@@ -1,0 +1,2 @@
+module AsiHelper
+end

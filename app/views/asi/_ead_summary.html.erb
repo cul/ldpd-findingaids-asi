@@ -1,0 +1,64 @@
+<h1>(HC) => Hard coded in html.erb</h1>
+<h1>Summary Information (HC)</h1>
+<h2>EAD Title (for debug): (HC)</h2>
+<p><%= @ead_title %></p>
+<h2>EAD Abstract (HC)</h2>
+<p><%= @ead_abstract %></p>
+<h2>At a Glance (HC)</h2>
+<p><strong>Bib ID (HC)</strong> <%= @ead_bib_id %></p>
+<p><strong>Creator(s) (HC)</strong><%= @ead_creators %></p>
+<p><strong>Physical Description (HC)</strong><%= @ead_physical_description %></p>
+<p><strong>Language (HC)</strong><%= @ead_language %></p>
+<p><strong>Access (HC)</strong><%= @ead_access_restrictions_value %></p>
+<h1>Arrangement (HC)</h1>
+<h2>Arrangement (HC)</h2>
+<p>
+  <ul>
+    <% @ead_series_titles.each do |series_title| %>
+    <li> <%= series_title %> </li>
+    <% end %>
+  </ul>
+</p>
+<h1>Description (HC)</h1>
+<h2><%= @ead_scope_content_head %></h2>
+<p><%= @ead_scope_content_value %></p>
+<p>
+  <ul style="list-style-type:none;">
+    <% @ead_series_titles.each_with_index do |series_title, i| %>
+    <li>
+      <p> <%= series_title %> </p>
+      <p> <%= @ead_series_scope_content[i] %> </p>
+    </li>
+    <% end %>
+  </ul>
+</p>
+<h1>Using the Collection (HC)</h1>
+<p><%= @ead_repository_corpname %></p>
+<h2><%= @ead_access_restrictions_head %></h2>
+<p><%= @ead_access_restrictions_value %></p>
+<h2><%= @ead_use_restrictions_head %></h2>
+<p><%= @ead_use_restrictions_value %></p>
+<h2><%= @ead_preferred_citation_head %></h2>
+<p><%= @ead_preferred_citation_value %></p>
+<h1>About the Finding Aid / Processing Information (HC)</h1>
+<p>Not sure if AS EAD contained the following (hard code in php app?): Columbia University Libraries. Rare Book and Manuscript Library; machine readable finding aid created by Columbia University Libraries Digital Library Program Division</p>
+<h2><%= @ead_processing_information_head %></h2>
+<p><%= @ead_processing_information_value %></p>
+<h1>Subject Headings (HC)</h1>
+<p>Missing blurb found in php app (HC)</p>
+<h2>Genre/Form (HC)</h2>
+<p>
+  <ul>
+    <% @ead_genres_forms.each do |genre_form| %>
+    <li><%= genre_form %>  </li>
+    <% end %>
+  </ul>
+</p>
+<h2>Subject (HC)</h2>
+<p>
+  <ul>
+    <% @ead_subjects.each do |subject| %>
+    <li><%= subject %>  </li>
+    <% end %>
+  </ul>
+</p>

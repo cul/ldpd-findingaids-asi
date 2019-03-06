@@ -42,6 +42,7 @@ set :keep_releases, 3
 set :passenger_restart_with_touch, true
 
 set :linked_files, fetch(:linked_files, []).push(
+  'config/archivespace.yml',
   'config/database.yml',
   'config/master.key',
   'config/secrets.yml'

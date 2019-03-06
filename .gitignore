@@ -38,3 +38,4 @@
 credentials.yml.enc
 database.yml
 master.key
+archivespace.yml
