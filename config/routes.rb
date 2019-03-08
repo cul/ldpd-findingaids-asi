@@ -4,5 +4,7 @@ Rails.application.routes.draw do
   get 'asi/as_ead'
 
   get '/asi/repo_id/:repo_id/res_id/:res_id/ead' => 'asi#as_ead'
+  get '/asi/local_fixtures/repo_id/:repo_id/res_id/:res_id/ead_fixture' => 'asi#as_ead_from_local_fixture'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -2,6 +2,12 @@ require 'asi/as_api'
 require 'asi/as_ead'
 
 class AsiController < ApplicationController
+  def as_ead
+    @asi_api = Asi::AsApi.new
+    @input_xml = @asi_api.get_ead_resource_description(params[:repo_id],params[:res_id])
+    ead_set_properties
+  end
+
   def as_ead_from_fixture
     @asi_api = Asi::AsApi.new
     @input_xml = @asi_api.get_ead_resource_description_from_fixture
@@ -9,9 +15,10 @@ class AsiController < ApplicationController
 #    render 'ead'    
   end
 
-  def as_ead
+  def as_ead_from_local_fixture
     @asi_api = Asi::AsApi.new
-    @input_xml = @asi_api.get_ead_resource_description(params[:repo_id],params[:res_id])
+    @input_xml =
+      @asi_api.get_ead_resource_description_from_local_fixture(params[:repo_id],params[:res_id])
     ead_set_properties
   end
 

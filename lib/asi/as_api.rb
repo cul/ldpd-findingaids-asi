@@ -8,6 +8,19 @@ module Asi
       end
     end
 
+    # Following gets fixtures that are not under source control. This allows
+    # the use of actual ArchiveSpace-generated EADs that can be quite large.
+    # It would be space-inefficient to store these in the source control tree.
+    # It also allows testing with a specific locally stored EAD (see the filepath
+    # variable below for the filename template).
+    def get_ead_resource_description_from_local_fixture(repo_id, resource_id)
+      filepath =
+        "spec/fixtures/asi/local_dev_fixtures/as_ead_repo_#{repo_id}_res_#{resource_id}.xml"
+      open(filepath) do |b|
+        b.read
+      end
+    end
+
     def authenticate
       post_uri = URI(ASI_CONFIG[:auth_url])
       post_request = Net::HTTP::Post.new post_uri.request_uri
