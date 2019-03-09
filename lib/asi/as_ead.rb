@@ -2,20 +2,27 @@ require 'net/http'
 
 module Asi
   class AsEad
+    XPATH = {
+      archive_abstract: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:abstract',
+      archive_id: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid',
+      archive_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle'
+    }
+
+    attr_reader :archive_abstract,
+                :archive_id,
+                :archive_title
+
     def parse(xml_input)
+      # for now, keep it as an attribute instead of a local var
       @nokogiri_xml = Nokogiri::XML(xml_input)
+      parse_arch_desc_did(@nokogiri_xml)
     end
 
-    def get_ead_title
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle').text
-    end
-
-    def get_ead_abstract
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:abstract').text
-    end
-
-    def get_bib_id
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid').text
+    # make private? Makes unit test harder
+    def parse_arch_desc_did(nokogiri_xml)
+      @archive_abstract = nokogiri_xml.xpath(XPATH[:archive_abstract]).text
+      @archive_id = nokogiri_xml.xpath(XPATH[:archive_id]).text
+      @archive_title = nokogiri_xml.xpath(XPATH[:archive_title]).text
     end
 
     def get_creators

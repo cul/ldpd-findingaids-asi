@@ -26,9 +26,9 @@ class AsiController < ApplicationController
   def ead_set_properties
     @asi_ead_nokogiri_xml = Asi::AsEad.new
     @asi_ead_nokogiri_xml.parse @input_xml
-    @ead_title = @asi_ead_nokogiri_xml.get_ead_title
-    @ead_abstract = @asi_ead_nokogiri_xml.get_ead_abstract
-    @ead_bib_id = @asi_ead_nokogiri_xml.get_bib_id
+    @ead_title = @asi_ead_nokogiri_xml.archive_title
+    @ead_abstract = @asi_ead_nokogiri_xml.archive_abstract
+    @ead_bib_id = @asi_ead_nokogiri_xml.archive_id
     @ead_creators = @asi_ead_nokogiri_xml.get_creators
     @ead_unit_date = @asi_ead_nokogiri_xml.get_unit_date
     @ead_physical_description = @asi_ead_nokogiri_xml.get_physical_description_extent
