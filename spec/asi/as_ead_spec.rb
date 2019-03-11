@@ -25,6 +25,12 @@ RSpec.describe Asi::AsEad do
         expect(subject).to respond_to(:archive_date)
       end
 
+      # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>
+      # returns array of titles
+      it 'archive_dsc_series_titles' do
+        expect(subject).to respond_to(:archive_dsc_series_titles)
+      end
+
       # <ead>:<archdesc>:<did>:<unitid>
       it 'archive_id' do
         expect(subject).to respond_to(:archive_id)
@@ -139,6 +145,21 @@ RSpec.describe Asi::AsEad do
       end
     end
 
+    ########################################## parse_arch_desc_dsc
+    context 'parse_arch_desc_dsc' do
+      before(:example) do
+        @as_ead = Asi::AsEad.new
+        xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
+        @nokogiri_xml = Nokogiri::XML(xml_input)
+        @as_ead.parse_arch_desc_dsc @nokogiri_xml
+      end
+
+      it 'parses the archive_abstract correctly' do
+        tested = @as_ead.archive_dsc_series_titles
+        expect(tested).to include 'Series VII: Bookplates'
+      end
+    end
+
     ########################################## parse_arch_desc_misc
     context 'parse_arch_desc_misc' do
       before(:example) do
@@ -209,16 +230,16 @@ RSpec.describe Asi::AsEad do
       expect(subject).to respond_to(:parse_arch_desc_did).with(1).arguments
     end
 
+    it 'has #parse_arch_desc_dsc method' do
+      expect(subject).to respond_to(:parse_arch_desc_dsc).with(1).arguments
+    end
+
     it 'has #parse_arch_desc_misc method' do
       expect(subject).to respond_to(:parse_arch_desc_misc).with(1).arguments
     end
 
     xit 'has #get_creators' do
       expect(subject).to respond_to(:get_creators).with(0).arguments
-    end
-
-    xit 'has #get_series_titles' do
-      expect(subject).to respond_to(:get_series_titles).with(0).arguments
     end
 
     xit 'has #get_series_scope_content' do

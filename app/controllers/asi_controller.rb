@@ -44,7 +44,7 @@ class AsiController < ApplicationController
     @ead_use_restrictions_value = @asi_ead_nokogiri_xml.archive_use_restrictions_value
     @ead_processing_information_head = @asi_ead_nokogiri_xml.archive_processing_information_head
     @ead_processing_information_value = @asi_ead_nokogiri_xml.archive_processing_information_value
-    @ead_series_titles = @asi_ead_nokogiri_xml.get_series_titles
+    @ead_series_titles = @asi_ead_nokogiri_xml.archive_dsc_series_titles
     @ead_series_scope_content = @asi_ead_nokogiri_xml.get_series_scope_content
     @ead_subjects = @asi_ead_nokogiri_xml.get_subjects
     @ead_genres_forms = @asi_ead_nokogiri_xml.get_genres_forms
