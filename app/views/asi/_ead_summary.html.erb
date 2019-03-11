@@ -24,10 +24,10 @@
 <p><%= @ead_scope_content_value %></p>
 <p>
   <ul style="list-style-type:none;">
-    <% @ead_series_titles.each_with_index do |series_title, i| %>
+    <% @ead_series_titles.each_with_index do |series_title, index| %>
     <li>
-      <p> <%= series_title %> </p>
-      <p> <%= @ead_series_scope_content[i] %> </p>
+      <p> <%= link_to series_title, series_fixture_path(:ser_id => index + 1) %> </p>
+      <p> <%= @ead_series_scope_content[index] %> </p>
     </li>
     <% end %>
   </ul>
