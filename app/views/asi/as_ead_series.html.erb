@@ -1,10 +1,3 @@
 <h1>Asi#as_ead_series</h1>
 <p>Find me in app/views/asi/as_ead_series.html.erb</p>
-<table>
-  <% @ead_series_files_info.each do |title_box_hash| %>
-  <tr>
-    <td><%= title_box_hash[:title] %></td>
-    <td><%= title_box_hash[:box_number] %></td>
-  </tr>
-  <% end %>
-</table>
+<%= render "ead_file_titles_box_numbers" %>
