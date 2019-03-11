@@ -1,3 +1,16 @@
 <h1>Asi#as_ead_series</h1>
 <p>Find me in app/views/asi/as_ead_series.html.erb</p>
-<%= render "ead_file_titles_box_numbers" %>
+<h1>(HC) => Hard coded in html.erb</h1>
+<h2>EAD Title (for debug): (HC)</h2>
+<table style="width=100%">
+  <tbody>
+    <tr>
+      <td class="sidebar">
+	<%= render partial: 'sidebar', :locals => {:slug => ead_path} %>
+      </td>
+      <td class="ead_content">
+	<%= render "ead_file_titles_box_numbers" %>
+      </td>
+    </tr>
+  </tbody>
+</table>

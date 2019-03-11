@@ -7,7 +7,7 @@
   <tbody>
     <tr>
       <td class="sidebar">
-	<%= render "sidebar" %>
+	<%= render partial: 'sidebar', :locals => {:slug => ead_fixture_path} %>
       </td>
       <td class="ead_content">
 	<%= render "ead_summary" %>
