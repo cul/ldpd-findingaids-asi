@@ -6,6 +6,8 @@ module Asi
       archive_abstract: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:abstract',
       archive_access_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:head',
       archive_access_restrictions_value: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:p',
+      archive_biography_history_head: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:head',
+      archive_biography_history_value: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:p',
       archive_date: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
       archive_dsc_series: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]',
       archive_dsc_series_titles: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]/xmlns:did/xmlns:unittitle',
@@ -27,6 +29,8 @@ module Asi
     attr_reader :archive_abstract,
                 :archive_access_restrictions_head,
                 :archive_access_restrictions_value,
+                :archive_biography_history_head,
+                :archive_biography_history_value,
                 :archive_date,
                 :archive_dsc_series,
                 :archive_dsc_series_titles,
@@ -78,6 +82,9 @@ module Asi
       @archive_access_restrictions_head = nokogiri_xml.xpath(XPATH[:archive_access_restrictions_head]).first.text unless
         nokogiri_xml.xpath(XPATH[:archive_access_restrictions_head]).first.nil?
       @archive_access_restrictions_value = nokogiri_xml.xpath(XPATH[:archive_access_restrictions_value]).text
+      @archive_biography_history_head = nokogiri_xml.xpath(XPATH[:archive_biography_history_head]).first.text unless
+        nokogiri_xml.xpath(XPATH[:archive_biography_history_head]).first.nil?
+      @archive_biography_history_value = nokogiri_xml.xpath(XPATH[:archive_biography_history_value]).text
       @archive_preferred_citation_head = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_head]).first.text unless
         nokogiri_xml.xpath(XPATH[:archive_preferred_citation_head]).first.nil?
       @archive_preferred_citation_value = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_value]).text

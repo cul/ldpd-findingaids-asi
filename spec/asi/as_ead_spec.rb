@@ -20,6 +20,16 @@ RSpec.describe Asi::AsEad do
         expect(subject).to respond_to(:archive_access_restrictions_value)
       end
 
+      # <ead>:<archdesc>:<bioghist>:<head>
+      it 'archive_biography_history_head' do
+        expect(subject).to respond_to(:archive_biography_history_head)
+      end
+
+      # <ead>:<archdesc>:<bioghist>:<p>
+      it 'archive_biography_history_value' do
+        expect(subject).to respond_to(:archive_biography_history_value)
+      end
+
       # <ead>:<archdesc>:<did>:<unitdate>
       it 'archive_date' do
         expect(subject).to respond_to(:archive_date)
@@ -204,6 +214,16 @@ RSpec.describe Asi::AsEad do
       it 'parses the archive_access_restrictions_value correctly' do
         tested = @as_ead.archive_access_restrictions_value
         expect(tested).to eq 'This collection is located on-site.This collection has no restrictions.'
+      end
+
+      it 'parses the archive_biography_history_head correctly' do
+        tested = @as_ead.archive_biography_history_head
+        expect(tested).to eq 'Biographical / Historical'
+      end
+
+      it 'parses the archive_biography_history_value correctly' do
+        tested = @as_ead.archive_biography_history_value
+        expect(tested).to eq 'American artist, travel writer, and political activist.'
       end
 
       it 'parses the archive_preferred_citation_head correctly' do
