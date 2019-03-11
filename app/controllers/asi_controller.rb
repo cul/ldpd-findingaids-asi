@@ -18,14 +18,14 @@ class AsiController < ApplicationController
   def as_ead_series
     @asi_api = Asi::AsApi.new
     @input_xml = @asi_api.get_ead_resource_description(params[:repo_id],params[:res_id])
-    ead_set_properties
+    ead_series_set_properties params[:ser_id]
   end
 
   def as_ead_series_from_local_fixture
     @asi_api = Asi::AsApi.new
     @input_xml =
       @asi_api.get_ead_resource_description_from_local_fixture(params[:repo_id],params[:res_id])
-    ead_set_properties
+    ead_series_set_properties params[:ser_id]
   end
 
   def as_ead_from_fixture
@@ -60,5 +60,11 @@ class AsiController < ApplicationController
     @ead_series_scope_content = @asi_ead_nokogiri_xml.get_series_scope_content
     @ead_subjects = @asi_ead_nokogiri_xml.get_subjects
     @ead_genres_forms = @asi_ead_nokogiri_xml.get_genres_forms
+  end
+
+  def ead_series_set_properties series_num
+    @asi_ead_nokogiri_xml = Asi::AsEad.new
+    @asi_ead_nokogiri_xml.parse @input_xml
+    @ead_series_files_info = @asi_ead_nokogiri_xml.get_files_info_for_series series_num
   end
 end

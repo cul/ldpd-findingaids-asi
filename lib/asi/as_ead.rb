@@ -7,6 +7,7 @@ module Asi
       archive_access_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:head',
       archive_access_restrictions_value: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:p',
       archive_date: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
+      archive_dsc_series: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]',
       archive_dsc_series_titles: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]/xmlns:did/xmlns:unittitle',
       archive_id: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid',
       archive_language: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:langmaterial/xmlns:language',
@@ -27,6 +28,7 @@ module Asi
                 :archive_access_restrictions_head,
                 :archive_access_restrictions_value,
                 :archive_date,
+                :archive_dsc_series,
                 :archive_dsc_series_titles,
                 :archive_id,
                 :archive_language,
@@ -68,6 +70,7 @@ module Asi
       @archive_dsc_series_titles = series_title_nokogiri_elements.map do |series|
         series.text
       end
+      @archive_dsc_series = nokogiri_xml.xpath(XPATH[:archive_dsc_series])
     end
 
     # make private? Makes unit test harder
@@ -121,20 +124,16 @@ module Asi
       end
     end
 
+    # fcd1, 03/11/19: Continure refactoring following when time allows
     # Note: arg start from 1, but array start at index 0
     def get_files_info_for_series(i)
-      series_nokogiri_elements =
-        @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
-      series = series_nokogiri_elements[i-1]
-      # puts series.inspect
-      series_file_info_nokogiri_elements = series.xpath('./xmlns:c[@level="file"]')
-      # puts series_file_info_nokogiri_elements.inspect
+      series_file_info_nokogiri_elements =
+        @archive_dsc_series[i.to_i - 1].xpath('./xmlns:c[@level="file"]')
       series_files_info = series_file_info_nokogiri_elements.map do |file_info_nokogiri_element|
         title = file_info_nokogiri_element.xpath('./xmlns:did/xmlns:unittitle').text
         box_number = file_info_nokogiri_element.xpath('./xmlns:did/xmlns:container').text
         {title: title, box_number: box_number}
       end
-      # puts series_files_info
     end
   end
 end

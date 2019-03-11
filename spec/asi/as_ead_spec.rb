@@ -25,6 +25,12 @@ RSpec.describe Asi::AsEad do
         expect(subject).to respond_to(:archive_date)
       end
 
+      # <ead>:<archdesc>:<dsc>:<c level=series><
+      # returns array of series
+      it 'archive_dsc_series' do
+        expect(subject).to respond_to(:archive_dsc_series)
+      end
+
       # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>
       # returns array of titles
       it 'archive_dsc_series_titles' do
@@ -100,6 +106,22 @@ RSpec.describe Asi::AsEad do
 
   ########################################## Functionality
   describe 'Testing functionality: ' do
+    ########################################## parse_arch_desc_dsc
+    # fcd1, 03//11/19: method probably needs renaming and refactoring
+    context 'get_files_info_for_series' do
+      before(:example) do
+        @as_ead = Asi::AsEad.new
+        xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
+        @nokogiri_xml = Nokogiri::XML(xml_input)
+        @as_ead.parse_arch_desc_dsc @nokogiri_xml
+      end
+
+      it 'returns correct list of file titles and associated box number' do
+        tested = @as_ead.get_files_info_for_series 1
+        expect(tested).to include({:title => 'Price, Arthur: to Rockwell Kent, t.l.s., 15', :box_number => '3'})
+      end
+    end
+
     ########################################## parse_arch_desc_did
     context 'parse_arch_desc_did' do
       before(:example) do
@@ -154,7 +176,12 @@ RSpec.describe Asi::AsEad do
         @as_ead.parse_arch_desc_dsc @nokogiri_xml
       end
 
-      it 'parses the archive_abstract correctly' do
+      it 'parses the archive_dsc_series correctly' do
+        tested = @as_ead.archive_dsc_series[0]
+        expect(tested).to be_instance_of Nokogiri::XML::Element
+      end
+
+      it 'parses the archive_dsc_series_titles correctly' do
         tested = @as_ead.archive_dsc_series_titles
         expect(tested).to include 'Series VII: Bookplates'
       end
