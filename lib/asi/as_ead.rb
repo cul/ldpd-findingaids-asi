@@ -4,52 +4,82 @@ module Asi
   class AsEad
     XPATH = {
       archive_abstract: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:abstract',
+      archive_access_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:head',
+      archive_access_restrictions_value: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:p',
+      archive_date: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
       archive_id: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid',
-      archive_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle'
+      archive_language: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:langmaterial/xmlns:language',
+      archive_physical_description_extent_carrier: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:physdesc/xmlns:extent[@altrender="carrier"]',
+      archive_preferred_citation_head: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:head',
+      archive_preferred_citation_value: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:p',
+      archive_processing_information_head: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:head',
+      archive_processing_information_value: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:p',
+      archive_scope_content_head: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:head',
+      archive_scope_content_value: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
+      archive_repository: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:repository/xmlns:corpname',
+      archive_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle',
+      archive_use_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:head',
+      archive_use_restrictions_value: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:p'
     }
 
     attr_reader :archive_abstract,
+                :archive_access_restrictions_head,
+                :archive_access_restrictions_value,
+                :archive_date,
                 :archive_id,
-                :archive_title
+                :archive_language,
+                :archive_physical_description_extent_carrier,
+                :archive_preferred_citation_head,
+                :archive_preferred_citation_value,
+                :archive_processing_information_head,
+                :archive_processing_information_value,
+                :archive_repository,
+                :archive_scope_content_head,
+                :archive_scope_content_value,
+                :archive_title,
+                :archive_use_restrictions_head,
+                :archive_use_restrictions_value
 
     def parse(xml_input)
       # for now, keep it as an attribute instead of a local var
       @nokogiri_xml = Nokogiri::XML(xml_input)
       parse_arch_desc_did(@nokogiri_xml)
+      parse_arch_desc_misc(@nokogiri_xml)
     end
 
     # make private? Makes unit test harder
     def parse_arch_desc_did(nokogiri_xml)
       @archive_abstract = nokogiri_xml.xpath(XPATH[:archive_abstract]).text
+      @archive_date = nokogiri_xml.xpath(XPATH[:archive_date]).text
       @archive_id = nokogiri_xml.xpath(XPATH[:archive_id]).text
+      @archive_language = nokogiri_xml.xpath(XPATH[:archive_language]).text
+      @archive_physical_description_extent_carrier = nokogiri_xml.xpath(XPATH[:archive_physical_description_extent_carrier]).text
+      @archive_repository = nokogiri_xml.xpath(XPATH[:archive_repository]).text
       @archive_title = nokogiri_xml.xpath(XPATH[:archive_title]).text
+    end
+
+    # make private? Makes unit test harder
+    def parse_arch_desc_misc(nokogiri_xml)
+      @archive_access_restrictions_head = nokogiri_xml.xpath(XPATH[:archive_access_restrictions_head]).first.text unless
+        nokogiri_xml.xpath(XPATH[:archive_access_restrictions_head]).first.nil?
+      @archive_access_restrictions_value = nokogiri_xml.xpath(XPATH[:archive_access_restrictions_value]).text
+      @archive_preferred_citation_head = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_head]).first.text unless
+        nokogiri_xml.xpath(XPATH[:archive_preferred_citation_head]).first.nil?
+      @archive_preferred_citation_value = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_value]).text
+      @archive_processing_information_head = nokogiri_xml.xpath(XPATH[:archive_processing_information_head]).first.text unless
+        nokogiri_xml.xpath(XPATH[:archive_processing_information_head]).first.nil?
+      @archive_processing_information_value = nokogiri_xml.xpath(XPATH[:archive_processing_information_value]).text
+      @archive_scope_content_head = nokogiri_xml.xpath(XPATH[:archive_scope_content_head]).first.text unless
+        nokogiri_xml.xpath(XPATH[:archive_scope_content_head]).first.nil?
+      @archive_scope_content_value = nokogiri_xml.xpath(XPATH[:archive_scope_content_value]).text
+      @archive_use_restrictions_head = nokogiri_xml.xpath(XPATH[:archive_use_restrictions_head]).first.text unless
+        nokogiri_xml.xpath(XPATH[:archive_use_restrictions_head]).first.nil?
+      @archive_use_restrictions_value = nokogiri_xml.xpath(XPATH[:archive_use_restrictions_value]).text
     end
 
     def get_creators
       ['Not Present in AS EAD']
       # @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid').text
-    end
-
-    def get_unit_date
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate').text
-    end
-
-    def get_physical_description_extent
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:physdesc/xmlns:extent[@altrender="carrier"]').text
-    end
-
-    def get_lang_material
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:langmaterial/xmlns:language').text
-    end
-
-    def get_access_restrictions_head
-      # Need to use first for now
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:head').first.text
-    end
-
-    def get_access_restrictions_value
-      # Need to use first for now
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:p').first.text
     end
 
     def get_series_titles
@@ -60,49 +90,12 @@ module Asi
       end
     end
 
-    def get_scope_content_head
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:head').text
-    end
-
-    def get_scope_content_value
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p').text
-    end
-
     def get_series_scope_content
       series_nokogiri_elements =
         @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
       series_scope_content = series_nokogiri_elements.map do |series|
         series.xpath('./xmlns:scopecontent/xmlns:p').text
       end
-    end
-
-    def get_repository_corpname
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:repository/xmlns:corpname').text
-    end
-
-    def get_prefer_cite_head
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:head').text
-    end
-
-    def get_prefer_cite_value
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:p').text
-    end
-
-    def get_use_restrict_head
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:head').text
-    end
-
-    def get_use_restrict_value
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:p').text
-    end
-
-    def get_process_info_head
-      # Only return the first instance, assume all are the same.
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:head').first.text
-    end
-
-    def get_process_info_value
-      @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:p').text
     end
 
     # May want to split this into multiple methods, one for each element

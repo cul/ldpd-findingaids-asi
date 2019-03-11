@@ -5,25 +5,96 @@ RSpec.describe Asi::AsEad do
   ########################################## API/interface
   describe 'API/interface' do
     context 'has attr_reader for instance var' do
-      # <archdesc>:<did>:<abstract>
+      # <ead>:<archdesc>:<did>:<abstract>
       it 'archive_abstract' do
         expect(subject).to respond_to(:archive_abstract)
       end
 
-      # <archdesc>:<did>:<unititle>
+      # <ead>:<archdesc>:<accessrestrict>:<head>
+      it 'archive_access_restrictions_head' do
+        expect(subject).to respond_to(:archive_access_restrictions_head)
+      end
+
+      # <ead>:<archdesc>:<accessrestrict>:<p>
+      it 'archive_access_restrictions_value' do
+        expect(subject).to respond_to(:archive_access_restrictions_value)
+      end
+
+      # <ead>:<archdesc>:<did>:<unitdate>
+      it 'archive_date' do
+        expect(subject).to respond_to(:archive_date)
+      end
+
+      # <ead>:<archdesc>:<did>:<unitid>
+      it 'archive_id' do
+        expect(subject).to respond_to(:archive_id)
+      end
+
+      # <ead>:<archdesc>:<did>:<langmaterial><language>
+      it 'archive_language' do
+        expect(subject).to respond_to(:archive_language)
+      end
+
+      # <ead>:<archdesc>:<did>:<physdesc>:<extent @altrender="carrier">
+      it 'archive_physical_description' do
+        expect(subject).to respond_to(:archive_physical_description_extent_carrier)
+      end
+
+      # <ead>:<archdesc>:<prefercite>:<head>
+      it 'archive_preferred_citation_head' do
+        expect(subject).to respond_to(:archive_preferred_citation_head)
+      end
+
+      # <ead>:<archdesc>:<prefercite>:<p>
+      it 'archive_preferred_citation_value' do
+        expect(subject).to respond_to(:archive_preferred_citation_value)
+      end
+
+      # <ead>:<archdesc>:<processinfo>:<head>
+      it 'archive_processing_information_head' do
+        expect(subject).to respond_to(:archive_processing_information_head)
+      end
+
+      # <ead>:<archdesc>:<processinfo>:<p>
+      it 'archive_processing_information_value' do
+        expect(subject).to respond_to(:archive_processing_information_value)
+      end
+
+      # <ead><archdesc><did><repository><corpname>
+      it 'archive_repository' do
+        expect(subject).to respond_to(:archive_repository)
+      end
+
+      # <ead>:<archdesc>:<scopecontent>:<head>
+      it 'archive_scope_content_head' do
+        expect(subject).to respond_to(:archive_scope_content_head)
+      end
+
+      # <ead>:<archdesc>:<scopecontent>:<p>
+      it 'archive_scope_content_value' do
+        expect(subject).to respond_to(:archive_scope_content_value)
+      end
+
+      # <ead>:<archdesc>:<did>:<unititle>
       it 'archive_title' do
         expect(subject).to respond_to(:archive_title)
       end
 
-      # <archdesc>:<did>:<unitid>
-      it 'archive_id' do
-        expect(subject).to respond_to(:archive_id)
+      # <ead>:<archdesc>:<userestrict>:<head>
+      it 'archive_use_restrictions_head' do
+        expect(subject).to respond_to(:archive_use_restrictions_head)
+      end
+
+      # <ead>:<archdesc>:<userestrict>:<p>
+      it 'archive_use_restrictions_value' do
+        expect(subject).to respond_to(:archive_use_restrictions_value)
       end
     end
   end
 
   ########################################## Functionality
   describe 'Testing functionality: ' do
+    ########################################## parse_arch_desc_did
     context 'parse_arch_desc_did' do
       before(:example) do
         @as_ead = Asi::AsEad.new
@@ -32,19 +103,99 @@ RSpec.describe Asi::AsEad do
         @as_ead.parse_arch_desc_did @nokogiri_xml
       end
 
-      it 'parses the archive_abstract correcty' do
+      it 'parses the archive_abstract correctly' do
         tested = @as_ead.archive_abstract
         expect(tested).to include "Rockwell Kent's correspondence; drawings and sketches;"
       end
 
-      it 'parses the archive_id correcty' do
+      it 'parses the archive_date correctly' do
+        tested = @as_ead.archive_date
+        expect(tested).to eq "1885-1970"
+      end
+
+      it 'parses the archive_id correctly' do
         tested = @as_ead.archive_id
         expect(tested).to eq '4079547'
       end
 
-      it 'parses the archive_title correcty' do
+      it 'parses the archive_language correctly' do
+        tested = @as_ead.archive_language
+        expect(tested).to eq 'English'
+      end
+
+      it 'parses the archive_physical_description_extent_carrier correctly' do
+        tested = @as_ead.archive_physical_description_extent_carrier
+        expect(tested).to eq '59 linear feet 46 boxes 10 drawers 3 slip cases'
+      end
+
+      it 'parses the archive_repository correctly' do
+        tested = @as_ead.archive_repository
+        expect(tested).to eq 'Rare Book and Manuscript Library'
+      end
+
+      it 'parses the archive_title correctly' do
         tested = @as_ead.archive_title
         expect(tested).to eq 'Rockwell Kent papers'
+      end
+    end
+
+    ########################################## parse_arch_desc_misc
+    context 'parse_arch_desc_misc' do
+      before(:example) do
+        @as_ead = Asi::AsEad.new
+        xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation_arch_desc_misc_only.xml').read
+        @nokogiri_xml = Nokogiri::XML(xml_input)
+        @as_ead.parse_arch_desc_misc @nokogiri_xml
+      end
+
+      it 'parses the archive_access_restrictions_head correctly' do
+        tested = @as_ead.archive_access_restrictions_head
+        expect(tested).to eq 'Restrictions on Access'
+      end
+
+      it 'parses the archive_access_restrictions_value correctly' do
+        tested = @as_ead.archive_access_restrictions_value
+        expect(tested).to eq 'This collection is located on-site.This collection has no restrictions.'
+      end
+
+      it 'parses the archive_preferred_citation_head correctly' do
+        tested = @as_ead.archive_preferred_citation_head
+        expect(tested).to eq 'Preferred Citation'
+      end
+
+      it 'parses the archive_preferred_citation_value correctly' do
+        tested = @as_ead.archive_preferred_citation_value
+        expect(tested).to include "specific item; Date (if known); Rockwell Kent papers; Box and"
+      end
+
+      it 'parses the archive_processing_information_head correctly' do
+        tested = @as_ead.archive_processing_information_head
+        expect(tested).to eq 'Processing Information'
+      end
+
+      it 'parses the archive_processing_information_value correctly' do
+        tested = @as_ead.archive_processing_information_value
+        expect(tested).to include "31 letters from RK to Henry Wohltjen Cataloged HR 11/06/1996."
+      end
+
+      it 'parses the archive_scope_content_head correctly' do
+        tested = @as_ead.archive_scope_content_head
+        expect(tested).to eq 'Scope and Content'
+      end
+
+      it 'parses the archive_scope_content_value correctly' do
+        tested = @as_ead.archive_scope_content_value
+        expect(tested).to include "as well as illustrations for 18 of Kent's own books; bookplates for many well known people,"
+      end
+
+      it 'parses the archive_use_restrictions_head correctly' do
+        tested = @as_ead.archive_use_restrictions_head
+        expect(tested).to eq 'Terms Governing Use and Reproduction'
+      end
+
+      it 'parses the archive_use_restrictions_value correctly' do
+        tested = @as_ead.archive_use_restrictions_value
+        expect(tested).to include 'be made for research purposes. The RBML maintains ownership of the physical material only. Copyright remains'
       end
     end
   end
@@ -58,73 +209,20 @@ RSpec.describe Asi::AsEad do
       expect(subject).to respond_to(:parse_arch_desc_did).with(1).arguments
     end
 
+    it 'has #parse_arch_desc_misc method' do
+      expect(subject).to respond_to(:parse_arch_desc_misc).with(1).arguments
+    end
+
     xit 'has #get_creators' do
       expect(subject).to respond_to(:get_creators).with(0).arguments
-    end
-
-    xit 'has #get_unit_date' do
-      expect(subject).to respond_to(:get_unit_date).with(0).arguments
-    end
-
-    xit 'has #get_physical_description_extent' do
-      expect(subject).to respond_to(:get_physical_description_extent).with(0).arguments
-    end
-
-    xit 'has #get_lang_material' do
-      expect(subject).to respond_to(:get_lang_material).with(0).arguments
-    end
-
-    xit 'has #get_access_restrictions_head' do
-      expect(subject).to respond_to(:get_access_restrictions_head).with(0).arguments
-    end
-
-    xit 'has #get_access_restrictions_value' do
-      expect(subject).to respond_to(:get_access_restrictions_value).with(0).arguments
     end
 
     xit 'has #get_series_titles' do
       expect(subject).to respond_to(:get_series_titles).with(0).arguments
     end
 
-    # this might not be needed if label/head is also gonna be the same
-    xit 'has #get_scope_content_head' do
-      expect(subject).to respond_to(:get_scope_content_head).with(0).arguments
-    end
-
-    xit 'has #get_scope_content_value' do
-      expect(subject).to respond_to(:get_scope_content_value).with(0).arguments
-    end
-
     xit 'has #get_series_scope_content' do
       expect(subject).to respond_to(:get_series_scope_content).with(0).arguments
-    end
-
-    xit 'has #get_repository_corpname' do
-      expect(subject).to respond_to(:get_repository_corpname).with(0).arguments
-    end
-
-    xit 'has #get_prefer_cite_head' do
-      expect(subject).to respond_to(:get_prefer_cite_head).with(0).arguments
-    end
-
-    xit 'has #get_prefer_cite_value' do
-      expect(subject).to respond_to(:get_prefer_cite_value).with(0).arguments
-    end
-
-    xit 'has #get_use_restrict_head' do
-      expect(subject).to respond_to(:get_use_restrict_head).with(0).arguments
-    end
-
-    xit 'has #get_use_restrict_value' do
-      expect(subject).to respond_to(:get_use_restrict_value).with(0).arguments
-    end
-
-    xit 'has #get_process_info_head' do
-      expect(subject).to respond_to(:get_process_info_head).with(0).arguments
-    end
-
-    xit 'has #get_process_info_value' do
-      expect(subject).to respond_to(:get_process_info_value).with(0).arguments
     end
 
     xit 'has #get_subjects' do
@@ -148,51 +246,9 @@ RSpec.describe Asi::AsEad do
     end
 
     context "check functionality" do
-      xit 'get_ead_title returns correct value' do
-        # puts @xml_input
-        ead_title = @as_ead_nokogiri_xml.get_ead_title
-        expect(ead_title).to eq 'Rockwell Kent papers'
-      end
-
-      xit 'get_ead_abstract returns correct value' do
-        # puts @xml_input
-        ead_abstract = @as_ead_nokogiri_xml.get_ead_abstract
-        expect(ead_abstract).to include('drawings and sketches; watercolors; lithographs; proofs; manuscripts;')
-      end
-
-      xit 'get_bib_id returns correct value' do
-        bib_id = @as_ead_nokogiri_xml.get_bib_id
-        expect(bib_id).to eq '4079547'
-      end
-
       xit 'get_creators returns correct value' do
         ead_creators = @as_ead_nokogiri_xml.get_creators
         expect(ead_creators).to include('Not Present in AS EAD')
-      end
-
-      xit 'get_unit_date returns correct value' do
-        ead_unit_date = @as_ead_nokogiri_xml.get_unit_date
-        expect(ead_unit_date).to eq '1885-1970'
-      end
-
-      xit 'get_physical_description_extent returns correct value' do
-        physical_desc_extent = @as_ead_nokogiri_xml.get_physical_description_extent
-        expect(physical_desc_extent).to eq '59 linear feet 46 boxes 10 drawers 3 slip cases'
-      end
-
-      xit 'get_lang_material returns correct value' do
-        lang_material = @as_ead_nokogiri_xml.get_lang_material
-        expect(lang_material).to eq 'English'
-      end
-
-      xit 'get_access_restrictions_head returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_access_restrictions_head
-        expect(tested).to eq 'Restrictions on Access'
-      end
-
-      xit 'get_access_restrictions_value returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_access_restrictions_value
-        expect(tested).to eq 'This collection is located on-site.'
       end
 
       xit 'get_series_titles returns correct value' do
@@ -200,54 +256,9 @@ RSpec.describe Asi::AsEad do
         expect(series_titles).to include 'Series VII: Bookplates'
       end
 
-      xit 'get_scope_content_head returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_scope_content_head
-        expect(tested).to eq 'Scope and Content'
-      end
-
-      xit 'get_scope_content_value returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_scope_content_value
-        expect(tested).to include " as well as many lithographs and woodblock prints by Kent's"
-      end
-
       xit 'get_series_scope_content returns correct value' do
         tested = @as_ead_nokogiri_xml.get_series_scope_content
         expect(tested).to include "This series contains material which was asscessioned after the main collection was processed."
-      end
-
-      xit 'get_repository_corpname returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_repository_corpname
-        expect(tested).to include "Rare Book and Manuscript Library"
-      end
-
-      xit 'get_prefer_cite_head returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_prefer_cite_head
-        expect(tested).to eq "Preferred Citation"
-      end
-
-      xit 'get_prefer_cite_value returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_prefer_cite_value
-        expect(tested).to eq "Identification of specific item; Date (if known); Rockwell Kent papers; Box and Folder; Rare Book and Manuscript Library, Columbia University Library."
-      end
-
-      xit 'get_use_restrict_head returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_use_restrict_head
-        expect(tested).to eq "Terms Governing Use and Reproduction"
-      end
-
-      xit 'get_use_restrict_value returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_use_restrict_value
-        expect(tested).to eq "Single photocopies may be made for research purposes. The RBML maintains ownership of the physical material only. Copyright remains with the creator and his/her heirs. The responsibility to secure copyright permission rests with the patron."
-      end
-
-      xit 'get_process_info_head returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_process_info_head
-        expect(tested).to eq "Processing Information"
-      end
-
-      xit 'get_use_restrict_value returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_process_info_value
-        expect(tested).to include "31 letters from RK to Henry Wohltjen Cataloged HR 11/06/1996."
       end
 
       xit 'get_subjects returns correct value' do

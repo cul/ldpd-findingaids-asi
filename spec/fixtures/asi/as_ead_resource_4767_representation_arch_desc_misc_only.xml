@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ead xmlns="urn:isbn:1-931666-22-9" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:isbn:1-931666-22-9 http://www.loc.gov/ead/ead.xsd"><eadheader countryencoding="iso3166-1" dateencoding="iso8601" langencoding="iso639-2b" repositoryencoding="iso15511"><eadid countrycode="US" mainagencycode="US-NNC-RB" url="http://findingaids.cul.columbia.edu/ead/nnc-rb/ldpd_4079547"></eadid><filedesc><titlestmt><titleproper>Rockwell Kent papers <num>4079547</num></titleproper></titlestmt><publicationstmt><publisher>Rare Book and Manuscript Library</publisher><address><addressline>Butler Library, 6th Floor</addressline><addressline>Columbia University, Mail Code 1127</addressline><addressline>535 W. 114th St.</addressline><addressline>New York, NY 10027</addressline><addressline>rbml@libraries.cul.columbia.edu</addressline><addressline>URL: <extptr xlink:href="http://www.columbia.edu/cu/lweb/indiv/rbml/index.html" xlink:show="new" xlink:title="http://www.columbia.edu/cu/lweb/indiv/rbml/index.html" xlink:type="simple"/></addressline></address></publicationstmt><notestmt><note><p>Contents list, 76p</p></note></notestmt></filedesc><profiledesc><creation>This finding aid was produced using ArchivesSpace on <date>2019-02-25 22:11:03 UTC</date>.</creation><descrules>Describing Archives: A Content Standard</descrules></profiledesc><revisiondesc><change><date>2009-06-26</date><item>File created.</item></change><change><date>2019-02-08</date><item>EAD was imported spring 2019 as part of the ArchivesSpace Phase II migration.</item></change></revisiondesc></eadheader><archdesc level="collection">
+  <arrangement id="aspace_b179f615dbc708c3bfb09a70e7100bc6">
+    <head>Arrangement</head>
+<p>In XV Series: Series I: Cataloged materials: Correspondence, Manuscripts and Prints by Other Artists -- Series II: Cataloged Manuacripts, Prints by others, etc. -- Series III: Titled Drawings, Lithographs, Prints and Proofs -- Series IV: Advertising -- Series V: Architecture -- Series VI: Book Illustration -- Series VII: Bookplates -- Series VIII: Exhibitions -- Series VIX: Magazine Illustrations -- Series X: Posters -- Series XI: Other Categories -- Series XII: Miscellaneous Drafts and Sketches-Early Work -- Series XIII: Miscellaneous Printed Materials -- Series XIV: Articles, Broadside, Clippings, Obituaries, and Photographs -- Series XV: Additions to the Collection.</p>  </arrangement>
+  <odd id="aspace_8dd46dcd9b27fa23e812bb79aa9f9ea4">
+    <head>General Note</head>
+<p>Other collections of Rockwell Kent materials are at: SUNY-Plattsburgh (Rockwell Kent Collection); National Museum of American Art, Smithsonian Institution (Peter A. Juley &amp; Son Collection, Photographs); Archives of American Art (Ken Papers); &amp; Princeton University Library (Graphic Arts-Kentiana)</p>  </odd>
+  <accessrestrict id="aspace_244ccf83bcfa68d214b17e259e1741af">
+    <head>Restrictions on Access</head>
+<p>This collection is located on-site.</p>  </accessrestrict>
+  <accessrestrict id="aspace_1900c5f6768e9086eec2b129c49d4333">
+    <head>Restrictions on Access</head>
+<p>This collection has no restrictions.</p>  </accessrestrict>
+  <scopecontent id="aspace_62cedffc690f1cde67a897499add6bf9">
+    <head>Scope and Content</head>
+<p>A comprehensive collection of working drawings and sketches, watercolor paintings, lithographs, proofs, manuscripts, and architectural drawings. There are illustrations for many books including <title render="italic">Moby Dick</title>, <title render="italic">Beowulf, The Canterbury Tales</title>, <title render="italic">The Decameron</title>, <title render="italic">Paul Bunyan</title>, <title render="italic">Candide</title>, and <title render="italic">The Bridge of San Luis Rey</title>, as well as illustrations for 18 of Kent's own books; bookplates for many well known people, magazine illustrations, advertising, posters, and graphic art work of many other types. Some correspondence is included, as well as many lithographs and woodblock prints by Kent's students and admirers.</p>  </scopecontent>
+  <prefercite id="aspace_3503fa4584bd059ce4fe5480a8ba2191">
+    <head>Preferred Citation</head>
+<p>Identification of specific item; Date (if known); Rockwell Kent papers; Box and Folder; Rare Book and Manuscript Library, Columbia University Library.</p>  </prefercite>
+  <userestrict id="aspace_11724ae58ce99a1ceab8f1c227b3f441">
+    <head>Terms Governing Use and Reproduction</head>
+<p>Single photocopies may be made for research purposes. The RBML maintains ownership of the physical material only. Copyright remains with the creator and his/her heirs. The responsibility to secure copyright permission rests with the patron.</p>  </userestrict>
+  <acqinfo id="aspace_c76d0712daf2b4e77028ec56e8e3bb20">
+    <head>Acquisition</head>
+<p>1971 M-1971 Berol, Mr &amp; Mrs A.C. Gift </p><p> 11/04/1996 M-96-11-04 31 letters from RK to Henry Wohltjen 6758B(Friends) Purchase </p><p> 01/31/1997 M-97-01-31 6 RK letters to Art Young 2293B Purchase </p><p> 02/20/1997 M-97-02-20 RK letter to Art Young 2293B Purchase </p><p> 05/26/1995 M-95-05-26 Papers 6192B(Mixer), 2293B, 2293X, 6346B(Berg) Purchase</p><p> 09/18/2013 2013.2014.M075 4 Rockwell Kent letters from David J. Homles Autographs Purchase</p>  </acqinfo>
+  <bioghist id="aspace_5112abe44ce8c485a3993d84eea464c1">
+    <head>Biographical / Historical</head>
+<p>American artist, travel writer, and political activist.</p>  </bioghist>
+  <custodhist id="aspace_55a4f4d47546c30be799ee9cf1cfff54">
+    <head>Ownership and Custodial History</head>
+<p>Gift of Mr &amp; Mrs Alfred C. Berol, Dan Burne Jones, Corliss Lamont&amp; Mrs Arthur Hays Sulzberger, 1971, etc.</p>  </custodhist>
+  <custodhist id="aspace_500cab8afcfb74d97915df26dc770d3f">
+    <head>Ownership and Custodial History</head>
+<p>Gift of Leo Lefkowitz, 1979.</p>  </custodhist>
+  <custodhist id="aspace_8d51c049ae713a0969b2ff869d6f3f45">
+    <head>Ownership and Custodial History</head>
+<p>Gift of Charles Green &amp; Martianne Reges, 1979.</p>  </custodhist>
+  <custodhist id="aspace_5d92554b4a72f5d6e83713865cc45fb9">
+    <head>Ownership and Custodial History</head>
+<p>Gift of Gordon Ray, 1986.</p>  </custodhist>
+  <custodhist id="aspace_fecbe40eaf9fdf686db8919497cd4e48">
+    <head>Ownership and Custodial History</head>
+<p>Gift of Herman Cohen, 1988.</p>  </custodhist>
+  <custodhist id="aspace_2fd99858abd4c1afc6d33de925bf6249">
+    <head>Ownership and Custodial History</head>
+<p>Gift of Barry Scott.</p>  </custodhist>
+  <custodhist id="aspace_4bb3a0755a8cf1eb9c4780b30318b89b">
+    <head>Ownership and Custodial History</head>
+<p>Gift of Mr &amp; Mrs George Spector.</p>  </custodhist>
+  <processinfo id="aspace_5e4998172a19da99c012f8eb6ca56021">
+    <head>Processing Information</head>
+<p>Processed HR 07/02/1972.</p>  </processinfo>
+  <processinfo id="aspace_d24017005f920e35b017545d1fedebba">
+    <head>Processing Information</head>
+<p>31 letters from RK to Henry Wohltjen Cataloged HR 11/06/1996.</p>  </processinfo>
+  <processinfo id="aspace_41122fe0ae9ccd20a311ea224e125ce6">
+    <head>Processing Information</head>
+<p>6 RK letters to Art Young Cataloged HR 02/11/1997.</p>  </processinfo>
+  <processinfo id="aspace_37350203400ab80528a0f8848c8305ba">
+    <head>Processing Information</head>
+<p>RK letter to Art Young Cataloged HR 02/20/1997.</p>  </processinfo>
+  <processinfo id="aspace_9ccf6752367bccd251a1758f78803f59">
+    <head>Processing Information</head>
+<p>Papers Cataloged HR 09/21/2000.</p>  </processinfo>
+  <processinfo id="aspace_a27ec52d2320ea88104a8a1cc9ec9ca6">
+    <head>Processing Information</head>
+<p>4 Rockwell Kent letters Processed Adrien Hilton 10/15/2013.</p>  </processinfo>
+</archdesc>
+</ead>
