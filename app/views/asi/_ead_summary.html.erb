@@ -1,17 +1,33 @@
-<h1>(HC) => Hard coded in html.erb</h1>
-<h1>Summary Information (HC)</h1>
-<h2>EAD Title (for debug): (HC)</h2>
-<p><%= @ead_title %></p>
-<h2>EAD Abstract (HC)</h2>
+<h2>Summary Information (HC)</h2>
+<h3>EAD Abstract (HC)</h3>
 <p><%= @ead_abstract %></p>
-<h2>At a Glance (HC)</h2>
-<p><strong>Bib ID (HC)</strong> <%= @ead_bib_id %></p>
-<p><strong>Creator(s) (HC)</strong><%= @ead_creators %></p>
-<p><strong>Physical Description (HC)</strong><%= @ead_physical_description %></p>
-<p><strong>Language (HC)</strong><%= @ead_language %></p>
-<p><strong>Access (HC)</strong><%= @ead_access_restrictions_value %></p>
-<h1>Arrangement (HC)</h1>
+<h3>At a Glance (HC)</h3>
+<table class="summaryTable">
+  <tbody>
+    <tr class="odd">
+      <th>Bib ID (HC)</th>
+      <td> <%= @ead_bib_id %></td>
+    </tr>
+    <tr class="odd">
+      <th>Creator(s) (HC)</th>
+      <td> <%= @ead_creators %></td>
+    </tr>
+    <tr class="odd">
+      <th>Physical Description (HC)</th>
+      <td> <%= @ead_physical_description %></td>
+    </tr>
+    <tr class="odd">
+      <th>Language (HC)</th>
+      <td> <%= @ead_language %></td>
+    </tr>
+    <tr class="odd">
+      <th>Access (HC)</th>
+      <td> <%=  @ead_access_restrictions_value %></td>
+    </tr>
+  </tbody>
+</table>
 <h2>Arrangement (HC)</h2>
+<h3>Arrangement (HC)</h3>
 <p>
   <ul>
     <% @ead_series_titles.each_with_index do |series_title, index| %>
@@ -19,8 +35,8 @@
     <% end %>
   </ul>
 </p>
-<h1>Description (HC)</h1>
-<h2><%= @ead_scope_content_head %></h2>
+<h2>Description (HC)</h2>
+<h3><%= @ead_scope_content_head %></h3>
 <p><%= @ead_scope_content_value %></p>
 <p>
   <ul style="list-style-type:none;">
@@ -32,33 +48,53 @@
     <% end %>
   </ul>
 </p>
-<h1>Using the Collection (HC)</h1>
+<h2>Using the Collection (HC)</h2>
 <p><%= @ead_repository_corpname %></p>
-<h2><%= @ead_access_restrictions_head %></h2>
+<h3><%= @ead_access_restrictions_head %></h3>
 <p><%= @ead_access_restrictions_value %></p>
-<h2><%= @ead_use_restrictions_head %></h2>
+<h3><%= @ead_use_restrictions_head %></h2>
 <p><%= @ead_use_restrictions_value %></p>
-<h2><%= @ead_preferred_citation_head %></h2>
+<h3><%= @ead_preferred_citation_head %></h3>
 <p><%= @ead_preferred_citation_value %></p>
-<h1>About the Finding Aid / Processing Information (HC)</h1>
+<h2>About the Finding Aid / Processing Information (HC)</h2>
 <p>Not sure if AS EAD contained the following (hard code in php app?): Columbia University Libraries. Rare Book and Manuscript Library; machine readable finding aid created by Columbia University Libraries Digital Library Program Division</p>
-<h2><%= @ead_processing_information_head %></h2>
+<h3><%= @ead_processing_information_head %></h3>
 <p><%= @ead_processing_information_value %></p>
-<h1>Subject Headings (HC)</h1>
+<h2>Subject Headings (HC)</h2>
 <p>Missing blurb found in php app (HC)</p>
-<h2>Genre/Form (HC)</h2>
-<p>
-  <ul>
+<h3>Genre/Form (HC)</h3>
+<table class="subjectTable">
+  <tbody>
+    <tr>
+      <th class="firstCell" style="vertical-align:middle;">Heading</th>
+      <th class="firstCell" style="vertical-align:middle;">"CUL Archives:"<br>"Portal"</th>
+      <th class="firstCell" style="vertical-align:middle;">"CUL Collections:"<br>"CLIO"</th>
+      <th class="firstCell" style="vertical-align:middle;">"Nat'l / Int'l Archives:"<br>"ArchivedGRID"</th>
+    </tr>
     <% @ead_genres_forms.each do |genre_form| %>
-    <li><%= genre_form %>  </li>
+    <tr>
+      <td class="firstCell"><%= genre_form %></td>
+    </tr>
     <% end %>
-  </ul>
-</p>
-<h2>Subject (HC)</h2>
+  </tbody>
+</table>
 <p>
   <ul>
-    <% @ead_subjects.each do |subject| %>
-    <li><%= subject %>  </li>
-    <% end %>
   </ul>
 </p>
+<h3>Subject (HC)</h3>
+<table class="subjectTable">
+  <tbody>
+    <tr>
+      <th class="firstCell" style="vertical-align:middle;">Heading</th>
+      <th class="firstCell" style="vertical-align:middle;">"CUL Archives:"<br>"Portal"</th>
+      <th class="firstCell" style="vertical-align:middle;">"CUL Collections:"<br>"CLIO"</th>
+      <th class="firstCell" style="vertical-align:middle;">"Nat'l / Int'l Archives:"<br>"ArchivedGRID"</th>
+    </tr>
+    <% @ead_subjects.each do |subject| %>
+    <tr>
+      <td class="firstCell"><%= subject %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
