@@ -9,7 +9,7 @@
 	<%= render partial: 'sidebar', :locals => {:slug => ead_path} %>
       </td>
       <td class="ead_content">
-	<%= render "ead_summary" %>
+	<%= render partial: 'ead_summary', :locals => {:slug_to_series_page => method(:series_path)} %>
       </td>
     </tr>
   </tbody>
