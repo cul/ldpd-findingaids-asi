@@ -142,5 +142,35 @@ module Asi
         {title: title, box_number: box_number}
       end
     end
+
+    def generate_html_from_component(component_arg, html_out = '')
+      # files = component.xpath('./xmlns:c[@level="file"]')
+      components = component_arg.xpath('./xmlns:c')
+      return if components.empty?
+      html_out << '<div class="component_entry" style="margin-left:2em;">'
+      # puts series_files.inspect
+      components.each do |component|
+        title = component.xpath('./xmlns:did/xmlns:unittitle').text
+        container_number = component.xpath('./xmlns:did/xmlns:container').text
+        scope_content = component.xpath('./xmlns:scopecontent/xmlns:p').text
+        html_out << '<p style="margin:0">'
+        html_out << '<span style="text-align:left;">' << title << '</span>'
+        html_out << '<span style="text-align:right;float:right;">' << container_number << '</span>'
+        html_out << '</p>'
+        html_out << '<p style="margin:0">' << scope_content << '</p>'
+        # file_subcomponents = file.xpath('./xmlns:c[@level="file"]')
+        # generate_html_from_component(file_subcomponents) unless file_subcomponents.empty?
+        generate_html_from_component(component, html_out)
+      end
+      html_out << '</div>'
+    end
+
+    def get_series_title(series)
+      series.xpath('./xmlns:did/xmlns:unittitle').text
+    end
+
+    def get_given_series_scope_content(series)
+      series.xpath('./xmlns:scopecontent/xmlns:p').text
+    end
   end
 end

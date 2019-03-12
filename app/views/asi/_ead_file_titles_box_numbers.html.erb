@@ -1,3 +1,5 @@
+<h2><%= @series_title %></h2>
+<p><%= @series_scope_content %></p>
 <table class="table table-striped">
   <% @ead_series_files_info.each do |title_box_hash| %>
   <tr>
@@ -6,3 +8,4 @@
   </tr>
   <% end %>
 </table>
+<%== @series_html %>
