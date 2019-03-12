@@ -6,10 +6,10 @@
   <tbody>
     <tr>
       <td class="sidebar">
-	<%= render partial: 'sidebar', :locals => {:slug => ead_path} %>
+	<%= render partial: 'sidebar', locals: {slug: ead_path} %>
       </td>
       <td class="ead_content">
-	<%= render partial: 'ead_summary', :locals => {:slug_to_series_page => method(:series_path)} %>
+	<%= render partial: 'ead_summary', locals: {slug_to_series_page: method(:series_path)} %>
       </td>
     </tr>
   </tbody>

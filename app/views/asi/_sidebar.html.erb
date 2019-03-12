@@ -28,7 +28,7 @@
   <div id="contentMenu1">
     <% @ead_series_titles.each_with_index do |series_title, index| %>
     <div class="item">
-      <%= link_to series_title, series_fixture_path(:ser_id => index + 1) %>
+      <%= link_to series_title, series_fixture_path(ser_id: index + 1) %>
     </div>
     <% end %>
   </div>

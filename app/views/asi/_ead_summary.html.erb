@@ -32,7 +32,7 @@
 <p>
   <ul>
     <% @ead_series_titles.each_with_index do |series_title, index| %>
-    <li> <%= link_to series_title, series_fixture_path(:ser_id => index + 1) %> </li>
+    <li> <%= link_to series_title, series_fixture_path(ser_id: index + 1) %> </li>
     <% end %>
   </ul>
 </p>
@@ -44,7 +44,7 @@
   <ul style="list-style-type:none;">
     <% @ead_series_titles.each_with_index do |series_title, index| %>
     <li>
-      <p> <%= link_to series_title, slug_to_series_page.call(:ser_id => index + 1) %> </p>
+      <p> <%= link_to series_title, slug_to_series_page.call(ser_id: index + 1) %> </p>
       <p> <%= @ead_series_scope_content[index] %> </p>
     </li>
     <% end %>

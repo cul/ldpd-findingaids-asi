@@ -7,10 +7,10 @@
   <tbody>
     <tr>
       <td class="sidebar">
-	<%= render partial: 'sidebar', :locals => {:slug => ead_fixture_path} %>
+	<%= render partial: 'sidebar', locals: {slug: ead_fixture_path} %>
       </td>
       <td class="ead_content">
-	<%= render partial: 'ead_summary', :locals => {:slug_to_series_page => method(:series_fixture_path)} %>
+	<%= render partial: 'ead_summary', locals: {slug_to_series_page: method(:series_fixture_path)} %>
       </td>
     </tr>
   </tbody>
