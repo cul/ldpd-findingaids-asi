@@ -68,5 +68,7 @@ class AsiController < ApplicationController
     @asi_ead_nokogiri_xml = Asi::AsEad.new
     @asi_ead_nokogiri_xml.parse @input_xml
     @ead_series_files_info = @asi_ead_nokogiri_xml.get_files_info_for_series series_num
+    # following is repeated in above method, so try to DRY
+    @ead_series_titles = @asi_ead_nokogiri_xml.archive_dsc_series_titles
   end
 end
