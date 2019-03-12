@@ -79,6 +79,24 @@
     <% @ead_genres_forms.each do |genre_form| %>
     <tr>
       <td class="firstCell"><%= genre_form %></td>
+      <td>
+	<a target="_blank"
+	  href="<%= "https://archivesportal.library.columbia.edu/results.php?component_text=\"#{genre_form}\"&operator=AND" %>">
+	  Portal
+	</a>
+      </td>
+      <td>
+	<a target="_blank"
+	  href="<%= "https://clio.columbia.edu/catalog?q=\"#{genre_form}\"&search_field=subject" %>">
+	  CLIO
+	</a>
+      </td>
+      <td>
+	<a target="_blank"
+	  href="<%= "https://researchworks.oclc.org/archivegrid/?q=#{genre_form}" %>">
+	  ArchiveGRID
+	</a>
+      </td>
     </tr>
     <% end %>
   </tbody>
@@ -99,6 +117,24 @@
     <% @ead_subjects.each do |subject| %>
     <tr>
       <td class="firstCell"><%= subject %></td>
+      <td>
+	<a target="_blank"
+	  href="<%= "https://archivesportal.library.columbia.edu/results.php?component_text=\"#{subject}\"&operator=AND" %>">
+	  Portal
+	</a>
+      </td>
+      <td>
+	<a target="_blank"
+	  href="<%= "https://clio.columbia.edu/catalog?q=\"#{subject}\"&search_field=subject" %>">
+	  CLIO
+	</a>
+      </td>
+      <td>
+	<a target="_blank"
+	  href="<%= "https://researchworks.oclc.org/archivegrid/?q=#{subject}" %>">
+	  ArchiveGRID
+	</a>
+      </td>
     </tr>
     <% end %>
   </tbody>
