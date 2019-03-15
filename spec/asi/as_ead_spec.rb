@@ -114,6 +114,118 @@ RSpec.describe Asi::AsEad do
     end
   end
 
+  ########################################## Debug API/interface
+  describe 'debug API/interface' do
+    context 'has debug_attr_reader for instance var' do
+      # <ead>:<archdesc>:<did>:<abstract>
+      it 'debug_archive_abstract' do
+        expect(subject).to respond_to(:debug_archive_abstract)
+      end
+
+      # <ead>:<archdesc>:<accessrestrict>:<head>
+      it 'debug_archive_access_restrictions_head' do
+        expect(subject).to respond_to(:debug_archive_access_restrictions_head)
+      end
+
+      # <ead>:<archdesc>:<accessrestrict>:<p>
+      it 'debug_archive_access_restrictions_value' do
+        expect(subject).to respond_to(:debug_archive_access_restrictions_value)
+      end
+
+      # <ead>:<archdesc>:<bioghist>:<head>
+      it 'debug_archive_biography_history_head' do
+        expect(subject).to respond_to(:debug_archive_biography_history_head)
+      end
+
+      # <ead>:<archdesc>:<bioghist>:<p>
+      it 'debug_archive_biography_history_value' do
+        expect(subject).to respond_to(:debug_archive_biography_history_value)
+      end
+
+      # <ead>:<archdesc>:<did>:<unitdate>
+      it 'debug_archive_date' do
+        expect(subject).to respond_to(:debug_archive_date)
+      end
+
+      # <ead>:<archdesc>:<dsc>:<c level=series><
+      # returns array of series
+      it 'debug_archive_dsc_series' do
+        expect(subject).to respond_to(:debug_archive_dsc_series)
+      end
+
+      # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>
+      # returns array of titles
+      it 'debug_archive_dsc_series_titles' do
+        expect(subject).to respond_to(:debug_archive_dsc_series_titles)
+      end
+
+      # <ead>:<archdesc>:<did>:<unitid>
+      it 'debug_archive_id' do
+        expect(subject).to respond_to(:debug_archive_id)
+      end
+
+      # <ead>:<archdesc>:<did>:<langmaterial><language>
+      it 'debug_archive_language' do
+        expect(subject).to respond_to(:debug_archive_language)
+      end
+
+      # <ead>:<archdesc>:<did>:<physdesc>:<extent @altrender="carrier">
+      it 'debug_archive_physical_description' do
+        expect(subject).to respond_to(:debug_archive_physical_description_extent_carrier)
+      end
+
+      # <ead>:<archdesc>:<prefercite>:<head>
+      it 'debug_archive_preferred_citation_head' do
+        expect(subject).to respond_to(:debug_archive_preferred_citation_head)
+      end
+
+      # <ead>:<archdesc>:<prefercite>:<p>
+      it 'debug_archive_preferred_citation_value' do
+        expect(subject).to respond_to(:debug_archive_preferred_citation_value)
+      end
+
+      # <ead>:<archdesc>:<processinfo>:<head>
+      it 'debug_archive_processing_information_head' do
+        expect(subject).to respond_to(:debug_archive_processing_information_head)
+      end
+
+      # <ead>:<archdesc>:<processinfo>:<p>
+      it 'debug_archive_processing_information_value' do
+        expect(subject).to respond_to(:debug_archive_processing_information_value)
+      end
+
+      # <ead><archdesc><did><repository><corpname>
+      it 'debug_archive_repository' do
+        expect(subject).to respond_to(:debug_archive_repository)
+      end
+
+      # <ead>:<archdesc>:<scopecontent>:<head>
+      it 'debug_archive_scope_content_head' do
+        expect(subject).to respond_to(:debug_archive_scope_content_head)
+      end
+
+      # <ead>:<archdesc>:<scopecontent>:<p>
+      it 'debug_archive_scope_content_value' do
+        expect(subject).to respond_to(:debug_archive_scope_content_value)
+      end
+
+      # <ead>:<archdesc>:<did>:<unititle>
+      it 'debug_archive_title' do
+        expect(subject).to respond_to(:debug_archive_title)
+      end
+
+      # <ead>:<archdesc>:<userestrict>:<head>
+      it 'debug_archive_use_restrictions_head' do
+        expect(subject).to respond_to(:debug_archive_use_restrictions_head)
+      end
+
+      # <ead>:<archdesc>:<userestrict>:<p>
+      it 'debug_archive_use_restrictions_value' do
+        expect(subject).to respond_to(:debug_archive_use_restrictions_value)
+      end
+    end
+  end
+
   ########################################## Functionality
   describe 'Testing functionality: ' do
     ########################################## generate_html_from_components

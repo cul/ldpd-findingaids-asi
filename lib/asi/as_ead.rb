@@ -28,6 +28,12 @@ module Asi
 
     attr_reader *XPATH.keys
 
+    XPATH.keys.each do |attr|
+      define_method :"debug_#{attr}" do
+        "#{self.send(attr)} DEBUG: #{XPATH[attr]}"
+      end
+    end
+
     def parse(xml_input)
       # for now, keep it as an attribute instead of a local var
       @nokogiri_xml = Nokogiri::XML(xml_input)

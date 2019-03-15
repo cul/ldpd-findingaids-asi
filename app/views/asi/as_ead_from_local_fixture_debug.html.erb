@@ -1,0 +1,19 @@
+<h1>Asi#as_ead_from_local_fixture</h1>
+<p>Find me in app/views/asi/as_ead_from_local_fixture.html.erb</p>
+<h1>(HC) => Hard coded in html.erb</h1>
+<h2>EAD Title (for debug): (HC)</h2>
+<p><%= @ead_title %></p>
+<table style="width=100%">
+  <tbody>
+    <tr>
+      <td class="sidebar">
+	<%= render partial: 'sidebar',
+	    locals: {slug: ead_fixture_path, slug_to_series_page: method(:series_fixture_path)} %>
+      </td>
+      <td class="ead_content">
+	<%= render partial: 'ead_summary',
+	    locals: {slug_to_series_page: method(:series_fixture_path)} %>
+      </td>
+    </tr>
+  </tbody>
+</table>
