@@ -18,35 +18,15 @@ module Asi
       archive_preferred_citation_value: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:p',
       archive_processing_information_head: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:head',
       archive_processing_information_value: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:p',
+      archive_repository: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:repository/xmlns:corpname',
       archive_scope_content_head: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:head',
       archive_scope_content_value: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
-      archive_repository: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:repository/xmlns:corpname',
       archive_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle',
       archive_use_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:head',
       archive_use_restrictions_value: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:p'
     }
 
-    attr_reader :archive_abstract,
-                :archive_access_restrictions_head,
-                :archive_access_restrictions_value,
-                :archive_biography_history_head,
-                :archive_biography_history_value,
-                :archive_date,
-                :archive_dsc_series,
-                :archive_dsc_series_titles,
-                :archive_id,
-                :archive_language,
-                :archive_physical_description_extent_carrier,
-                :archive_preferred_citation_head,
-                :archive_preferred_citation_value,
-                :archive_processing_information_head,
-                :archive_processing_information_value,
-                :archive_repository,
-                :archive_scope_content_head,
-                :archive_scope_content_value,
-                :archive_title,
-                :archive_use_restrictions_head,
-                :archive_use_restrictions_value
+    attr_reader *XPATH.keys
 
     def parse(xml_input)
       # for now, keep it as an attribute instead of a local var
