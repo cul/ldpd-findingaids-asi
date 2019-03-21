@@ -1,115 +1,39 @@
 require 'rails_helper'
 require 'asi/as_ead.rb'
 
+attributes = [
+  :archive_abstract, # <ead>:<archdesc>:<did>:<abstract>
+  :archive_access_restrictions_head, # <ead>:<archdesc>:<accessrestrict>:<head>
+  :archive_access_restrictions_value, # <ead>:<archdesc>:<accessrestrict>:<p>
+  :archive_biography_history_head, # <ead>:<archdesc>:<bioghist>:<head>
+  :archive_biography_history_value, # <ead>:<archdesc>:<bioghist>:<p>
+  :archive_date, # <ead>:<archdesc>:<did>:<unitdate>
+  :archive_dsc_series, # <ead>:<archdesc>:<dsc>:<c level=series>, returns array of series
+  :archive_dsc_series_titles, # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>, returns array of titles
+  :archive_id, # <ead>:<archdesc>:<did>:<unitid>
+  :archive_language, # <ead>:<archdesc>:<did>:<langmaterial><language>
+  :archive_physical_description_extent_carrier, # <ead>:<archdesc>:<did>:<physdesc>:<extent @altrender="carrier">
+  :archive_preferred_citation_head, # <ead>:<archdesc>:<prefercite>:<head>
+  :archive_preferred_citation_value, # <ead>:<archdesc>:<prefercite>:<p>
+  :archive_processing_information_head, # <ead>:<archdesc>:<processinfo>:<head>
+  :archive_processing_information_value, # <ead>:<archdesc>:<processinfo>:<p>
+  :archive_repository, # <ead><archdesc><did><repository><corpname>
+  :archive_scope_content_head, # <ead>:<archdesc>:<scopecontent>:<head>
+  :archive_scope_content_value, # <ead>:<archdesc>:<scopecontent>:<p>
+  :archive_title, # <ead>:<archdesc>:<did>:<unititle>
+  :archive_use_restrictions_head, # <ead>:<archdesc>:<userestrict>:<head>
+  :archive_use_restrictions_value # <ead>:<archdesc>:<userestrict>:<p>
+].freeze
+
+
 RSpec.describe Asi::AsEad do
   ########################################## API/interface
   describe 'API/interface' do
     context 'has attr_reader for instance var' do
-      # <ead>:<archdesc>:<did>:<abstract>
-      it 'archive_abstract' do
-        expect(subject).to respond_to(:archive_abstract)
-      end
-
-      # <ead>:<archdesc>:<accessrestrict>:<head>
-      it 'archive_access_restrictions_head' do
-        expect(subject).to respond_to(:archive_access_restrictions_head)
-      end
-
-      # <ead>:<archdesc>:<accessrestrict>:<p>
-      it 'archive_access_restrictions_value' do
-        expect(subject).to respond_to(:archive_access_restrictions_value)
-      end
-
-      # <ead>:<archdesc>:<bioghist>:<head>
-      it 'archive_biography_history_head' do
-        expect(subject).to respond_to(:archive_biography_history_head)
-      end
-
-      # <ead>:<archdesc>:<bioghist>:<p>
-      it 'archive_biography_history_value' do
-        expect(subject).to respond_to(:archive_biography_history_value)
-      end
-
-      # <ead>:<archdesc>:<did>:<unitdate>
-      it 'archive_date' do
-        expect(subject).to respond_to(:archive_date)
-      end
-
-      # <ead>:<archdesc>:<dsc>:<c level=series><
-      # returns array of series
-      it 'archive_dsc_series' do
-        expect(subject).to respond_to(:archive_dsc_series)
-      end
-
-      # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>
-      # returns array of titles
-      it 'archive_dsc_series_titles' do
-        expect(subject).to respond_to(:archive_dsc_series_titles)
-      end
-
-      # <ead>:<archdesc>:<did>:<unitid>
-      it 'archive_id' do
-        expect(subject).to respond_to(:archive_id)
-      end
-
-      # <ead>:<archdesc>:<did>:<langmaterial><language>
-      it 'archive_language' do
-        expect(subject).to respond_to(:archive_language)
-      end
-
-      # <ead>:<archdesc>:<did>:<physdesc>:<extent @altrender="carrier">
-      it 'archive_physical_description' do
-        expect(subject).to respond_to(:archive_physical_description_extent_carrier)
-      end
-
-      # <ead>:<archdesc>:<prefercite>:<head>
-      it 'archive_preferred_citation_head' do
-        expect(subject).to respond_to(:archive_preferred_citation_head)
-      end
-
-      # <ead>:<archdesc>:<prefercite>:<p>
-      it 'archive_preferred_citation_value' do
-        expect(subject).to respond_to(:archive_preferred_citation_value)
-      end
-
-      # <ead>:<archdesc>:<processinfo>:<head>
-      it 'archive_processing_information_head' do
-        expect(subject).to respond_to(:archive_processing_information_head)
-      end
-
-      # <ead>:<archdesc>:<processinfo>:<p>
-      it 'archive_processing_information_value' do
-        expect(subject).to respond_to(:archive_processing_information_value)
-      end
-
-      # <ead><archdesc><did><repository><corpname>
-      it 'archive_repository' do
-        expect(subject).to respond_to(:archive_repository)
-      end
-
-      # <ead>:<archdesc>:<scopecontent>:<head>
-      it 'archive_scope_content_head' do
-        expect(subject).to respond_to(:archive_scope_content_head)
-      end
-
-      # <ead>:<archdesc>:<scopecontent>:<p>
-      it 'archive_scope_content_value' do
-        expect(subject).to respond_to(:archive_scope_content_value)
-      end
-
-      # <ead>:<archdesc>:<did>:<unititle>
-      it 'archive_title' do
-        expect(subject).to respond_to(:archive_title)
-      end
-
-      # <ead>:<archdesc>:<userestrict>:<head>
-      it 'archive_use_restrictions_head' do
-        expect(subject).to respond_to(:archive_use_restrictions_head)
-      end
-
-      # <ead>:<archdesc>:<userestrict>:<p>
-      it 'archive_use_restrictions_value' do
-        expect(subject).to respond_to(:archive_use_restrictions_value)
+      attributes.each do |attribute|
+        it "#{attribute}" do
+          expect(subject).to respond_to("#{attribute}")
+        end
       end
     end
   end
@@ -117,111 +41,10 @@ RSpec.describe Asi::AsEad do
   ########################################## Debug API/interface
   describe 'debug API/interface' do
     context 'has debug_attr_reader for instance var' do
-      # <ead>:<archdesc>:<did>:<abstract>
-      it 'debug_archive_abstract' do
-        expect(subject).to respond_to(:debug_archive_abstract)
-      end
-
-      # <ead>:<archdesc>:<accessrestrict>:<head>
-      it 'debug_archive_access_restrictions_head' do
-        expect(subject).to respond_to(:debug_archive_access_restrictions_head)
-      end
-
-      # <ead>:<archdesc>:<accessrestrict>:<p>
-      it 'debug_archive_access_restrictions_value' do
-        expect(subject).to respond_to(:debug_archive_access_restrictions_value)
-      end
-
-      # <ead>:<archdesc>:<bioghist>:<head>
-      it 'debug_archive_biography_history_head' do
-        expect(subject).to respond_to(:debug_archive_biography_history_head)
-      end
-
-      # <ead>:<archdesc>:<bioghist>:<p>
-      it 'debug_archive_biography_history_value' do
-        expect(subject).to respond_to(:debug_archive_biography_history_value)
-      end
-
-      # <ead>:<archdesc>:<did>:<unitdate>
-      it 'debug_archive_date' do
-        expect(subject).to respond_to(:debug_archive_date)
-      end
-
-      # <ead>:<archdesc>:<dsc>:<c level=series><
-      # returns array of series
-      it 'debug_archive_dsc_series' do
-        expect(subject).to respond_to(:debug_archive_dsc_series)
-      end
-
-      # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>
-      # returns array of titles
-      it 'debug_archive_dsc_series_titles' do
-        expect(subject).to respond_to(:debug_archive_dsc_series_titles)
-      end
-
-      # <ead>:<archdesc>:<did>:<unitid>
-      it 'debug_archive_id' do
-        expect(subject).to respond_to(:debug_archive_id)
-      end
-
-      # <ead>:<archdesc>:<did>:<langmaterial><language>
-      it 'debug_archive_language' do
-        expect(subject).to respond_to(:debug_archive_language)
-      end
-
-      # <ead>:<archdesc>:<did>:<physdesc>:<extent @altrender="carrier">
-      it 'debug_archive_physical_description' do
-        expect(subject).to respond_to(:debug_archive_physical_description_extent_carrier)
-      end
-
-      # <ead>:<archdesc>:<prefercite>:<head>
-      it 'debug_archive_preferred_citation_head' do
-        expect(subject).to respond_to(:debug_archive_preferred_citation_head)
-      end
-
-      # <ead>:<archdesc>:<prefercite>:<p>
-      it 'debug_archive_preferred_citation_value' do
-        expect(subject).to respond_to(:debug_archive_preferred_citation_value)
-      end
-
-      # <ead>:<archdesc>:<processinfo>:<head>
-      it 'debug_archive_processing_information_head' do
-        expect(subject).to respond_to(:debug_archive_processing_information_head)
-      end
-
-      # <ead>:<archdesc>:<processinfo>:<p>
-      it 'debug_archive_processing_information_value' do
-        expect(subject).to respond_to(:debug_archive_processing_information_value)
-      end
-
-      # <ead><archdesc><did><repository><corpname>
-      it 'debug_archive_repository' do
-        expect(subject).to respond_to(:debug_archive_repository)
-      end
-
-      # <ead>:<archdesc>:<scopecontent>:<head>
-      it 'debug_archive_scope_content_head' do
-        expect(subject).to respond_to(:debug_archive_scope_content_head)
-      end
-
-      # <ead>:<archdesc>:<scopecontent>:<p>
-      it 'debug_archive_scope_content_value' do
-        expect(subject).to respond_to(:debug_archive_scope_content_value)
-      end
-
-      # <ead>:<archdesc>:<did>:<unititle>
-      it 'debug_archive_title' do
-        expect(subject).to respond_to(:debug_archive_title)
-      end
-
-      # <ead>:<archdesc>:<userestrict>:<head>
-      it 'debug_archive_use_restrictions_head' do
-        expect(subject).to respond_to(:debug_archive_use_restrictions_head)
-      end
-
-      # <ead>:<archdesc>:<userestrict>:<p>
-      it 'debug_archive_use_restrictions_value' do
-        expect(subject).to respond_to(:debug_archive_use_restrictions_value)
+      attributes.each do |attribute|
+        it "#{attribute}" do
+          expect(subject).to respond_to("debug_#{attribute}")
+        end
       end
     end
   end
