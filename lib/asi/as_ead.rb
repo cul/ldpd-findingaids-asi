@@ -34,8 +34,7 @@ module Asi
       end
     end
 
-    def parse(xml_input)
-      # for now, keep it as an attribute instead of a local var
+    def initialize(xml_input)
       @nokogiri_xml = Nokogiri::XML(xml_input)
       parse_arch_desc_did(@nokogiri_xml)
       parse_arch_desc_dsc(@nokogiri_xml)

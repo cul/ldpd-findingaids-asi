@@ -29,21 +29,45 @@ attributes = [
 RSpec.describe Asi::AsEad do
   ########################################## API/interface
   describe 'API/interface' do
+    before(:context) do
+      xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
+      @as_ead = Asi::AsEad.new xml_input
+    end
+
     context 'has attr_reader for instance var' do
       attributes.each do |attribute|
         it "#{attribute}" do
-          expect(subject).to respond_to("#{attribute}")
+          expect(@as_ead).to respond_to("#{attribute}")
         end
+      end
+    end
+
+    context 'has ' do
+      it 'has #parse_arch_desc_did method' do
+        expect(@as_ead).to respond_to(:parse_arch_desc_did).with(1).arguments
+      end
+
+      it 'has #parse_arch_desc_dsc method' do
+        expect(@as_ead).to respond_to(:parse_arch_desc_dsc).with(1).arguments
+      end
+
+      it 'has #parse_arch_desc_misc method' do
+        expect(@as_ead).to respond_to(:parse_arch_desc_misc).with(1).arguments
       end
     end
   end
 
   ########################################## Debug API/interface
   describe 'debug API/interface' do
+    before(:context) do
+      xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
+      @as_ead = Asi::AsEad.new xml_input
+    end
+
     context 'has debug_attr_reader for instance var' do
       attributes.each do |attribute|
         it "#{attribute}" do
-          expect(subject).to respond_to("debug_#{attribute}")
+          expect(@as_ead).to respond_to("debug_#{attribute}")
         end
       end
     end
@@ -51,15 +75,15 @@ RSpec.describe Asi::AsEad do
 
   ########################################## Functionality
   describe 'Testing functionality: ' do
+    before(:context) do
+      xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
+      @as_ead = Asi::AsEad.new xml_input
+      nokogiri_xml = Nokogiri::XML(xml_input)
+      # @as_ead.parse_arch_desc_dsc nokogiri_xml
+    end
+
     ########################################## generate_html_from_components
     context 'generate_html_from_components' do
-      before(:example) do
-        @as_ead = Asi::AsEad.new
-        xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-        @nokogiri_xml = Nokogiri::XML(xml_input)
-        @as_ead.parse_arch_desc_dsc @nokogiri_xml
-      end
-
       it 'process files' do
         tested_series = @as_ead.archive_dsc_series[0]
         # puts '*******************************************'
@@ -75,13 +99,6 @@ RSpec.describe Asi::AsEad do
     ########################################## parse_arch_desc_dsc
     # fcd1, 03//11/19: method probably needs renaming and refactoring
     context 'get_files_info_for_series' do
-      before(:example) do
-        @as_ead = Asi::AsEad.new
-        xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-        @nokogiri_xml = Nokogiri::XML(xml_input)
-        @as_ead.parse_arch_desc_dsc @nokogiri_xml
-      end
-
       it 'returns correct list of file titles and associated box number' do
         tested = @as_ead.get_files_info_for_series 1
         expect(tested).to include({:title => 'Price, Arthur: to Rockwell Kent, t.l.s., 15', :box_number => '3'})
@@ -90,13 +107,6 @@ RSpec.describe Asi::AsEad do
 
     ########################################## parse_arch_desc_did
     context 'parse_arch_desc_did' do
-      before(:example) do
-        @as_ead = Asi::AsEad.new
-        xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation_arch_desc_did_only.xml').read
-        @nokogiri_xml = Nokogiri::XML(xml_input)
-        @as_ead.parse_arch_desc_did @nokogiri_xml
-      end
-
       it 'parses the archive_abstract correctly' do
         tested = @as_ead.archive_abstract
         expect(tested).to include "Rockwell Kent's correspondence; drawings and sketches;"
@@ -135,13 +145,6 @@ RSpec.describe Asi::AsEad do
 
     ########################################## parse_arch_desc_dsc
     context 'parse_arch_desc_dsc' do
-      before(:example) do
-        @as_ead = Asi::AsEad.new
-        xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-        @nokogiri_xml = Nokogiri::XML(xml_input)
-        @as_ead.parse_arch_desc_dsc @nokogiri_xml
-      end
-
       it 'parses the archive_dsc_series correctly' do
         tested = @as_ead.archive_dsc_series[0]
         expect(tested).to be_instance_of Nokogiri::XML::Element
@@ -155,13 +158,6 @@ RSpec.describe Asi::AsEad do
 
     ########################################## parse_arch_desc_misc
     context 'parse_arch_desc_misc' do
-      before(:example) do
-        @as_ead = Asi::AsEad.new
-        xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation_arch_desc_misc_only.xml').read
-        @nokogiri_xml = Nokogiri::XML(xml_input)
-        @as_ead.parse_arch_desc_misc @nokogiri_xml
-      end
-
       it 'parses the archive_access_restrictions_head correctly' do
         tested = @as_ead.archive_access_restrictions_head
         expect(tested).to eq 'Restrictions on Access'
@@ -225,22 +221,6 @@ RSpec.describe Asi::AsEad do
   end
 
   context "API/interface" do
-    it 'has #parse method' do
-      expect(subject).to respond_to(:parse).with(1).arguments
-    end
-
-    it 'has #parse_arch_desc_did method' do
-      expect(subject).to respond_to(:parse_arch_desc_did).with(1).arguments
-    end
-
-    it 'has #parse_arch_desc_dsc method' do
-      expect(subject).to respond_to(:parse_arch_desc_dsc).with(1).arguments
-    end
-
-    it 'has #parse_arch_desc_misc method' do
-      expect(subject).to respond_to(:parse_arch_desc_misc).with(1).arguments
-    end
-
     xit 'has #get_creators' do
       expect(subject).to respond_to(:get_creators).with(0).arguments
     end
@@ -264,9 +244,8 @@ RSpec.describe Asi::AsEad do
 
   describe 'Processing' do
     before(:context) do
-      @as_ead_nokogiri_xml = Asi::AsEad.new
-      @xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-      @as_ead_nokogiri_xml.parse @xml_input
+      xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
+      @as_ead_nokogiri_xml = Asi::AsEad.new xml_input
     end
 
     context "check functionality" do

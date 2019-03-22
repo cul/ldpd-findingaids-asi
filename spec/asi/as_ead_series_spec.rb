@@ -50,8 +50,8 @@ RSpec.describe Asi::AsEadSeries do
     ########################################## generate_html_from_components
     context 'generate_html_from_components' do
       before(:example) do
-        @as_ead = Asi::AsEad.new
         xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
+        @as_ead = Asi::AsEad.new xml_input
         @nokogiri_xml = Nokogiri::XML(xml_input)
         @as_ead.parse_arch_desc_dsc @nokogiri_xml
       end
@@ -72,8 +72,8 @@ RSpec.describe Asi::AsEadSeries do
     ########################################## parse
     context 'parse' do
       before(:example) do
-        @as_ead = Asi::AsEad.new
         xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
+        @as_ead = Asi::AsEad.new xml_input
         @nokogiri_xml = Nokogiri::XML(xml_input)
         @as_ead.parse_arch_desc_dsc @nokogiri_xml
         @as_ead_series = Asi::AsEadSeries.new

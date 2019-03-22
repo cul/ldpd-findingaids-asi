@@ -50,8 +50,7 @@ class AsiController < ApplicationController
 
   private
   def ead_set_properties
-    @asi_ead = Asi::AsEad.new
-    @asi_ead.parse @input_xml
+    @asi_ead = Asi::AsEad.new @input_xml
     @ead_title = @asi_ead.archive_title
     @ead_abstract = @asi_ead.archive_abstract
     @ead_bib_id = @asi_ead.archive_id
@@ -79,8 +78,7 @@ class AsiController < ApplicationController
   end
 
   def ead_set_properties_debug
-    @asi_ead = Asi::AsEad.new
-    @asi_ead.parse @input_xml
+    @asi_ead = Asi::AsEad.new @input_xml
     @ead_title = @asi_ead.debug_archive_title
     @ead_abstract = @asi_ead.debug_archive_abstract
     @ead_bib_id = @asi_ead.debug_archive_id
@@ -109,8 +107,7 @@ class AsiController < ApplicationController
   end
 
   def ead_series_set_properties series_num
-    @asi_ead = Asi::AsEad.new
-    @asi_ead.parse @input_xml
+    @asi_ead = Asi::AsEad.new @input_xml
     @ead_series_files_info = @asi_ead.get_files_info_for_series series_num
     # @ead_series_titles is repeated in above method, so try to DRY
     @ead_series_titles = @asi_ead.archive_dsc_series_titles
