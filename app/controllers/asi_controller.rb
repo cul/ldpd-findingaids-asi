@@ -1,5 +1,6 @@
 require 'asi/as_api'
 require 'asi/as_ead'
+require 'asi/as_ead_series'
 
 class AsiController < ApplicationController
   def as_ead
@@ -113,9 +114,11 @@ class AsiController < ApplicationController
     @ead_series_files_info = @asi_ead.get_files_info_for_series series_num
     # @ead_series_titles is repeated in above method, so try to DRY
     @ead_series_titles = @asi_ead.archive_dsc_series_titles
-    series = @asi_ead.archive_dsc_series[series_num.to_i - 1]
-    @series_title = @asi_ead.get_series_title(series)
-    @series_scope_content = @asi_ead.get_given_series_scope_content(series)
-    @series_html = @asi_ead.generate_html_from_component(series, '')
+    series_nokogiri_xml = @asi_ead.archive_dsc_series[series_num.to_i - 1]
+    @as_ead_series = Asi::AsEadSeries.new
+    @as_ead_series.parse series_nokogiri_xml
+    @series_title = @as_ead_series.title
+    @series_scope_content = @as_ead_series.scope_content
+    @series_html = @asi_ead.generate_html_from_component(series_nokogiri_xml, '')
   end
 end

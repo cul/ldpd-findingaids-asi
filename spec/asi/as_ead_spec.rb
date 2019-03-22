@@ -275,16 +275,6 @@ RSpec.describe Asi::AsEad do
         expect(ead_creators).to include('Not Present in AS EAD')
       end
 
-      xit 'get_series_titles returns correct value' do
-        series_titles = @as_ead_nokogiri_xml.get_series_titles
-        expect(series_titles).to include 'Series VII: Bookplates'
-      end
-
-      xit 'get_series_scope_content returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_series_scope_content
-        expect(tested).to include "This series contains material which was asscessioned after the main collection was processed."
-      end
-
       xit 'get_subjects returns correct value' do
         tested = @as_ead_nokogiri_xml.get_subjects
         expect(tested).to include 'Graphic arts'

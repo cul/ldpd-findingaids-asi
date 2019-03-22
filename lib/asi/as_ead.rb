@@ -150,13 +150,5 @@ module Asi
       end
       html_out << '</div>'
     end
-
-    def get_series_title(series)
-      series.xpath('./xmlns:did/xmlns:unittitle').text
-    end
-
-    def get_given_series_scope_content(series)
-      series.xpath('./xmlns:scopecontent/xmlns:p').text
-    end
   end
 end
