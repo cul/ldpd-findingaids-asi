@@ -1,6 +1,6 @@
 require 'asi/as_api'
 require 'asi/as_ead'
-require 'asi/as_ead_series'
+require 'asi/as_ead_component'
 
 class AsiController < ApplicationController
   def as_ead
@@ -112,7 +112,7 @@ class AsiController < ApplicationController
     # @ead_series_titles is repeated in above method, so try to DRY
     @ead_series_titles = @asi_ead.archive_dsc_series_titles
     series_nokogiri_xml = @asi_ead.archive_dsc_series[series_num.to_i - 1]
-    @as_ead_series = Asi::AsEadSeries.new
+    @as_ead_series = Asi::AsEadComponent.new
     @as_ead_series.parse series_nokogiri_xml
     @series_title = @as_ead_series.title
     @series_scope_content = @as_ead_series.scope_content

@@ -1,7 +1,7 @@
 require 'net/http'
 
 module Asi
-  class AsEadSeries
+  class AsEadComponent
     XPATH = {
       title: './xmlns:did/xmlns:unittitle',
       scope_content: './xmlns:scopecontent/xmlns:p'

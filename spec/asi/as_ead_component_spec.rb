@@ -1,8 +1,8 @@
 require 'rails_helper'
 require 'asi/as_ead.rb'
-require 'asi/as_ead_series.rb'
+require 'asi/as_ead_component.rb'
 
-RSpec.describe Asi::AsEadSeries do
+RSpec.describe Asi::AsEadComponent do
   ########################################## API/interface
   describe 'API/interface' do
     context 'has attr_reader for instance var' do
@@ -76,7 +76,7 @@ RSpec.describe Asi::AsEadSeries do
         @as_ead = Asi::AsEad.new xml_input
         @nokogiri_xml = Nokogiri::XML(xml_input)
         @as_ead.parse_arch_desc_dsc @nokogiri_xml
-        @as_ead_series = Asi::AsEadSeries.new
+        @as_ead_series = Asi::AsEadComponent.new
         @as_ead_series.parse @as_ead.archive_dsc_series[0]
       end
 
