@@ -23,6 +23,12 @@ RSpec.describe Asi::AsEadComponent do
       end
     end
 
+    context 'has generate_html method' do
+      it 'that takes no arguments' do
+        expect(subject).to respond_to(:generate_html).with(0).arguments
+      end
+    end
+
     context 'has generate_html_from_component method' do
       it 'that takes two arguments' do
         expect(subject).to respond_to(:generate_html_from_component).with(2).arguments

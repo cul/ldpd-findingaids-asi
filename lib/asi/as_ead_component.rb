@@ -18,8 +18,13 @@ module Asi
     # Takes a Nokogiri::XML::Element (fcd1: verify this)
     # containing a <c lelvel="series"> element
     def parse(nokogiri_xml)
+      @nokogiri_xml = nokogiri_xml
       @title = nokogiri_xml.xpath(XPATH[:title]).text
       @scope_content = nokogiri_xml.xpath(XPATH[:scope_content]).text
+    end
+
+    def generate_html
+      generate_html_from_component(@nokogiri_xml)
     end
 
     def generate_html_from_component(component_arg, html_out = '')

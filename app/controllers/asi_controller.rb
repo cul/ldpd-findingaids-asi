@@ -116,6 +116,6 @@ class AsiController < ApplicationController
     @as_ead_series.parse series_nokogiri_xml
     @series_title = @as_ead_series.title
     @series_scope_content = @as_ead_series.scope_content
-    @series_html = @asi_ead.generate_html_from_component(series_nokogiri_xml, '')
+    @series_html = @as_ead_series.generate_html
   end
 end
