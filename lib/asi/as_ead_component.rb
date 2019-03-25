@@ -28,9 +28,9 @@ module Asi
     end
 
     def generate_html_from_component(component_arg, html_out = '')
-      # files = component.xpath('./xmlns:c[@level="file"]')
       components = component_arg.xpath('./xmlns:c')
       return if components.empty?
+      html_out << '<hr style="margin-top:10px;margin-bottom:10px">'
       html_out << '<div class="component_entry" style="margin-left:2em;">'
       # puts series_files.inspect
       components.each do |component|
@@ -42,11 +42,10 @@ module Asi
         html_out << '<span style="text-align:right;float:right;">' << container_number << '</span>'
         html_out << '</p>'
         html_out << '<p style="margin:0">' << scope_content << '</p>'
-        # file_subcomponents = file.xpath('./xmlns:c[@level="file"]')
-        # generate_html_from_component(file_subcomponents) unless file_subcomponents.empty?
         generate_html_from_component(component, html_out)
       end
       html_out << '</div>'
+      html_out << '<hr style="margin-top:10px;margin-bottom:10px">'
     end
   end
 end
