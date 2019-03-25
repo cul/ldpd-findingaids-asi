@@ -1,11 +1,11 @@
-<h2><%= @series_title %></h2>
-<p><%= @series_scope_content %></p>
+<h2><%= @component_title %></h2>
+<p><%= @component_scope_content %></p>
 <table class="table table-striped">
-  <% @ead_series_files_info.each do |title_box_hash| %>
+  <% @series_files_info.each do |title_box_hash| %>
   <tr>
     <td><%= title_box_hash[:title] %></td>
     <td><%= title_box_hash[:box_number] %></td>
   </tr>
   <% end %>
 </table>
-<%== @series_html %>
+<%== @component_html %>
