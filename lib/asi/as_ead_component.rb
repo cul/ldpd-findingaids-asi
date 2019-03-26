@@ -44,11 +44,16 @@ module Asi
 
     def generate_html_component(component)
       title = component.xpath('./xmlns:did/xmlns:unittitle').text
-      container_number = component.xpath('./xmlns:did/xmlns:container').text
       scope_content = component.xpath('./xmlns:scopecontent/xmlns:p').text
+      container_nokogiri_elements = component.xpath('./xmlns:did/xmlns:container')
+      container_info = container_nokogiri_elements.map do |container|
+        container_type = container['type']
+        container_value = container.text
+        "#{container_type} #{container_value}"
+      end
       @html_out << '<p style="margin:0">'
       @html_out << '<span style="text-align:left;">' << title << '</span>'
-      @html_out << '<span style="text-align:right;float:right;">' << container_number << '</span>'
+      @html_out << '<span style="text-align:right;float:right;">' << container_info.join(' ') << '</span>'
       @html_out << '</p>'
       @html_out << '<p style="margin:0">' << scope_content << '</p>'
     end
