@@ -24,10 +24,10 @@ module Asi
     end
 
     def generate_html
-      generate_html_from_component(@nokogiri_xml)
+      generate_html_child_components(@nokogiri_xml)
     end
 
-    def generate_html_from_component(component_arg, html_out = '')
+    def generate_html_child_components(component_arg, html_out = '')
       components = component_arg.xpath('./xmlns:c')
       return if components.empty?
       html_out << '<hr style="margin-top:10px;margin-bottom:10px">'
@@ -42,7 +42,7 @@ module Asi
         html_out << '<span style="text-align:right;float:right;">' << container_number << '</span>'
         html_out << '</p>'
         html_out << '<p style="margin:0">' << scope_content << '</p>'
-        generate_html_from_component(component, html_out)
+        generate_html_child_components(component, html_out)
       end
       html_out << '</div>'
       html_out << '<hr style="margin-top:10px;margin-bottom:10px">'

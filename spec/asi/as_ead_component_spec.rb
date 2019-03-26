@@ -29,9 +29,9 @@ RSpec.describe Asi::AsEadComponent do
       end
     end
 
-    context 'has generate_html_from_component method' do
+    context 'has generate_html_child_components method' do
       it 'that takes two arguments' do
-        expect(subject).to respond_to(:generate_html_from_component).with(2).arguments
+        expect(subject).to respond_to(:generate_html_child_components).with(2).arguments
       end
     end
   end
@@ -53,8 +53,8 @@ RSpec.describe Asi::AsEadComponent do
 
   ########################################## Functionality
   describe 'Testing functionality: ' do
-    ########################################## generate_html_from_components
-    context 'generate_html_from_components' do
+    ########################################## generate_html_child_components
+    context 'generate_html_child_components' do
       before(:example) do
         xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
         @as_ead = Asi::AsEad.new xml_input
@@ -67,7 +67,7 @@ RSpec.describe Asi::AsEadComponent do
         tested_series = @as_ead.archive_dsc_series[0]
         # puts '*******************************************'
         #  puts '*******************************************'
-        # puts @as_ead.generate_html_from_component(tested_series, '')
+        # puts @as_ead.generate_html_child_component(tested_series, '')
         # puts @as_ead.process_children_files(series_c_children)
         # puts tested
         # expect(tested).to include({:title => 'Price, Arthur: to Rockwell Kent, t.l.s., 15', :box_number => '3'})
