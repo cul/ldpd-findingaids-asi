@@ -30,8 +30,8 @@ RSpec.describe Asi::AsEadComponent do
     end
 
     context 'has generate_html_child_components method' do
-      it 'that takes two arguments' do
-        expect(subject).to respond_to(:generate_html_child_components).with(2).arguments
+      it 'that takes one argument' do
+        expect(subject).to respond_to(:generate_html_child_components).with(1).arguments
       end
     end
   end
