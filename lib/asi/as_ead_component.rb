@@ -49,7 +49,7 @@ module Asi
       container_info = container_nokogiri_elements.map do |container|
         container_type = container['type']
         container_value = container.text
-        "#{container_type} #{container_value}"
+        "#{container_type.capitalize} #{container_value}"
       end
       @html_out << '<p style="margin:0">'
       @html_out << '<span style="text-align:left;">' << title << '</span>'
