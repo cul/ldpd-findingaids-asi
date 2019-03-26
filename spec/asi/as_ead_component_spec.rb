@@ -34,6 +34,12 @@ RSpec.describe Asi::AsEadComponent do
         expect(subject).to respond_to(:generate_html_child_components).with(1).arguments
       end
     end
+
+    context 'has generate_html_component method' do
+      it 'that takes one argument' do
+        expect(subject).to respond_to(:generate_html_component).with(1).arguments
+      end
+    end
   end
 
   ########################################## Debug API/interface
