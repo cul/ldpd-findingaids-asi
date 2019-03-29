@@ -39,6 +39,7 @@ credentials.yml.enc
 database.yml
 master.key
 archivespace.yml
+repositories.yml
 
 # Ignore local fixture files
 /spec/fixtures/asi/local_dev_fixtures/*
