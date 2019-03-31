@@ -23,6 +23,37 @@ module Asi
       @scope_content = nokogiri_xml.xpath(XPATH[:scope_content]).text
     end
 
+    def generate_info
+      @component_info = []
+      generate_component_info(@nokigiri_xml)
+      @component_info = generate_child_components_info(@nokogiri_xml)
+    end
+
+    def generate_child_components_info(component_arg, nesting_level = 0)
+      nesting_level += nesting_level
+      components = component_arg.xpath('./xmlns:c')
+      return if components.empty?
+      components.each do |component|
+        generate_component_info(component)
+        generate_child_components_info(component)
+      end
+    end
+
+    def generate_component_info(component)
+      title = component.xpath('./xmlns:did/xmlns:unittitle').text
+      scope_content = component.xpath('./xmlns:scopecontent/xmlns:p').text
+      current_first_container_type = component.xpath('./xmlns:did/xmlns:container').first['type'] unless
+        component.xpath('./xmlns:did/xmlns:container').first.nil?
+      current_first_container_value = component.xpath('./xmlns:did/xmlns:container').first.text unless
+        component.xpath('./xmlns:did/xmlns:container').first.nil?
+      container_nokogiri_elements = component.xpath('./xmlns:did/xmlns:container')
+      container_info = container_nokogiri_elements.map do |container|
+        container_type = container['type']
+        container_value = container.text
+        "#{container_type.capitalize} #{container_value}"
+      end
+    end
+
     def generate_html
       @checkbox_id = 0
       @last_container_type = ''
