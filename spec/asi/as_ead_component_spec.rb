@@ -2,41 +2,36 @@ require 'rails_helper'
 require 'asi/as_ead.rb'
 require 'asi/as_ead_component.rb'
 
+attributes = [
+  :title, # <c>:<did>:<unititle>
+  :scope_content # <c>:<scopecontent>:<p>
+].freeze
+
 RSpec.describe Asi::AsEadComponent do
   ########################################## API/interface
   describe 'API/interface' do
     context 'has attr_reader for instance var' do
-      # within a given series: <did>:<unittitle>
-      it 'title' do
-        expect(subject).to respond_to(:title)
-      end
-
-      # within a given series: <scopecontent>:<p>
-      it 'scope_content' do
-        expect(subject).to respond_to(:scope_content)
+      attributes.each do |attribute|
+        it "#{attribute}" do
+          expect(subject).to respond_to("#{attribute}")
+        end
       end
     end
 
-    context 'has parse method' do
-      it 'that takes one argument' do
+    context 'has' do
+      it 'parse method that takes one argument' do
         expect(subject).to respond_to(:parse).with(1).argument
       end
-    end
 
-    context 'has generate_html method' do
-      it 'that takes no arguments' do
+      it 'generate_html method that takes no arguments' do
         expect(subject).to respond_to(:generate_html).with(0).arguments
       end
-    end
 
-    context 'has generate_html_child_components method' do
-      it 'that takes one argument' do
+      it 'generate_html_child_components that takes one argument' do
         expect(subject).to respond_to(:generate_html_child_components).with(1).arguments
       end
-    end
 
-    context 'has generate_html_component method' do
-      it 'that takes one argument' do
+      it 'generate_html_component that takes one argument' do
         expect(subject).to respond_to(:generate_html_component).with(1).arguments
       end
     end
@@ -45,14 +40,10 @@ RSpec.describe Asi::AsEadComponent do
   ########################################## Debug API/interface
   describe 'debug API/interface' do
     context 'has debug_attr_reader for instance var' do
-      # within a given series: <did>:<unittitle>
-      it 'title' do
-        expect(subject).to respond_to(:debug_title)
-      end
-
-      # within a given series: <scopecontent>:<p>
-      it 'scope_content' do
-        expect(subject).to respond_to(:debug_scope_content)
+      attributes.each do |attribute|
+        it "#{attribute}" do
+          expect(subject).to respond_to("debug_#{attribute}")
+        end
       end
     end
   end
