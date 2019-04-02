@@ -115,7 +115,7 @@ class AsiController < ApplicationController
     @component = Asi::AsEadComponent.new
     @component.parse component_nokogiri_xml
     @component_title = @component.title
-    @component_scope_content = @component.scope_content
+    @component_scope_content = @component.scope_content_value
     @component_html = @component.generate_html
   end
 end

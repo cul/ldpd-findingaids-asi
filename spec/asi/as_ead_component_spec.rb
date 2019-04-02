@@ -4,7 +4,7 @@ require 'asi/as_ead_component.rb'
 
 attributes = [
   :title, # <c>:<did>:<unititle>
-  :scope_content # <c>:<scopecontent>:<p>
+  :scope_content_value # <c>:<scopecontent>:<p>
 ].freeze
 
 RSpec.describe Asi::AsEadComponent do
@@ -89,7 +89,7 @@ RSpec.describe Asi::AsEadComponent do
       end
 
       it 'sets the scope content correctly' do
-        tested = @as_ead_series.scope_content
+        tested = @as_ead_series.scope_content_value
         expect(tested).to include "Kent's letters are arranged chronologically in Boxes 2: (1918-1940); 3: (1941-1969)"
       end
     end

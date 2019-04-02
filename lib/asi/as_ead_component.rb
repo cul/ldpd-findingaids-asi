@@ -4,7 +4,7 @@ module Asi
   class AsEadComponent
     XPATH = {
       title: './xmlns:did/xmlns:unittitle',
-      scope_content: './xmlns:scopecontent/xmlns:p'
+      scope_content_value: './xmlns:scopecontent/xmlns:p'
     }
 
     attr_reader *XPATH.keys
@@ -20,7 +20,7 @@ module Asi
     def parse(nokogiri_xml)
       @nokogiri_xml = nokogiri_xml
       @title = nokogiri_xml.xpath(XPATH[:title]).text
-      @scope_content = nokogiri_xml.xpath(XPATH[:scope_content]).text
+      @scope_content_value = nokogiri_xml.xpath(XPATH[:scope_content_value]).text
     end
 
     def generate_info
