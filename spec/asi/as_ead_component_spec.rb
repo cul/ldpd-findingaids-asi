@@ -34,6 +34,18 @@ RSpec.describe Asi::AsEadComponent do
       it 'generate_html_component that takes one argument' do
         expect(subject).to respond_to(:generate_html_component).with(1).arguments
       end
+
+      it 'generate_info method that takes no arguments' do
+        expect(subject).to respond_to(:generate_info).with(0).arguments
+      end
+
+      it 'generate_child_components_info that takes one argument' do
+        expect(subject).to respond_to(:generate_child_components_info).with(2).arguments
+      end
+
+      it 'generate_component_info that takes one argument' do
+        expect(subject).to respond_to(:generate_component_info).with(1).arguments
+      end
     end
   end
 
@@ -68,6 +80,24 @@ RSpec.describe Asi::AsEadComponent do
         # puts @as_ead.process_children_files(series_c_children)
         # puts tested
         # expect(tested).to include({:title => 'Price, Arthur: to Rockwell Kent, t.l.s., 15', :box_number => '3'})
+        expect(true).to eq true
+      end
+    end
+
+    ########################################## generate_info
+    context 'generate_html_child_components' do
+      before(:example) do
+        xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
+        @as_ead = Asi::AsEad.new xml_input
+        @nokogiri_xml = Nokogiri::XML(xml_input)
+        @as_ead.parse_arch_desc_dsc @nokogiri_xml
+        @as_ead_series = Asi::AsEadComponent.new
+        @as_ead_series.parse @as_ead.archive_dsc_series[0]
+      end
+
+      it 'generate the correct info' do
+        tested = @as_ead_series.generate_info
+        # puts tested.inspect
         expect(true).to eq true
       end
     end

@@ -8,6 +8,7 @@ module Asi
     }
 
     attr_reader *XPATH.keys
+    attr_reader :nokogiri_xml
 
     XPATH.keys.each do |attr|
       define_method :"debug_#{attr}" do
@@ -24,34 +25,38 @@ module Asi
     end
 
     def generate_info
+      # puts @nokogiri_xml.inspect
       @component_info = []
-      generate_component_info(@nokigiri_xml)
-      @component_info = generate_child_components_info(@nokogiri_xml)
+      generate_component_info(@nokogiri_xml)
+      # @component_info = generate_child_components_info(@nokogiri_xml)
+      generate_child_components_info(@nokogiri_xml)
+      @component_info
     end
 
     def generate_child_components_info(component_arg, nesting_level = 0)
-      nesting_level += nesting_level
+      nesting_level += 1
       components = component_arg.xpath('./xmlns:c')
       return if components.empty?
       components.each do |component|
-        generate_component_info(component)
-        generate_child_components_info(component)
+        generate_component_info(component, nesting_level)
+        generate_child_components_info(component, nesting_level)
       end
     end
 
-    def generate_component_info(component)
+    def generate_component_info(component, nesting_level = 0)
       title = component.xpath('./xmlns:did/xmlns:unittitle').text
       scope_content = component.xpath('./xmlns:scopecontent/xmlns:p').text
-      current_first_container_type = component.xpath('./xmlns:did/xmlns:container').first['type'] unless
-        component.xpath('./xmlns:did/xmlns:container').first.nil?
-      current_first_container_value = component.xpath('./xmlns:did/xmlns:container').first.text unless
-        component.xpath('./xmlns:did/xmlns:container').first.nil?
+      # current_first_container_type = component.xpath('./xmlns:did/xmlns:container').first['type'] unless
+      # component.xpath('./xmlns:did/xmlns:container').first.nil?
+      # current_first_container_value = component.xpath('./xmlns:did/xmlns:container').first.text unless
+      # component.xpath('./xmlns:did/xmlns:container').first.nil?
       container_nokogiri_elements = component.xpath('./xmlns:did/xmlns:container')
       container_info = container_nokogiri_elements.map do |container|
         container_type = container['type']
         container_value = container.text
         "#{container_type.capitalize} #{container_value}"
       end
+      @component_info.append [nesting_level, title, scope_content, container_info]
     end
 
     def generate_html
