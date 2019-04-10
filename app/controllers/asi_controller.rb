@@ -117,5 +117,6 @@ class AsiController < ApplicationController
     @component_title = @component.title
     @component_scope_content = @component.scope_content_value
     @component_html = @component.generate_html
+    @flattened_component_structure = @component.generate_info
   end
 end
