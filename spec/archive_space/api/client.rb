@@ -1,7 +1,7 @@
 require 'rails_helper'
-require 'asi/as_api.rb'
+require 'archive_space/api/client.rb'
 
-RSpec.describe Asi::AsApi do
+RSpec.describe ArchiveSpace::Api::Client do
   context "API/interface" do
     # http://archivesspace.github.io/archivesspace/api/#authentication
     it 'has #get_ead_resource_description_from_fixture  method' do
