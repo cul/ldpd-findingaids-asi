@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'asi/as_ead.rb'
+require 'archive_space/ead/ead_parser.rb'
 
 attributes = [
   :archive_abstract, # <ead>:<archdesc>:<did>:<abstract>
@@ -26,12 +26,12 @@ attributes = [
 ].freeze
 
 
-RSpec.describe Asi::AsEad do
+RSpec.describe ArchiveSpace::Ead::EadParser do
   ########################################## API/interface
   describe 'API/interface' do
     before(:context) do
       xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-      @as_ead = Asi::AsEad.new xml_input
+      @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
     end
 
     context 'has attr_reader for instance var' do
@@ -61,7 +61,7 @@ RSpec.describe Asi::AsEad do
   describe 'debug API/interface' do
     before(:context) do
       xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-      @as_ead = Asi::AsEad.new xml_input
+      @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
     end
 
     context 'has debug_attr_reader for instance var' do
@@ -77,7 +77,7 @@ RSpec.describe Asi::AsEad do
   describe 'Testing functionality: ' do
     before(:context) do
       xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-      @as_ead = Asi::AsEad.new xml_input
+      @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
       nokogiri_xml = Nokogiri::XML(xml_input)
       # @as_ead.parse_arch_desc_dsc nokogiri_xml
     end
@@ -231,7 +231,7 @@ RSpec.describe Asi::AsEad do
   describe 'Processing' do
     before(:context) do
       xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-      @as_ead_nokogiri_xml = Asi::AsEad.new xml_input
+      @as_ead_nokogiri_xml = ArchiveSpace::Ead::EadParser.new xml_input
     end
 
     context "check functionality" do

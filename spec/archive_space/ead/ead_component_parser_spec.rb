@@ -1,13 +1,13 @@
 require 'rails_helper'
-require 'asi/as_ead.rb'
-require 'asi/as_ead_component.rb'
+require 'archive_space/ead/ead_parser.rb'
+require 'archive_space/ead/ead_component_parser.rb'
 
 attributes = [
   :title, # <c>:<did>:<unititle>
   :scope_content_value # <c>:<scopecontent>:<p>
 ].freeze
 
-RSpec.describe Asi::AsEadComponent do
+RSpec.describe ArchiveSpace::Ead::EadComponentParser do
   ########################################## API/interface
   describe 'API/interface' do
     context 'has attr_reader for instance var' do
@@ -66,7 +66,7 @@ RSpec.describe Asi::AsEadComponent do
     context 'generate_html_child_components' do
       before(:example) do
         xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-        @as_ead = Asi::AsEad.new xml_input
+        @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
         @nokogiri_xml = Nokogiri::XML(xml_input)
         @as_ead.parse_arch_desc_dsc @nokogiri_xml
       end
@@ -88,10 +88,10 @@ RSpec.describe Asi::AsEadComponent do
     context 'generate_html_child_components' do
       before(:example) do
         xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-        @as_ead = Asi::AsEad.new xml_input
+        @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
         @nokogiri_xml = Nokogiri::XML(xml_input)
         @as_ead.parse_arch_desc_dsc @nokogiri_xml
-        @as_ead_series = Asi::AsEadComponent.new
+        @as_ead_series = ArchiveSpace::Ead::EadComponentParser.new
         @as_ead_series.parse @as_ead.archive_dsc_series[0]
       end
 
@@ -106,10 +106,10 @@ RSpec.describe Asi::AsEadComponent do
     context 'parse' do
       before(:example) do
         xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-        @as_ead = Asi::AsEad.new xml_input
+        @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
         @nokogiri_xml = Nokogiri::XML(xml_input)
         @as_ead.parse_arch_desc_dsc @nokogiri_xml
-        @as_ead_series = Asi::AsEadComponent.new
+        @as_ead_series = ArchiveSpace::Ead::EadComponentParser.new
         @as_ead_series.parse @as_ead.archive_dsc_series[0]
       end
 

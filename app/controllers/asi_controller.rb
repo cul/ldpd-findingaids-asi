@@ -1,6 +1,6 @@
 require 'archive_space/api/client'
-require 'asi/as_ead'
-require 'asi/as_ead_component'
+require 'archive_space/ead/ead_parser'
+require 'archive_space/ead/ead_component_parser'
 
 class AsiController < ApplicationController
   def as_ead
@@ -50,7 +50,7 @@ class AsiController < ApplicationController
 
   private
   def ead_set_properties
-    @ead = Asi::AsEad.new @input_xml
+    @ead = ArchiveSpace::Ead::EadParser.new @input_xml
     @title = @ead.archive_title
     @abstract = @ead.archive_abstract
     @bib_id = @ead.archive_id
@@ -78,7 +78,7 @@ class AsiController < ApplicationController
   end
 
   def ead_set_properties_debug
-    @ead = Asi::AsEad.new @input_xml
+    @ead = ArchiveSpace::Ead::EadParser.new @input_xml
     @title = @ead.debug_archive_title
     @abstract = @ead.debug_archive_abstract
     @bib_id = @ead.debug_archive_id
@@ -107,12 +107,12 @@ class AsiController < ApplicationController
   end
 
   def ead_series_set_properties component_num
-    @ead = Asi::AsEad.new @input_xml
+    @ead = ArchiveSpace::Ead::EadParser.new @input_xml
     @series_files_info = @ead.get_files_info_for_series component_num
     # @ead_series_titles is repeated in above method, so try to DRY
     @series_titles = @ead.archive_dsc_series_titles
     component_nokogiri_xml = @ead.archive_dsc_series[component_num.to_i - 1]
-    @component = Asi::AsEadComponent.new
+    @component = ArchiveSpace::Ead::EadComponentParser.new
     @component.parse component_nokogiri_xml
     @component_title = @component.title
     @component_scope_content = @component.scope_content_value
