@@ -5,8 +5,24 @@ require 'archive_space/ead/ead_component_parser'
 class AsiController < ApplicationController
   def as_ead
     @as_api = ArchiveSpace::Api::Client.new
-    @input_xml = @as_api.get_ead_resource_description(params[:repo_id],params[:res_id])
+    if CONFIG[:use_fixtures]
+      @input_xml =
+        @as_api.get_ead_resource_description_from_local_fixture(params[:repo_id],params[:res_id])
+    else
+      @input_xml = @as_api.get_ead_resource_description(params[:repo_id],params[:res_id])
+    end
     ead_set_properties
+  end
+
+  def as_ead_series
+    @as_api = ArchiveSpace::Api::Client.new
+    if CONFIG[:use_fixtures]
+    @input_xml =
+      @as_api.get_ead_resource_description_from_local_fixture(params[:repo_id],params[:res_id])
+    else
+      @input_xml = @as_api.get_ead_resource_description(params[:repo_id],params[:res_id])
+    end
+    ead_series_set_properties params[:ser_id]
   end
 
   def as_ead_debug
@@ -27,12 +43,6 @@ class AsiController < ApplicationController
     @input_xml =
       @as_api.get_ead_resource_description_from_local_fixture(params[:repo_id],params[:res_id])
     ead_set_properties_debug
-  end
-
-  def as_ead_series
-    @as_api = ArchiveSpace::Api::Client.new
-    @input_xml = @as_api.get_ead_resource_description(params[:repo_id],params[:res_id])
-    ead_series_set_properties params[:ser_id]
   end
 
   def as_ead_series_from_local_fixture
