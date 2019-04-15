@@ -1,0 +1,151 @@
+<h2>Summary Information (HC)</h2>
+<h3>EAD Abstract (HC)</h3>
+<p><%= @abstract %></p>
+<h3>At a Glance (HC)</h3>
+<table class="summaryTable">
+  <tbody>
+    <tr class="odd">
+      <th>Bib ID (HC)</th>
+      <td> <%= @bib_id %></td>
+    </tr>
+    <tr class="odd">
+      <th>Creator(s) (HC)</th>
+      <td> <%= @creators %></td>
+    </tr>
+    <tr class="odd">
+      <th>Physical Description (HC)</th>
+      <td> <%= @physical_description %></td>
+    </tr>
+    <tr class="odd">
+      <th>Language (HC)</th>
+      <td> <%= @language %></td>
+    </tr>
+    <tr class="odd">
+      <th>Access (HC)</th>
+      <td> <%=  @access_restrictions_value %></td>
+    </tr>
+  </tbody>
+</table>
+<a name="arrangement"></a>
+<h2>Arrangement (HC)</h2>
+<h3>Arrangement (HC)</h3>
+<p>
+  <ul>
+    <% @series_titles.each_with_index do |series_title, index| %>
+    <li> <%= link_to series_title,
+	     repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])
+	     # slug_to_series_page.call(ser_id: index + 1)
+	     %> </li>
+    <% end %>
+  </ul>
+</p>
+<a name="description"></a>
+<h2>Description (HC)</h2>
+<h3><%= @scope_content_head %></h3>
+<p><%= @scope_content_value %></p>
+<p>
+  <ul style="list-style-type:none;">
+    <% @series_titles.each_with_index do |series_title, index| %>
+    <li>
+      <p> <%= link_to series_title,
+	      # slug_to_series_page.call(ser_id: index + 1)
+	      repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])
+	      %> </p>
+      <p> <%= @series_scope_content[index] %> </p>
+    </li>
+    <% end %>
+  </ul>
+</p>
+<a name="using_collection"></a>
+<h2>Using the Collection (HC)</h2>
+<p><%= @repository_corpname %></p>
+<h3><%= @access_restrictions_head %></h3>
+<p><%= @access_restrictions_value %></p>
+<h3><%= @use_restrictions_head %></h2>
+<p><%= @use_restrictions_value %></p>
+<h3><%= @preferred_citation_head %></h3>
+<p><%= @preferred_citation_value %></p>
+<a name="about_findaid"></a>
+<h2>About the Finding Aid / Processing Information (HC)</h2>
+<p>Not sure if AS EAD contained the following (hard code in php app?): Columbia University Libraries. Rare Book and Manuscript Library; machine readable finding aid created by Columbia University Libraries Digital Library Program Division</p>
+<h3><%= @processing_information_head %></h3>
+<p><%= @processing_information_value %></p>
+<a name="subjects"></a>
+<h2>Subject Headings (HC)</h2>
+<p>Missing blurb found in php app (HC)</p>
+<h3>Genre/Form (HC)</h3>
+<table class="subjectTable">
+  <tbody>
+    <tr>
+      <th class="firstCell" style="vertical-align:middle;">Heading</th>
+      <th class="firstCell" style="vertical-align:middle;">"CUL Archives:"<br>"Portal"</th>
+      <th class="firstCell" style="vertical-align:middle;">"CUL Collections:"<br>"CLIO"</th>
+      <th class="firstCell" style="vertical-align:middle;">"Nat'l / Int'l Archives:"<br>"ArchivedGRID"</th>
+    </tr>
+    <% @genres_forms.each do |genre_form| %>
+    <tr>
+      <td class="firstCell"><%= genre_form %></td>
+      <td>
+	<a target="_blank"
+	  href="<%= "https://archivesportal.library.columbia.edu/results.php?component_text=\"#{genre_form}\"&operator=AND" %>">
+	  Portal
+	</a>
+      </td>
+      <td>
+	<a target="_blank"
+	  href="<%= "https://clio.columbia.edu/catalog?q=\"#{genre_form}\"&search_field=subject" %>">
+	  CLIO
+	</a>
+      </td>
+      <td>
+	<a target="_blank"
+	  href="<%= "https://researchworks.oclc.org/archivegrid/?q=#{genre_form}" %>">
+	  ArchiveGRID
+	</a>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<p>
+  <ul>
+  </ul>
+</p>
+<h3>Subject (HC)</h3>
+<table class="subjectTable">
+  <tbody>
+    <tr>
+      <th class="firstCell" style="vertical-align:middle;">Heading</th>
+      <th class="firstCell" style="vertical-align:middle;">"CUL Archives:"<br>"Portal"</th>
+      <th class="firstCell" style="vertical-align:middle;">"CUL Collections:"<br>"CLIO"</th>
+      <th class="firstCell" style="vertical-align:middle;">"Nat'l / Int'l Archives:"<br>"ArchivedGRID"</th>
+    </tr>
+    <% @subjects.each do |subject| %>
+    <tr>
+      <td class="firstCell"><%= subject %></td>
+      <td>
+	<a target="_blank"
+	  href="<%= "https://archivesportal.library.columbia.edu/results.php?component_text=\"#{subject}\"&operator=AND" %>">
+	  Portal
+	</a>
+      </td>
+      <td>
+	<a target="_blank"
+	  href="<%= "https://clio.columbia.edu/catalog?q=\"#{subject}\"&search_field=subject" %>">
+	  CLIO
+	</a>
+      </td>
+      <td>
+	<a target="_blank"
+	  href="<%= "https://researchworks.oclc.org/archivegrid/?q=#{subject}" %>">
+	  ArchiveGRID
+	</a>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<a name="history"></a>
+<h2>History / Biographical Note</h2>
+<h3><%= @biography_history_head %></h3>
+<p><%= @biography_history_value %></p>
