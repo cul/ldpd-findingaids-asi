@@ -3,10 +3,21 @@ require 'net/http'
 module ArchiveSpace
   module Api
     class Client
-      def get_ead_resource_description_from_fixture
-        open('spec/fixtures/asi/as_ead_resource_4767_representation.xml') do |b|
-          b.read
+      def get_ead_resource_description(repo_id, resource_id)
+        # move following outside later
+        authenticate
+        repo_url = "#{ASI_CONFIG[:repositories_url]}/#{repo_id}"
+        ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml"
+        # puts ead_resource_description_url
+        get_uri = URI(ead_resource_description_url)
+        get_request = Net::HTTP::Get.new get_uri.request_uri
+        get_request['X-ArchivesSpace-Session'] = @token
+        result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
+          http.request(get_request)
         end
+        # puts result.inspect
+        # puts JSON.parse(result.body)['title']
+        result.body
       end
 
       # Following gets fixtures that are not under source control. This allows
@@ -32,6 +43,8 @@ module ArchiveSpace
         # puts result.inspect
         @token = JSON.parse(result.body)['session']
       end
+
+      # fcd1, 04/15/19: Following work, but are not currently being used
 
       def get_resource(repo_id, resource_id)
         # move following outside later
@@ -76,23 +89,6 @@ module ArchiveSpace
         resource_tree_url = "#{repo_url}/resources/#{resource_id}/tree/root"
         # puts resource_url
         get_uri = URI(resource_tree_url)
-        get_request = Net::HTTP::Get.new get_uri.request_uri
-        get_request['X-ArchivesSpace-Session'] = @token
-        result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
-          http.request(get_request)
-        end
-        # puts result.inspect
-        # puts JSON.parse(result.body)['title']
-        result.body
-      end
-
-      def get_ead_resource_description(repo_id, resource_id)
-        # move following outside later
-        authenticate
-        repo_url = "#{ASI_CONFIG[:repositories_url]}/#{repo_id}"
-        ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml"
-        # puts ead_resource_description_url
-        get_uri = URI(ead_resource_description_url)
         get_request = Net::HTTP::Get.new get_uri.request_uri
         get_request['X-ArchivesSpace-Session'] = @token
         result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|

@@ -42,12 +42,6 @@ class AsiController < ApplicationController
     ead_series_set_properties params[:ser_id]
   end
 
-  def as_ead_from_fixture
-    @as_api = ArchiveSpace::Api::Client.new
-    @input_xml = @as_api.get_ead_resource_description_from_fixture
-    ead_set_properties
-  end
-
   private
   def ead_set_properties
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
