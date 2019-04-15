@@ -1,0 +1,15 @@
+<h2><%= @component_title %></h2>
+<p><%= @component_scope_content %></p>
+<h3>Using bootstrap table-striped</h3>
+<table class="table table-striped">
+  <% @series_files_info.each do |title_box_hash| %>
+  <tr>
+    <td><%= title_box_hash[:title] %></td>
+    <td><%= title_box_hash[:box_number] %></td>
+  </tr>
+  <% end %>
+</table>
+<h3>Using hacky method in controller that generates html recursively</h3>
+<%== @component_html %>
+<h3>Using flattened component tree and view helper to display</h3>
+<%== display_component_structure %>

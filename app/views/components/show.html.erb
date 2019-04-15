@@ -1,2 +1,16 @@
 <h1>Components#show</h1>
 <p>Find me in app/views/components/show.html.erb</p>
+<table style="width=100%">
+  <tbody>
+    <tr>
+      <td class="sidebar">
+	<%= # render partial: 'sidebar',
+	    # locals: {slug: ead_path, slug_to_series_page: method(:series_path)}
+	    %>
+      </td>
+      <td class="ead_content">
+	<%= render "ead_component" %>
+      </td>
+    </tr>
+  </tbody>
+</table>
