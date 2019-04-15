@@ -6,7 +6,7 @@ module ArchiveSpace
       def get_ead_resource_description(repo_id, resource_id)
         # move following outside later
         authenticate
-        repo_url = "#{ASI_CONFIG[:repositories_url]}/#{repo_id}"
+        repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
         ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml"
         # puts ead_resource_description_url
         get_uri = URI(ead_resource_description_url)
@@ -34,9 +34,9 @@ module ArchiveSpace
       end
 
       def authenticate
-        post_uri = URI(ASI_CONFIG[:auth_url])
+        post_uri = URI(AS_CONFIG[:auth_url])
         post_request = Net::HTTP::Post.new post_uri.request_uri
-        post_request.set_form_data('password' => ASI_CONFIG[:password])
+        post_request.set_form_data('password' => AS_CONFIG[:password])
         result = Net::HTTP.start(post_uri.host, post_uri.port, use_ssl: true) do |http|
           http.request(post_request)
         end
@@ -49,8 +49,8 @@ module ArchiveSpace
       def get_resource(repo_id, resource_id)
         # move following outside later
         authenticate
-        repo_url = "#{ASI_CONFIG[:repositories_url]}/#{repo_id}"
-        params = ASI_CONFIG[:get_resource_params]
+        repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
+        params = AS_CONFIG[:get_resource_params]
         # puts params
         resource_url = "#{repo_url}/resources/#{resource_id}?#{params}"
         # puts resource_url
@@ -68,7 +68,7 @@ module ArchiveSpace
       def get_resource_tree(repo_id, resource_id)
         # move following outside later
         authenticate
-        repo_url = "#{ASI_CONFIG[:repositories_url]}/#{repo_id}"
+        repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
         resource_tree_url = "#{repo_url}/resources/#{resource_id}/tree"
         # puts resource_url
         get_uri = URI(resource_tree_url)
@@ -85,7 +85,7 @@ module ArchiveSpace
       def get_resource_tree_root(repo_id, resource_id)
         # move following outside later
         authenticate
-        repo_url = "#{ASI_CONFIG[:repositories_url]}/#{repo_id}"
+        repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
         resource_tree_url = "#{repo_url}/resources/#{resource_id}/tree/root"
         # puts resource_url
         get_uri = URI(resource_tree_url)
