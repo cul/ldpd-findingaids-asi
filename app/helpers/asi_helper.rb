@@ -15,7 +15,7 @@ module AsiHelper
         @html_out << '</div>'
       end
       current_nesting_level = component[0]
-      checkbox_display(container_info[0]) unless container_info.empty?
+      asi_checkbox_display(container_info[0]) unless container_info.empty?
       @html_out << '<p style="margin:0">'
       @html_out << '<span style="text-align:left;">' << title << '</span>'
       @html_out << '<span style="text-align:right;float:right;">' << container_info.join(' ') << '</span>'
@@ -25,7 +25,7 @@ module AsiHelper
     @html_out
   end
 
-  def checkbox_display(container_info)
+  def asi_checkbox_display(container_info)
     if (!container_info.nil? and
         container_info != @last_container_seen)
       @last_container_seen = container_info
