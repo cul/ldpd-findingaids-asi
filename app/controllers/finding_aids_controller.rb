@@ -46,16 +46,4 @@ class FindingAidsController < ApplicationController
     @subjects = @ead.get_subjects
     @genres_forms = @ead.get_genres_forms
   end
-
-  # @as_repo_id => repo ID in ArchiveSpace
-  def validate_repository_code_and_set_repo_id
-    unless REPOS.key? params[:repository_id]
-      # not currently displaying contents of flash, but may be useful
-      # when redirect to other than root
-      flash[:error] = 'Non-existent repo code in url'
-      # for now, redirect to root. Change later
-      redirect_to '/'
-    end
-    @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
-  end
 end
