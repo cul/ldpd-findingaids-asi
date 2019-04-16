@@ -1,5 +1,5 @@
 module AsiHelper
-  def display_component_structure
+  def asi_display_component_structure
     @html_out = ''
     @last_container_seen = ''
     @checkbox_id = 0
