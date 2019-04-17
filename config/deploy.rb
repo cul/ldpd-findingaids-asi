@@ -44,7 +44,9 @@ set :passenger_restart_with_touch, true
 set :linked_files, fetch(:linked_files, []).push(
   'config/archivespace.yml',
   'config/database.yml',
+  'config/finding_aids.yml',
   'config/master.key',
+  'config/repositories.yml',
   'config/secrets.yml'
 )
 
