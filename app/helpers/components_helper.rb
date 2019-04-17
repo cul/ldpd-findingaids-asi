@@ -44,4 +44,16 @@ module ComponentsHelper
         '</label><br style="clear:both;">'
     end
   end
+
+  def display_striped_table
+    html_out = ''
+    html_out << '<table class="table table-striped">'
+    @series_files_info.each do |title_box_hash|
+      html_out << '<tr>'
+      html_out << '<td>' << title_box_hash[:title]<< '</td>'
+      html_out << '<td>' << title_box_hash[:box_number] << '</td>'
+      html_out << '</tr>'
+    end
+    html_out << '</table>'
+  end
 end
