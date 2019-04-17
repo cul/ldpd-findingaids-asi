@@ -15,7 +15,7 @@ module ComponentsHelper
         @html_out << '</div>'
       end
       current_nesting_level = component[0]
-      checkbox_display(container_info[0]) unless container_info.empty?
+      checkbox_display(container_info[0]) unless (container_info.empty? or  !REPOS[params[:repository_id]][:requestable_via_aeon])
       @html_out << '<p style="margin:0">'
       @html_out << '<span style="text-align:left;">' << title << '</span>'
       @html_out << '<span style="text-align:right;float:right;">' << container_info.join(' ') << '</span>'
