@@ -1,3 +1,57 @@
 // Place all the styles related to the FindingAids controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.summaryTable {
+    font-size: 11px;
+    border: 1px solid #eee;
+    border-collapse: collapse;
+    background-color: #eee;
+}
+
+.summaryTable td {
+    vertical-align: top;
+    border: 1px solid #eee;
+}
+
+.summaryTable tr.odd {
+    background-color: #eee;
+}
+
+.summaryTable th {
+    font-weight: bold;
+    border: 1px solid #eee;
+    vertical-align: top;
+    width: 150px;
+}
+
+table.subjectTable {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    width: 99%;
+}
+
+table.subjectTable th {
+    text-align: left;
+    background: #eee;
+    border: 1px solid #ccc;
+    vertical-align: top;
+    padding: 5px;
+    margin: 5px;
+    font-size: 11px;
+    text-align: center;
+}
+
+table.subjectTable TD.firstCell,
+table.subjectTable TH.firstCell {
+    text-align: left;
+}
+
+table.subjectTable td {
+    border: 1px solid #ccc;
+    border-top: none;
+    vertical-align: top;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+}

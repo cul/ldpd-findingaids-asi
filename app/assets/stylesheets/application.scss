@@ -16,3 +16,47 @@
 @import "bootstrap";
 @import "asi";
 @import "components";
+
+// application-wide styles
+.sidebar {
+    vertical-align: top;
+    background: #eee;
+    width: 200px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+}
+
+.ead_content {
+    padding: 5px;
+}
+
+h2 {
+    color: #2c5277;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+h3, h3 em {
+    color: #999;
+    border-bottom: 1px solid #999;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 10px;
+}
+
+div.toc {
+    width: 188px;
+    background: #eee;
+    padding: 10px;
+    font-size: 12px;
+}
+
+#contentMenu1 {
+    margin-left: 5px;
+}
+
+div.item {
+    padding: 5px;
+    margin: 5px;
+}

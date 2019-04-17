@@ -1,6 +1,8 @@
 // Place all the styles related to the Asi controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// fcd1, 17Apr19: copied to application.scss
 .sidebar {
     vertical-align: top;
     background: #eee;
@@ -10,16 +12,19 @@
     margin: 5px;
 }
 
+// fcd1, 17Apr19: copied to application.scss
 .ead_content {
     padding: 5px;
 }
 
+// fcd1, 17Apr19: copied to application.scss
 h2 {
     color: #2c5277;
     font-size: 16px;
     font-weight: bold;
 }
 
+// fcd1, 17Apr19: copied to application.scss
 h3, h3 em {
     color: #999;
     border-bottom: 1px solid #999;
@@ -28,6 +33,7 @@ h3, h3 em {
     padding-top: 10px;
 }
 
+// fcd1, 17Apr19: copied to finding_aids.scss
 .summaryTable {
     font-size: 11px;
     border: 1px solid #eee;
@@ -35,15 +41,18 @@ h3, h3 em {
     background-color: #eee;
 }
 
+// fcd1, 17Apr19: copied to finding_aids.scss
 .summaryTable td {
     vertical-align: top;
     border: 1px solid #eee;
 }
 
+// fcd1, 17Apr19: copied to finding_aids.scss
 .summaryTable tr.odd {
     background-color: #eee;
 }
 
+// fcd1, 17Apr19: copied to finding_aids.scss
 .summaryTable th {
     font-weight: bold;
     border: 1px solid #eee;
@@ -51,12 +60,14 @@ h3, h3 em {
     width: 150px;
 }
 
+// fcd1, 17Apr19: copied to finding_aids.scss
 table.subjectTable {
     border: 1px solid #ccc;
     border-collapse: collapse;
     width: 99%;
 }
 
+// fcd1, 17Apr19: copied to finding_aids.scss
 table.subjectTable th {
     text-align: left;
     background: #eee;
@@ -68,11 +79,13 @@ table.subjectTable th {
     text-align: center;
 }
 
+// fcd1, 17Apr19: copied to finding_aids.scss
 table.subjectTable TD.firstCell,
 table.subjectTable TH.firstCell {
     text-align: left;
 }
 
+// fcd1, 17Apr19: copied to finding_aids.scss
 table.subjectTable td {
     border: 1px solid #ccc;
     border-top: none;
@@ -82,6 +95,7 @@ table.subjectTable td {
     text-align: center;
 }
 
+// fcd1, 17Apr19: copied to application.scss
 div.toc {
     width: 188px;
     background: #eee;
@@ -89,10 +103,12 @@ div.toc {
     font-size: 12px;
 }
 
+// fcd1, 17Apr19: copied to application.scss
 #contentMenu1 {
     margin-left: 5px;
 }
 
+// fcd1, 17Apr19: copied to application.scss
 div.item {
     padding: 5px;
     margin: 5px;
