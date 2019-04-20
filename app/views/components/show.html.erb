@@ -9,7 +9,11 @@
 	    %>
       </td>
       <td class="ead_content">
-	<%= render "ead_component" %>
+	<% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
+	<%= render partial: "component_structure", layout: "with_aeon" %>
+	<% else %>
+	<%= render partial: "component_structure", layout: "without_aeon" %>
+	<% end %>
       </td>
     </tr>
   </tbody>

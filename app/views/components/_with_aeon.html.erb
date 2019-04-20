@@ -1,0 +1,13 @@
+<%= form_tag aeon_request_path do %>
+<div class="aeon_blurb">
+<p>Submit a request for access to the archival material.
+All users will need to register the first time they make a request.
+Columbia-affiliated users may login with their uni and password.
+  Unaffiliated users may create a new account.
+</p>
+<%= submit_tag 'Submit Request'%>
+</div>
+<hr>
+<%= yield %>
+<%= hidden_field_tag 'ItemTitle_FIXED', @ead.archive_title %>
+<% end %>
