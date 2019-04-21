@@ -9,10 +9,11 @@
 	    %>
       </td>
       <td class="ead_content">
+	<% repo_suffix = params[:repository_id].gsub('-','_') %>
 	<% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
-	<%= render partial: "component_structure", layout: "with_aeon" %>
+	<%= render partial: "component_structure_#{repo_suffix}", layout: "with_aeon" %>
 	<% else %>
-	<%= render partial: "component_structure", layout: "without_aeon" %>
+	<%= render partial: "component_structure_#{repo_suffix}", layout: "without_aeon" %>
 	<% end %>
       </td>
     </tr>

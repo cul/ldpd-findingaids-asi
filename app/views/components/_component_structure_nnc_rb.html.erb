@@ -1,0 +1,29 @@
+<div class="nnc-rb">
+  <h1>RBML, take 1(<i>DISABLED</i>)</h1>
+  <%==
+    # display_component_structure
+  %>
+  <h1>RBML, take 2</h1>
+  <% @last_container_seen = '' %>
+  <% @checkbox_id = 0 %>
+  <% current_nesting_level = 1 %>
+  <% @flattened_component_structure.each do |component| %>
+    <% nesting_level, title, scope_content, container_info = component %>
+    <% if nesting_level > current_nesting_level %>
+      <hr style="margin-top:10px;margin-bottom:10px">
+      <div class="component_entry" style="margin-left:2em;">
+    <% elsif nesting_level < current_nesting_level %>
+         <hr style="margin-top:10px;margin-bottom:10px">
+      </div>
+    <% end %>
+    <% current_nesting_level = component[0] %>
+    <%== checkbox_display(container_info[0]) unless container_info.empty? %>
+    <p style="margin:0">
+      <span style="text-align:left;"> <%= title %> </span>
+      <span style="text-align:right;float:right;"><%=container_info.join(' ') %></span>
+    </p>
+    <% unless scope_content.blank? %>
+      <p style="margin:0"><%= scope_content %></p>
+    <% end %>
+  <% end %>
+</div>

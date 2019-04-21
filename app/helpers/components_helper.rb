@@ -15,7 +15,7 @@ module ComponentsHelper
         @html_out << '</div>'
       end
       current_nesting_level = component[0]
-      checkbox_display(container_info[0]) unless (container_info.empty? or  !REPOS[params[:repository_id]][:requestable_via_aeon])
+      @html_out << checkbox_display(container_info[0]) unless (container_info.empty? or  !REPOS[params[:repository_id]][:requestable_via_aeon])
       @html_out << '<p style="margin:0">'
       @html_out << '<span style="text-align:left;">' << title << '</span>'
       @html_out << '<span style="text-align:right;float:right;">' << container_info.join(' ') << '</span>'
@@ -26,11 +26,12 @@ module ComponentsHelper
   end
 
   def checkbox_display(container_info)
+    checkbox_html_out = ''
     if (!container_info.nil? and
         container_info != @last_container_seen)
       @last_container_seen = container_info
       @checkbox_id += 1
-      @html_out <<
+      checkbox_html_out =
         '<input type="checkbox" name="' <<
         "checkbox_#{@checkbox_id}" <<
         '" value="' <<
@@ -43,6 +44,7 @@ module ComponentsHelper
         "Request #{container_info}" <<
         '</label><br style="clear:both;">'
     end
+    checkbox_html_out
   end
 
   def display_striped_table
