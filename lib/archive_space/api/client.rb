@@ -8,15 +8,12 @@ module ArchiveSpace
         authenticate
         repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
         ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml"
-        # puts ead_resource_description_url
         get_uri = URI(ead_resource_description_url)
         get_request = Net::HTTP::Get.new get_uri.request_uri
         get_request['X-ArchivesSpace-Session'] = @token
         result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
           http.request(get_request)
         end
-        # puts result.inspect
-        # puts JSON.parse(result.body)['title']
         result.body
       end
 
@@ -68,10 +65,8 @@ module ArchiveSpace
         authenticate
         repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
         search_url = "#{repo_url}/search"
-        puts search_url
         search_uri = URI(search_url)
         search_uri.query = URI.encode_www_form(params)
-        puts search_uri.inspect
         get_request = Net::HTTP::Get.new search_uri.request_uri
         get_request['X-ArchivesSpace-Session'] = @token
         get_request['Content_Type'] = 'application/json'
@@ -97,7 +92,6 @@ module ArchiveSpace
         result = Net::HTTP.start(post_uri.host, post_uri.port, use_ssl: true) do |http|
           http.request(post_request)
         end
-        # puts result.inspect
         @token = JSON.parse(result.body)['session']
       end
 
@@ -108,17 +102,13 @@ module ArchiveSpace
         authenticate
         repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
         params = AS_CONFIG[:get_resource_params]
-        # puts params
         resource_url = "#{repo_url}/resources/#{resource_id}?#{params}"
-        # puts resource_url
         get_uri = URI(resource_url)
         get_request = Net::HTTP::Get.new get_uri.request_uri
         get_request['X-ArchivesSpace-Session'] = @token
         result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
           http.request(get_request)
         end
-        # puts result.inspect
-        # puts JSON.parse(result.body)['title']
         result.body
       end
 
@@ -127,15 +117,12 @@ module ArchiveSpace
         authenticate
         repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
         resource_tree_url = "#{repo_url}/resources/#{resource_id}/tree"
-        # puts resource_url
         get_uri = URI(resource_tree_url)
         get_request = Net::HTTP::Get.new get_uri.request_uri
         get_request['X-ArchivesSpace-Session'] = @token
         result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
           http.request(get_request)
         end
-        # puts result.inspect
-        # puts JSON.parse(result.body)['title']
         result.body
       end
 
@@ -144,15 +131,12 @@ module ArchiveSpace
         authenticate
         repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
         resource_tree_url = "#{repo_url}/resources/#{resource_id}/tree/root"
-        # puts resource_url
         get_uri = URI(resource_tree_url)
         get_request = Net::HTTP::Get.new get_uri.request_uri
         get_request['X-ArchivesSpace-Session'] = @token
         result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
           http.request(get_request)
         end
-        # puts result.inspect
-        # puts JSON.parse(result.body)['title']
         result.body
       end
     end

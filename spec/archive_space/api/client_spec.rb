@@ -16,7 +16,6 @@ RSpec.describe ArchiveSpace::Api::Client do
     # Use Search API call:
     # http://archivesspace.github.io/archivesspace/api/#search-this-repository
     it 'get_resource_id' do
-      subject.get_resource_id(2,4079547)
       expect(subject).to respond_to(:get_resource_id).with(2).arguments
     end
 
