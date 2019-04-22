@@ -6,7 +6,7 @@ module ComponentsHelper
     # nesting level starts at 1 (top-level)
     current_nesting_level = 1
     @flattened_component_structure.each do |component|
-      nesting_level, title, level, scope_content, container_info = component
+      nesting_level, title, date, level, scope_content, container_info = component
       if nesting_level > current_nesting_level
         @html_out << '<hr style="margin-top:10px;margin-bottom:10px">'
         @html_out << '<div class="component_entry" style="margin-left:2em;">'
