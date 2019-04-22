@@ -1,10 +1,42 @@
+<div class="aeon-confirm-request container">
 <h1>AeonRequests#create</h1>
 <%= debug params %>
 <p>Find me in app/views/aeon_requests/create.html.erb</p>
-<h3 class="trajanpro">Confirm Request'</h3>
+<h3 class="trajanpro">Confirm Request</h3>
 <div class="span8">
   <p>
     <b>Item Title</b>
+    <%= params[:ItemTitle_FIXED] %>
   </p>
-<%= form_tag do %>
-<% end %>
+  <% @selected_containers.each do |container| %>
+  <p>
+    <b>Item Volume</b>
+    <%= container %>
+    <br>
+    <b>Item SubTitle</b>
+    <%= params[:ComponentTitle_FIXED] %>
+  </p>
+  <% end %>
+  <%= form_tag do %>
+    <p>
+      <b>Rquest Notes</b>
+      <br>
+      Use this field to add research notes for your future reference. You may also offer an alternate date
+      or range of dates for your requested Scheduled Date. For immediate inquiries or concerns, please
+      contact the library directly.
+      <br>
+    </p>
+    <p>
+      <%= text_area_tag 'Notes', nil, class: 'span8', cols: 60 %>
+    </p>
+    <p>
+      <%= label_tag :datepicker, 'Scheduled Date' %>
+      <%= text_field_tag :datepicker, nil, class: 'hasDatepicker' %>
+    </p>
+    <p>
+      Please schedule no more than 10 boxes per date. Scheduled dates for off-site materials are pending approval
+      by staff until a confirmation email is sent. Please schedule off-site items five (5) business days in advance.
+    </p>
+    <%= submit_tag 'Submit Request' %>
+  <% end %>
+</div>

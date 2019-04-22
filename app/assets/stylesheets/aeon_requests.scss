@@ -1,3 +1,19 @@
 // Place all the styles related to the AeonRequests controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.trajanpro {
+    font-weight: 400;
+    font-family: trajanproregular,"trajan pro regular",trajan,serif;
+    color: black;
+}
+
+.aeon-confirm-request h3 {
+    font-size: 22.75px;
+    border-bottom: none;
+}
+
+div.aeon-confirm-request {
+    border-radius: 0 0 4px 4px;
+    border: 1px solid #aaa;
+    border-top-width: 2px;
+}
