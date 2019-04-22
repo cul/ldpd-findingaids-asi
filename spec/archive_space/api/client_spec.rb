@@ -13,6 +13,13 @@ RSpec.describe ArchiveSpace::Api::Client do
       expect(subject).to respond_to(:get_ead_resource_description_from_local_fixture).with(2).arguments
     end
 
+    # Use Search API call:
+    # http://archivesspace.github.io/archivesspace/api/#search-this-repository
+    it 'get_resource_id' do
+      subject.get_resource_id(2,4079547)
+      expect(subject).to respond_to(:get_resource_id).with(2).arguments
+    end
+
     # http://archivesspace.github.io/archivesspace/api/#authentication
     it 'has #authenticate method' do
       # subject.authenticate

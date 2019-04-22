@@ -33,6 +33,63 @@ module ArchiveSpace
         end
       end
 
+      def get_resource_id(repo_id, bib_id)
+        type_filter = {
+	  jsonmodel_type: 'field_query',
+	  field: 'primary_type',
+	  comparator: 'equal',
+	  value: 'resource'
+        }
+
+        id_filter = {
+	  jsonmodel_type: 'field_query',
+	  comparator: 'equal',
+	  field: 'identifier',
+	  value: bib_id
+        }
+
+        comp_query = {
+	  jsonmodel_type: 'boolean_query',
+	  op: 'AND',
+	  subqueries: [type_filter, id_filter]
+        }
+
+        aq = {
+	  jsonmodel_type: 'advanced_query',
+	  query: comp_query
+        }
+
+        params = {
+	  page: 1,
+	  page_size: 1,
+	  aq: aq.to_json
+        }
+
+        authenticate
+        repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
+        search_url = "#{repo_url}/search"
+        puts search_url
+        search_uri = URI(search_url)
+        search_uri.query = URI.encode_www_form(params)
+        puts search_uri.inspect
+        get_request = Net::HTTP::Get.new search_uri.request_uri
+        get_request['X-ArchivesSpace-Session'] = @token
+        get_request['Content_Type'] = 'application/json'
+        result = Net::HTTP.start(search_uri.host, search_uri.port, use_ssl: true) do |http|
+          http.request(get_request)
+        end
+        result_json = JSON.parse result.body
+        # Should probably add a test to check that number of hits is exactly 1
+        results = result_json["results"]
+        if results.empty?
+          # return nil
+          nil
+        else
+          # parse out the id
+          result_json["results"][0]["id"].gsub("/repositories/#{repo_id}/resources/",'')
+        end
+      end
+
       def authenticate
         post_uri = URI(AS_CONFIG[:auth_url])
         post_request = Net::HTTP::Post.new post_uri.request_uri
