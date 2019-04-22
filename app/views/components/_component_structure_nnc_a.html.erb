@@ -4,25 +4,21 @@
     # display_component_structure
   %>
   <h1>Avery, take 2</h1>
-  <% @last_container_seen = '' %>
-  <% @checkbox_id = 0 %>
-  <% current_nesting_level = 1 %>
-  <% @flattened_component_structure.each do |component| %>
-    <% nesting_level, title, level, scope_content, container_info = component %>
-    <% if nesting_level > current_nesting_level %>
-      <hr style="margin-top:10px;margin-bottom:10px">
-      <div class="component_entry" style="margin-left:2em;">
-    <% elsif nesting_level < current_nesting_level %>
-         <hr style="margin-top:10px;margin-bottom:10px">
-      </div>
+  <table style="width:100%">
+    <% @flattened_component_structure.each do |component| %>
+      <tr style="border-top:1px solid #eee">
+        <% nesting_level, title, level, scope_content, container_info = component %>
+        <td style="width:20%"><%= container_info.join(' ') %></td>
+        <td style="width:60%;font-weight:bold"> <%= title %> </td>
+        <td style="width:20%"><%='date goes here' %></td>
+      </tr>
+      <% unless scope_content.blank? %>
+        <tr>
+          <td style="width:20%"></td>
+          <td style="width:60%"><%= scope_content %></td>
+          <td style="width:20%"></td>
+        </tr>
+      <% end %>
     <% end %>
-    <% current_nesting_level = component[0] %>
-    <p style="margin:0">
-      <span style="text-align:right;float:left;"><%=container_info.join(' ') %></span>
-      <span style="text-align:left;"> <%= title %> </span>
-    </p>
-    <% unless scope_content.blank? %>
-      <p style="margin:0"><%= scope_content %></p>
-    <% end %>
-  <% end %>
+  </table>
 </div>    
