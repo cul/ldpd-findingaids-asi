@@ -8,7 +8,7 @@
   <% @checkbox_id = 0 %>
   <% current_nesting_level = 1 %>
   <% @flattened_component_structure.each do |component| %>
-    <% nesting_level, title, scope_content, container_info = component %>
+    <% nesting_level, title, level, scope_content, container_info = component %>
     <% if nesting_level > current_nesting_level %>
       <hr style="margin-top:10px;margin-bottom:10px">
       <div class="component_entry" style="margin-left:2em;">

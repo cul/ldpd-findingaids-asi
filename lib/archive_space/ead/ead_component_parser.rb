@@ -46,6 +46,7 @@ module ArchiveSpace
 
       def generate_component_info(component, nesting_level = 0)
         title = component.xpath('./xmlns:did/xmlns:unittitle').text
+        level = component['level']
         scope_content = component.xpath('./xmlns:scopecontent/xmlns:p').text
         # current_first_container_type = component.xpath('./xmlns:did/xmlns:container').first['type'] unless
         # component.xpath('./xmlns:did/xmlns:container').first.nil?
@@ -57,7 +58,7 @@ module ArchiveSpace
           container_value = container.text
           "#{container_type.capitalize} #{container_value}"
         end
-        @component_info.append [nesting_level, title, scope_content, container_info]
+        @component_info.append [nesting_level, title, level, scope_content, container_info]
       end
 
       def generate_html
