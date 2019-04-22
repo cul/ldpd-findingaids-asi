@@ -21,7 +21,7 @@ module ArchiveSpace
         archive_processing_information_value: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:p',
         archive_repository: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:repository/xmlns:corpname',
         archive_scope_content_head: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:head',
-        archive_scope_content_value: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
+        archive_scope_content_values: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
         archive_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle',
         archive_use_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:head',
         archive_use_restrictions_value: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:p'
@@ -79,7 +79,7 @@ module ArchiveSpace
         @archive_processing_information_value = nokogiri_xml.xpath(XPATH[:archive_processing_information_value]).text
         @archive_scope_content_head = nokogiri_xml.xpath(XPATH[:archive_scope_content_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_scope_content_head]).first.nil?
-        @archive_scope_content_value = nokogiri_xml.xpath(XPATH[:archive_scope_content_value]).text
+        @archive_scope_content_values = nokogiri_xml.xpath(XPATH[:archive_scope_content_values])
         @archive_use_restrictions_head = nokogiri_xml.xpath(XPATH[:archive_use_restrictions_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_use_restrictions_head]).first.nil?
         @archive_use_restrictions_value = nokogiri_xml.xpath(XPATH[:archive_use_restrictions_value]).text

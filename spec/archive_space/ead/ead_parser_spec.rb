@@ -19,7 +19,7 @@ attributes = [
   :archive_processing_information_value, # <ead>:<archdesc>:<processinfo>:<p>
   :archive_repository, # <ead><archdesc><did><repository><corpname>
   :archive_scope_content_head, # <ead>:<archdesc>:<scopecontent>:<head>
-  :archive_scope_content_value, # <ead>:<archdesc>:<scopecontent>:<p>
+  :archive_scope_content_values, # <ead>:<archdesc>:<scopecontent>:<p>
   :archive_title, # <ead>:<archdesc>:<did>:<unititle>
   :archive_use_restrictions_head, # <ead>:<archdesc>:<userestrict>:<head>
   :archive_use_restrictions_value # <ead>:<archdesc>:<userestrict>:<p>
@@ -189,8 +189,9 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         expect(tested).to eq 'Scope and Content'
       end
 
-      it 'parses the archive_scope_content_value correctly' do
-        tested = @as_ead.archive_scope_content_value
+      # fcd1, 04/22/19: Want to rethink this test since now return array of values
+      it 'parses the archive_scope_content_values correctly' do
+        tested = @as_ead.archive_scope_content_values.text
         expect(tested).to include "as well as illustrations for 18 of Kent's own books; bookplates for many well known people,"
       end
 

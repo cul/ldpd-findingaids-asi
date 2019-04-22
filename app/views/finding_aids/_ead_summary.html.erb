@@ -42,7 +42,9 @@
 <a name="description"></a>
 <h2>Description (HC)</h2>
 <h3><%= @scope_content_head %></h3>
-<p><%= @scope_content_value %></p>
+<% @scope_content_values.each do |scope_content_value| %>
+  <p><%= scope_content_value.text %></p>
+<% end %>
 <p>
   <ul style="list-style-type:none;">
     <% @series_titles.each_with_index do |series_title, index| %>
