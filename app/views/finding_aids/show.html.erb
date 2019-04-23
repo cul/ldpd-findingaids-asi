@@ -10,10 +10,47 @@
 	  %>
       </td>
       <td class="ead_content">
+        <h2>Summary Information</h2>
 	<%=
-	  render partial: 'ead_summary'
+	  render partial: 'summary'
 	    # locals: {slug_to_series_page: method(:series_path)}
-	    %>
+        %>
+	<a name="arrangement"></a>
+        <h2>Arrangement</h2>
+	<%=
+	  render partial: 'arrangement'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
+	<a name="description"></a>
+        <h2>Description</h2>
+	<%=
+	  render partial: 'description'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
+	<a name="using_collection"></a>
+        <h2>Using the Collection</h2>
+	<%=
+	  render partial: 'using_collection'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
+	<a name="about_findaid"></a>
+        <h2>About the Finding Aid / Processing Information</h2>
+	<%=
+	  render partial: 'about_findaid'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
+	<a name="subjects"></a>
+        <h2>Subject Headings</h2>
+	<%=
+	  render partial: 'subjects'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
+	<a name="history"></a>
+        <h2>History / Biographical Note</h2>
+	<%=
+	  render partial: 'history'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
       </td>
     </tr>
   </tbody>

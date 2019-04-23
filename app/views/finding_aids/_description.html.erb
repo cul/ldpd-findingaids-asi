@@ -1,0 +1,17 @@
+<h3><%= @scope_content_head %></h3>
+<% @scope_content_values.each do |scope_content_value| %>
+  <p><%= scope_content_value.text %></p>
+<% end %>
+<p>
+  <ul style="list-style-type:none;">
+    <% @series_titles.each_with_index do |series_title, index| %>
+    <li>
+      <p> <%= link_to series_title,
+	      # slug_to_series_page.call(ser_id: index + 1)
+	      repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])
+	      %> </p>
+      <p> <%= @series_scope_content[index] %> </p>
+    </li>
+    <% end %>
+  </ul>
+</p>

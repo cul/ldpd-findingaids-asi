@@ -1,0 +1,11 @@
+<h3>Arrangement</h3>
+<p>
+  <ul>
+    <% @series_titles.each_with_index do |series_title, index| %>
+    <li> <%= link_to series_title,
+	     repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])
+	     # slug_to_series_page.call(ser_id: index + 1)
+	     %> </li>
+    <% end %>
+  </ul>
+</p>
