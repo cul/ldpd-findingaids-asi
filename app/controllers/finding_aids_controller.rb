@@ -40,7 +40,7 @@ class FindingAidsController < ApplicationController
     @processing_information_head = @ead.archive_processing_information_head
     @processing_information_value = @ead.archive_processing_information_value
     @biography_history_head = @ead.archive_biography_history_head
-    @biography_history_value = @ead.archive_biography_history_value
+    @biography_history_values = @ead.archive_biography_history_values
     @series_titles = @ead.archive_dsc_series_titles
     @series_scope_content = @ead.get_series_scope_content
     @subjects = @ead.get_subjects

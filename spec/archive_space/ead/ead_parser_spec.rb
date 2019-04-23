@@ -6,7 +6,7 @@ attributes = [
   :archive_access_restrictions_head, # <ead>:<archdesc>:<accessrestrict>:<head>
   :archive_access_restrictions_value, # <ead>:<archdesc>:<accessrestrict>:<p>
   :archive_biography_history_head, # <ead>:<archdesc>:<bioghist>:<head>
-  :archive_biography_history_value, # <ead>:<archdesc>:<bioghist>:<p>
+  :archive_biography_history_values, # <ead>:<archdesc>:<bioghist>:<p>
   :archive_date, # <ead>:<archdesc>:<did>:<unitdate>
   :archive_dsc_series, # <ead>:<archdesc>:<dsc>:<c level=series>, returns array of series
   :archive_dsc_series_titles, # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>, returns array of titles
@@ -159,8 +159,8 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         expect(tested).to eq 'Biographical / Historical'
       end
 
-      it 'parses the archive_biography_history_value correctly' do
-        tested = @as_ead.archive_biography_history_value
+      it 'parses the archive_biography_history_values correctly' do
+        tested = @as_ead.archive_biography_history_values.text
         expect(tested).to eq 'American artist, travel writer, and political activist.'
       end
 

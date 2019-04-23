@@ -8,7 +8,7 @@ module ArchiveSpace
         archive_access_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:head',
         archive_access_restrictions_value: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:p',
         archive_biography_history_head: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:head',
-        archive_biography_history_value: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:p',
+        archive_biography_history_values: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:p',
         archive_date: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
         archive_dsc_series: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]',
         archive_dsc_series_titles: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]/xmlns:did/xmlns:unittitle',
@@ -70,7 +70,7 @@ module ArchiveSpace
         @archive_access_restrictions_value = nokogiri_xml.xpath(XPATH[:archive_access_restrictions_value]).text
         @archive_biography_history_head = nokogiri_xml.xpath(XPATH[:archive_biography_history_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_biography_history_head]).first.nil?
-        @archive_biography_history_value = nokogiri_xml.xpath(XPATH[:archive_biography_history_value]).text
+        @archive_biography_history_values = nokogiri_xml.xpath(XPATH[:archive_biography_history_values])
         @archive_preferred_citation_head = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_preferred_citation_head]).first.nil?
         @archive_preferred_citation_value = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_value]).text
