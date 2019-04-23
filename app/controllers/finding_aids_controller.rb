@@ -9,7 +9,6 @@ class FindingAidsController < ApplicationController
   end
 
   def show
-#    @as_api = ArchiveSpace::Api::Client.new
     if CONFIG[:use_fixtures]
       @input_xml =
         # @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id,params[:id])
