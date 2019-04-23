@@ -2,18 +2,21 @@ require 'archive_space/api/client'
 require 'archive_space/ead/ead_parser'
 
 class FindingAidsController < ApplicationController
-  before_action :validate_repository_code_and_set_repo_id
+  before_action :validate_repository_code_and_set_repo_id,
+                :validate_bib_id_and_set_resource_id
 
   def index
   end
 
   def show
-    @as_api = ArchiveSpace::Api::Client.new
+#    @as_api = ArchiveSpace::Api::Client.new
     if CONFIG[:use_fixtures]
       @input_xml =
-        @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id,params[:id])
+        # @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id,params[:id])
+        @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id,@as_resource_id)
     else
-      @input_xml = @as_api.get_ead_resource_description(@as_repo_id,params[:res_id])
+      # @input_xml = @as_api.get_ead_resource_description(@as_repo_id,params[:res_id])
+      @input_xml = @as_api.get_ead_resource_description(@as_repo_id,@as_resource_id)
     end
     ead_set_properties
   end
@@ -45,5 +48,23 @@ class FindingAidsController < ApplicationController
     @series_scope_content = @ead.get_series_scope_content
     @subjects = @ead.get_subjects
     @genres_forms = @ead.get_genres_forms
+  end
+
+  # @as_resource_id => resource ID in ArchiveSpace
+  def validate_bib_id_and_set_resource_id
+     @as_api = ArchiveSpace::Api::Client.new
+     bib_id = params[:id].delete_prefix('ldpd_').to_i
+     puts bib_id
+    if CONFIG[:use_fixtures]
+      @as_resource_id = @as_api.get_resource_id_local_fixture(bib_id)
+    else
+      @as_respource_id = @as_api.get_resource_id(bib_id)
+    end
+
+    # not currently displaying contents of flash, but may be useful
+      # when redirect to other than root
+    # flash[:error] = 'Non-existent repo code in url'
+      # for now, redirect to root. Change later
+    # redirect_to '/'
   end
 end

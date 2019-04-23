@@ -30,6 +30,12 @@ module ArchiveSpace
         end
       end
 
+      def get_resource_id_local_fixture(bib_id)
+        puts bib_id
+        puts LOCAL_FIXTURES[:map_bib_id_to_as_reource_id][bib_id]
+        LOCAL_FIXTURES[:map_bib_id_to_as_reource_id][bib_id]
+      end
+
       def get_resource_id(repo_id, bib_id)
         type_filter = {
 	  jsonmodel_type: 'field_query',
