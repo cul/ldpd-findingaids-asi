@@ -3,17 +3,19 @@ require 'archive_space/ead/ead_parser'
 require 'archive_space/ead/ead_component_parser'
 
 class ComponentsController < ApplicationController
-  before_action :validate_repository_code_and_set_repo_id
+  before_action :set_bib_id,
+                :validate_repository_code_and_set_repo_id,
+                :validate_bib_id_and_set_resource_id,
+
   def index
   end
 
   def show
-    @as_api = ArchiveSpace::Api::Client.new
     if CONFIG[:use_fixtures]
       @input_xml =
-        @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id,params[:finding_aid_id])
+        @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id,@as_resource_id)
     else
-      @input_xml = @as_api.get_ead_resource_description(@as_repo_id,params[:finding_aid_id])
+      @input_xml = @as_api.get_ead_resource_description(@as_repo_id,@as_resource_id)
     end
     ead_series_set_properties params[:id]
   end
@@ -31,5 +33,9 @@ class ComponentsController < ApplicationController
     @component_scope_content = @component.scope_content_value
     @component_html = @component.generate_html
     @flattened_component_structure = @component.generate_info
+  end
+
+  def set_bib_id
+    @bib_id = params[:finding_aid_id].delete_prefix('ldpd_').to_i
   end
 end

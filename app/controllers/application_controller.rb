@@ -21,18 +21,17 @@ class ApplicationController < ActionController::Base
 
   # @as_resource_id => resource ID in ArchiveSpace
   def validate_bib_id_and_set_resource_id
-     bib_id = params[:id].delete_prefix('ldpd_').to_i
-     puts bib_id
     if CONFIG[:use_fixtures]
-      @as_resource_id = @as_api.get_resource_id_local_fixture(bib_id)
+      @as_resource_id = @as_api.get_resource_id_local_fixture(@bib_id)
     else
-      @as_respource_id = @as_api.get_resource_id(bib_id)
+      @as_respource_id = @as_api.get_resource_id(@bib_id)
     end
-
-    # not currently displaying contents of flash, but may be useful
+    unless @as_resource_id
+      # not currently displaying contents of flash, but may be useful
       # when redirect to other than root
-    # flash[:error] = 'Non-existent repo code in url'
+      flash[:error] = 'Non-existent repo code in url'
       # for now, redirect to root. Change later
-    # redirect_to '/'
+      redirect_to '/'
+    end
   end
 end
