@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     if CONFIG[:use_fixtures]
       @as_resource_id = @as_api.get_resource_id_local_fixture(@bib_id)
     else
-      @as_respource_id = @as_api.get_resource_id(@as_repo_id, @bib_id)
+      @as_resource_id = @as_api.get_resource_id(@as_repo_id, @bib_id)
     end
     unless @as_resource_id
       # not currently displaying contents of flash, but may be useful
