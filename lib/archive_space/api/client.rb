@@ -37,6 +37,8 @@ module ArchiveSpace
       end
 
       def get_resource_id(repo_id, bib_id)
+        puts "repo_id: #{repo_id}"
+        puts "repo_id: #{bib_id}"
         type_filter = {
 	  jsonmodel_type: 'field_query',
 	  field: 'primary_type',
@@ -79,6 +81,7 @@ module ArchiveSpace
         result = Net::HTTP.start(search_uri.host, search_uri.port, use_ssl: true) do |http|
           http.request(get_request)
         end
+        puts result.body
         result_json = JSON.parse result.body
         # Should probably add a test to check that number of hits is exactly 1
         results = result_json["results"]
