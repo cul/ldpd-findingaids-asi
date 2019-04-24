@@ -45,6 +45,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/archivespace.yml',
   'config/database.yml',
   'config/finding_aids.yml',
+  'config/local_fixtures.yml',
   'config/master.key',
   'config/repositories.yml',
   'config/secrets.yml'
