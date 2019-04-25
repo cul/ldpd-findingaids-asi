@@ -4,7 +4,8 @@ require 'archive_space/ead/ead_parser'
 class FindingAidsController < ApplicationController
   before_action :set_bib_id,
                 :validate_repository_code_and_set_repo_id,
-                :validate_bib_id_and_set_resource_id
+                :validate_bib_id_and_set_resource_id,
+                only: [:show]
 
   def index
   end
@@ -19,6 +20,10 @@ class FindingAidsController < ApplicationController
       @input_xml = @as_api.get_ead_resource_description(@as_repo_id,@as_resource_id)
     end
     ead_set_properties
+  end
+
+  def summary
+    redirect_to repository_finding_aid_path(id: params[:finding_aid_id])
   end
 
   private
