@@ -1,2 +1,24 @@
 <h1>Components#index</h1>
 <p>Find me in app/views/components/index.html.erb</p>
+<table style="width=100%">
+  <tbody>
+    <tr>
+      <td class="sidebar">
+	<%= render partial: 'sidebar'
+	    # locals: {slug: ead_path, slug_to_series_page: method(:series_path)}
+	    %>
+      </td>
+      <td class="ead_content">
+	<% repo_suffix = params[:repository_id].gsub('-','_') %>
+        <% @flattened_component_structure_array.each do |structure| %>
+	<% @flattened_component_structure = structure %>
+          <% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
+            <%= render partial: "component_structure_#{repo_suffix}", layout: "with_aeon" %>
+          <% else %>
+            <%= render partial: "component_structure_#{repo_suffix}", layout: "without_aeon" %>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>

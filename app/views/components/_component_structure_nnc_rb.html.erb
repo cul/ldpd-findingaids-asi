@@ -9,8 +9,10 @@
       <hr style="margin-top:10px;margin-bottom:10px">
       <div class="component_entry" style="margin-left:2em;">
     <% elsif nesting_level < current_nesting_level %>
-         <hr style="margin-top:10px;margin-bottom:10px">
-      </div>
+       <hr style="margin-top:10px;margin-bottom:10px">
+       <% (nesting_level...current_nesting_level).each do %>
+        </div>
+      <% end %>
     <% end %>
     <% current_nesting_level = component[0] %>
     <%== checkbox_display(container_info[0]) unless container_info.empty? %>
