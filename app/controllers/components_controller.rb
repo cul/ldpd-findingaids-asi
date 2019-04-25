@@ -23,15 +23,12 @@ class ComponentsController < ApplicationController
   private
   def ead_series_set_properties component_num
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
-    @series_files_info = @ead.get_files_info_for_series component_num
-    # @ead_series_titles is repeated in above method, so try to DRY
     @series_titles = @ead.archive_dsc_series_titles
     component_nokogiri_xml = @ead.archive_dsc_series[component_num.to_i - 1]
     @component = ArchiveSpace::Ead::EadComponentParser.new
     @component.parse component_nokogiri_xml
     @component_title = @component.title
     @component_scope_content = @component.scope_content_value
-    @component_html = @component.generate_html
     @flattened_component_structure = @component.generate_info
   end
 
