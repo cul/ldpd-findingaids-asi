@@ -1,6 +1,6 @@
 <h1>Components#show</h1>
 <p>Find me in app/views/components/show.html.erb</p>
-<table style="width=100%">
+<table style="width:100%">
   <tbody>
     <tr>
       <td class="sidebar">
@@ -8,7 +8,7 @@
 	    # locals: {slug: ead_path, slug_to_series_page: method(:series_path)}
 	    %>
       </td>
-      <td class="ead_content">
+      <td class="ead_content" style="vertical-align:top">
 	<% repo_suffix = params[:repository_id].gsub('-','_') %>
 	<% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
 	<%= render partial: "component_structure_#{repo_suffix}", layout: "with_aeon" %>
