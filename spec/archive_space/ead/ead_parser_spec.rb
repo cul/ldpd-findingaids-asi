@@ -12,6 +12,7 @@ attributes = [
   :archive_dsc_series_titles, # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>, returns array of titles
   :archive_id, # <ead>:<archdesc>:<did>:<unitid>
   :archive_language, # <ead>:<archdesc>:<did>:<langmaterial><language>
+  :archive_origination_creator, # <ead>:<archdesc>:<did>:<origination label="creator">
   :archive_physical_description_extent_carrier, # <ead>:<archdesc>:<did>:<physdesc>:<extent @altrender="carrier">
   :archive_preferred_citation_head, # <ead>:<archdesc>:<prefercite>:<head>
   :archive_preferred_citation_value, # <ead>:<archdesc>:<prefercite>:<p>

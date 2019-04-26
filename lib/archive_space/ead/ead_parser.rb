@@ -14,6 +14,7 @@ module ArchiveSpace
         archive_dsc_series_titles: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]/xmlns:did/xmlns:unittitle',
         archive_id: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid',
         archive_language: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:langmaterial/xmlns:language',
+        archive_origination_creator: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:origination[@label="creator"]',
         archive_physical_description_extent_carrier: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:physdesc/xmlns:extent[@altrender="carrier"]',
         archive_preferred_citation_head: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:head',
         archive_preferred_citation_value: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:p',
@@ -48,6 +49,7 @@ module ArchiveSpace
         @archive_date = nokogiri_xml.xpath(XPATH[:archive_date]).text
         @archive_id = nokogiri_xml.xpath(XPATH[:archive_id]).text
         @archive_language = nokogiri_xml.xpath(XPATH[:archive_language]).text
+        @archive_origination_creator = nokogiri_xml.xpath(XPATH[:archive_origination_creator]).text
         @archive_physical_description_extent_carrier = nokogiri_xml.xpath(XPATH[:archive_physical_description_extent_carrier]).text
         @archive_repository = nokogiri_xml.xpath(XPATH[:archive_repository]).text
         @archive_title = nokogiri_xml.xpath(XPATH[:archive_title]).text
