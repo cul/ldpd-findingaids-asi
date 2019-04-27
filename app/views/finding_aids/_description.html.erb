@@ -1,6 +1,6 @@
 <h3><%= @scope_content_head %></h3>
 <% @scope_content_values.each do |scope_content_value| %>
-  <p><%= scope_content_value.text %></p>
+  <%== apply_title_render_italic scope_content_value %>
 <% end %>
 <p>
   <ul style="list-style-type:none;">
