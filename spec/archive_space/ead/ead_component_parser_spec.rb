@@ -23,18 +23,6 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         expect(subject).to respond_to(:parse).with(1).argument
       end
 
-      it 'generate_html method that takes no arguments' do
-        expect(subject).to respond_to(:generate_html).with(0).arguments
-      end
-
-      it 'generate_html_child_components that takes one argument' do
-        expect(subject).to respond_to(:generate_html_child_components).with(1).arguments
-      end
-
-      it 'generate_html_component that takes one argument' do
-        expect(subject).to respond_to(:generate_html_component).with(1).arguments
-      end
-
       it 'generate_info method that takes no arguments' do
         expect(subject).to respond_to(:generate_info).with(0).arguments
       end
