@@ -105,12 +105,10 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
     ########################################## parse
     context 'parse' do
       before(:example) do
-        xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-        @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
+        xml_input = fixture_file_upload('asi/test_c_element.xml').read
         @nokogiri_xml = Nokogiri::XML(xml_input)
-        @as_ead.parse_arch_desc_dsc @nokogiri_xml
         @as_ead_series = ArchiveSpace::Ead::EadComponentParser.new
-        @as_ead_series.parse @as_ead.archive_dsc_series[0]
+        @as_ead_series.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
       end
 
       it 'sets the title correctly' do

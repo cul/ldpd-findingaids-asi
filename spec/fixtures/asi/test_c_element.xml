@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ead xmlns="urn:isbn:1-931666-22-9" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:isbn:1-931666-22-9 http://www.loc.gov/ead/ead.xsd">
+  <archdesc level="collection">
+    <dsc>
+      <c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="series">
+	<did>
+	  <unittitle>Series I: Cataloged Correspondence</unittitle>
+	</did>
+	<scopecontent id="aspace_c35fc09c1d77badb7e08caaa0d60dccf">
+	  <head>Scope and Contents</head>
+	  <p>
+	    In four boxes, numbered 1-4. Kent's letters are arranged chronologically in Boxes 2: (1918-1940); 3: (1941-1969); 4 (Letters to Richard K. Larcada, 1965-1970).
+	  </p>
+	</scopecontent>
+	<otherfindaid id="aspace_e21a175ee1704a70bd7f04d1f5cd4bf7">
+	  <head>Other Finding Aids</head>
+	  <p>
+	    *In addition to the project listing below, a sortable inventory of the drawings can be consult in this
+	    <extref xlink:type="simple" xlink:href="http://www.columbia.edu/cu/libraries/inside/avery_assets/Guastavino_Architectural_Drawings.xls">downloadable Excel spreadsheet.</extref>
+	  </p>
+	</otherfindaid>
+      </c>
+    </dsc>
+  </archdesc>
+</ead>
