@@ -47,7 +47,7 @@ module ArchiveSpace
       def generate_component_info(component, nesting_level = 0)
         title = component.xpath('./xmlns:did/xmlns:unittitle').text
         date = component.xpath('./xmlns:did/xmlns:unitdate').text
-        level = component['level']
+        level = component.attribute('level').text
         scope_content = component.xpath('./xmlns:scopecontent/xmlns:p').text
         # current_first_container_type = component.xpath('./xmlns:did/xmlns:container').first['type'] unless
         # component.xpath('./xmlns:did/xmlns:container').first.nil?

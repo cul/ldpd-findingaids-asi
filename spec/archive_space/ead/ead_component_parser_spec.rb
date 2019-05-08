@@ -73,20 +73,29 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
     end
 
     ########################################## generate_info
-    context 'generate_html_child_components' do
+    context 'generate_info' do
       before(:example) do
-        xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-        @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
+        xml_input = fixture_file_upload('asi/test_c_element.xml').read
         @nokogiri_xml = Nokogiri::XML(xml_input)
-        @as_ead.parse_arch_desc_dsc @nokogiri_xml
         @as_ead_series = ArchiveSpace::Ead::EadComponentParser.new
-        @as_ead_series.parse @as_ead.archive_dsc_series[0]
+        @as_ead_series.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
       end
+
+      let (:expected) {
+        [
+          [0,
+           "Series I: Cataloged Correspondence",
+           "",
+           "series",
+           "\n\t    In four boxes, numbered 1-4. Kent's letters are arranged chronologically in Boxes 2: (1918-1940); 3: (1941-1969).\n\t  ",
+           []
+          ]
+        ]
+      }
 
       it 'generate the correct info' do
         tested = @as_ead_series.generate_info
-        # puts tested.inspect
-        expect(true).to eq true
+        expect(tested).to eq expected
       end
     end
 
