@@ -4,6 +4,8 @@ module ArchiveSpace
   module Ead
     class EadComponentParser
       XPATH = {
+        container: './xmlns:did/xmlns:container',
+        date: './xmlns:did/xmlns:unitdate',
         title: './xmlns:did/xmlns:unittitle',
         scope_content_value: './xmlns:scopecontent/xmlns:p'
       }
@@ -26,10 +28,8 @@ module ArchiveSpace
       end
 
       def generate_info
-        # puts @nokogiri_xml.inspect
         @component_info = []
         generate_component_info(@nokogiri_xml)
-        # @component_info = generate_child_components_info(@nokogiri_xml)
         generate_child_components_info(@nokogiri_xml)
         @component_info
       end
@@ -45,15 +45,11 @@ module ArchiveSpace
       end
 
       def generate_component_info(component, nesting_level = 0)
-        title = component.xpath('./xmlns:did/xmlns:unittitle').text
-        date = component.xpath('./xmlns:did/xmlns:unitdate').text
+        title = component.xpath(XPATH[:title]).text
+        date = component.xpath(XPATH[:date]).text
         level = component.attribute('level').text
-        scope_content = component.xpath('./xmlns:scopecontent/xmlns:p').text
-        # current_first_container_type = component.xpath('./xmlns:did/xmlns:container').first['type'] unless
-        # component.xpath('./xmlns:did/xmlns:container').first.nil?
-        # current_first_container_value = component.xpath('./xmlns:did/xmlns:container').first.text unless
-        # component.xpath('./xmlns:did/xmlns:container').first.nil?
-        container_nokogiri_elements = component.xpath('./xmlns:did/xmlns:container')
+        scope_content = component.xpath(XPATH[:scope_content_value]).text
+        container_nokogiri_elements = component.xpath(XPATH[:container])
         container_info = container_nokogiri_elements.map do |container|
           container_type = container['type']
           container_value = container.text
