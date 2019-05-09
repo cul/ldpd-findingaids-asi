@@ -50,28 +50,6 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
 
   ########################################## Functionality
   describe 'Testing functionality: ' do
-    ########################################## generate_html_child_components
-    context 'generate_html_child_components' do
-      before(:example) do
-        xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-        @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
-        @nokogiri_xml = Nokogiri::XML(xml_input)
-        @as_ead.parse_arch_desc_dsc @nokogiri_xml
-      end
-
-      # TODO: Fix/Change/Finish following. Probably requires changes in above before block
-      it 'process files (CHANGE)' do
-        tested_series = @as_ead.archive_dsc_series[0]
-        # puts '*******************************************'
-        #  puts '*******************************************'
-        # puts @as_ead.generate_html_child_component(tested_series, '')
-        # puts @as_ead.process_children_files(series_c_children)
-        # puts tested
-        # expect(tested).to include({:title => 'Price, Arthur: to Rockwell Kent, t.l.s., 15', :box_number => '3'})
-        expect(true).to eq true
-      end
-    end
-
     ########################################## generate_info
     context 'generate_info' do
       before(:example) do
