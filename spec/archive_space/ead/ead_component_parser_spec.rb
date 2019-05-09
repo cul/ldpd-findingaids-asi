@@ -65,7 +65,8 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
            "Series I: Cataloged Correspondence",
            "",
            "series",
-           "\n\t    In four boxes, numbered 1-4. Kent's letters are arranged chronologically in Boxes 2: (1918-1940); 3: (1941-1969).\n\t  ",
+           "In four boxes, numbered 1-4. Kent's letters are arranged chronologically in Boxes 2: (1918-1940); 3: (1941-1969).",
+           "*In addition, a sortable inventory in this downloadable Excel spreadsheet.",
            []
           ]
         ]

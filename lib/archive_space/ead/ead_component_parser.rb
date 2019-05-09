@@ -6,6 +6,7 @@ module ArchiveSpace
       XPATH = {
         container: './xmlns:did/xmlns:container',
         date: './xmlns:did/xmlns:unitdate',
+        other_finding_aid_value: './xmlns:otherfindaid/xmlns:p',
         title: './xmlns:did/xmlns:unittitle',
         scope_content_value: './xmlns:scopecontent/xmlns:p'
       }
@@ -49,13 +50,14 @@ module ArchiveSpace
         date = component.xpath(XPATH[:date]).text
         level = component.attribute('level').text
         scope_content = component.xpath(XPATH[:scope_content_value]).text
+        other_finding_aid = component.xpath(XPATH[:other_finding_aid_value]).text
         container_nokogiri_elements = component.xpath(XPATH[:container])
         container_info = container_nokogiri_elements.map do |container|
           container_type = container['type']
           container_value = container.text
           "#{container_type.capitalize} #{container_value}"
         end
-        @component_info.append [nesting_level, title, date, level, scope_content, container_info]
+        @component_info.append [nesting_level, title, date, level, scope_content, other_finding_aid, container_info]
       end
     end
   end

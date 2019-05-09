@@ -4,7 +4,7 @@
   <% @checkbox_id = 0 %>
   <% current_nesting_level = 1 %>
   <% @flattened_component_structure.each do |component| %>
-    <% nesting_level, title, date, level, scope_content, container_info = component %>
+    <% nesting_level, title, date, level, scope_content, other_finding_aid, container_info = component %>
     <% if nesting_level > current_nesting_level %>
       <hr style="margin-top:10px;margin-bottom:10px">
       <div class="component_entry" style="margin-left:2em;">
@@ -22,6 +22,9 @@
     </p>
     <% unless scope_content.blank? %>
       <p style="margin:0"><%= scope_content %></p>
+    <% end %>
+    <% unless other_finding_aid.blank? %>
+      <p style="margin:0"><%= other_finding_aid %></p>
     <% end %>
   <% end %>
 </div>
