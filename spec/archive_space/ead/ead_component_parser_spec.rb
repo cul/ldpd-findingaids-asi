@@ -46,7 +46,13 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         @nokogiri_xml = Nokogiri::XML(xml_input)
         @as_ead_series = ArchiveSpace::Ead::EadComponentParser.new
         @as_ead_series.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
-        @nesting_level, @title, @date, @level, @scope_content_values, @other_finding_aid, @container_info = @as_ead_series.generate_info.first
+        ( @nesting_level,
+          @title,
+          @date,
+          @level,
+          @scope_content_values,
+          @other_finding_aid_values,
+          @container_info ) = @as_ead_series.generate_info.first
       end
 
       let (:expected_scope_content_values) {
@@ -54,6 +60,14 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           "In four boxes, numbered 1-4.",
           "The Builder. Nov 11, 1921. Excerpt;",
           "Notice de la constitution des societe local."
+        ]
+      }
+
+      let (:expected_other_finding_aid_values) {
+        [
+          "*In addition, a sortable inventory in this downloadable Excel spreadsheet.",
+          "A pdf version is available for download.",
+          "Another finding aid available online."
         ]
       }
 
@@ -75,8 +89,10 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         end
       end
 
-      it 'generates the correct other finding aid' do
-        expect(@other_finding_aid).to eq '*In addition, a sortable inventory in this downloadable Excel spreadsheet.'
+      it 'generates the correct other finding aid values' do
+        @other_finding_aid_values.each_with_index do |other_finding_aid_value, index|
+          expect(other_finding_aid_value.text).to eq expected_other_finding_aid_values[index]
+        end
       end
     end
 

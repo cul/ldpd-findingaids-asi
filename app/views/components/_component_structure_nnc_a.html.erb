@@ -2,7 +2,14 @@
   <h1>Avery</h1>
   <table style="width:100%">
     <% @flattened_component_structure.each do |component| %>
-      <% nesting_level, title, date, level, scope_content_values, other_finding_aid, container_info = component %>
+      <% ( nesting_level,
+           title,
+           date,
+           level,
+           scope_content_values,
+           other_finding_aid_values,
+           container_info ) = component
+      %>
       <tr style="border-top:1px solid #eee">
         <td style="width:20%"><%= container_info.join(' ') %></td>
         <td style="width:60%;font-weight:bold"> <%= title %> </td>
@@ -19,10 +26,14 @@
           <td style="width:20%"></td>
         </tr>
       <% end %>
-      <% unless other_finding_aid.blank? %>
+      <% unless other_finding_aid_values.empty? %>
         <tr>
           <td style="width:20%"></td>
-          <td style="width:60%"><%= other_finding_aid %></td>
+          <td style="width:60%">
+	    <% other_finding_aid_values.each do |other_finding_aid_value| %>
+	      <%== apply_extref_type_simple other_finding_aid_value %>
+	    <% end %>
+	  </td>
           <td style="width:20%"></td>
         </tr>
       <% end %>
