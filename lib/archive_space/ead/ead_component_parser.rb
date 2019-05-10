@@ -8,18 +8,19 @@ module ArchiveSpace
         date: './xmlns:did/xmlns:unitdate',
         other_finding_aid_value: './xmlns:otherfindaid/xmlns:p',
         title: './xmlns:did/xmlns:unittitle',
-        scope_content_value: './xmlns:scopecontent/xmlns:p'
+        scope_content_p: './xmlns:scopecontent/xmlns:p'
       }
 
       attr_reader *XPATH.keys
       attr_reader :nokogiri_xml
+      attr_reader :scope_content_value
 
       # Takes a Nokogiri::XML::Element (fcd1: verify this)
       # containing a <c lelvel="series"> element
       def parse(nokogiri_xml)
         @nokogiri_xml = nokogiri_xml
         @title = nokogiri_xml.xpath(XPATH[:title]).text
-        @scope_content_value = nokogiri_xml.xpath(XPATH[:scope_content_value]).text
+        @scope_content_value = nokogiri_xml.xpath(XPATH[:scope_content_p]).text
       end
 
       def generate_info
@@ -43,7 +44,7 @@ module ArchiveSpace
         title = component.xpath(XPATH[:title]).text
         date = component.xpath(XPATH[:date]).text
         level = component.attribute('level').text
-        scope_content = component.xpath(XPATH[:scope_content_value]).text
+        scope_content_values = component.xpath(XPATH[:scope_content_p])
         other_finding_aid = component.xpath(XPATH[:other_finding_aid_value]).text
         container_nokogiri_elements = component.xpath(XPATH[:container])
         container_info = container_nokogiri_elements.map do |container|
@@ -51,7 +52,7 @@ module ArchiveSpace
           container_value = container.text
           "#{container_type.capitalize} #{container_value}"
         end
-        @component_info.append [nesting_level, title, date, level, scope_content, other_finding_aid, container_info]
+        @component_info.append [nesting_level, title, date, level, scope_content_values, other_finding_aid, container_info]
       end
     end
   end

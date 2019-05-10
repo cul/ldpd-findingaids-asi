@@ -46,24 +46,37 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         @nokogiri_xml = Nokogiri::XML(xml_input)
         @as_ead_series = ArchiveSpace::Ead::EadComponentParser.new
         @as_ead_series.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
+        @nesting_level, @title, @date, @level, @scope_content_values, @other_finding_aid, @container_info = @as_ead_series.generate_info.first
       end
 
-      let (:expected) {
+      let (:expected_scope_content_values) {
         [
-          [0,
-           "Series I: Cataloged Correspondence",
-           "",
-           "series",
-           "In four boxes, numbered 1-4. Kent's letters are arranged chronologically in Boxes 2: (1918-1940); 3: (1941-1969).",
-           "*In addition, a sortable inventory in this downloadable Excel spreadsheet.",
-           []
-          ]
+          "In four boxes, numbered 1-4.",
+          "The Builder. Nov 11, 1921. Excerpt;",
+          "Notice de la constitution des societe local."
         ]
       }
 
-      it 'generate the correct info' do
-        tested = @as_ead_series.generate_info
-        expect(tested).to eq expected
+      it 'generates the correct nesting level' do
+        expect(@nesting_level).to eq 0
+      end
+
+      it 'generates the correct title' do
+        expect(@title).to eq 'Series I: Cataloged Correspondence'
+      end
+
+      it 'generates the correct level' do
+        expect(@level).to eq 'series'
+      end
+
+      it 'generates the correct scope content values' do
+        @scope_content_values.each_with_index do |scope_content_value, index|
+          expect(scope_content_value.text).to eq expected_scope_content_values[index]
+        end
+      end
+
+      it 'generates the correct other finding aid' do
+        expect(@other_finding_aid).to eq '*In addition, a sortable inventory in this downloadable Excel spreadsheet.'
       end
     end
 
@@ -83,7 +96,7 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
 
       it 'sets the scope content correctly' do
         tested = @as_ead_series.scope_content_value
-        expect(tested).to include "Kent's letters are arranged chronologically in Boxes 2: (1918-1940); 3: (1941-1969)"
+        expect(tested).to include "In four boxes, numbered 1-4."
       end
     end
   end
