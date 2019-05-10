@@ -18,6 +18,10 @@ RSpec.describe FindingAidsHelper, type: :helper do
       it 'apply_title_render_italics method taking one argument' do
         expect(helper).to respond_to(:apply_title_render_italic).with(1).arguments
       end
+
+      it 'apply_extref_type_simple method taking one argument' do
+        expect(helper).to respond_to(:apply_extref_type_simple).with(1).arguments
+      end
     end
   end
 
@@ -31,6 +35,19 @@ RSpec.describe FindingAidsHelper, type: :helper do
         nokogiri_xml = Nokogiri::XML(xml_input).xpath('/xmlns:ead/xmlns:p')
         result = helper.apply_title_render_italic nokogiri_xml
         expect(result.to_s).to include('<i>The Decameron</i>')
+      end
+    end
+
+    context '#apply_extref_type_simple' do
+      it 'creates links in content with <extref xlink:type="simple" xlink:href="..."' do
+        xml_input = fixture_file_upload('asi/extref_type_simple.xml').read
+        # Note: bogus ead format, would never have <p> as direct child of <ead>
+        # but not an issue here, just testing the italicizing functionality
+        # and just want a simple xml doc for Nokogiri to parse.
+        nokogiri_xml = Nokogiri::XML(xml_input).xpath('/xmlns:ead/xmlns:p')
+        result = helper.apply_extref_type_simple nokogiri_xml
+        expect(result.to_s).to include('<a href="http://www.columbia.edu/cu')
+        expect(result.to_s).to include('">downloadable Excel spreadsheet.</a>')
       end
     end
   end
