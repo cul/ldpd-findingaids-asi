@@ -37,17 +37,6 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
     end
   end
 
-  ########################################## Debug API/interface
-  describe 'debug API/interface' do
-    context 'has debug_attr_reader for instance var' do
-      attributes.each do |attribute|
-        it "#{attribute}" do
-          expect(subject).to respond_to("debug_#{attribute}")
-        end
-      end
-    end
-  end
-
   ########################################## Functionality
   describe 'Testing functionality: ' do
     ########################################## generate_info

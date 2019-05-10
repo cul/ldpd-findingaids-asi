@@ -30,12 +30,6 @@ module ArchiveSpace
 
       attr_reader *XPATH.keys
 
-      XPATH.keys.each do |attr|
-        define_method :"debug_#{attr}" do
-          "#{self.send(attr)} DEBUG: #{XPATH[attr]}"
-        end
-      end
-
       def initialize(xml_input)
         @nokogiri_xml = Nokogiri::XML(xml_input)
         parse_arch_desc_did(@nokogiri_xml)

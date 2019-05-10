@@ -58,22 +58,6 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
     end
   end
 
-  ########################################## Debug API/interface
-  describe 'debug API/interface' do
-    before(:context) do
-      xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
-      @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
-    end
-
-    context 'has debug_attr_reader for instance var' do
-      attributes.each do |attribute|
-        it "#{attribute}" do
-          expect(@as_ead).to respond_to("debug_#{attribute}")
-        end
-      end
-    end
-  end
-
   ########################################## Functionality
   describe 'Testing functionality: ' do
     before(:context) do

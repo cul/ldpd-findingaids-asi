@@ -14,12 +14,6 @@ module ArchiveSpace
       attr_reader *XPATH.keys
       attr_reader :nokogiri_xml
 
-      XPATH.keys.each do |attr|
-        define_method :"debug_#{attr}" do
-          "#{self.send(attr)} DEBUG: #{XPATH[attr]}"
-        end
-      end
-
       # Takes a Nokogiri::XML::Element (fcd1: verify this)
       # containing a <c lelvel="series"> element
       def parse(nokogiri_xml)
