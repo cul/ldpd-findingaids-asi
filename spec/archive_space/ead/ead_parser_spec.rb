@@ -59,7 +59,7 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
   end
 
   ########################################## Functionality
-  describe 'Testing functionality: ' do
+  describe 'Testing functionality (OLD): ' do
     before(:context) do
       xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
       @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
@@ -186,6 +186,140 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       end
 
       it 'parses the archive_use_restrictions_value correctly' do
+        tested = @as_ead.archive_use_restrictions_value
+        expect(tested).to include 'be made for research purposes. The RBML maintains ownership of the physical material only. Copyright remains'
+      end
+    end
+  end
+
+  ########################################## Functionality
+  describe 'Testing functionality (NEW): ' do
+    before(:context) do
+      xml_input = fixture_file_upload('asi/test_as_ead_resource.xml').read
+      @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
+      nokogiri_xml = Nokogiri::XML(xml_input)
+      # @as_ead.parse_arch_desc_dsc nokogiri_xml
+    end
+
+    ########################################## parse_arch_desc_did
+    context 'parse_arch_desc_did' do
+      it 'parses the archive_abstract correctly' do
+        tested = @as_ead.archive_abstract
+        expect(tested).to eq "This collection is made up of architectural drawings."
+      end
+
+      it 'parses the archive_date correctly' do
+        tested = @as_ead.archive_date
+        expect(tested).to eq "1894-1966"
+      end
+
+      it 'parses the archive_id correctly' do
+        tested = @as_ead.archive_id
+        expect(tested).to eq '4079591'
+      end
+
+      it 'parses the archive_language correctly' do
+        tested = @as_ead.archive_language
+        expect(tested).to eq 'English'
+      end
+
+      # TODO: need to verify how the sibling <extent> elements are parsed
+      it 'parses the archive_physical_description_extent_carrier correctly' do
+        tested = @as_ead.archive_physical_description_extent_carrier
+        expect(tested).to eq '4 boxes 13 slipcases'
+        # expect(tested).to eq '3 linear feet 4 boxes 13 slipcases'
+      end
+
+      it 'parses the archive_repository correctly' do
+        tested = @as_ead.archive_repository
+        expect(tested).to eq 'Rare Book and Manuscript Library'
+      end
+
+      it 'parses the archive_title correctly' do
+        tested = @as_ead.archive_title
+        expect(tested).to eq 'Siegfried Sassoon papers'
+      end
+    end
+
+    ########################################## parse_arch_desc_dsc
+    xcontext 'parse_arch_desc_dsc' do
+      it 'parses the archive_dsc_series correctly' do
+        tested = @as_ead.archive_dsc_series[0]
+        expect(tested).to be_instance_of Nokogiri::XML::Element
+      end
+
+      it 'parses the archive_dsc_series_titles correctly' do
+        tested = @as_ead.archive_dsc_series_titles
+        expect(tested).to include 'Series VII: Bookplates'
+      end
+    end
+
+    ########################################## parse_arch_desc_misc
+    context 'parse_arch_desc_misc' do
+      let (:expected_scope_content_values) {
+        [
+          "The Edith Elmer Wood Collection covers a short but important period in the housing field.",
+          "The collection documents this period."
+        ]
+      }
+
+      xit 'parses the archive_access_restrictions_head correctly' do
+        tested = @as_ead.archive_access_restrictions_head
+        expect(tested).to eq 'Restrictions on Access'
+      end
+
+      xit 'parses the archive_access_restrictions_value correctly' do
+        tested = @as_ead.archive_access_restrictions_value
+        expect(tested).to eq 'This collection is located on-site.This collection has no restrictions.'
+      end
+
+      xit 'parses the archive_biography_history_head correctly' do
+        tested = @as_ead.archive_biography_history_head
+        expect(tested).to eq 'Biographical / Historical'
+      end
+
+      xit 'parses the archive_biography_history_values correctly' do
+        tested = @as_ead.archive_biography_history_values.text
+        expect(tested).to eq 'American artist, travel writer, and political activist.'
+      end
+
+      xit 'parses the archive_preferred_citation_head correctly' do
+        tested = @as_ead.archive_preferred_citation_head
+        expect(tested).to eq 'Preferred Citation'
+      end
+
+      xit 'parses the archive_preferred_citation_value correctly' do
+        tested = @as_ead.archive_preferred_citation_value
+        expect(tested).to include "specific item; Date (if known); Rockwell Kent papers; Box and"
+      end
+
+      xit 'parses the archive_processing_information_head correctly' do
+        tested = @as_ead.archive_processing_information_head
+        expect(tested).to eq 'Processing Information'
+      end
+
+      xit 'parses the archive_processing_information_value correctly' do
+        tested = @as_ead.archive_processing_information_value
+        expect(tested).to include "31 letters from RK to Henry Wohltjen Cataloged HR 11/06/1996."
+      end
+
+      it 'parses the archive_scope_content_head correctly' do
+        tested = @as_ead.archive_scope_content_head
+        expect(tested).to eq 'Scope and Content'
+      end
+
+      it 'parses the archive_scope_content_values correctly' do
+        @as_ead.archive_scope_content_values.each_with_index do |scope_content_value, index|
+          expect(scope_content_value.text).to eq expected_scope_content_values[index]
+        end
+      end
+
+      xit 'parses the archive_use_restrictions_head correctly' do
+        tested = @as_ead.archive_use_restrictions_head
+        expect(tested).to eq 'Terms Governing Use and Reproduction'
+      end
+
+      xit 'parses the archive_use_restrictions_value correctly' do
         tested = @as_ead.archive_use_restrictions_value
         expect(tested).to include 'be made for research purposes. The RBML maintains ownership of the physical material only. Copyright remains'
       end
