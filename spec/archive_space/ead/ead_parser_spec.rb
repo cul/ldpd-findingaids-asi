@@ -23,7 +23,7 @@ attributes = [
   :archive_scope_content_values, # <ead>:<archdesc>:<scopecontent>:<p>
   :archive_title, # <ead>:<archdesc>:<did>:<unititle>
   :archive_use_restrictions_head, # <ead>:<archdesc>:<userestrict>:<head>
-  :archive_use_restrictions_value # <ead>:<archdesc>:<userestrict>:<p>
+  :archive_use_restrictions_values # <ead>:<archdesc>:<userestrict>:<p>
 ].freeze
 
 
@@ -157,6 +157,13 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_use_restrictions_values) {
+        [
+          "Readers must use microfilm of materials specified above.",
+          "Single photocopies may be made for research purposes."
+        ]
+      }
+
       it 'parses the archive_access_restrictions_head correctly' do
         tested = @as_ead.archive_access_restrictions_head
         expect(tested).to eq 'Restrictions on Access'
@@ -212,14 +219,15 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         end
       end
 
-      xit 'parses the archive_use_restrictions_head correctly' do
+      it 'parses the archive_use_restrictions_head correctly' do
         tested = @as_ead.archive_use_restrictions_head
         expect(tested).to eq 'Terms Governing Use and Reproduction'
       end
 
-      xit 'parses the archive_use_restrictions_value correctly' do
-        tested = @as_ead.archive_use_restrictions_value
-        expect(tested).to include 'be made for research purposes. The RBML maintains ownership of the physical material only. Copyright remains'
+      it 'parses the archive_use_restrictions_values correctly' do
+        @as_ead.archive_use_restrictions_values.each_with_index do |use_restrictions_value, index|
+          expect(use_restrictions_value.text).to eq expected_use_restrictions_values[index]
+        end
       end
     end
   end

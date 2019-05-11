@@ -4,7 +4,9 @@
   <%==  access_restrictions_value %>
 <% end %>
 <h3><%= @use_restrictions_head %></h2>
-<p><%= @use_restrictions_value %></p>
+<% @use_restrictions_values.each do |use_restrictions_value| %>
+  <%==  use_restrictions_value %>
+<% end %>
 <h3><%= @preferred_citation_head %></h3>
 <% @preferred_citation_values.each do |preferred_citation_value| %>
   <%==  preferred_citation_value %>

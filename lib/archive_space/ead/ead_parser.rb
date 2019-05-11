@@ -25,7 +25,7 @@ module ArchiveSpace
         archive_scope_content_values: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
         archive_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle',
         archive_use_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:head',
-        archive_use_restrictions_value: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:p'
+        archive_use_restrictions_values: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:p'
       }
 
       attr_reader *XPATH.keys
@@ -78,7 +78,7 @@ module ArchiveSpace
         @archive_scope_content_values = nokogiri_xml.xpath(XPATH[:archive_scope_content_values])
         @archive_use_restrictions_head = nokogiri_xml.xpath(XPATH[:archive_use_restrictions_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_use_restrictions_head]).first.nil?
-        @archive_use_restrictions_value = nokogiri_xml.xpath(XPATH[:archive_use_restrictions_value]).text
+        @archive_use_restrictions_values = nokogiri_xml.xpath(XPATH[:archive_use_restrictions_values])
       end
 
       def get_creators

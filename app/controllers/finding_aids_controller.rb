@@ -45,7 +45,7 @@ class FindingAidsController < ApplicationController
     @preferred_citation_head = @ead.archive_preferred_citation_head
     @preferred_citation_values = @ead.archive_preferred_citation_values
     @use_restrictions_head = @ead.archive_use_restrictions_head
-    @use_restrictions_value = @ead.archive_use_restrictions_value
+    @use_restrictions_values = @ead.archive_use_restrictions_values
     @processing_information_head = @ead.archive_processing_information_head
     @processing_information_values = @ead.archive_processing_information_values
     @biography_history_head = @ead.archive_biography_history_head
