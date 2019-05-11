@@ -15,7 +15,7 @@ attributes = [
   :archive_origination_creator, # <ead>:<archdesc>:<did>:<origination label="creator">
   :archive_physical_description_extent_carrier, # <ead>:<archdesc>:<did>:<physdesc>:<extent @altrender="carrier">
   :archive_preferred_citation_head, # <ead>:<archdesc>:<prefercite>:<head>
-  :archive_preferred_citation_value, # <ead>:<archdesc>:<prefercite>:<p>
+  :archive_preferred_citation_values, # <ead>:<archdesc>:<prefercite>:<p>
   :archive_processing_information_head, # <ead>:<archdesc>:<processinfo>:<head>
   :archive_processing_information_value, # <ead>:<archdesc>:<processinfo>:<p>
   :archive_repository, # <ead><archdesc><did><repository><corpname>
@@ -143,6 +143,13 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_preferred_citation_values) {
+        [
+          "Identification of specific item.",
+          "Date and Provenance of specific item."
+        ]
+      }
+
       it 'parses the archive_access_restrictions_head correctly' do
         tested = @as_ead.archive_access_restrictions_head
         expect(tested).to eq 'Restrictions on Access'
@@ -165,14 +172,15 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         end
       end
 
-      xit 'parses the archive_preferred_citation_head correctly' do
+      it 'parses the archive_preferred_citation_head correctly' do
         tested = @as_ead.archive_preferred_citation_head
         expect(tested).to eq 'Preferred Citation'
       end
 
-      xit 'parses the archive_preferred_citation_value correctly' do
-        tested = @as_ead.archive_preferred_citation_value
-        expect(tested).to include "specific item; Date (if known); Rockwell Kent papers; Box and"
+      it 'parses the archive_preferred_citation_values correctly' do
+        @as_ead.archive_preferred_citation_values.each_with_index do |preferred_citation_value, index|
+          expect(preferred_citation_value.text).to eq expected_preferred_citation_values[index]
+        end
       end
 
       xit 'parses the archive_processing_information_head correctly' do

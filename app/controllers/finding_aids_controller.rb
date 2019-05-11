@@ -43,7 +43,7 @@ class FindingAidsController < ApplicationController
     @scope_content_values = @ead.archive_scope_content_values
     @repository_corpname = @ead.archive_repository
     @preferred_citation_head = @ead.archive_preferred_citation_head
-    @preferred_citation_value = @ead.archive_preferred_citation_value
+    @preferred_citation_values = @ead.archive_preferred_citation_values
     @use_restrictions_head = @ead.archive_use_restrictions_head
     @use_restrictions_value = @ead.archive_use_restrictions_value
     @processing_information_head = @ead.archive_processing_information_head

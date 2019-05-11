@@ -17,7 +17,7 @@ module ArchiveSpace
         archive_origination_creator: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:origination[@label="creator"]',
         archive_physical_description_extent_carrier: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:physdesc/xmlns:extent[@altrender="carrier"]',
         archive_preferred_citation_head: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:head',
-        archive_preferred_citation_value: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:p',
+        archive_preferred_citation_values: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:p',
         archive_processing_information_head: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:head',
         archive_processing_information_value: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:p',
         archive_repository: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:repository/xmlns:corpname',
@@ -69,7 +69,7 @@ module ArchiveSpace
         @archive_biography_history_values = nokogiri_xml.xpath(XPATH[:archive_biography_history_values])
         @archive_preferred_citation_head = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_preferred_citation_head]).first.nil?
-        @archive_preferred_citation_value = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_value]).text
+        @archive_preferred_citation_values = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_values])
         @archive_processing_information_head = nokogiri_xml.xpath(XPATH[:archive_processing_information_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_processing_information_head]).first.nil?
         @archive_processing_information_value = nokogiri_xml.xpath(XPATH[:archive_processing_information_value]).text

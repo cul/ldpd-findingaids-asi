@@ -6,4 +6,6 @@
 <h3><%= @use_restrictions_head %></h2>
 <p><%= @use_restrictions_value %></p>
 <h3><%= @preferred_citation_head %></h3>
-<p><%= @preferred_citation_value %></p>
+<% @preferred_citation_values.each do |preferred_citation_value| %>
+  <%==  preferred_citation_value %>
+<% end %>
