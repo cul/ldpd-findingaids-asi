@@ -136,6 +136,13 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_biography_history_values) {
+        [
+          "Siegfried Loraine Sassoon, CBE, MC was an English poet, writer, and soldier.",
+          "Decorated for bravery on the Western Front."
+        ]
+      }
+
       it 'parses the archive_access_restrictions_head correctly' do
         tested = @as_ead.archive_access_restrictions_head
         expect(tested).to eq 'Restrictions on Access'
@@ -147,14 +154,15 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         end
       end
 
-      xit 'parses the archive_biography_history_head correctly' do
+      it 'parses the archive_biography_history_head correctly' do
         tested = @as_ead.archive_biography_history_head
-        expect(tested).to eq 'Biographical / Historical'
+        expect(tested).to eq 'Biographical note'
       end
 
-      xit 'parses the archive_biography_history_values correctly' do
-        tested = @as_ead.archive_biography_history_values.text
-        expect(tested).to eq 'American artist, travel writer, and political activist.'
+      it 'parses the archive_biography_history_values correctly' do
+        @as_ead.archive_biography_history_values.each_with_index do |biography_history_value, index|
+          expect(biography_history_value.text).to eq expected_biography_history_values[index]
+        end
       end
 
       xit 'parses the archive_preferred_citation_head correctly' do
