@@ -98,6 +98,14 @@
       <head>Processing Information</head>
       <p>4 letters of Arnold Bennett Cataloged HR 11/25/1991.</p>
     </processinfo>
+    <accruals>
+      <head>Accruals</head>
+      <p>No additional material is expected in the short term.</p>
+    </accruals>
+    <accruals>
+      <head>Accruals</head>
+      <p>Additional material is expected in the long term.</p>
+    </accruals>
     <controlaccess>
       <subject source="lcsh">Art</subject>
       <subject source="lcsh">Drawing</subject>

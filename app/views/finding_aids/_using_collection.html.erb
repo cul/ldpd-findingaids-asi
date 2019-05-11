@@ -11,3 +11,7 @@
 <% @preferred_citation_values.each do |preferred_citation_value| %>
   <%==  preferred_citation_value %>
 <% end %>
+<%= content_tag(:h3,@accruals_head) unless @accruals_head.nil? %>
+<% @accruals_values.each do |accruals_value| %>
+  <%==  accruals_value %>
+<% end %>

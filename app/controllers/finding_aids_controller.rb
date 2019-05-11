@@ -39,6 +39,8 @@ class FindingAidsController < ApplicationController
     @language = @ead.archive_language
     @access_restrictions_head = @ead.archive_access_restrictions_head
     @access_restrictions_values = @ead.archive_access_restrictions_values
+    @accruals_head = @ead.archive_accruals_head
+    @accruals_values = @ead.archive_accruals_values
     @scope_content_head = @ead.archive_scope_content_head
     @scope_content_values = @ead.archive_scope_content_values
     @repository_corpname = @ead.archive_repository

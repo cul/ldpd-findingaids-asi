@@ -5,6 +5,8 @@ attributes = [
   :archive_abstract, # <ead>:<archdesc>:<did>:<abstract>
   :archive_access_restrictions_head, # <ead>:<archdesc>:<accessrestrict>:<head>
   :archive_access_restrictions_values, # <ead>:<archdesc>:<accessrestrict>:<p>
+  :archive_accruals_head, # <ead>:<archdesc>:<accruals>:<head>
+  :archive_accruals_values, # <ead>:<archdesc>:<accruals>:<p>
   :archive_biography_history_head, # <ead>:<archdesc>:<bioghist>:<head>
   :archive_biography_history_values, # <ead>:<archdesc>:<bioghist>:<p>
   :archive_date, # <ead>:<archdesc>:<did>:<unitdate>
@@ -122,17 +124,17 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
 
     ########################################## parse_arch_desc_misc
     context 'parse_arch_desc_misc' do
-      let (:expected_scope_content_values) {
-        [
-          "The Edith Elmer Wood Collection covers a short but important period in the housing field.",
-          "The collection documents this period."
-        ]
-      }
-
       let (:expected_access_restrictions_values) {
         [
           "This collection is located on-site.",
           "This collection has no restrictions."
+        ]
+      }
+
+      let (:expected_accruals_values) {
+        [
+          "No additional material is expected in the short term.",
+          "Additional material is expected in the long term."
         ]
       }
 
@@ -157,6 +159,13 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_scope_content_values) {
+        [
+          "The Edith Elmer Wood Collection covers a short but important period in the housing field.",
+          "The collection documents this period."
+        ]
+      }
+
       let (:expected_use_restrictions_values) {
         [
           "Readers must use microfilm of materials specified above.",
@@ -172,6 +181,17 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       it 'parses the archive_access_restrictions_values correctly' do
         @as_ead.archive_access_restrictions_values.each_with_index do |access_restrictions_value, index|
           expect(access_restrictions_value.text).to eq expected_access_restrictions_values[index]
+        end
+      end
+
+      it 'parses the archive_accruals_head correctly' do
+        tested = @as_ead.archive_accruals_head
+        expect(tested).to eq 'Accruals'
+      end
+
+      it 'parses the archive_accruals_values correctly' do
+        @as_ead.archive_accruals_values.each_with_index do |accruals_value, index|
+          expect(accruals_value.text).to eq expected_accruals_values[index]
         end
       end
 
