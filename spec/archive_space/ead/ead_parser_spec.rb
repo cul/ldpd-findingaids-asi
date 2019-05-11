@@ -4,7 +4,7 @@ require 'archive_space/ead/ead_parser.rb'
 attributes = [
   :archive_abstract, # <ead>:<archdesc>:<did>:<abstract>
   :archive_access_restrictions_head, # <ead>:<archdesc>:<accessrestrict>:<head>
-  :archive_access_restrictions_value, # <ead>:<archdesc>:<accessrestrict>:<p>
+  :archive_access_restrictions_values, # <ead>:<archdesc>:<accessrestrict>:<p>
   :archive_biography_history_head, # <ead>:<archdesc>:<bioghist>:<head>
   :archive_biography_history_values, # <ead>:<archdesc>:<bioghist>:<p>
   :archive_date, # <ead>:<archdesc>:<did>:<unitdate>
@@ -59,7 +59,7 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
   end
 
   ########################################## Functionality
-  describe 'Testing functionality (OLD): ' do
+  xdescribe 'Testing functionality (OLD): ' do
     before(:context) do
       xml_input = fixture_file_upload('asi/as_ead_resource_4767_representation.xml').read
       @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
@@ -263,14 +263,22 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
-      xit 'parses the archive_access_restrictions_head correctly' do
+      let (:expected_access_restrictions_values) {
+        [
+          "This collection is located on-site.",
+          "This collection has no restrictions."
+        ]
+      }
+
+      it 'parses the archive_access_restrictions_head correctly' do
         tested = @as_ead.archive_access_restrictions_head
         expect(tested).to eq 'Restrictions on Access'
       end
 
-      xit 'parses the archive_access_restrictions_value correctly' do
-        tested = @as_ead.archive_access_restrictions_value
-        expect(tested).to eq 'This collection is located on-site.This collection has no restrictions.'
+      it 'parses the archive_access_restrictions_values correctly' do
+        @as_ead.archive_access_restrictions_values.each_with_index do |access_restrictions_value, index|
+          expect(access_restrictions_value.text).to eq expected_access_restrictions_values[index]
+        end
       end
 
       xit 'parses the archive_biography_history_head correctly' do

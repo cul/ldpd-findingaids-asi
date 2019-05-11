@@ -6,7 +6,7 @@ module ArchiveSpace
       XPATH = {
         archive_abstract: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:abstract',
         archive_access_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:head',
-        archive_access_restrictions_value: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:p',
+        archive_access_restrictions_values: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:p',
         archive_biography_history_head: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:head',
         archive_biography_history_values: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:p',
         archive_date: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
@@ -63,7 +63,7 @@ module ArchiveSpace
       def parse_arch_desc_misc(nokogiri_xml)
         @archive_access_restrictions_head = nokogiri_xml.xpath(XPATH[:archive_access_restrictions_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_access_restrictions_head]).first.nil?
-        @archive_access_restrictions_value = nokogiri_xml.xpath(XPATH[:archive_access_restrictions_value]).text
+        @archive_access_restrictions_values = nokogiri_xml.xpath(XPATH[:archive_access_restrictions_values])
         @archive_biography_history_head = nokogiri_xml.xpath(XPATH[:archive_biography_history_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_biography_history_head]).first.nil?
         @archive_biography_history_values = nokogiri_xml.xpath(XPATH[:archive_biography_history_values])

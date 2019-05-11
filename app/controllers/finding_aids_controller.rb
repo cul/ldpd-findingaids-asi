@@ -38,7 +38,7 @@ class FindingAidsController < ApplicationController
     @physical_description = @ead.archive_physical_description_extent_carrier
     @language = @ead.archive_language
     @access_restrictions_head = @ead.archive_access_restrictions_head
-    @access_restrictions_value = @ead.archive_access_restrictions_value
+    @access_restrictions_values = @ead.archive_access_restrictions_values
     @scope_content_head = @ead.archive_scope_content_head
     @scope_content_values = @ead.archive_scope_content_values
     @repository_corpname = @ead.archive_repository

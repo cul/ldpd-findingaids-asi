@@ -1,6 +1,8 @@
 <p><%= @repository_corpname %></p>
 <h3><%= @access_restrictions_head %></h3>
-<p><%= @access_restrictions_value %></p>
+<% @access_restrictions_values.each do |access_restrictions_value| %>
+  <%==  access_restrictions_value %>
+<% end %>
 <h3><%= @use_restrictions_head %></h2>
 <p><%= @use_restrictions_value %></p>
 <h3><%= @preferred_citation_head %></h3>
