@@ -17,7 +17,7 @@ attributes = [
   :archive_preferred_citation_head, # <ead>:<archdesc>:<prefercite>:<head>
   :archive_preferred_citation_values, # <ead>:<archdesc>:<prefercite>:<p>
   :archive_processing_information_head, # <ead>:<archdesc>:<processinfo>:<head>
-  :archive_processing_information_value, # <ead>:<archdesc>:<processinfo>:<p>
+  :archive_processing_information_values, # <ead>:<archdesc>:<processinfo>:<p>
   :archive_repository, # <ead><archdesc><did><repository><corpname>
   :archive_scope_content_head, # <ead>:<archdesc>:<scopecontent>:<head>
   :archive_scope_content_values, # <ead>:<archdesc>:<scopecontent>:<p>
@@ -150,6 +150,13 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_processing_information_values) {
+        [
+          "Papers Entered in AMC 11/29/1990.",
+          "4 letters of Arnold Bennett Cataloged HR 11/25/1991."
+        ]
+      }
+
       it 'parses the archive_access_restrictions_head correctly' do
         tested = @as_ead.archive_access_restrictions_head
         expect(tested).to eq 'Restrictions on Access'
@@ -183,14 +190,15 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         end
       end
 
-      xit 'parses the archive_processing_information_head correctly' do
+      it 'parses the archive_processing_information_head correctly' do
         tested = @as_ead.archive_processing_information_head
         expect(tested).to eq 'Processing Information'
       end
 
-      xit 'parses the archive_processing_information_value correctly' do
-        tested = @as_ead.archive_processing_information_value
-        expect(tested).to include "31 letters from RK to Henry Wohltjen Cataloged HR 11/06/1996."
+      it 'parses the archive_processing_information_values correctly' do
+        @as_ead.archive_processing_information_values.each_with_index do |processing_information_value, index|
+          expect(processing_information_value.text).to eq expected_processing_information_values[index]
+        end
       end
 
       it 'parses the archive_scope_content_head correctly' do
