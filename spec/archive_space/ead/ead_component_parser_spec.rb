@@ -94,6 +94,10 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           expect(other_finding_aid_value.text).to eq expected_other_finding_aid_values[index]
         end
       end
+
+      it 'generates the correct container info' do
+        expect(@container_info).to eq ["Box 78", "Folder 5"]
+      end
     end
 
     ########################################## parse
