@@ -23,6 +23,7 @@ module ArchiveSpace
         archive_processing_information_head: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:head',
         archive_processing_information_values: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:p',
         archive_repository: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:repository/xmlns:corpname',
+        archive_revision_description_changes: '/xmlns:ead/xmlns:eadheader/xmlns:revisiondesc/xmlns:change',
         archive_scope_content_head: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:head',
         archive_scope_content_values: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
         archive_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle',
@@ -34,9 +35,19 @@ module ArchiveSpace
 
       def initialize(xml_input)
         @nokogiri_xml = Nokogiri::XML(xml_input)
+        parse_ead_header(@nokogiri_xml)
         parse_arch_desc_did(@nokogiri_xml)
         parse_arch_desc_dsc(@nokogiri_xml)
         parse_arch_desc_misc(@nokogiri_xml)
+      end
+
+      # make private? Makes unit test harder
+      def parse_ead_header(nokogiri_xml)
+        revision_description_change_nokogiri_elements =
+          nokogiri_xml.xpath(XPATH[:archive_revision_description_changes])
+        @archive_revision_description_changes = revision_description_change_nokogiri_elements.map do |change|
+          {date: change.xpath('./xmlns:date').text, item: change.xpath('./xmlns:item').text}
+        end
       end
 
       # make private? Makes unit test harder

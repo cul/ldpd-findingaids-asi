@@ -21,6 +21,7 @@ attributes = [
   :archive_processing_information_head, # <ead>:<archdesc>:<processinfo>:<head>
   :archive_processing_information_values, # <ead>:<archdesc>:<processinfo>:<p>
   :archive_repository, # <ead><archdesc><did><repository><corpname>
+  :archive_revision_description_changes, # <ead><archheader><revisiondesc><change>
   :archive_scope_content_head, # <ead>:<archdesc>:<scopecontent>:<head>
   :archive_scope_content_values, # <ead>:<archdesc>:<scopecontent>:<p>
   :archive_title, # <ead>:<archdesc>:<did>:<unititle>
@@ -46,6 +47,10 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
     end
 
     context 'has ' do
+      it 'has #parse_ead_header method' do
+        expect(@as_ead).to respond_to(:parse_ead_header).with(1).arguments
+      end
+
       it 'has #parse_arch_desc_did method' do
         expect(@as_ead).to respond_to(:parse_arch_desc_did).with(1).arguments
       end
@@ -67,6 +72,30 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
       nokogiri_xml = Nokogiri::XML(xml_input)
       # @as_ead.parse_arch_desc_dsc nokogiri_xml
+    end
+
+    ########################################## parse_arch_desc_misc
+    context 'parse_ead_header' do
+      let (:expected_revision_change_dates) {
+        [
+          "2009-06-26",
+          "2019-04-01"
+        ]
+      }
+
+      let (:expected_revision_change_items) {
+        [
+          "File created.",
+          "EAD was imported during the ArchivesSpace Phase II migration."
+        ]
+      }
+
+      it 'parses the archive_revision_description_changes correctly' do
+        @as_ead.archive_revision_description_changes.each_with_index do |change, index|
+          expect(change[:date]).to eq expected_revision_change_dates[index]
+          expect(change[:item]).to eq expected_revision_change_items[index]
+        end
+      end
     end
 
     ########################################## parse_arch_desc_did

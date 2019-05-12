@@ -7,6 +7,16 @@
 	     dateencoding="iso8601"
 	     langencoding="iso639-2b"
 	     repositoryencoding="iso15511">
+    <revisiondesc>
+      <change>
+	<date>2009-06-26</date>
+	<item>File created.</item>
+      </change>
+      <change>
+	<date>2019-04-01</date>
+	<item>EAD was imported during the ArchivesSpace Phase II migration.</item>
+      </change>
+    </revisiondesc>
   </eadheader>
   <archdesc level="collection">
     <did>
