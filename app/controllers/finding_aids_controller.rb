@@ -50,6 +50,8 @@ class FindingAidsController < ApplicationController
     @use_restrictions_values = @ead.archive_use_restrictions_values
     @processing_information_head = @ead.archive_processing_information_head
     @processing_information_values = @ead.archive_processing_information_values
+    @related_material_head = @ead.archive_related_material_head
+    @related_material_values = @ead.archive_related_material_values
     @biography_history_head = @ead.archive_biography_history_head
     @biography_history_values = @ead.archive_biography_history_values
     @revision_description_changes = @ead.archive_revision_description_changes

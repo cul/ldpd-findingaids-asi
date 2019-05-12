@@ -20,6 +20,8 @@ attributes = [
   :archive_preferred_citation_values, # <ead>:<archdesc>:<prefercite>:<p>
   :archive_processing_information_head, # <ead>:<archdesc>:<processinfo>:<head>
   :archive_processing_information_values, # <ead>:<archdesc>:<processinfo>:<p>
+  :archive_related_material_head, # <ead>:<archdesc>:<relatedmaterial>:<head>
+  :archive_related_material_values, # <ead>:<archdesc>:<related_material>:<p>
   :archive_repository, # <ead><archdesc><did><repository><corpname>
   :archive_revision_description_changes, # <ead><archheader><revisiondesc><change>
   :archive_scope_content_head, # <ead>:<archdesc>:<scopecontent>:<head>
@@ -188,6 +190,13 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_related_material_values) {
+        [
+          "The following are the finalized memoirs are cataloged individually:",
+          "Reminiscences of Choy Jun-ke"
+        ]
+      }
+
       let (:expected_scope_content_values) {
         [
           "The Edith Elmer Wood Collection covers a short but important period in the housing field.",
@@ -254,6 +263,17 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       it 'parses the archive_processing_information_values correctly' do
         @as_ead.archive_processing_information_values.each_with_index do |processing_information_value, index|
           expect(processing_information_value.text).to eq expected_processing_information_values[index]
+        end
+      end
+
+      it 'parses the archive_related_material_head correctly' do
+        tested = @as_ead.archive_related_material_head
+        expect(tested).to eq 'Related Materials'
+      end
+
+      it 'parses the archive_related_material_values correctly' do
+        @as_ead.archive_related_material_values.each_with_index do |related_material_value, index|
+          expect(related_material_value.text).to eq expected_related_material_values[index]
         end
       end
 

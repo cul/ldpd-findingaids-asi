@@ -22,6 +22,8 @@ module ArchiveSpace
         archive_preferred_citation_values: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:p',
         archive_processing_information_head: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:head',
         archive_processing_information_values: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:p',
+        archive_related_material_head: '/xmlns:ead/xmlns:archdesc/xmlns:relatedmaterial/xmlns:head',
+        archive_related_material_values: '/xmlns:ead/xmlns:archdesc/xmlns:relatedmaterial/xmlns:p',
         archive_repository: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:repository/xmlns:corpname',
         archive_revision_description_changes: '/xmlns:ead/xmlns:eadheader/xmlns:revisiondesc/xmlns:change',
         archive_scope_content_head: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:head',
@@ -89,6 +91,9 @@ module ArchiveSpace
         @archive_processing_information_head = nokogiri_xml.xpath(XPATH[:archive_processing_information_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_processing_information_head]).first.nil?
         @archive_processing_information_values = nokogiri_xml.xpath(XPATH[:archive_processing_information_values])
+        @archive_related_material_head = nokogiri_xml.xpath(XPATH[:archive_related_material_head]).first.text unless
+          nokogiri_xml.xpath(XPATH[:archive_related_material_head]).first.nil?
+        @archive_related_material_values = nokogiri_xml.xpath(XPATH[:archive_related_material_values])
         @archive_scope_content_head = nokogiri_xml.xpath(XPATH[:archive_scope_content_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_scope_content_head]).first.nil?
         @archive_scope_content_values = nokogiri_xml.xpath(XPATH[:archive_scope_content_values])
