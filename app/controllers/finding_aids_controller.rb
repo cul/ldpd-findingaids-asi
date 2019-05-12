@@ -41,6 +41,8 @@ class FindingAidsController < ApplicationController
     @access_restrictions_values = @ead.archive_access_restrictions_values
     @accruals_head = @ead.archive_accruals_head
     @accruals_values = @ead.archive_accruals_values
+    @alternative_form_available_head = @ead.archive_alternative_form_available_head
+    @alternative_form_available_values = @ead.archive_alternative_form_available_values
     @scope_content_head = @ead.archive_scope_content_head
     @scope_content_values = @ead.archive_scope_content_values
     @repository_corpname = @ead.archive_repository

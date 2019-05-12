@@ -19,3 +19,7 @@
 <% @accruals_values.each do |accruals_value| %>
   <%==  accruals_value %>
 <% end %>
+<%= content_tag(:h3,@alternative_form_available_head) unless @alternative_form_available_head.nil? %>
+<% @alternative_form_available_values.each do |alternative_form_available_value| %>
+  <%==  alternative_form_available_value %>
+<% end %>

@@ -9,6 +9,8 @@ module ArchiveSpace
         archive_access_restrictions_values: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:p',
         archive_accruals_head: '/xmlns:ead/xmlns:archdesc/xmlns:accruals/xmlns:head',
         archive_accruals_values: '/xmlns:ead/xmlns:archdesc/xmlns:accruals/xmlns:p',
+        archive_alternative_form_available_head: '/xmlns:ead/xmlns:archdesc/xmlns:altformavail/xmlns:head',
+        archive_alternative_form_available_values: '/xmlns:ead/xmlns:archdesc/xmlns:altformavail/xmlns:p',
         archive_biography_history_head: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:head',
         archive_biography_history_values: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:p',
         archive_date: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
@@ -82,6 +84,9 @@ module ArchiveSpace
         @archive_accruals_head = nokogiri_xml.xpath(XPATH[:archive_accruals_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_accruals_head]).first.nil?
         @archive_accruals_values = nokogiri_xml.xpath(XPATH[:archive_accruals_values])
+        @archive_alternative_form_available_head = nokogiri_xml.xpath(XPATH[:archive_alternative_form_available_head]).first.text unless
+          nokogiri_xml.xpath(XPATH[:archive_alternative_form_available_head]).first.nil?
+        @archive_alternative_form_available_values = nokogiri_xml.xpath(XPATH[:archive_alternative_form_available_values])
         @archive_biography_history_head = nokogiri_xml.xpath(XPATH[:archive_biography_history_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_biography_history_head]).first.nil?
         @archive_biography_history_values = nokogiri_xml.xpath(XPATH[:archive_biography_history_values])
