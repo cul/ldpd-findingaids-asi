@@ -1,4 +1,9 @@
 module FindingAidsHelper
+  def apply_ead_to_html_transforms content
+    html_content = apply_title_render_italic content
+    html_content = apply_extref_type_simple html_content
+  end
+
   def apply_title_render_italic content
     titles_render_italic = content.xpath('./xmlns:title[@render="italic"]')
     titles_render_italic.each do |title_italic|

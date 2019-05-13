@@ -15,6 +15,10 @@ require 'spec_helper'
 RSpec.describe FindingAidsHelper, type: :helper do
   describe 'API/interface' do
     context 'has' do
+      it 'apply_ead_to_html_transforms taking one argument' do
+        expect(helper).to respond_to(:apply_ead_to_html_transforms).with(1).arguments
+      end
+
       it 'apply_title_render_italics method taking one argument' do
         expect(helper).to respond_to(:apply_title_render_italic).with(1).arguments
       end

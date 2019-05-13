@@ -20,7 +20,7 @@
           <td style="width:20%"></td>
           <td style="width:60%">
 	    <% scope_content_values.each do |scope_content_value| %>
-	      <%== apply_title_render_italic scope_content_value %>
+	      <%== apply_ead_to_html_transforms scope_content_value %>
 	    <% end %>
 	  </td>
           <td style="width:20%"></td>
@@ -31,7 +31,7 @@
           <td style="width:20%"></td>
           <td style="width:60%">
 	    <% other_finding_aid_values.each do |other_finding_aid_value| %>
-	      <%== apply_extref_type_simple other_finding_aid_value %>
+	      <%== apply_ead_to_html_transforms other_finding_aid_value %>
 	    <% end %>
 	  </td>
           <td style="width:20%"></td>
