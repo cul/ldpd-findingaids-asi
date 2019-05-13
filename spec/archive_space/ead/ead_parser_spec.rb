@@ -322,10 +322,6 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
   end
 
   context "API/interface" do
-    xit 'has #get_creators' do
-      expect(subject).to respond_to(:get_creators).with(0).arguments
-    end
-
     xit 'has #get_series_scope_content' do
       expect(subject).to respond_to(:get_series_scope_content).with(0).arguments
     end
@@ -350,11 +346,6 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
     end
 
     context "check functionality" do
-      xit 'get_creators returns correct value' do
-        ead_creators = @as_ead_nokogiri_xml.get_creators
-        expect(ead_creators).to include('Not Present in AS EAD')
-      end
-
       xit 'get_subjects returns correct value' do
         tested = @as_ead_nokogiri_xml.get_subjects
         expect(tested).to include 'Graphic arts'

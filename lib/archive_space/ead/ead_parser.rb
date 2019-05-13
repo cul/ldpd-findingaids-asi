@@ -107,11 +107,6 @@ module ArchiveSpace
         @archive_use_restrictions_values = nokogiri_xml.xpath(XPATH[:archive_use_restrictions_values])
       end
 
-      def get_creators
-        ['Not Present in AS EAD']
-        # @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid').text
-      end
-
       def get_series_scope_content
         series_nokogiri_elements =
           @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
