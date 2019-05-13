@@ -121,7 +121,7 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
 
       it 'parses the archive_language correctly' do
         tested = @as_ead.archive_language
-        expect(tested).to eq 'English'
+        expect(tested).to eq 'Material is in English and in French, with some materials in Dutch.'
       end
 
       # TODO: need to verify how the sibling <extent> elements are parsed
