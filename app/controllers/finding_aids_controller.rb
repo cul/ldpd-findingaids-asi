@@ -58,8 +58,11 @@ class FindingAidsController < ApplicationController
     @revision_description_changes = @ead.archive_revision_description_changes
     @series_titles = @ead.archive_dsc_series_titles
     @series_scope_content = @ead.get_series_scope_content
-    @subjects = @ead.get_subjects
-    @genres_forms = @ead.get_genres_forms
+    @subjects = (@ead.archive_control_access_corpnames +
+                @ead.archive_control_access_occupations +
+                @ead.archive_control_access_persnames +
+                @ead.archive_control_access_subjects).sort
+    @genres_forms = @ead.archive_control_access_genres_forms.sort
   end
 
   def set_bib_id

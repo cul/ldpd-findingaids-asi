@@ -11,6 +11,11 @@ attributes = [
   :archive_alternative_form_available_values, # <ead>:<archdesc>:<accruals>:<p>
   :archive_biography_history_head, # <ead>:<archdesc>:<bioghist>:<head>
   :archive_biography_history_values, # <ead>:<archdesc>:<bioghist>:<p>
+  :archive_control_access_corpnames, # <ead>:<archdesc>:<controlaccess>:<corpname>
+  :archive_control_access_genres_forms, # <ead>:<archdesc>:<controlaccess>:<genreform>
+  :archive_control_access_occupations, # <ead>:<archdesc>:<controlaccess>:<occupation>
+  :archive_control_access_persnames, # <ead>:<archdesc>:<controlaccess>:<persname>
+  :archive_control_access_subjects, # <ead>:<archdesc>:<controlaccess>:<subject>
   :archive_date, # <ead>:<archdesc>:<did>:<unitdate>
   :archive_dsc_series, # <ead>:<archdesc>:<dsc>:<c level=series>, returns array of series
   :archive_dsc_series_titles, # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>, returns array of titles
@@ -185,6 +190,41 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_control_access_corpnames) {
+        [
+          "Barnard College",
+          "Simon and Schuster, Inc"
+        ]
+      }
+
+      let (:expected_control_access_genres_forms) {
+        [
+          "Illustrations",
+          "Initials"
+        ]
+      }
+
+      let (:expected_control_access_occupations) {
+        [
+          "Artists",
+          "Cartoonists"
+        ]
+      }
+
+      let (:expected_control_access_persnames) {
+        [
+          "Fritz, Chester",
+          "Tong, Te-kong, 1920-2009"
+        ]
+      }
+
+      let (:expected_control_access_subjects) {
+        [
+          "Art",
+          "Drawing"
+        ]
+      }
+
       let (:expected_preferred_citation_values) {
         [
           "Identification of specific item.",
@@ -264,6 +304,28 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         end
       end
 
+      it 'parses the archive_control_access_corpnames correctly' do
+        tested = @as_ead.archive_control_access_corpnames
+        expect(tested).to eq expected_control_access_corpnames
+      end
+
+      it 'parses the archive_control_access_genres_forms correctly' do
+        tested = @as_ead.archive_control_access_genres_forms
+        expect(tested).to eq expected_control_access_genres_forms
+      end
+      it 'parses the archive_control_access_occupations correctly' do
+        tested = @as_ead.archive_control_access_occupations
+        expect(tested).to eq expected_control_access_occupations
+      end
+      it 'parses the archive_control_access_persnames correctly' do
+        tested = @as_ead.archive_control_access_persnames
+        expect(tested).to eq expected_control_access_persnames
+      end
+      it 'parses the archive_control_access_subjects correctly' do
+        tested = @as_ead.archive_control_access_subjects
+        expect(tested).to eq expected_control_access_subjects
+      end
+
       it 'parses the archive_preferred_citation_head correctly' do
         tested = @as_ead.archive_preferred_citation_head
         expect(tested).to eq 'Preferred Citation'
@@ -326,14 +388,6 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       expect(subject).to respond_to(:get_series_scope_content).with(0).arguments
     end
 
-    xit 'has #get_subjects' do
-      expect(subject).to respond_to(:get_subjects).with(0).arguments
-    end
-
-    xit 'has #get_genres_forms' do
-      expect(subject).to respond_to(:get_genres_forms).with(0).arguments
-    end
-
     xit 'has #get_files_info_for_series' do
       expect(subject).to respond_to(:get_files_info_for_series).with(1).arguments
     end
@@ -346,16 +400,6 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
     end
 
     context "check functionality" do
-      xit 'get_subjects returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_subjects
-        expect(tested).to include 'Graphic arts'
-      end
-
-      xit 'get_genres_forms returns correct value' do
-        tested = @as_ead_nokogiri_xml.get_genres_forms
-        expect(tested).to include 'Lithographs'
-      end
-
       xit 'get_files_info_for_series' do
         tested = @as_ead_nokogiri_xml.get_files_info_for_series 2
         expect(tested).to include({:title=>"Gag, Wanda Hazel.  [Spinning wheel], lithograph, (10.75\" x 9\")", :box_number=> "13V-F-01"})

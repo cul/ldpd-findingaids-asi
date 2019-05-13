@@ -13,6 +13,11 @@ module ArchiveSpace
         archive_alternative_form_available_values: '/xmlns:ead/xmlns:archdesc/xmlns:altformavail/xmlns:p',
         archive_biography_history_head: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:head',
         archive_biography_history_values: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:p',
+        archive_control_access_corpnames: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:corpname',
+        archive_control_access_genres_forms: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:genreform',
+        archive_control_access_occupations: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:occupation',
+        archive_control_access_persnames: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:persname',
+        archive_control_access_subjects: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:subject',
         archive_date: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
         archive_dsc_series: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]',
         archive_dsc_series_titles: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]/xmlns:did/xmlns:unittitle',
@@ -90,6 +95,11 @@ module ArchiveSpace
         @archive_biography_history_head = nokogiri_xml.xpath(XPATH[:archive_biography_history_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_biography_history_head]).first.nil?
         @archive_biography_history_values = nokogiri_xml.xpath(XPATH[:archive_biography_history_values])
+        @archive_control_access_corpnames = nokogiri_xml.xpath(XPATH[:archive_control_access_corpnames]).map(&:text)
+        @archive_control_access_genres_forms = nokogiri_xml.xpath(XPATH[:archive_control_access_genres_forms]).map(&:text)
+        @archive_control_access_occupations = nokogiri_xml.xpath(XPATH[:archive_control_access_occupations]).map(&:text)
+        @archive_control_access_persnames = nokogiri_xml.xpath(XPATH[:archive_control_access_persnames]).map(&:text)
+        @archive_control_access_subjects = nokogiri_xml.xpath(XPATH[:archive_control_access_subjects]).map(&:text)
         @archive_preferred_citation_head = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_preferred_citation_head]).first.nil?
         @archive_preferred_citation_values = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_values])
@@ -112,25 +122,6 @@ module ArchiveSpace
           @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
         series_scope_content = series_nokogiri_elements.map do |series|
           series.xpath('./xmlns:scopecontent/xmlns:p').text
-        end
-      end
-
-      # May want to split this into multiple methods, one for each element
-      def get_subjects
-        subject_nokogiri_elements =
-          @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:subject' + ' | ' +
-                              '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:persname' + ' | ' +
-                              '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:occupation')
-        subjects = subject_nokogiri_elements.map do |subject|
-          subject.text
-        end
-      end
-
-      def get_genres_forms
-        genre_form_nokogiri_elements =
-          @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:genreform')
-        genres_forms = genre_form_nokogiri_elements.map do |genre_form|
-          genre_form.text
         end
       end
 
