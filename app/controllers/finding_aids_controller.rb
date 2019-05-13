@@ -29,7 +29,7 @@ class FindingAidsController < ApplicationController
   private
   def ead_set_properties
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
-    @title = @ead.archive_title
+    @finding_aid_title = @ead.archive_title
     @abstract = @ead.archive_abstract
     @bib_id = @ead.archive_id
     # @creators = @ead.get_creators

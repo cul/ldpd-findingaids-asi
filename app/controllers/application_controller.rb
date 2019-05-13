@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   def validate_repository_code_and_set_repo_id
     if REPOS.key? params[:repository_id]
       @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
+      @repository_name = REPOS[params[:repository_id]][:name]
     else
       # not currently displaying contents of flash, but may be useful
       # when redirect to other than root
