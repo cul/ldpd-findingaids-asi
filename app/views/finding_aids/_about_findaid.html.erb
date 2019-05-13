@@ -1,7 +1,7 @@
 <p>Not sure if AS EAD contained the following (hard code in php app?): Columbia University Libraries. Rare Book and Manuscript Library; machine readable finding aid created by Columbia University Libraries Digital Library Program Division</p>
 <h3><%= @processing_information_head %></h3>
 <% @processing_information_values.each do |processing_information_value| %>
-  <%==  processing_information_value %>
+  <%== apply_ead_to_html_transforms processing_information_value %>
 <% end %>
 <h3>Revision Description</h3>
 <% @revision_description_changes.each do |revision_description_change| %>

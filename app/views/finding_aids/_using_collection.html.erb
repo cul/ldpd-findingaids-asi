@@ -1,25 +1,25 @@
 <p><%= @repository_corpname %></p>
 <h3><%= @access_restrictions_head %></h3>
 <% @access_restrictions_values.each do |access_restrictions_value| %>
-  <%==  access_restrictions_value %>
+  <%== apply_ead_to_html_transforms access_restrictions_value %>
 <% end %>
 <h3><%= @use_restrictions_head %></h2>
 <% @use_restrictions_values.each do |use_restrictions_value| %>
-  <%==  use_restrictions_value %>
+  <%== apply_ead_to_html_transforms use_restrictions_value %>
 <% end %>
 <h3><%= @preferred_citation_head %></h3>
 <% @preferred_citation_values.each do |preferred_citation_value| %>
-  <%==  preferred_citation_value %>
+  <%== apply_ead_to_html_transforms preferred_citation_value %>
 <% end %>
 <%= content_tag(:h3,@related_material_head) unless @related_material_head.nil? %>
 <% @related_material_values.each do |related_material_value| %>
-  <%==  related_material_value %>
+  <%== apply_ead_to_html_transforms related_material_value %>
 <% end %>
 <%= content_tag(:h3,@accruals_head) unless @accruals_head.nil? %>
 <% @accruals_values.each do |accruals_value| %>
-  <%==  accruals_value %>
+  <%== apply_ead_to_html_transforms accruals_value %>
 <% end %>
 <%= content_tag(:h3,@alternative_form_available_head) unless @alternative_form_available_head.nil? %>
 <% @alternative_form_available_values.each do |alternative_form_available_value| %>
-  <%==  alternative_form_available_value %>
+  <%== apply_ead_to_html_transforms alternative_form_available_value %>
 <% end %>

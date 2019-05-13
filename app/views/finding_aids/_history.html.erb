@@ -1,4 +1,4 @@
 <h3><%= @biography_history_head %></h3>
 <% @biography_history_values.each do |biography_history_value| %>
-  <p><%= biography_history_value.text %></p>
+  <p><%== apply_ead_to_html_transforms biography_history_value %></p>
 <% end %>
