@@ -33,6 +33,8 @@ attributes = [
   :archive_revision_description_changes, # <ead><archheader><revisiondesc><change>
   :archive_scope_content_head, # <ead>:<archdesc>:<scopecontent>:<head>
   :archive_scope_content_values, # <ead>:<archdesc>:<scopecontent>:<p>
+  :archive_separated_material_head, # <ead>:<archdesc>:<separatedmaterial>:<head>
+  :archive_separated_material_values, # <ead>:<archdesc>:<separatedmaterial>:<p>
   :archive_title, # <ead>:<archdesc>:<did>:<unititle>
   :archive_use_restrictions_head, # <ead>:<archdesc>:<userestrict>:<head>
   :archive_use_restrictions_values # <ead>:<archdesc>:<userestrict>:<p>
@@ -253,6 +255,13 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_separated_material_values) {
+        [
+          "Interviewees' personal papers were separated.",
+          "Researchers may find the personal papers on CLIO."
+        ]
+      }
+
       let (:expected_use_restrictions_values) {
         [
           "Readers must use microfilm of materials specified above.",
@@ -367,6 +376,17 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       it 'parses the archive_scope_content_values correctly' do
         @as_ead.archive_scope_content_values.each_with_index do |scope_content_value, index|
           expect(scope_content_value.text).to eq expected_scope_content_values[index]
+        end
+      end
+
+      it 'parses the archive_separated_material_head correctly' do
+        tested = @as_ead.archive_separated_material_head
+        expect(tested).to eq 'Separated Materials'
+      end
+
+      it 'parses the archive_separated_material_values correctly' do
+        @as_ead.archive_separated_material_values.each_with_index do |separated_material_value, index|
+          expect(separated_material_value.text).to eq expected_separated_material_values[index]
         end
       end
 

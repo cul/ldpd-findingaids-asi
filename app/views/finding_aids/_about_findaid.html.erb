@@ -3,6 +3,10 @@
 <% @processing_information_values.each do |processing_information_value| %>
   <%== apply_ead_to_html_transforms processing_information_value %>
 <% end %>
+<%= content_tag(:h3,@separated_material_head) unless @separated_material_head.nil? %>
+<% @separated_material_values.each do |separated_material_value| %>
+  <%== apply_ead_to_html_transforms separated_material_value %>
+<% end %>
 <h3>Revision Description</h3>
 <% @revision_description_changes.each do |revision_description_change| %>
   <%= content_tag(:p,"#{revision_description_change[:date]} #{revision_description_change[:item]}") %>

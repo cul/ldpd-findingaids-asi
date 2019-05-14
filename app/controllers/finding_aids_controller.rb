@@ -56,6 +56,8 @@ class FindingAidsController < ApplicationController
     @biography_history_head = @ead.archive_biography_history_head
     @biography_history_values = @ead.archive_biography_history_values
     @revision_description_changes = @ead.archive_revision_description_changes
+    @separated_material_head = @ead.archive_separated_material_head
+    @separated_material_values = @ead.archive_separated_material_values
     @series_titles = @ead.archive_dsc_series_titles
     @series_scope_content = @ead.get_series_scope_content
     @subjects = (@ead.archive_control_access_corpnames +

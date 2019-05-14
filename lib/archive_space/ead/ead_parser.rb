@@ -35,6 +35,8 @@ module ArchiveSpace
         archive_revision_description_changes: '/xmlns:ead/xmlns:eadheader/xmlns:revisiondesc/xmlns:change',
         archive_scope_content_head: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:head',
         archive_scope_content_values: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
+        archive_separated_material_head: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:head',
+        archive_separated_material_values: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:p',
         archive_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle',
         archive_use_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:head',
         archive_use_restrictions_values: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:p'
@@ -112,6 +114,9 @@ module ArchiveSpace
         @archive_scope_content_head = nokogiri_xml.xpath(XPATH[:archive_scope_content_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_scope_content_head]).first.nil?
         @archive_scope_content_values = nokogiri_xml.xpath(XPATH[:archive_scope_content_values])
+        @archive_separated_material_head = nokogiri_xml.xpath(XPATH[:archive_separated_material_head]).first.text unless
+          nokogiri_xml.xpath(XPATH[:archive_separated_material_head]).first.nil?
+        @archive_separated_material_values = nokogiri_xml.xpath(XPATH[:archive_separated_material_values])
         @archive_use_restrictions_head = nokogiri_xml.xpath(XPATH[:archive_use_restrictions_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_use_restrictions_head]).first.nil?
         @archive_use_restrictions_values = nokogiri_xml.xpath(XPATH[:archive_use_restrictions_values])
