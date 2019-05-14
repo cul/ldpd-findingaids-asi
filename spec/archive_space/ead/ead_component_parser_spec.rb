@@ -51,6 +51,7 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           @date,
           @level,
           @scope_content_values,
+          @separated_material_values,
           @other_finding_aid_values,
           @container_info ) = @as_ead_series.generate_info.first
       end
@@ -60,6 +61,14 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           "In four boxes, numbered 1-4.",
           "The Builder. Nov 11, 1921. Excerpt;",
           "Notice de la constitution des societe local."
+        ]
+      }
+
+      let (:expected_separated_material_values) {
+        [
+          "Some interviewees' personal papers were separated and described as their own collection.",
+          "Oral history transcripts in this series are drafts and editing copies.",
+          "The personal papers and finalized individual memoirs are cataloged in CLIO."
         ]
       }
 
@@ -86,6 +95,12 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       it 'generates the correct scope content values' do
         @scope_content_values.each_with_index do |scope_content_value, index|
           expect(scope_content_value.text).to eq expected_scope_content_values[index]
+        end
+      end
+
+      it 'generates the correct separated material values' do
+        @separated_material_values.each_with_index do |separated_material_value, index|
+          expect(separated_material_value.text).to eq expected_separated_material_values[index]
         end
       end
 

@@ -8,7 +8,8 @@ module ArchiveSpace
         date: './xmlns:did/xmlns:unitdate',
         other_finding_aid_p: './xmlns:otherfindaid/xmlns:p',
         title: './xmlns:did/xmlns:unittitle',
-        scope_content_p: './xmlns:scopecontent/xmlns:p'
+        scope_content_p: './xmlns:scopecontent/xmlns:p',
+        separated_material_p: './xmlns:separatedmaterial/xmlns:p'
       }
 
       attr_reader *XPATH.keys
@@ -45,6 +46,7 @@ module ArchiveSpace
         date = component.xpath(XPATH[:date]).text
         level = component.attribute('level').text
         scope_content_values = component.xpath(XPATH[:scope_content_p])
+        separated_material_values = component.xpath(XPATH[:separated_material_p])
         other_finding_aid_values = component.xpath(XPATH[:other_finding_aid_p])
         container_nokogiri_elements = component.xpath(XPATH[:container])
         container_info = container_nokogiri_elements.map do |container|
@@ -57,6 +59,7 @@ module ArchiveSpace
                                  date,
                                  level,
                                  scope_content_values,
+                                 separated_material_values,
                                  other_finding_aid_values,
                                  container_info ]
       end

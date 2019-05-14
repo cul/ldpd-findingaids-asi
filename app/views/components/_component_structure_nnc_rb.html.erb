@@ -9,6 +9,7 @@
          date,
          level,
          scope_content_values,
+         separated_material_values,
          other_finding_aid_values,
          container_info ) = component
     %>
@@ -31,6 +32,13 @@
       <p style="margin:0">
         <% scope_content_values.each do |scope_content_value| %>
           <%== apply_ead_to_html_transforms scope_content_value %>
+        <% end %>
+      </p>
+    <% end %>
+    <% unless separated_material_values.empty? %>
+      <p style="margin:0">
+        <% separated_material_values.each do |separated_material_value| %>
+          <%== apply_ead_to_html_transforms separated_material_value %>
         <% end %>
       </p>
     <% end %>
