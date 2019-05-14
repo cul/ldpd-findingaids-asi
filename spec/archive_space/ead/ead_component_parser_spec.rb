@@ -58,9 +58,9 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
 
       let (:expected_scope_content_values) {
         [
-          "In four boxes, numbered 1-4.",
-          "The Builder. Nov 11, 1921. Excerpt;",
-          "Notice de la constitution des societe local."
+          "<p>In four boxes, numbered 1-4.</p>",
+          "<p>The Builder. Nov 11, 1921. Excerpt;</p>",
+          "<p>Notice de la constitution des societe local.</p>"
         ]
       }
 
@@ -94,7 +94,7 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
 
       it 'generates the correct scope content values' do
         @scope_content_values.each_with_index do |scope_content_value, index|
-          expect(scope_content_value.text).to eq expected_scope_content_values[index]
+          expect(scope_content_value).to eq expected_scope_content_values[index]
         end
       end
 

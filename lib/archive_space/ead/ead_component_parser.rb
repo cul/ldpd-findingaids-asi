@@ -45,7 +45,9 @@ module ArchiveSpace
         title = component.xpath(XPATH[:title]).text
         date = component.xpath(XPATH[:date]).text
         level = component.attribute('level').text
-        scope_content_values = component.xpath(XPATH[:scope_content_p])
+        scope_content_ps = component.xpath(XPATH[:scope_content_p]).map do |scope_content_p|
+          (apply_ead_to_html_transforms scope_content_p).to_s
+        end
         separated_material_values = component.xpath(XPATH[:separated_material_p])
         other_finding_aid_values = component.xpath(XPATH[:other_finding_aid_p])
         container_nokogiri_elements = component.xpath(XPATH[:container])
@@ -58,10 +60,33 @@ module ArchiveSpace
                                  title,
                                  date,
                                  level,
-                                 scope_content_values,
+                                 scope_content_ps,
                                  separated_material_values,
                                  other_finding_aid_values,
                                  container_info ]
+      end
+
+      def apply_ead_to_html_transforms content
+        html_content = apply_title_render_italic content
+        html_content = apply_extref_type_simple html_content
+      end
+
+      def apply_title_render_italic content
+        titles_render_italic = content.xpath('./xmlns:title[@render="italic"]')
+        titles_render_italic.each do |title_italic|
+          title_italic.replace "<i>#{title_italic.text}</i>"
+        end
+        content
+      end
+
+      def apply_extref_type_simple content
+        extrefs_type_simple = content.xpath('./xmlns:extref[@xlink:type="simple"]')
+        extrefs_type_simple.each do |extref|
+          href = "\"#{extref.attribute('href')}\""
+          link_text = extref.text
+          extref.replace "<a href=#{href}>#{link_text}</a>"
+        end
+        content
       end
     end
   end

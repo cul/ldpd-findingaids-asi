@@ -8,7 +8,7 @@
          title,
          date,
          level,
-         scope_content_values,
+         scope_content_ps,
          separated_material_values,
          other_finding_aid_values,
          container_info ) = component
@@ -28,10 +28,10 @@
       <span style="text-align:left;"> <%= title %> </span>
       <span style="text-align:right;float:right;"><%=container_info.join(' ') %></span>
     </p>
-    <% unless scope_content_values.empty? %>
+    <% unless scope_content_ps.empty? %>
       <p style="margin:0">
-        <% scope_content_values.each do |scope_content_value| %>
-          <%== apply_ead_to_html_transforms scope_content_value %>
+        <% scope_content_ps.each do |scope_content_p| %>
+          <%== scope_content_p %>
         <% end %>
       </p>
     <% end %>
