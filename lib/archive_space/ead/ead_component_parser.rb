@@ -51,7 +51,9 @@ module ArchiveSpace
         separated_material_ps = component.xpath(XPATH[:separated_material_p]).map do |separated_material_p|
           (apply_ead_to_html_transforms separated_material_p).to_s
         end
-        other_finding_aid_values = component.xpath(XPATH[:other_finding_aid_p])
+        other_finding_aid_ps = component.xpath(XPATH[:other_finding_aid_p]).map do |other_finding_aid_p|
+          (apply_ead_to_html_transforms other_finding_aid_p).to_s
+        end
         container_nokogiri_elements = component.xpath(XPATH[:container])
         container_info = container_nokogiri_elements.map do |container|
           container_type = container['type']
@@ -64,7 +66,7 @@ module ArchiveSpace
                                  level,
                                  scope_content_ps,
                                  separated_material_ps,
-                                 other_finding_aid_values,
+                                 other_finding_aid_ps,
                                  container_info ]
       end
 

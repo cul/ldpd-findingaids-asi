@@ -52,7 +52,7 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           @level,
           @scope_content_ps,
           @separated_material_ps,
-          @other_finding_aid_values,
+          @other_finding_aid_ps,
           @container_info ) = @as_ead_series.generate_info.first
       end
 
@@ -72,11 +72,11 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         ]
       }
 
-      let (:expected_other_finding_aid_values) {
+      let (:expected_other_finding_aid_ps) {
         [
-          "*In addition, a sortable inventory in this downloadable Excel spreadsheet.",
-          "A pdf version is available for download.",
-          "Another finding aid available online."
+          "<p>*In addition, a sortable inventory in this downloadable Excel spreadsheet.</p>",
+          "<p>A pdf version is available for download.</p>",
+          "<p>Another finding aid available online.</p>"
         ]
       }
 
@@ -105,8 +105,8 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       end
 
       it 'generates the correct other finding aid values' do
-        @other_finding_aid_values.each_with_index do |other_finding_aid_value, index|
-          expect(other_finding_aid_value.text).to eq expected_other_finding_aid_values[index]
+        @other_finding_aid_ps.each_with_index do |other_finding_aid_p, index|
+          expect(other_finding_aid_p).to eq expected_other_finding_aid_ps[index]
         end
       end
 

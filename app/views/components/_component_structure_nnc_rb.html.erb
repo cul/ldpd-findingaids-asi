@@ -10,7 +10,7 @@
          level,
          scope_content_ps,
          separated_material_ps,
-         other_finding_aid_values,
+         other_finding_aid_ps,
          container_info ) = component
     %>
     <% if nesting_level > current_nesting_level %>
@@ -42,10 +42,10 @@
         <% end %>
       </p>
     <% end %>
-    <% unless other_finding_aid_values.empty? %>
+    <% unless other_finding_aid_ps.empty? %>
       <p style="margin:0">
-        <% other_finding_aid_values.each do |other_finding_aid_value| %>
-          <%== apply_ead_to_html_transforms other_finding_aid_value %>
+        <% other_finding_aid_ps.each do |other_finding_aid_p| %>
+          <%== other_finding_aid_p %>
         <% end %>
       </p>
     <% end %>

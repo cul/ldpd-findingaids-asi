@@ -8,7 +8,7 @@
            level,
            scope_content_ps,
            separated_material_ps,
-           other_finding_aid_values,
+           other_finding_aid_ps,
            container_info ) = component
       %>
       <tr style="border-top:1px solid #eee">
@@ -38,12 +38,12 @@
           <td style="width:20%"></td>
         </tr>
       <% end %>
-      <% unless other_finding_aid_values.empty? %>
+      <% unless other_finding_aid_ps.empty? %>
         <tr>
           <td style="width:20%"></td>
           <td style="width:60%">
-	    <% other_finding_aid_values.each do |other_finding_aid_value| %>
-	      <%== apply_ead_to_html_transforms other_finding_aid_value %>
+	    <% other_finding_aid_ps.each do |other_finding_aid_p| %>
+	      <%== other_finding_aid_p %>
 	    <% end %>
 	  </td>
           <td style="width:20%"></td>
