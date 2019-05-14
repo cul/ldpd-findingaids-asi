@@ -50,13 +50,13 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           @title,
           @date,
           @level,
-          @scope_content_values,
-          @separated_material_values,
+          @scope_content_ps,
+          @separated_material_ps,
           @other_finding_aid_values,
           @container_info ) = @as_ead_series.generate_info.first
       end
 
-      let (:expected_scope_content_values) {
+      let (:expected_scope_content_ps) {
         [
           "<p>In four boxes, numbered 1-4.</p>",
           "<p>The Builder. Nov 11, 1921. Excerpt;</p>",
@@ -64,11 +64,11 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         ]
       }
 
-      let (:expected_separated_material_values) {
+      let (:expected_separated_material_ps) {
         [
-          "Some interviewees' personal papers were separated and described as their own collection.",
-          "Oral history transcripts in this series are drafts and editing copies.",
-          "The personal papers and finalized individual memoirs are cataloged in CLIO."
+          "<p>Some interviewees' personal papers were separated and described as their own collection.</p>",
+          "<p>Oral history transcripts in this series are drafts and editing copies.</p>",
+          "<p>The personal papers and finalized individual memoirs are cataloged in CLIO.</p>"
         ]
       }
 
@@ -93,14 +93,14 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       end
 
       it 'generates the correct scope content values' do
-        @scope_content_values.each_with_index do |scope_content_value, index|
-          expect(scope_content_value).to eq expected_scope_content_values[index]
+        @scope_content_ps.each_with_index do |scope_content_p, index|
+          expect(scope_content_p).to eq expected_scope_content_ps[index]
         end
       end
 
       it 'generates the correct separated material values' do
-        @separated_material_values.each_with_index do |separated_material_value, index|
-          expect(separated_material_value.text).to eq expected_separated_material_values[index]
+        @separated_material_ps.each_with_index do |separated_material_p, index|
+          expect(separated_material_p).to eq expected_separated_material_ps[index]
         end
       end
 

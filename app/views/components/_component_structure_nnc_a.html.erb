@@ -6,8 +6,8 @@
            title,
            date,
            level,
-           scope_content_values,
-           separated_material_values,
+           scope_content_ps,
+           separated_material_ps,
            other_finding_aid_values,
            container_info ) = component
       %>
@@ -16,23 +16,23 @@
         <td style="width:60%;font-weight:bold"> <%= title %> </td>
         <td style="width:20%"><%= date %></td>
       </tr>
-      <% unless scope_content_values.empty? %>
+      <% unless scope_content_ps.empty? %>
         <tr>
           <td style="width:20%"></td>
           <td style="width:60%">
-	    <% scope_content_values.each do |scope_content_value| %>
-	    <%== scope_content_value %>
+	    <% scope_content_ps.each do |scope_content_p| %>
+	    <%== scope_content_p %>
 	    <% end %>
 	  </td>
           <td style="width:20%"></td>
         </tr>
       <% end %>
-      <% unless separated_material_values.empty? %>
+      <% unless separated_material_ps.empty? %>
         <tr>
           <td style="width:20%"></td>
           <td style="width:60%">
-	    <% separated_material_values.each do |separated_material_value| %>
-	      <%== apply_ead_to_html_transforms separated_material_value %>
+	    <% separated_material_ps.each do |separated_material_p| %>
+	      <%== separated_material_p %>
 	    <% end %>
 	  </td>
           <td style="width:20%"></td>

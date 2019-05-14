@@ -9,7 +9,7 @@
          date,
          level,
          scope_content_ps,
-         separated_material_values,
+         separated_material_ps,
          other_finding_aid_values,
          container_info ) = component
     %>
@@ -35,10 +35,10 @@
         <% end %>
       </p>
     <% end %>
-    <% unless separated_material_values.empty? %>
+    <% unless separated_material_ps.empty? %>
       <p style="margin:0">
-        <% separated_material_values.each do |separated_material_value| %>
-          <%== apply_ead_to_html_transforms separated_material_value %>
+        <% separated_material_ps.each do |separated_material_p| %>
+          <%== separated_material_p %>
         <% end %>
       </p>
     <% end %>
