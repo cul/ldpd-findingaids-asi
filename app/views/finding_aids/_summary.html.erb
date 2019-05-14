@@ -5,7 +5,16 @@
   <tbody>
     <tr class="odd">
       <th>Bib ID (HC)</th>
-      <td> <%= @bib_id %></td>
+      <td>
+	<%= @bib_id %>
+	<% bib_href = "http://www.columbia.edu/cgi-bin/cul/cliosearch?BIBID=#{@bib_id}" %>
+	<a href= <%= bib_href %>
+	   target="_blank"
+	   class="smaller">
+	  View CLIO record
+	</a>
+
+      </td>
     </tr>
     <tr class="odd">
       <th>Creator(s) (HC)</th>
