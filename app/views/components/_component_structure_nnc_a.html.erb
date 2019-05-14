@@ -10,40 +10,21 @@
            separated_material_ps,
            other_finding_aid_ps,
            container_info ) = component
+         displayed_component_infos = scope_content_ps +
+                                     separated_material_ps +
+                                     other_finding_aid_ps
       %>
       <tr style="border-top:1px solid #eee">
         <td style="width:20%"><%= container_info.join(' ') %></td>
         <td style="width:60%;font-weight:bold"> <%= title %> </td>
         <td style="width:20%"><%= date %></td>
       </tr>
-      <% unless scope_content_ps.empty? %>
+      <% unless displayed_component_infos.empty? %>
         <tr>
           <td style="width:20%"></td>
           <td style="width:60%">
-	    <% scope_content_ps.each do |scope_content_p| %>
-	    <%== scope_content_p %>
-	    <% end %>
-	  </td>
-          <td style="width:20%"></td>
-        </tr>
-      <% end %>
-      <% unless separated_material_ps.empty? %>
-        <tr>
-          <td style="width:20%"></td>
-          <td style="width:60%">
-	    <% separated_material_ps.each do |separated_material_p| %>
-	      <%== separated_material_p %>
-	    <% end %>
-	  </td>
-          <td style="width:20%"></td>
-        </tr>
-      <% end %>
-      <% unless other_finding_aid_ps.empty? %>
-        <tr>
-          <td style="width:20%"></td>
-          <td style="width:60%">
-	    <% other_finding_aid_ps.each do |other_finding_aid_p| %>
-	      <%== other_finding_aid_p %>
+	    <% displayed_component_infos.each do |displayed_component_info| %>
+	      <%== displayed_component_info %>
 	    <% end %>
 	  </td>
           <td style="width:20%"></td>

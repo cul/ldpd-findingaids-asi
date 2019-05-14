@@ -12,6 +12,9 @@
          separated_material_ps,
          other_finding_aid_ps,
          container_info ) = component
+       displayed_component_infos = scope_content_ps +
+                                   separated_material_ps +
+                                   other_finding_aid_ps
     %>
     <% if nesting_level > current_nesting_level %>
       <hr style="margin-top:10px;margin-bottom:10px">
@@ -28,24 +31,10 @@
       <span style="text-align:left;"> <%= title %> </span>
       <span style="text-align:right;float:right;"><%=container_info.join(' ') %></span>
     </p>
-    <% unless scope_content_ps.empty? %>
+    <% unless displayed_component_infos.empty? %>
       <p style="margin:0">
-        <% scope_content_ps.each do |scope_content_p| %>
-          <%== scope_content_p %>
-        <% end %>
-      </p>
-    <% end %>
-    <% unless separated_material_ps.empty? %>
-      <p style="margin:0">
-        <% separated_material_ps.each do |separated_material_p| %>
-          <%== separated_material_p %>
-        <% end %>
-      </p>
-    <% end %>
-    <% unless other_finding_aid_ps.empty? %>
-      <p style="margin:0">
-        <% other_finding_aid_ps.each do |other_finding_aid_p| %>
-          <%== other_finding_aid_p %>
+        <% displayed_component_infos.each do |displayed_component_info| %>
+          <%== displayed_component_info %>
         <% end %>
       </p>
     <% end %>
