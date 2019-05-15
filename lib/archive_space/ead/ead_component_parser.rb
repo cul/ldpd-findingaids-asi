@@ -7,6 +7,7 @@ module ArchiveSpace
         container: './xmlns:did/xmlns:container',
         date: './xmlns:did/xmlns:unitdate',
         other_finding_aid_p: './xmlns:otherfindaid/xmlns:p',
+        physical_description: './xmlns:did/xmlns:physdesc',
         title: './xmlns:did/xmlns:unittitle',
         scope_content_p: './xmlns:scopecontent/xmlns:p',
         separated_material_p: './xmlns:separatedmaterial/xmlns:p'
@@ -43,6 +44,7 @@ module ArchiveSpace
 
       def generate_component_info(component, nesting_level = 0)
         title = component.xpath(XPATH[:title]).text
+        physical_description = component.xpath(XPATH[:physical_description]).text
         date = component.xpath(XPATH[:date]).text
         level = component.attribute('level').text
         scope_content_ps = component.xpath(XPATH[:scope_content_p]).map do |scope_content_p|
@@ -62,6 +64,7 @@ module ArchiveSpace
         end
         @component_info.append [ nesting_level,
                                  title,
+                                 physical_description,
                                  date,
                                  level,
                                  scope_content_ps,

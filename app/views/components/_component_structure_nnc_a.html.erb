@@ -4,6 +4,7 @@
     <% @flattened_component_structure.each do |component| %>
       <% ( nesting_level,
            title,
+           physical_description,
            date,
            level,
            scope_content_ps,
@@ -16,7 +17,7 @@
       %>
       <tr style="border-top:1px solid #eee">
         <td style="width:20%"><%= container_info.join(' ') %></td>
-        <td style="width:60%;font-weight:bold"> <%= title %> </td>
+        <td style="width:60%;font-weight:bold"> <%= [title, physical_description].reject(&:blank?).join(", ") %> </td>
         <td style="width:20%"><%= date %></td>
       </tr>
       <% unless displayed_component_infos.empty? %>

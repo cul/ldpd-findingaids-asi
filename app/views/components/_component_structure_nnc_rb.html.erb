@@ -6,6 +6,7 @@
   <% @flattened_component_structure.each do |component| %>
     <% ( nesting_level,
          title,
+         physical_description,
          date,
          level,
          scope_content_ps,
@@ -28,7 +29,7 @@
     <% current_nesting_level = component[0] %>
     <%== checkbox_display(container_info[0]) unless container_info.empty? %>
     <p style="margin:0">
-      <span style="text-align:left;"> <%= [title, date].reject(&:blank?).join(", ") %> </span>
+      <span style="text-align:left;"> <%= [title, date, physical_description].reject(&:blank?).join(", ") %> </span>
       <span style="text-align:right;float:right;"><%=container_info.join(' ') %></span>
     </p>
     <% unless displayed_component_infos.empty? %>

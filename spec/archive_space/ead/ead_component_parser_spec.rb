@@ -48,6 +48,7 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         @as_ead_series.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
         ( @nesting_level,
           @title,
+          @physical_description,
           @date,
           @level,
           @scope_content_ps,
@@ -86,6 +87,10 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
 
       it 'generates the correct title' do
         expect(@title).to eq 'Series I: Cataloged Correspondence'
+      end
+
+      it 'generates the correct physical description' do
+        expect(@physical_description).to eq '(1 folder)'
       end
 
       it 'generates the correct level' do
