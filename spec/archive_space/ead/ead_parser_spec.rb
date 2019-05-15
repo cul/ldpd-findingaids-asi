@@ -21,6 +21,8 @@ attributes = [
   :archive_dsc_series_titles, # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>, returns array of titles
   :archive_id, # <ead>:<archdesc>:<did>:<unitid>
   :archive_language, # <ead>:<archdesc>:<did>:<langmaterial><language>
+  :archive_odd_head, # <ead>:<archdesc>:<odd>:<head>
+  :archive_odd_values, # <ead>:<archdesc>:<odd>:<p>
   :archive_origination_creator, # <ead>:<archdesc>:<did>:<origination label="creator">
   :archive_physical_description_extent_carrier, # <ead>:<archdesc>:<did>:<physdesc>:<extent @altrender="carrier">
   :archive_preferred_citation_head, # <ead>:<archdesc>:<prefercite>:<head>
@@ -234,6 +236,13 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_odd_values) {
+        [
+          "Other collections of Rockwell Kent materials are at: SUNY-Plattsburgh (Rockwell Kent Collection).",
+          "This is the collection-level record for which 700 associated project-level records were created."
+        ]
+      }
+
       let (:expected_processing_information_values) {
         [
           "Papers Entered in AMC 11/29/1990.",
@@ -333,6 +342,17 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       it 'parses the archive_control_access_subjects correctly' do
         tested = @as_ead.archive_control_access_subjects
         expect(tested).to eq expected_control_access_subjects
+      end
+
+      it 'parses the archive_odd_head correctly' do
+        tested = @as_ead.archive_odd_head
+        expect(tested).to eq 'General Note'
+      end
+
+      it 'parses the archive_odd_values correctly' do
+        @as_ead.archive_odd_values.each_with_index do |odd_value, index|
+          expect(odd_value.text).to eq expected_odd_values[index]
+        end
       end
 
       it 'parses the archive_preferred_citation_head correctly' do

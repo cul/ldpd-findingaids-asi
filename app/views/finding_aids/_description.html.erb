@@ -15,3 +15,7 @@
     <% end %>
   </ul>
 </p>
+<%= content_tag(:h3,@odd_head) unless @odd_head.nil? %>
+<% @odd_values.each do |odd_value| %>
+  <%== apply_ead_to_html_transforms odd_value %>
+<% end %>

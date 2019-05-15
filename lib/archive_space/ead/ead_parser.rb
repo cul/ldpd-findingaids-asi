@@ -24,6 +24,8 @@ module ArchiveSpace
         archive_id: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid',
         archive_language: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:langmaterial',
         archive_origination_creator: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:origination[@label="creator"]',
+        archive_odd_head: '/xmlns:ead/xmlns:archdesc/xmlns:odd/xmlns:head',
+        archive_odd_values: '/xmlns:ead/xmlns:archdesc/xmlns:odd/xmlns:p',
         archive_physical_description_extent_carrier: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:physdesc/xmlns:extent[@altrender="carrier"]',
         archive_preferred_citation_head: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:head',
         archive_preferred_citation_values: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:p',
@@ -102,6 +104,9 @@ module ArchiveSpace
         @archive_control_access_occupations = nokogiri_xml.xpath(XPATH[:archive_control_access_occupations]).map(&:text)
         @archive_control_access_persnames = nokogiri_xml.xpath(XPATH[:archive_control_access_persnames]).map(&:text)
         @archive_control_access_subjects = nokogiri_xml.xpath(XPATH[:archive_control_access_subjects]).map(&:text)
+        @archive_odd_head = nokogiri_xml.xpath(XPATH[:archive_odd_head]).first.text unless
+          nokogiri_xml.xpath(XPATH[:archive_odd_head]).first.nil?
+        @archive_odd_values = nokogiri_xml.xpath(XPATH[:archive_odd_values])
         @archive_preferred_citation_head = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:archive_preferred_citation_head]).first.nil?
         @archive_preferred_citation_values = nokogiri_xml.xpath(XPATH[:archive_preferred_citation_values])
