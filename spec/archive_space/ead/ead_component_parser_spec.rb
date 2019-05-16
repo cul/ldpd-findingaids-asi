@@ -82,11 +82,11 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       }
 
       it 'generates the correct nesting level' do
-        expect(@nesting_level).to eq 0
+        expect(@nesting_level).to eq 1
       end
 
       it 'generates the correct title' do
-        expect(@title).to eq 'Series I: Cataloged Correspondence'
+        expect(@title).to eq 'Subseries I: Cataloged Correspondence'
       end
 
       it 'generates the correct physical description' do

@@ -45,6 +45,50 @@
 	  <head>Other Finding Aids</head>
 	  <p>Another finding aid available online.</p>
 	</otherfindaid>
+	<c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="series">
+	  <did>
+	    <unittitle>Subseries I: Cataloged Correspondence</unittitle>
+	    <physdesc>(1 folder)</physdesc>
+	    <container label="general manuscripts box" type="box">78</container>
+	    <container type="folder">5</container>
+	  </did>
+	  <scopecontent id="aspace_c35fc09c1d77badb7e08caaa0d60dccf">
+	    <head>Scope and Contents</head>
+	    <p>In four boxes, numbered 1-4.</p>
+	  </scopecontent>
+	  <scopecontent id="aspace_dad8ab5d0f38f7a1ef59b34e26956d4c">
+	    <head>Scope and Contents</head>
+	    <p>The Builder. Nov 11, 1921. Excerpt;</p>
+	  </scopecontent>
+	  <scopecontent id="aspace_d49890c77e0051ced6786539d459c7ae">
+	    <head>Scope and Contents</head>
+	    <p>Notice de la constitution des societe local.</p>
+	  </scopecontent>
+	  <separatedmaterial>
+	    <head>Separated Materials</head>
+	    <p>Some interviewees' personal papers were separated and described as their own collection.</p>
+	  </separatedmaterial>
+	  <separatedmaterial>
+	    <head>Separated Materials</head>
+	    <p>Oral history transcripts in this series are drafts and editing copies.</p>
+	  </separatedmaterial>
+	  <separatedmaterial>
+	    <head>Separated Materials</head>
+	    <p>The personal papers and finalized individual memoirs are cataloged in CLIO.</p>
+	  </separatedmaterial>
+	  <otherfindaid id="aspace_e21a175ee1704a70bd7f04d1f5cd4bf7">
+	    <head>Other Finding Aids</head>
+	    <p>*In addition, a sortable inventory in this downloadable Excel spreadsheet.</p>
+	  </otherfindaid>
+	  <otherfindaid id="aspace_e21a175ee1704a70bd7f04d1f5cd4bf7">
+	    <head>Other Finding Aids</head>
+	    <p>A pdf version is available for download.</p>
+	  </otherfindaid>
+	  <otherfindaid id="aspace_e21a175ee1704a70bd7f04d1f5cd4bf7">
+	    <head>Other Finding Aids</head>
+	    <p>Another finding aid available online.</p>
+	  </otherfindaid>
+	</c>
       </c>
     </dsc>
   </archdesc>

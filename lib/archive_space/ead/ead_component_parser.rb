@@ -27,7 +27,7 @@ module ArchiveSpace
 
       def generate_info
         @component_info = []
-        generate_component_info(@nokogiri_xml)
+        # generate_component_info(@nokogiri_xml)
         generate_child_components_info(@nokogiri_xml)
         @component_info
       end

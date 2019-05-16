@@ -1,5 +1,6 @@
 <div class="nnc-a">
-  <h1>Avery</h1>
+  <h1 style="color:#2c5277;font-size:16px;font-weight:bold;"><%= @component_title %></h1>
+  <p><%= @component_scope_content %></p>
   <table style="width:100%">
     <% @flattened_component_structure.each do |component| %>
       <% ( nesting_level,
