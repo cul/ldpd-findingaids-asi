@@ -18,13 +18,15 @@
                                    other_finding_aid_ps
     %>
     <% if nesting_level > current_nesting_level %>
-      <hr style="margin-top:10px;margin-bottom:10px">
-      <div class="component_entry" style="margin-left:2em;">
+      <hr style="margin-top:10px;margin-bottom:10px;">
+      <div class="component_entry" style="margin-left:1em;">
     <% elsif nesting_level < current_nesting_level %>
-       <hr style="margin-top:10px;margin-bottom:10px">
+       <hr style="margin-top:10px;margin-bottom:10px;">
        <% (nesting_level...current_nesting_level).each do %>
         </div>
       <% end %>
+    <% else %>
+       <hr style="margin-top:10px;margin-bottom:10px;">
     <% end %>
     <% current_nesting_level = component[0] %>
     <%== checkbox_display(container_info[0]) unless container_info.empty? %>
@@ -33,11 +35,11 @@
       <span style="text-align:right;float:right;"><%=container_info.join(' ') %></span>
     </p>
     <% unless displayed_component_infos.empty? %>
-      <p style="margin:0">
+      <div style="margin:0;padding-left:1em;">
         <% displayed_component_infos.each do |displayed_component_info| %>
           <%== displayed_component_info %>
         <% end %>
-      </p>
+      </div>
     <% end %>
   <% end %>
 </div>
