@@ -42,7 +42,7 @@ class ComponentsController < ApplicationController
     @component = ArchiveSpace::Ead::EadComponentParser.new
     @component.parse component_nokogiri_xml
     @component_title = @component.title
-    @component_scope_content = @component.scope_content_value
+    @component_scope_content_ps = @component.scope_content_ps
     @flattened_component_structure = @component.generate_info
   end
 

@@ -39,6 +39,36 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
 
   ########################################## Functionality
   describe 'Testing functionality: ' do
+    ########################################## parse
+    context 'parse' do
+      before(:example) do
+        xml_input = fixture_file_upload('asi/test_c_element.xml').read
+        @nokogiri_xml = Nokogiri::XML(xml_input)
+        @as_ead_series = ArchiveSpace::Ead::EadComponentParser.new
+        @as_ead_series.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
+      end
+
+      let (:expected_scope_content_ps) {
+        [
+          "<p>The drawings in the collection consist of pencil and ink drawings.</p>",
+          "<p>Correspondents include: H.J. Heinz.</p>",
+          "<p>Contains  document allowing Bunshaft to practice architecture in Belgium.</p>"
+        ]
+      }
+
+      it 'sets the title correctly' do
+        tested = @as_ead_series.title
+        expect(tested).to eq 'Series I: Cataloged Correspondence'
+      end
+
+      it 'sets the scope content correctly' do
+        tested = @as_ead_series.scope_content_ps
+        tested.each_with_index do |scope_content_p, index|
+          expect(scope_content_p).to eq expected_scope_content_ps[index]
+        end
+      end
+    end
+
     ########################################## generate_info
     context 'generate_info' do
       before(:example) do
@@ -117,26 +147,6 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
 
       it 'generates the correct container info' do
         expect(@container_info).to eq ["Box 78", "Folder 5"]
-      end
-    end
-
-    ########################################## parse
-    context 'parse' do
-      before(:example) do
-        xml_input = fixture_file_upload('asi/test_c_element.xml').read
-        @nokogiri_xml = Nokogiri::XML(xml_input)
-        @as_ead_series = ArchiveSpace::Ead::EadComponentParser.new
-        @as_ead_series.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
-      end
-
-      it 'sets the title correctly' do
-        tested = @as_ead_series.title
-        expect(tested).to eq 'Series I: Cataloged Correspondence'
-      end
-
-      it 'sets the scope content correctly' do
-        tested = @as_ead_series.scope_content_value
-        expect(tested).to include "In four boxes, numbered 1-4."
       end
     end
   end

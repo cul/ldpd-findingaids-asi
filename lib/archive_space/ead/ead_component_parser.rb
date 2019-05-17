@@ -9,7 +9,7 @@ module ArchiveSpace
         other_finding_aid_p: './xmlns:otherfindaid/xmlns:p',
         physical_description: './xmlns:did/xmlns:physdesc',
         title: './xmlns:did/xmlns:unittitle',
-        scope_content_p: './xmlns:scopecontent/xmlns:p',
+        scope_content_ps: './xmlns:scopecontent/xmlns:p',
         separated_material_p: './xmlns:separatedmaterial/xmlns:p'
       }
 
@@ -22,7 +22,9 @@ module ArchiveSpace
       def parse(nokogiri_xml)
         @nokogiri_xml = nokogiri_xml
         @title = nokogiri_xml.xpath(XPATH[:title]).text
-        @scope_content_value = nokogiri_xml.xpath(XPATH[:scope_content_p]).text
+        @scope_content_ps = nokogiri_xml.xpath(XPATH[:scope_content_ps]).map do |scope_content_p|
+          (apply_ead_to_html_transforms scope_content_p).to_s
+        end
       end
 
       def generate_info
@@ -47,7 +49,7 @@ module ArchiveSpace
         physical_description = component.xpath(XPATH[:physical_description]).text
         date = component.xpath(XPATH[:date]).text
         level = component.attribute('level').text
-        scope_content_ps = component.xpath(XPATH[:scope_content_p]).map do |scope_content_p|
+        scope_content_ps = component.xpath(XPATH[:scope_content_ps]).map do |scope_content_p|
           (apply_ead_to_html_transforms scope_content_p).to_s
         end
         separated_material_ps = component.xpath(XPATH[:separated_material_p]).map do |separated_material_p|
