@@ -1,0 +1,30 @@
+<div class="aeon-confirm-request container">
+  <h1>AeonRequests#login</h1>
+  <%= debug params %>
+  <p>Find me in app/views/aeon_requests/login.html.erb</p>
+  <div class="aeon-header">
+    <div class="aeon-title-name">
+      <h3 class="trajanpro">Special Collections Research Account</h3>
+    </div>
+    <p>To access the system please click the 'Login' button below that represents your affiliation.</p>
+  </div>
+  <div class="row">
+    <div class="col-md-6" style="border:1px solid grey">
+      <article>
+	<h4>Columbia University Patrons</h4>
+	<p>Columbia University Affiliates include current students, faculty, offices, and staff.</p>
+      </article>
+      <% aeon_host = AEON[:host] %>
+      <% aeon_url = "https://#{aeon_host}" %>
+      <%= form_tag aeon_url do %>
+        <%= submit_tag 'Login' %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <article>
+	<h4>Non-Columbia University Patrons</h4>
+	<p>Non-Columbia University patrons include everyone not actively affiliated with the University. Special Borrower card holders, alumni, and staff retiresees are non-Columbia affiliates.</p>
+      </article>
+    </div>
+  </div>
+</div>

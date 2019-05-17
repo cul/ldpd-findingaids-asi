@@ -5,4 +5,7 @@ class AeonRequestsController < ApplicationController
       @selected_containers.add checkbox_value
     end
   end
+
+  def login
+  end
 end
