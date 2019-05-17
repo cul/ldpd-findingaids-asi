@@ -32,6 +32,7 @@ class ComponentsController < ApplicationController
       @input_xml = @as_api.get_ead_resource_description(@as_repo_id,@as_resource_id)
     end
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
+    @finding_aid_title = @ead.archive_title
     @series_titles = @ead.archive_dsc_series_titles
     ead_series_set_properties params[:id]
   end
