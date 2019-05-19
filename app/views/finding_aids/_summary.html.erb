@@ -18,7 +18,7 @@
     </tr>
     <tr class="odd">
       <th>Creator(s) (HC)</th>
-      <td> <%= @creators %></td>
+      <td> <%= @creators.map(&:text).join('; ') %></td>
     </tr>
     <tr class="odd">
       <th>Physical Description (HC)</th>

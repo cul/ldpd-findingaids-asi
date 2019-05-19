@@ -27,9 +27,8 @@
 	<corpname>Rare Book and Manuscript Library</corpname>
       </repository>
       <unittitle>Siegfried Sassoon papers</unittitle>
-      <origination label="creator">
-	<persname authfilenumber="http://id.loc.gov/authorities/names/n80056884" source="naf">Sassoon, Siegfried, 1886-1967</persname>
-      </origination>
+      <origination label="creator"><persname>Smith, John</persname></origination>
+      <origination label="creator"><persname>Sassoon, Siegfried, 1886-1967</persname></origination>
       <unitid>4079591</unitid>
       <physdesc altrender="whole">
 	<extent altrender="materialtype spaceoccupied">3 linear feet</extent>

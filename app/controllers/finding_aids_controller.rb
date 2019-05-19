@@ -32,7 +32,7 @@ class FindingAidsController < ApplicationController
     @finding_aid_title = @ead.archive_title
     @abstract = @ead.archive_abstract
     @bib_id = @ead.archive_id
-    @creators = @ead.archive_origination_creator
+    @creators = @ead.archive_origination_creators
     @unit_date = @ead.archive_date
     @physical_description = @ead.archive_physical_description_extent_carrier
     @language = @ead.archive_language

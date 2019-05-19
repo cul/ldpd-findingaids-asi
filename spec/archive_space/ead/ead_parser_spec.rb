@@ -23,7 +23,7 @@ attributes = [
   :archive_language, # <ead>:<archdesc>:<did>:<langmaterial><language>
   :archive_odd_head, # <ead>:<archdesc>:<odd>:<head>
   :archive_odd_values, # <ead>:<archdesc>:<odd>:<p>
-  :archive_origination_creator, # <ead>:<archdesc>:<did>:<origination label="creator">
+  :archive_origination_creators, # <ead>:<archdesc>:<did>:<origination label="creator">
   :archive_physical_description_extent_carrier, # <ead>:<archdesc>:<did>:<physdesc>:<extent @altrender="carrier">
   :archive_preferred_citation_head, # <ead>:<archdesc>:<prefercite>:<head>
   :archive_preferred_citation_values, # <ead>:<archdesc>:<prefercite>:<p>
@@ -113,6 +113,13 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
 
     ########################################## parse_arch_desc_did
     context 'parse_arch_desc_did' do
+      let (:expected_origination_creators) {
+        [
+          "Smith, John",
+          "Sassoon, Siegfried, 1886-1967"
+        ]
+      }
+
       it 'parses the archive_abstract correctly' do
         tested = @as_ead.archive_abstract
         expect(tested).to eq "This collection is made up of architectural drawings."
@@ -131,6 +138,12 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       it 'parses the archive_language correctly' do
         tested = @as_ead.archive_language
         expect(tested).to eq 'Material is in English and in French, with some materials in Dutch.'
+      end
+
+      it 'parses the archive_originations_creators correctly' do
+        @as_ead.archive_origination_creators.each_with_index do |creator, index|
+          expect(creator.text).to eq expected_origination_creators[index]
+        end
       end
 
       # TODO: need to verify how the sibling <extent> elements are parsed
