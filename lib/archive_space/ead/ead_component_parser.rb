@@ -60,9 +60,9 @@ module ArchiveSpace
         end
         container_nokogiri_elements = component.xpath(XPATH[:container])
         container_info = container_nokogiri_elements.map do |container|
-          container_type = container['type']
+          container_type = container['label'] || container['type']
           container_value = container.text
-          "#{container_type.capitalize} #{container_value}"
+          "#{container_type.titlecase} #{container_value}"
         end
         @component_info.append [ nesting_level,
                                  title,

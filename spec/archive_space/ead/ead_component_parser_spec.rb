@@ -146,7 +146,7 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       end
 
       it 'generates the correct container info' do
-        expect(@container_info).to eq ["Box 78", "Folder 5"]
+        expect(@container_info).to eq ["General Manuscripts Box 78", "Folder 5"]
       end
     end
   end
