@@ -8,4 +8,7 @@ class AeonRequestsController < ApplicationController
 
   def login
   end
+
+  def redirectshib
+  end
 end

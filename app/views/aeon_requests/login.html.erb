@@ -14,9 +14,10 @@
 	<h4>Columbia University Patrons</h4>
 	<p>Columbia University Affiliates include current students, faculty, offices, and staff.</p>
       </article>
-      <% aeon_host = AEON[:host] %>
-      <% aeon_url = "https://#{aeon_host}" %>
-      <%= form_tag aeon_url do %>
+      <% aeon_url = "#{AEON[:aeon_url]}/boom.html" %>
+      <%= form_tag(aeon_url, method: :get) do %>
+        <%= hidden_field_tag 'authenticated', 'true' %>
+        <%= hidden_field_tag 'target', redirectshib_aeon_request_url %>
         <%= submit_tag 'Login' %>
       <% end %>
     </div>
