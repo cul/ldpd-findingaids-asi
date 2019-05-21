@@ -33,7 +33,9 @@ class FindingAidsController < ApplicationController
     @abstract = @ead.abstract
     @bib_id = @ead.unit_id
     @creators = @ead.origination_creators
-    @unit_date = @ead.unit_date
+    # fcd1, 05/21/19: Since never display unitdate on it's own, may be able to remove following
+    # after further investigation.
+    @unit_dates = @ead.unit_dates
     @physical_description = @ead.physical_description_extent_carrier
     @language = @ead.language
     @access_restrictions_head = @ead.access_restrictions_head

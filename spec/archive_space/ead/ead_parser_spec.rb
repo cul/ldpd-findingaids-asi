@@ -35,7 +35,7 @@ attributes = [
   :scope_content_values, # <ead>:<archdesc>:<scopecontent>:<p>
   :separated_material_head, # <ead>:<archdesc>:<separatedmaterial>:<head>
   :separated_material_values, # <ead>:<archdesc>:<separatedmaterial>:<p>
-  :unit_date, # <ead>:<archdesc>:<did>:<unitdate>
+  :unit_dates, # <ead>:<archdesc>:<did>:<unitdate>
   :unit_id, # <ead>:<archdesc>:<did>:<unitid>
   :unit_title, # <ead>:<archdesc>:<did>:<unititle>
   :use_restrictions_head, # <ead>:<archdesc>:<userestrict>:<head>
@@ -87,6 +87,14 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       # @as_ead.parse_arch_desc_dsc nokogiri_xml
     end
 
+    ########################################## compound_dates_into_string
+    context 'compound_dates_into_string' do
+      it 'compounds the <unitdate> elements correctly into a string depending on their type attribute' do
+        tested = @as_ead.compound_dates_into_string
+        expect(tested).to eq '1914-1989, 1894-1966, bulk 1958-1980'
+      end
+    end
+
     ########################################## parse_arch_desc_misc
     context 'parse_ead_header' do
       let (:expected_revision_change_dates) {
@@ -120,6 +128,14 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_unit_dates) {
+        [
+          "1914-1989",
+          "1958-1980",
+          "1894-1966"
+        ]
+      }
+
       it 'parses the abstract correctly' do
         tested = @as_ead.abstract
         expect(tested).to eq "This collection is made up of architectural drawings."
@@ -148,9 +164,10 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         expect(tested).to eq 'Rare Book and Manuscript Library'
       end
 
-      it 'parses the unit_date correctly' do
-        tested = @as_ead.unit_date
-        expect(tested).to eq "1894-1966"
+      it 'parses the unit_dates correctly' do
+        @as_ead.unit_dates.each_with_index do |unit_date, index|
+          expect(unit_date.text).to eq expected_unit_dates[index]
+        end
       end
 
       it 'parses the unit_id correctly' do

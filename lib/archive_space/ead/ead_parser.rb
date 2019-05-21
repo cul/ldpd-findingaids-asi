@@ -37,7 +37,7 @@ module ArchiveSpace
         scope_content_values: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
         separated_material_head: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:head',
         separated_material_values: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:p',
-        unit_date: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
+        unit_dates: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
         unit_id: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid',
         unit_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle',
         use_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:head',
@@ -70,7 +70,7 @@ module ArchiveSpace
         @origination_creators = nokogiri_xml.xpath(XPATH[:origination_creators])
         @physical_description_extent_carrier = nokogiri_xml.xpath(XPATH[:physical_description_extent_carrier]).text
         @repository = nokogiri_xml.xpath(XPATH[:repository]).text
-        @unit_date = nokogiri_xml.xpath(XPATH[:unit_date]).text
+        @unit_dates = nokogiri_xml.xpath(XPATH[:unit_dates])
         @unit_id = nokogiri_xml.xpath(XPATH[:unit_id]).text
         @unit_title = nokogiri_xml.xpath(XPATH[:unit_title]).text
       end
@@ -125,6 +125,19 @@ module ArchiveSpace
         @use_restrictions_head = nokogiri_xml.xpath(XPATH[:use_restrictions_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:use_restrictions_head]).first.nil?
         @use_restrictions_values = nokogiri_xml.xpath(XPATH[:use_restrictions_values])
+      end
+
+      def compound_dates_into_string
+        bulk_dates = []
+        non_bulk_dates = []
+        @unit_dates.each do |unit_date|
+          if unit_date['type'] == 'bulk'
+            bulk_dates.append "bulk #{unit_date.text}"
+          else
+            non_bulk_dates.append "#{unit_date.text}"
+          end
+        end
+        non_bulk_dates.concat(bulk_dates).join(', ')
       end
 
       def get_series_scope_content

@@ -34,7 +34,11 @@
 	<extent altrender="materialtype spaceoccupied">3 linear feet</extent>
 	<extent altrender="carrier">4 boxes 13 slipcases</extent>
       </physdesc>
-      <unitdate normal="1894/1966" type="inclusive">1894-1966</unitdate>
+      <!-- fcd1, 05/21/19: the following combination of unitdate elements might not appear -->
+      <!-- in an actual  AS EAD; it is used here for testing the parsing of the different types-->
+      <unitdate normal="1914/1989" type="inclusive">1914-1989</unitdate>
+      <unitdate normal="1958/1980" type="bulk">1958-1980</unitdate>
+      <unitdate>1894-1966</unitdate>
       <langmaterial>English</langmaterial>
       <langmaterial>Material is in English and in French, with some materials in Dutch.</langmaterial>
       <abstract>This collection is made up of architectural drawings.</abstract>
