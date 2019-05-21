@@ -18,10 +18,8 @@ module ArchiveSpace
         control_access_occupations: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:occupation',
         control_access_persnames: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:persname',
         control_access_subjects: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:subject',
-        date: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
         dsc_series: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]',
         dsc_series_titles: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]/xmlns:did/xmlns:unittitle',
-        id: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid',
         language: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:langmaterial',
         origination_creators: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:origination[@label="creator"]/xmlns:persname',
         odd_head: '/xmlns:ead/xmlns:archdesc/xmlns:odd/xmlns:head',
@@ -39,6 +37,8 @@ module ArchiveSpace
         scope_content_values: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
         separated_material_head: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:head',
         separated_material_values: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:p',
+        unit_date: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
+        unit_id: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid',
         unit_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle',
         use_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:head',
         use_restrictions_values: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:p'
@@ -66,12 +66,12 @@ module ArchiveSpace
       # make private? Makes unit test harder
       def parse_arch_desc_did(nokogiri_xml)
         @abstract = nokogiri_xml.xpath(XPATH[:abstract]).text
-        @date = nokogiri_xml.xpath(XPATH[:date]).text
-        @id = nokogiri_xml.xpath(XPATH[:id]).text
         @language = nokogiri_xml.xpath(XPATH[:language]).map(&:text).max_by(&:length)
         @origination_creators = nokogiri_xml.xpath(XPATH[:origination_creators])
         @physical_description_extent_carrier = nokogiri_xml.xpath(XPATH[:physical_description_extent_carrier]).text
         @repository = nokogiri_xml.xpath(XPATH[:repository]).text
+        @unit_date = nokogiri_xml.xpath(XPATH[:unit_date]).text
+        @unit_id = nokogiri_xml.xpath(XPATH[:unit_id]).text
         @unit_title = nokogiri_xml.xpath(XPATH[:unit_title]).text
       end
 

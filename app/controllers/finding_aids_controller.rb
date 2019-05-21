@@ -31,9 +31,9 @@ class FindingAidsController < ApplicationController
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
     @finding_aid_title = @ead.unit_title
     @abstract = @ead.abstract
-    @bib_id = @ead.id
+    @bib_id = @ead.unit_id
     @creators = @ead.origination_creators
-    @unit_date = @ead.date
+    @unit_date = @ead.unit_date
     @physical_description = @ead.physical_description_extent_carrier
     @language = @ead.language
     @access_restrictions_head = @ead.access_restrictions_head

@@ -16,10 +16,8 @@ attributes = [
   :control_access_occupations, # <ead>:<archdesc>:<controlaccess>:<occupation>
   :control_access_persnames, # <ead>:<archdesc>:<controlaccess>:<persname>
   :control_access_subjects, # <ead>:<archdesc>:<controlaccess>:<subject>
-  :date, # <ead>:<archdesc>:<did>:<unitdate>
   :dsc_series, # <ead>:<archdesc>:<dsc>:<c level=series>, returns array of series
   :dsc_series_titles, # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>, returns array of titles
-  :id, # <ead>:<archdesc>:<did>:<unitid>
   :language, # <ead>:<archdesc>:<did>:<langmaterial><language>
   :odd_head, # <ead>:<archdesc>:<odd>:<head>
   :odd_values, # <ead>:<archdesc>:<odd>:<p>
@@ -37,6 +35,8 @@ attributes = [
   :scope_content_values, # <ead>:<archdesc>:<scopecontent>:<p>
   :separated_material_head, # <ead>:<archdesc>:<separatedmaterial>:<head>
   :separated_material_values, # <ead>:<archdesc>:<separatedmaterial>:<p>
+  :unit_date, # <ead>:<archdesc>:<did>:<unitdate>
+  :unit_id, # <ead>:<archdesc>:<did>:<unitid>
   :unit_title, # <ead>:<archdesc>:<did>:<unititle>
   :use_restrictions_head, # <ead>:<archdesc>:<userestrict>:<head>
   :use_restrictions_values # <ead>:<archdesc>:<userestrict>:<p>
@@ -125,16 +125,6 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         expect(tested).to eq "This collection is made up of architectural drawings."
       end
 
-      it 'parses the date correctly' do
-        tested = @as_ead.date
-        expect(tested).to eq "1894-1966"
-      end
-
-      it 'parses the id correctly' do
-        tested = @as_ead.id
-        expect(tested).to eq '4079591'
-      end
-
       it 'parses the language correctly' do
         tested = @as_ead.language
         expect(tested).to eq 'Material is in English and in French, with some materials in Dutch.'
@@ -156,6 +146,16 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       it 'parses the repository correctly' do
         tested = @as_ead.repository
         expect(tested).to eq 'Rare Book and Manuscript Library'
+      end
+
+      it 'parses the unit_date correctly' do
+        tested = @as_ead.unit_date
+        expect(tested).to eq "1894-1966"
+      end
+
+      it 'parses the unit_id correctly' do
+        tested = @as_ead.unit_id
+        expect(tested).to eq '4079591'
       end
 
       it 'parses the unit_title correctly' do
