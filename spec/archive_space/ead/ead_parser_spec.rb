@@ -90,7 +90,7 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
     ########################################## compound_dates_into_string
     context 'compound_dates_into_string' do
       it 'compounds the <unitdate> elements correctly into a string depending on their type attribute' do
-        tested = @as_ead.compound_dates_into_string
+        tested = @as_ead.compound_dates_into_string @as_ead.unit_dates
         expect(tested).to eq '1914-1989, 1894-1966, bulk 1958-1980'
       end
     end

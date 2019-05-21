@@ -1,8 +1,10 @@
-require 'net/http'
+require 'archive_space/ead/ead_helper'
 
 module ArchiveSpace
   module Ead
     class EadParser
+      include  ArchiveSpace::Ead::EadHelper
+
       XPATH = {
         abstract: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:abstract',
         access_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:head',
@@ -125,19 +127,6 @@ module ArchiveSpace
         @use_restrictions_head = nokogiri_xml.xpath(XPATH[:use_restrictions_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:use_restrictions_head]).first.nil?
         @use_restrictions_values = nokogiri_xml.xpath(XPATH[:use_restrictions_values])
-      end
-
-      def compound_dates_into_string
-        bulk_dates = []
-        non_bulk_dates = []
-        @unit_dates.each do |unit_date|
-          if unit_date['type'] == 'bulk'
-            bulk_dates.append "bulk #{unit_date.text}"
-          else
-            non_bulk_dates.append "#{unit_date.text}"
-          end
-        end
-        non_bulk_dates.concat(bulk_dates).join(', ')
       end
 
       def get_series_scope_content
