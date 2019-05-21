@@ -4,7 +4,7 @@
 <table class="summaryTable">
   <tbody>
     <tr class="odd">
-      <th>Bib ID (HC)</th>
+      <th>Bib ID</th>
       <td>
 	<%= @bib_id %>
 	<% bib_href = "http://www.columbia.edu/cgi-bin/cul/cliosearch?BIBID=#{@bib_id}" %>
@@ -17,19 +17,23 @@
       </td>
     </tr>
     <tr class="odd">
-      <th>Creator(s) (HC)</th>
+      <th>Creator(s)</th>
       <td> <%= @creators.map(&:text).join('; ') %></td>
     </tr>
     <tr class="odd">
-      <th>Physical Description (HC)</th>
+      <th>Title</th>
+      <td> <%= @finding_aid_title %></td>
+    </tr>
+    <tr class="odd">
+      <th>Physical Description</th>
       <td> <%= @physical_description %></td>
     </tr>
     <tr class="odd">
-      <th>Language (HC)</th>
+      <th>Language</th>
       <td> <%= @language %></td>
     </tr>
     <tr class="odd">
-      <th>Access (HC)</th>
+      <th>Access</th>
       <td> <%=  @access_restrictions_value %></td>
     </tr>
   </tbody>

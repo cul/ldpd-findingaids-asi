@@ -15,7 +15,8 @@ class ComponentsController < ApplicationController
       @input_xml = @as_api.get_ead_resource_description(@as_repo_id,@as_resource_id)
     end
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
-    @finding_aid_title = @ead.unit_title
+    @finding_aid_title =
+      [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @series_titles = @ead.dsc_series_titles
     @flattened_component_structure_array = []
     @series_titles.each_with_index do |title, index|
@@ -32,7 +33,8 @@ class ComponentsController < ApplicationController
       @input_xml = @as_api.get_ead_resource_description(@as_repo_id,@as_resource_id)
     end
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
-    @finding_aid_title = @ead.unit_title
+    @finding_aid_title =
+      [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @series_titles = @ead.dsc_series_titles
     ead_series_set_properties params[:id]
   end

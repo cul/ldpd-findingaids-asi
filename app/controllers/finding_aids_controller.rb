@@ -29,7 +29,8 @@ class FindingAidsController < ApplicationController
   private
   def ead_set_properties
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
-    @finding_aid_title = @ead.unit_title
+    @finding_aid_title =
+      [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @abstract = @ead.abstract
     @bib_id = @ead.unit_id
     @creators = @ead.origination_creators
