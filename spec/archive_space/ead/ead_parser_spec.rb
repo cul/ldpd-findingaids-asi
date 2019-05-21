@@ -2,44 +2,44 @@ require 'rails_helper'
 require 'archive_space/ead/ead_parser.rb'
 
 attributes = [
-  :archive_abstract, # <ead>:<archdesc>:<did>:<abstract>
-  :archive_access_restrictions_head, # <ead>:<archdesc>:<accessrestrict>:<head>
-  :archive_access_restrictions_values, # <ead>:<archdesc>:<accessrestrict>:<p>
-  :archive_accruals_head, # <ead>:<archdesc>:<accruals>:<head>
-  :archive_accruals_values, # <ead>:<archdesc>:<accruals>:<p>
-  :archive_alternative_form_available_head, # <ead>:<archdesc>:<accruals>:<head>
-  :archive_alternative_form_available_values, # <ead>:<archdesc>:<accruals>:<p>
-  :archive_biography_history_head, # <ead>:<archdesc>:<bioghist>:<head>
-  :archive_biography_history_values, # <ead>:<archdesc>:<bioghist>:<p>
-  :archive_control_access_corpnames, # <ead>:<archdesc>:<controlaccess>:<corpname>
-  :archive_control_access_genres_forms, # <ead>:<archdesc>:<controlaccess>:<genreform>
-  :archive_control_access_occupations, # <ead>:<archdesc>:<controlaccess>:<occupation>
-  :archive_control_access_persnames, # <ead>:<archdesc>:<controlaccess>:<persname>
-  :archive_control_access_subjects, # <ead>:<archdesc>:<controlaccess>:<subject>
-  :archive_date, # <ead>:<archdesc>:<did>:<unitdate>
-  :archive_dsc_series, # <ead>:<archdesc>:<dsc>:<c level=series>, returns array of series
-  :archive_dsc_series_titles, # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>, returns array of titles
-  :archive_id, # <ead>:<archdesc>:<did>:<unitid>
-  :archive_language, # <ead>:<archdesc>:<did>:<langmaterial><language>
-  :archive_odd_head, # <ead>:<archdesc>:<odd>:<head>
-  :archive_odd_values, # <ead>:<archdesc>:<odd>:<p>
-  :archive_origination_creators, # <ead>:<archdesc>:<did>:<origination label="creator">
-  :archive_physical_description_extent_carrier, # <ead>:<archdesc>:<did>:<physdesc>:<extent @altrender="carrier">
-  :archive_preferred_citation_head, # <ead>:<archdesc>:<prefercite>:<head>
-  :archive_preferred_citation_values, # <ead>:<archdesc>:<prefercite>:<p>
-  :archive_processing_information_head, # <ead>:<archdesc>:<processinfo>:<head>
-  :archive_processing_information_values, # <ead>:<archdesc>:<processinfo>:<p>
-  :archive_related_material_head, # <ead>:<archdesc>:<relatedmaterial>:<head>
-  :archive_related_material_values, # <ead>:<archdesc>:<related_material>:<p>
-  :archive_repository, # <ead><archdesc><did><repository><corpname>
-  :archive_revision_description_changes, # <ead><archheader><revisiondesc><change>
-  :archive_scope_content_head, # <ead>:<archdesc>:<scopecontent>:<head>
-  :archive_scope_content_values, # <ead>:<archdesc>:<scopecontent>:<p>
-  :archive_separated_material_head, # <ead>:<archdesc>:<separatedmaterial>:<head>
-  :archive_separated_material_values, # <ead>:<archdesc>:<separatedmaterial>:<p>
-  :archive_unit_title, # <ead>:<archdesc>:<did>:<unititle>
-  :archive_use_restrictions_head, # <ead>:<archdesc>:<userestrict>:<head>
-  :archive_use_restrictions_values # <ead>:<archdesc>:<userestrict>:<p>
+  :abstract, # <ead>:<archdesc>:<did>:<abstract>
+  :access_restrictions_head, # <ead>:<archdesc>:<accessrestrict>:<head>
+  :access_restrictions_values, # <ead>:<archdesc>:<accessrestrict>:<p>
+  :accruals_head, # <ead>:<archdesc>:<accruals>:<head>
+  :accruals_values, # <ead>:<archdesc>:<accruals>:<p>
+  :alternative_form_available_head, # <ead>:<archdesc>:<accruals>:<head>
+  :alternative_form_available_values, # <ead>:<archdesc>:<accruals>:<p>
+  :biography_history_head, # <ead>:<archdesc>:<bioghist>:<head>
+  :biography_history_values, # <ead>:<archdesc>:<bioghist>:<p>
+  :control_access_corpnames, # <ead>:<archdesc>:<controlaccess>:<corpname>
+  :control_access_genres_forms, # <ead>:<archdesc>:<controlaccess>:<genreform>
+  :control_access_occupations, # <ead>:<archdesc>:<controlaccess>:<occupation>
+  :control_access_persnames, # <ead>:<archdesc>:<controlaccess>:<persname>
+  :control_access_subjects, # <ead>:<archdesc>:<controlaccess>:<subject>
+  :date, # <ead>:<archdesc>:<did>:<unitdate>
+  :dsc_series, # <ead>:<archdesc>:<dsc>:<c level=series>, returns array of series
+  :dsc_series_titles, # <ead>:<archdesc>:<dsc>:<c level=series><did><unittitle>, returns array of titles
+  :id, # <ead>:<archdesc>:<did>:<unitid>
+  :language, # <ead>:<archdesc>:<did>:<langmaterial><language>
+  :odd_head, # <ead>:<archdesc>:<odd>:<head>
+  :odd_values, # <ead>:<archdesc>:<odd>:<p>
+  :origination_creators, # <ead>:<archdesc>:<did>:<origination label="creator">
+  :physical_description_extent_carrier, # <ead>:<archdesc>:<did>:<physdesc>:<extent @altrender="carrier">
+  :preferred_citation_head, # <ead>:<archdesc>:<prefercite>:<head>
+  :preferred_citation_values, # <ead>:<archdesc>:<prefercite>:<p>
+  :processing_information_head, # <ead>:<archdesc>:<processinfo>:<head>
+  :processing_information_values, # <ead>:<archdesc>:<processinfo>:<p>
+  :related_material_head, # <ead>:<archdesc>:<relatedmaterial>:<head>
+  :related_material_values, # <ead>:<archdesc>:<related_material>:<p>
+  :repository, # <ead><archdesc><did><repository><corpname>
+  :revision_description_changes, # <ead><archheader><revisiondesc><change>
+  :scope_content_head, # <ead>:<archdesc>:<scopecontent>:<head>
+  :scope_content_values, # <ead>:<archdesc>:<scopecontent>:<p>
+  :separated_material_head, # <ead>:<archdesc>:<separatedmaterial>:<head>
+  :separated_material_values, # <ead>:<archdesc>:<separatedmaterial>:<p>
+  :unit_title, # <ead>:<archdesc>:<did>:<unititle>
+  :use_restrictions_head, # <ead>:<archdesc>:<userestrict>:<head>
+  :use_restrictions_values # <ead>:<archdesc>:<userestrict>:<p>
 ].freeze
 
 
@@ -103,8 +103,8 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
-      it 'parses the archive_revision_description_changes correctly' do
-        @as_ead.archive_revision_description_changes.each_with_index do |change, index|
+      it 'parses the revision_description_changes correctly' do
+        @as_ead.revision_description_changes.each_with_index do |change, index|
           expect(change[:date]).to eq expected_revision_change_dates[index]
           expect(change[:item]).to eq expected_revision_change_items[index]
         end
@@ -120,59 +120,59 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
-      it 'parses the archive_abstract correctly' do
-        tested = @as_ead.archive_abstract
+      it 'parses the abstract correctly' do
+        tested = @as_ead.abstract
         expect(tested).to eq "This collection is made up of architectural drawings."
       end
 
-      it 'parses the archive_date correctly' do
-        tested = @as_ead.archive_date
+      it 'parses the date correctly' do
+        tested = @as_ead.date
         expect(tested).to eq "1894-1966"
       end
 
-      it 'parses the archive_id correctly' do
-        tested = @as_ead.archive_id
+      it 'parses the id correctly' do
+        tested = @as_ead.id
         expect(tested).to eq '4079591'
       end
 
-      it 'parses the archive_language correctly' do
-        tested = @as_ead.archive_language
+      it 'parses the language correctly' do
+        tested = @as_ead.language
         expect(tested).to eq 'Material is in English and in French, with some materials in Dutch.'
       end
 
-      it 'parses the archive_originations_creators correctly' do
-        @as_ead.archive_origination_creators.each_with_index do |creator, index|
+      it 'parses the originations_creators correctly' do
+        @as_ead.origination_creators.each_with_index do |creator, index|
           expect(creator.text).to eq expected_origination_creators[index]
         end
       end
 
       # TODO: need to verify how the sibling <extent> elements are parsed
-      it 'parses the archive_physical_description_extent_carrier correctly' do
-        tested = @as_ead.archive_physical_description_extent_carrier
+      it 'parses the physical_description_extent_carrier correctly' do
+        tested = @as_ead.physical_description_extent_carrier
         expect(tested).to eq '4 boxes 13 slipcases'
         # expect(tested).to eq '3 linear feet 4 boxes 13 slipcases'
       end
 
-      it 'parses the archive_repository correctly' do
-        tested = @as_ead.archive_repository
+      it 'parses the repository correctly' do
+        tested = @as_ead.repository
         expect(tested).to eq 'Rare Book and Manuscript Library'
       end
 
-      it 'parses the archive_unit_title correctly' do
-        tested = @as_ead.archive_unit_title
+      it 'parses the unit_title correctly' do
+        tested = @as_ead.unit_title
         expect(tested).to eq 'Siegfried Sassoon papers'
       end
     end
 
     ########################################## parse_arch_desc_dsc
     xcontext 'parse_arch_desc_dsc' do
-      it 'parses the archive_dsc_series correctly' do
-        tested = @as_ead.archive_dsc_series[0]
+      it 'parses the dsc_series correctly' do
+        tested = @as_ead.dsc_series[0]
         expect(tested).to be_instance_of Nokogiri::XML::Element
       end
 
-      it 'parses the archive_dsc_series_titles correctly' do
-        tested = @as_ead.archive_dsc_series_titles
+      it 'parses the dsc_series_titles correctly' do
+        tested = @as_ead.dsc_series_titles
         expect(tested).to include 'Series VII: Bookplates'
       end
     end
@@ -291,145 +291,145 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
-      it 'parses the archive_access_restrictions_head correctly' do
-        tested = @as_ead.archive_access_restrictions_head
+      it 'parses the access_restrictions_head correctly' do
+        tested = @as_ead.access_restrictions_head
         expect(tested).to eq 'Restrictions on Access'
       end
 
-      it 'parses the archive_access_restrictions_values correctly' do
-        @as_ead.archive_access_restrictions_values.each_with_index do |access_restrictions_value, index|
+      it 'parses the access_restrictions_values correctly' do
+        @as_ead.access_restrictions_values.each_with_index do |access_restrictions_value, index|
           expect(access_restrictions_value.text).to eq expected_access_restrictions_values[index]
         end
       end
 
-      it 'parses the archive_accruals_head correctly' do
-        tested = @as_ead.archive_accruals_head
+      it 'parses the accruals_head correctly' do
+        tested = @as_ead.accruals_head
         expect(tested).to eq 'Accruals'
       end
 
-      it 'parses the archive_accruals_values correctly' do
-        @as_ead.archive_accruals_values.each_with_index do |accruals_value, index|
+      it 'parses the accruals_values correctly' do
+        @as_ead.accruals_values.each_with_index do |accruals_value, index|
           expect(accruals_value.text).to eq expected_accruals_values[index]
         end
       end
 
-      it 'parses the archive_alternative_form_available_head correctly' do
-        tested = @as_ead.archive_alternative_form_available_head
+      it 'parses the alternative_form_available_head correctly' do
+        tested = @as_ead.alternative_form_available_head
         expect(tested).to eq 'Alternate Form Available'
       end
 
-      it 'parses the archive_alternative_form_available_values correctly' do
-        @as_ead.archive_alternative_form_available_values.each_with_index do |alternative_form_available_value, index|
+      it 'parses the alternative_form_available_values correctly' do
+        @as_ead.alternative_form_available_values.each_with_index do |alternative_form_available_value, index|
           expect(alternative_form_available_value.text).to eq expected_alternative_form_available_values[index]
         end
       end
 
-      it 'parses the archive_biography_history_head correctly' do
-        tested = @as_ead.archive_biography_history_head
+      it 'parses the biography_history_head correctly' do
+        tested = @as_ead.biography_history_head
         expect(tested).to eq 'Biographical note'
       end
 
-      it 'parses the archive_biography_history_values correctly' do
-        @as_ead.archive_biography_history_values.each_with_index do |biography_history_value, index|
+      it 'parses the biography_history_values correctly' do
+        @as_ead.biography_history_values.each_with_index do |biography_history_value, index|
           expect(biography_history_value.text).to eq expected_biography_history_values[index]
         end
       end
 
-      it 'parses the archive_control_access_corpnames correctly' do
-        tested = @as_ead.archive_control_access_corpnames
+      it 'parses the control_access_corpnames correctly' do
+        tested = @as_ead.control_access_corpnames
         expect(tested).to eq expected_control_access_corpnames
       end
 
-      it 'parses the archive_control_access_genres_forms correctly' do
-        tested = @as_ead.archive_control_access_genres_forms
+      it 'parses the control_access_genres_forms correctly' do
+        tested = @as_ead.control_access_genres_forms
         expect(tested).to eq expected_control_access_genres_forms
       end
-      it 'parses the archive_control_access_occupations correctly' do
-        tested = @as_ead.archive_control_access_occupations
+      it 'parses the control_access_occupations correctly' do
+        tested = @as_ead.control_access_occupations
         expect(tested).to eq expected_control_access_occupations
       end
-      it 'parses the archive_control_access_persnames correctly' do
-        tested = @as_ead.archive_control_access_persnames
+      it 'parses the control_access_persnames correctly' do
+        tested = @as_ead.control_access_persnames
         expect(tested).to eq expected_control_access_persnames
       end
-      it 'parses the archive_control_access_subjects correctly' do
-        tested = @as_ead.archive_control_access_subjects
+      it 'parses the control_access_subjects correctly' do
+        tested = @as_ead.control_access_subjects
         expect(tested).to eq expected_control_access_subjects
       end
 
-      it 'parses the archive_odd_head correctly' do
-        tested = @as_ead.archive_odd_head
+      it 'parses the odd_head correctly' do
+        tested = @as_ead.odd_head
         expect(tested).to eq 'General Note'
       end
 
-      it 'parses the archive_odd_values correctly' do
-        @as_ead.archive_odd_values.each_with_index do |odd_value, index|
+      it 'parses the odd_values correctly' do
+        @as_ead.odd_values.each_with_index do |odd_value, index|
           expect(odd_value.text).to eq expected_odd_values[index]
         end
       end
 
-      it 'parses the archive_preferred_citation_head correctly' do
-        tested = @as_ead.archive_preferred_citation_head
+      it 'parses the preferred_citation_head correctly' do
+        tested = @as_ead.preferred_citation_head
         expect(tested).to eq 'Preferred Citation'
       end
 
-      it 'parses the archive_preferred_citation_values correctly' do
-        @as_ead.archive_preferred_citation_values.each_with_index do |preferred_citation_value, index|
+      it 'parses the preferred_citation_values correctly' do
+        @as_ead.preferred_citation_values.each_with_index do |preferred_citation_value, index|
           expect(preferred_citation_value.text).to eq expected_preferred_citation_values[index]
         end
       end
 
-      it 'parses the archive_processing_information_head correctly' do
-        tested = @as_ead.archive_processing_information_head
+      it 'parses the processing_information_head correctly' do
+        tested = @as_ead.processing_information_head
         expect(tested).to eq 'Processing Information'
       end
 
-      it 'parses the archive_processing_information_values correctly' do
-        @as_ead.archive_processing_information_values.each_with_index do |processing_information_value, index|
+      it 'parses the processing_information_values correctly' do
+        @as_ead.processing_information_values.each_with_index do |processing_information_value, index|
           expect(processing_information_value.text).to eq expected_processing_information_values[index]
         end
       end
 
-      it 'parses the archive_related_material_head correctly' do
-        tested = @as_ead.archive_related_material_head
+      it 'parses the related_material_head correctly' do
+        tested = @as_ead.related_material_head
         expect(tested).to eq 'Related Materials'
       end
 
-      it 'parses the archive_related_material_values correctly' do
-        @as_ead.archive_related_material_values.each_with_index do |related_material_value, index|
+      it 'parses the related_material_values correctly' do
+        @as_ead.related_material_values.each_with_index do |related_material_value, index|
           expect(related_material_value.text).to eq expected_related_material_values[index]
         end
       end
 
-      it 'parses the archive_scope_content_head correctly' do
-        tested = @as_ead.archive_scope_content_head
+      it 'parses the scope_content_head correctly' do
+        tested = @as_ead.scope_content_head
         expect(tested).to eq 'Scope and Content'
       end
 
-      it 'parses the archive_scope_content_values correctly' do
-        @as_ead.archive_scope_content_values.each_with_index do |scope_content_value, index|
+      it 'parses the scope_content_values correctly' do
+        @as_ead.scope_content_values.each_with_index do |scope_content_value, index|
           expect(scope_content_value.text).to eq expected_scope_content_values[index]
         end
       end
 
-      it 'parses the archive_separated_material_head correctly' do
-        tested = @as_ead.archive_separated_material_head
+      it 'parses the separated_material_head correctly' do
+        tested = @as_ead.separated_material_head
         expect(tested).to eq 'Separated Materials'
       end
 
-      it 'parses the archive_separated_material_values correctly' do
-        @as_ead.archive_separated_material_values.each_with_index do |separated_material_value, index|
+      it 'parses the separated_material_values correctly' do
+        @as_ead.separated_material_values.each_with_index do |separated_material_value, index|
           expect(separated_material_value.text).to eq expected_separated_material_values[index]
         end
       end
 
-      it 'parses the archive_use_restrictions_head correctly' do
-        tested = @as_ead.archive_use_restrictions_head
+      it 'parses the use_restrictions_head correctly' do
+        tested = @as_ead.use_restrictions_head
         expect(tested).to eq 'Terms Governing Use and Reproduction'
       end
 
-      it 'parses the archive_use_restrictions_values correctly' do
-        @as_ead.archive_use_restrictions_values.each_with_index do |use_restrictions_value, index|
+      it 'parses the use_restrictions_values correctly' do
+        @as_ead.use_restrictions_values.each_with_index do |use_restrictions_value, index|
           expect(use_restrictions_value.text).to eq expected_use_restrictions_values[index]
         end
       end

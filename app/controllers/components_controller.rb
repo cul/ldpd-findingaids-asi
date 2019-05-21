@@ -15,8 +15,8 @@ class ComponentsController < ApplicationController
       @input_xml = @as_api.get_ead_resource_description(@as_repo_id,@as_resource_id)
     end
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
-    @finding_aid_title = @ead.archive_title
-    @series_titles = @ead.archive_dsc_series_titles
+    @finding_aid_title = @ead.unit_title
+    @series_titles = @ead.dsc_series_titles
     @flattened_component_structure_array = []
     @series_titles.each_with_index do |title, index|
       ead_series_set_properties(index + 1)
@@ -32,14 +32,14 @@ class ComponentsController < ApplicationController
       @input_xml = @as_api.get_ead_resource_description(@as_repo_id,@as_resource_id)
     end
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
-    @finding_aid_title = @ead.archive_title
-    @series_titles = @ead.archive_dsc_series_titles
+    @finding_aid_title = @ead.unit_title
+    @series_titles = @ead.dsc_series_titles
     ead_series_set_properties params[:id]
   end
 
   private
   def ead_series_set_properties component_num
-    component_nokogiri_xml = @ead.archive_dsc_series[component_num.to_i - 1]
+    component_nokogiri_xml = @ead.dsc_series[component_num.to_i - 1]
     @component = ArchiveSpace::Ead::EadComponentParser.new
     @component.parse component_nokogiri_xml
     @component_title = @component.title
