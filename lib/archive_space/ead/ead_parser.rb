@@ -39,7 +39,7 @@ module ArchiveSpace
         archive_scope_content_values: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
         archive_separated_material_head: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:head',
         archive_separated_material_values: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:p',
-        archive_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle',
+        archive_unit_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle',
         archive_use_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:head',
         archive_use_restrictions_values: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:p'
       }
@@ -72,7 +72,7 @@ module ArchiveSpace
         @archive_origination_creators = nokogiri_xml.xpath(XPATH[:archive_origination_creators])
         @archive_physical_description_extent_carrier = nokogiri_xml.xpath(XPATH[:archive_physical_description_extent_carrier]).text
         @archive_repository = nokogiri_xml.xpath(XPATH[:archive_repository]).text
-        @archive_title = nokogiri_xml.xpath(XPATH[:archive_title]).text
+        @archive_unit_title = nokogiri_xml.xpath(XPATH[:archive_unit_title]).text
       end
 
       # make private? Makes unit test harder

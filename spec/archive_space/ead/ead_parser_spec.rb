@@ -37,7 +37,7 @@ attributes = [
   :archive_scope_content_values, # <ead>:<archdesc>:<scopecontent>:<p>
   :archive_separated_material_head, # <ead>:<archdesc>:<separatedmaterial>:<head>
   :archive_separated_material_values, # <ead>:<archdesc>:<separatedmaterial>:<p>
-  :archive_title, # <ead>:<archdesc>:<did>:<unititle>
+  :archive_unit_title, # <ead>:<archdesc>:<did>:<unititle>
   :archive_use_restrictions_head, # <ead>:<archdesc>:<userestrict>:<head>
   :archive_use_restrictions_values # <ead>:<archdesc>:<userestrict>:<p>
 ].freeze
@@ -158,8 +158,8 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         expect(tested).to eq 'Rare Book and Manuscript Library'
       end
 
-      it 'parses the archive_title correctly' do
-        tested = @as_ead.archive_title
+      it 'parses the archive_unit_title correctly' do
+        tested = @as_ead.archive_unit_title
         expect(tested).to eq 'Siegfried Sassoon papers'
       end
     end
