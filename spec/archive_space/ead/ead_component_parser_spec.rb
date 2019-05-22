@@ -4,6 +4,7 @@ require 'archive_space/ead/ead_component_parser.rb'
 
 attributes = [
   :other_finding_aid_ps, # <c>:<scopecontent>:<p>
+  :access_restrictions_ps, # <c>:<accessrestrict>:<p>
   :scope_content_ps, # <c>:<scopecontent>:<p>
   :separated_material_ps, # <c>:<sepratedmaterial>:<p>
   :title # <c>:<did>:<unititle>
@@ -50,6 +51,14 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         @as_ead_series.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
       end
 
+      let (:expected_access_restrictions_ps) {
+        [
+          "[Restricted Until 2039](top-level container)",
+          "[Restricted Until 2059](top-level container)",
+          "[Restricted Until 2020](top-level container)"
+        ]
+      }
+
       let (:expected_other_finding_aid_ps) {
         [
           "*In addition, a sortable inventory in this downloadable Excel spreadsheet.",
@@ -73,6 +82,12 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           "The personal papers and finalized individual memoirs are cataloged in CLIO."
         ]
       }
+
+      it 'sets the access_restrictions_ps correctly' do
+        @as_ead_series.access_restrictions_ps.each_with_index do |access_restrictions_p, index|
+          expect(access_restrictions_p.text).to eq expected_access_restrictions_ps[index]
+        end
+      end
 
       it 'sets the other_finding_aid_ps correctly' do
         @as_ead_series.other_finding_aid_ps.each_with_index do |other_finding_aid_p, index|
@@ -110,11 +125,20 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           @physical_description,
           @date,
           @level,
+          @access_restrictions_ps,
           @scope_content_ps,
           @separated_material_ps,
           @other_finding_aid_ps,
           @container_info ) = @as_ead_series.generate_info.first
       end
+
+      let (:expected_access_restrictions_ps) {
+        [
+          "<p>[Restricted Until 2049](child container)</p>",
+          "<p>[Restricted Until 2047](child container)</p>",
+          "<p>[Restricted Until 2059](child container)</p>"
+        ]
+      }
 
       let (:expected_scope_content_ps) {
         [
@@ -154,6 +178,12 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
 
       it 'generates the correct level' do
         expect(@level).to eq 'series'
+      end
+
+      it 'generates the correct access_restrictions_ps values' do
+        @access_restrictions_ps.each_with_index do |access_restrictions_p, index|
+          expect(access_restrictions_p).to eq expected_access_restrictions_ps[index]
+        end
       end
 
       it 'generates the correct scope content values' do

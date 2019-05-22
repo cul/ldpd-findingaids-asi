@@ -45,6 +45,18 @@
 	  <head>Other Finding Aids</head>
 	  <p>Another finding aid available online.</p>
 	</otherfindaid>
+	<accessrestrict>
+	  <head>Conditions Governing Access</head>
+	  <p>[Restricted Until 2039](top-level container)</p>
+	</accessrestrict>
+	<accessrestrict>
+	  <head>Conditions Governing Access</head>
+	  <p>[Restricted Until 2059](top-level container)</p>
+	</accessrestrict>
+	<accessrestrict>
+	  <head>Conditions Governing Access</head>
+	  <p>[Restricted Until 2020](top-level container)</p>
+	</accessrestrict>
 	<c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="series">
 	  <did>
 	    <unittitle>Subseries I: Cataloged Correspondence</unittitle>
@@ -88,6 +100,18 @@
 	    <head>Other Finding Aids</head>
 	    <p>Another finding aid available online.</p>
 	  </otherfindaid>
+	  <accessrestrict>
+	    <head>Conditions Governing Access</head>
+	    <p>[Restricted Until 2049](child container)</p>
+	  </accessrestrict>
+	  <accessrestrict>
+	    <head>Conditions Governing Access</head>
+	    <p>[Restricted Until 2047](child container)</p>
+	  </accessrestrict>
+	  <accessrestrict>
+	    <head>Conditions Governing Access</head>
+	    <p>[Restricted Until 2059](child container)</p>
+	  </accessrestrict>
 	</c>
       </c>
     </dsc>

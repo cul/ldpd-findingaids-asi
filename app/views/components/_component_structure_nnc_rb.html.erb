@@ -1,5 +1,10 @@
 <div class="nnc-rb">
   <h1 style="color:#2c5277;font-size:16px;font-weight:bold;"><%= @component_title %></h1>
+  <% @access_restrictions_ps.each do |access_restrictions_p| %>
+    <div style="color:red;">
+      <%== apply_ead_to_html_transforms access_restrictions_p %>
+    </div>
+  <% end %>
   <% @component_scope_content_ps.each do |scope_content_p| %>
     <%== apply_ead_to_html_transforms scope_content_p %>
   <% end %>
@@ -18,6 +23,7 @@
          physical_description,
          date,
          level,
+         access_restrictions_ps,
          scope_content_ps,
          separated_material_ps,
          other_finding_aid_ps,
@@ -43,6 +49,13 @@
       <span style="text-align:left;"> <%= [title, date, physical_description].reject(&:blank?).join(", ") %> </span>
       <span style="text-align:right;float:right;"><%=container_info.join(' ') %></span>
     </p>
+    <% unless access_restrictions_ps.empty? %>
+      <div style="margin:0;padding-left:1em;color:red;">
+        <% access_restrictions_ps.each do |access_restrictions_p| %>
+          <%== access_restrictions_p %>
+        <% end %>
+      </div>
+    <% end %>
     <% unless displayed_component_infos.empty? %>
       <div style="margin:0;padding-left:1em;">
         <% displayed_component_infos.each do |displayed_component_info| %>

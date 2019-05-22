@@ -6,13 +6,14 @@ module ArchiveSpace
       include  ArchiveSpace::Ead::EadHelper
 
       XPATH = {
+        access_restrictions_ps: './xmlns:accessrestrict/xmlns:p',
         container: './xmlns:did/xmlns:container',
         date: './xmlns:did/xmlns:unitdate',
         other_finding_aid_ps: './xmlns:otherfindaid/xmlns:p',
         physical_description: './xmlns:did/xmlns:physdesc',
-        title: './xmlns:did/xmlns:unittitle',
         scope_content_ps: './xmlns:scopecontent/xmlns:p',
-        separated_material_ps: './xmlns:separatedmaterial/xmlns:p'
+        separated_material_ps: './xmlns:separatedmaterial/xmlns:p',
+        title: './xmlns:did/xmlns:unittitle'
       }
 
       attr_reader *XPATH.keys
@@ -21,6 +22,7 @@ module ArchiveSpace
       # Takes a Nokogiri::XML::Element (fcd1: verify this)
       # containing a <c lelvel="series"> element
       def parse(nokogiri_xml)
+        @access_restrictions_ps = nokogiri_xml.xpath(XPATH[:access_restrictions_ps])
         @nokogiri_xml = nokogiri_xml
         @other_finding_aid_ps = nokogiri_xml.xpath(XPATH[:other_finding_aid_ps])
         @scope_content_ps = nokogiri_xml.xpath(XPATH[:scope_content_ps])
@@ -50,6 +52,9 @@ module ArchiveSpace
         physical_description = component.xpath(XPATH[:physical_description]).text
         date = component.xpath(XPATH[:date]).text
         level = component.attribute('level').text
+        access_restrictions_ps = component.xpath(XPATH[:access_restrictions_ps]).map do |access_restrictions_p|
+          (apply_ead_to_html_transforms access_restrictions_p).to_s
+        end
         scope_content_ps = component.xpath(XPATH[:scope_content_ps]).map do |scope_content_p|
           (apply_ead_to_html_transforms scope_content_p).to_s
         end
@@ -70,6 +75,7 @@ module ArchiveSpace
                                  physical_description,
                                  date,
                                  level,
+                                 access_restrictions_ps,
                                  scope_content_ps,
                                  separated_material_ps,
                                  other_finding_aid_ps,
