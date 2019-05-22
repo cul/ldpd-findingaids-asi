@@ -46,6 +46,7 @@ class ComponentsController < ApplicationController
     @component.parse component_nokogiri_xml
     @component_title = @component.title
     @other_finding_aid_ps = @component.other_finding_aid_ps
+    @separated_material_ps = @component.separated_material_ps
     @component_scope_content_ps = @component.scope_content_ps
     @flattened_component_structure = @component.generate_info
   end

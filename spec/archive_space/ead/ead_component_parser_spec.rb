@@ -5,6 +5,7 @@ require 'archive_space/ead/ead_component_parser.rb'
 attributes = [
   :other_finding_aid_ps, # <c>:<scopecontent>:<p>
   :scope_content_ps, # <c>:<scopecontent>:<p>
+  :separated_material_ps, # <c>:<sepratedmaterial>:<p>
   :title # <c>:<did>:<unititle>
 ].freeze
 
@@ -65,6 +66,14 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         ]
       }
 
+      let (:expected_separated_material_ps) {
+        [
+          "Some interviewees' personal papers were separated and described as their own collection.",
+          "Oral history transcripts in this series are drafts and editing copies.",
+          "The personal papers and finalized individual memoirs are cataloged in CLIO."
+        ]
+      }
+
       it 'sets the other_finding_aid_ps correctly' do
         @as_ead_series.other_finding_aid_ps.each_with_index do |other_finding_aid_p, index|
           expect(other_finding_aid_p.text).to eq expected_other_finding_aid_ps[index]
@@ -74,6 +83,12 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       it 'sets the scope_content_ps correctly' do
         @as_ead_series.scope_content_ps.each_with_index do |scope_content_p, index|
           expect(scope_content_p.text).to eq expected_scope_content_ps[index]
+        end
+      end
+
+      it 'sets the separated_material_ps correctly' do
+        @as_ead_series.separated_material_ps.each_with_index do |separated_material_p, index|
+          expect(separated_material_p.text).to eq expected_separated_material_ps[index]
         end
       end
 
