@@ -1,5 +1,9 @@
-<h3>EAD Abstract</h3>
-<p><%= @abstract %></p>
+<%= content_tag(:h3,'Abstract') unless @abstracts.empty? %>
+<% @abstracts.each do |abstract| %>
+  <p>
+    <%== apply_ead_to_html_transforms abstract %>
+  </p>
+<% end %>
 <h3>At a Glance</h3>
 <table class="summaryTable">
   <tbody>

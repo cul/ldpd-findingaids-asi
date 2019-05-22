@@ -31,7 +31,7 @@ class FindingAidsController < ApplicationController
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
     @finding_aid_title =
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
-    @abstract = @ead.abstract
+    @abstracts = @ead.abstracts
     @bib_id = @ead.unit_id
     @creators = @ead.origination_creators
     # fcd1, 05/21/19: Since never display unitdate on it's own, may be able to remove following

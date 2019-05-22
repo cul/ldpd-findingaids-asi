@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'archive_space/ead/ead_parser.rb'
 
 attributes = [
-  :abstract, # <ead>:<archdesc>:<did>:<abstract>
+  :abstracts, # <ead>:<archdesc>:<did>:<abstract>
   :access_restrictions_head, # <ead>:<archdesc>:<accessrestrict>:<head>
   :access_restrictions_values, # <ead>:<archdesc>:<accessrestrict>:<p>
   :accruals_head, # <ead>:<archdesc>:<accruals>:<head>
@@ -136,8 +136,8 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
-      it 'parses the abstract correctly' do
-        tested = @as_ead.abstract
+      it 'parses the abstracts correctly' do
+        tested = @as_ead.abstracts.text
         expect(tested).to eq "This collection is made up of architectural drawings."
       end
 

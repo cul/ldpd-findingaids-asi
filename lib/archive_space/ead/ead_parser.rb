@@ -6,7 +6,7 @@ module ArchiveSpace
       include  ArchiveSpace::Ead::EadHelper
 
       XPATH = {
-        abstract: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:abstract',
+        abstracts: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:abstract',
         access_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:head',
         access_restrictions_values: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:p',
         accruals_head: '/xmlns:ead/xmlns:archdesc/xmlns:accruals/xmlns:head',
@@ -67,7 +67,7 @@ module ArchiveSpace
 
       # make private? Makes unit test harder
       def parse_arch_desc_did(nokogiri_xml)
-        @abstract = nokogiri_xml.xpath(XPATH[:abstract]).text
+        @abstracts = nokogiri_xml.xpath(XPATH[:abstracts])
         @language = nokogiri_xml.xpath(XPATH[:language]).map(&:text).max_by(&:length)
         @origination_creators = nokogiri_xml.xpath(XPATH[:origination_creators])
         @physical_description_extent_carrier = nokogiri_xml.xpath(XPATH[:physical_description_extent_carrier]).text
