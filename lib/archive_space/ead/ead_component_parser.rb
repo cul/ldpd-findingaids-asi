@@ -24,9 +24,7 @@ module ArchiveSpace
       def parse(nokogiri_xml)
         @nokogiri_xml = nokogiri_xml
         @title = nokogiri_xml.xpath(XPATH[:title]).text
-        @scope_content_ps = nokogiri_xml.xpath(XPATH[:scope_content_ps]).map do |scope_content_p|
-          (apply_ead_to_html_transforms scope_content_p).to_s
-        end
+        @scope_content_ps = nokogiri_xml.xpath(XPATH[:scope_content_ps])
       end
 
       def generate_info

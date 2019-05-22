@@ -50,9 +50,9 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
 
       let (:expected_scope_content_ps) {
         [
-          "<p>The drawings in the collection consist of pencil and ink drawings.</p>",
-          "<p>Correspondents include: H.J. Heinz.</p>",
-          "<p>Contains  document allowing Bunshaft to practice architecture in Belgium.</p>"
+          "The drawings in the collection consist of pencil and ink drawings.",
+          "Correspondents include: H.J. Heinz.",
+          "Contains  document allowing Bunshaft to practice architecture in Belgium."
         ]
       }
 
@@ -64,7 +64,7 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       it 'sets the scope content correctly' do
         tested = @as_ead_series.scope_content_ps
         tested.each_with_index do |scope_content_p, index|
-          expect(scope_content_p).to eq expected_scope_content_ps[index]
+          expect(scope_content_p.text).to eq expected_scope_content_ps[index]
         end
       end
     end

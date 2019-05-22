@@ -1,7 +1,7 @@
 <div class="nnc-rb">
   <h1 style="color:#2c5277;font-size:16px;font-weight:bold;"><%= @component_title %></h1>
   <% @component_scope_content_ps.each do |scope_content_p| %>
-    <%== scope_content_p %>
+    <%== apply_ead_to_html_transforms scope_content_p %>
   <% end %>
   <% @last_container_seen = '' %>
   <% @checkbox_id = 0 %>
