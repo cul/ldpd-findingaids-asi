@@ -31,6 +31,7 @@ module ArchiveSpace
         preferred_citation_values: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:p',
         processing_information_head: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:head',
         processing_information_values: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:p',
+        publicationstmt_publisher: '/xmlns:ead/xmlns:eadheader/xmlns:filedesc/xmlns:publicationstmt/xmlns:publisher',
         related_material_head: '/xmlns:ead/xmlns:archdesc/xmlns:relatedmaterial/xmlns:head',
         related_material_values: '/xmlns:ead/xmlns:archdesc/xmlns:relatedmaterial/xmlns:p',
         repository: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:repository/xmlns:corpname',
@@ -58,6 +59,7 @@ module ArchiveSpace
 
       # make private? Makes unit test harder
       def parse_ead_header(nokogiri_xml)
+        @publicationstmt_publisher = nokogiri_xml.xpath(XPATH[:publicationstmt_publisher]).text
         revision_description_change_nokogiri_elements =
           nokogiri_xml.xpath(XPATH[:revision_description_changes])
         @revision_description_changes = revision_description_change_nokogiri_elements.map do |change|

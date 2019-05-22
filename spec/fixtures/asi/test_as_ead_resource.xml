@@ -7,6 +7,31 @@
 	     dateencoding="iso8601"
 	     langencoding="iso639-2b"
 	     repositoryencoding="iso15511">
+    <filedesc>
+      <titlestmt>
+	<titleproper>Aleksei Aleksandrovich von Lampe Papers<num>4077739</num></titleproper>
+      </titlestmt>
+      <publicationstmt>
+	<publisher>Rare Book and Manuscript Library</publisher>
+	<address>
+	  <addressline>Butler Library, 6th Floor</addressline>
+	  <addressline>Columbia University, Mail Code 1127</addressline>
+	  <addressline>535 W. 114th St.</addressline>
+	  <addressline>New York, NY 10027</addressline>
+	  <addressline>rbml@libraries.cul.columbia.edu</addressline>
+	  <addressline>
+	    URL:
+	    <extptr xlink:href="http://www.columbia.edu/cu/lweb/indiv/rbml/index.html"
+		    xlink:show="new"
+		    xlink:title="http://www.columbia.edu/cu/lweb/indiv/rbml/index.html"
+		    xlink:type="simple"/>
+	  </addressline>
+	</address>
+      </publicationstmt>
+      <notestmt>
+	<note><p>Finding aid in repository</p></note>
+      </notestmt>
+    </filedesc>
     <revisiondesc>
       <change>
 	<date>2009-06-26</date>

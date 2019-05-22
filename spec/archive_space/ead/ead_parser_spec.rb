@@ -27,10 +27,11 @@ attributes = [
   :preferred_citation_values, # <ead>:<archdesc>:<prefercite>:<p>
   :processing_information_head, # <ead>:<archdesc>:<processinfo>:<head>
   :processing_information_values, # <ead>:<archdesc>:<processinfo>:<p>
+  :publicationstmt_publisher, # <ead><archheader>:<filedesc>:<publicationstmt>:<publisher>
   :related_material_head, # <ead>:<archdesc>:<relatedmaterial>:<head>
   :related_material_values, # <ead>:<archdesc>:<related_material>:<p>
-  :repository, # <ead><archdesc><did><repository><corpname>
-  :revision_description_changes, # <ead><archheader><revisiondesc><change>
+  :repository, # <ead><archdesc>:<did>:<repository>:<corpname>
+  :revision_description_changes, # <ead>:<archheader>:<revisiondesc>:<change>
   :scope_content_head, # <ead>:<archdesc>:<scopecontent>:<head>
   :scope_content_values, # <ead>:<archdesc>:<scopecontent>:<p>
   :separated_material_head, # <ead>:<archdesc>:<separatedmaterial>:<head>
@@ -123,6 +124,11 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
           "EAD was imported during the ArchivesSpace Phase II migration."
         ]
       }
+
+      it 'parses the publicationstmt_publisher correctly' do
+        tested = @as_ead.publicationstmt_publisher
+        expect(tested).to eq 'Rare Book and Manuscript Library'
+      end
 
       it 'parses the revision_description_changes correctly' do
         @as_ead.revision_description_changes.each_with_index do |change, index|
