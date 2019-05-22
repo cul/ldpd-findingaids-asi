@@ -2,6 +2,8 @@ require 'archive_space/api/client'
 require 'archive_space/ead/ead_parser'
 
 class FindingAidsController < ApplicationController
+  include  ArchiveSpace::Ead::EadHelper
+
   before_action :set_bib_id,
                 :validate_repository_code_and_set_repo_id,
                 :validate_bib_id_and_set_resource_id,
@@ -70,6 +72,8 @@ class FindingAidsController < ApplicationController
                 @ead.control_access_persnames +
                 @ead.control_access_subjects).sort
     @genres_forms = @ead.control_access_genres_forms.sort
+    @restricted_access_flag =
+      @ead.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
   end
 
   def set_bib_id

@@ -95,6 +95,19 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       end
     end
 
+    ########################################## highlight_offsite
+    context 'hightlight_offsite' do
+      it 'returns truthy for string "An off-site collection"' do
+        tested = @as_ead.hightlight_offsite "An off-site collection"
+        expect(tested).to be_truthy
+      end
+
+      it 'returns falsey for string "A foobar collection"' do
+        tested = @as_ead.hightlight_offsite "A foobar collection"
+        expect(tested).to be_falsey
+      end
+    end
+
     ########################################## parse_arch_desc_misc
     context 'parse_ead_header' do
       let (:expected_revision_change_dates) {

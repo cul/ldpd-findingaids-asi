@@ -1,7 +1,14 @@
 <p><%= @repository_corpname %></p>
 <%= content_tag(:h3, @access_restrictions_head) unless @access_restrictions_head.nil? %>
 <% @access_restrictions_values.each do |access_restrictions_value| %>
+  <% if hightlight_offsite access_restrictions_value.text %>
+    <div style="color:red;">
+    <%= image_tag 'alert.gif' %>
+  <% end %>
   <%== apply_ead_to_html_transforms access_restrictions_value %>
+  <% if hightlight_offsite access_restrictions_value.text %>
+    </div>
+  <% end %>
 <% end %>
 <%= content_tag(:h3, @use_restrictions_head) unless @use_restrictions_head.nil? %>
 <% @use_restrictions_values.each do |use_restrictions_value| %>

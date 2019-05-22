@@ -1,3 +1,5 @@
+# fcd1, 05/22/19: Currently being tested via ead_parser_spec.rb
+# and finding_aids_helper_spec.rb
 module ArchiveSpace
   module Ead
     module EadHelper
@@ -35,6 +37,10 @@ module ArchiveSpace
           extref.replace "<a href=#{href}>#{link_text}</a>"
         end
         content
+      end
+
+      def hightlight_offsite content
+        content.match(/off+[A-Za-z-]*site/)
       end
     end
   end
