@@ -123,7 +123,8 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
     context 'parse_arch_desc_did' do
       let (:expected_origination_creators) {
         [
-          "Smith, John",
+          "Columbia University. Teachers College",
+          "Romanov family",
           "Sassoon, Siegfried, 1886-1967"
         ]
       }
