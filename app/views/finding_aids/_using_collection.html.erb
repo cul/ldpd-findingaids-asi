@@ -1,13 +1,13 @@
 <p><%= @repository_corpname %></p>
-<h3><%= @access_restrictions_head %></h3>
+<%= content_tag(:h3, @access_restrictions_head) unless @access_restrictions_head.nil? %>
 <% @access_restrictions_values.each do |access_restrictions_value| %>
   <%== apply_ead_to_html_transforms access_restrictions_value %>
 <% end %>
-<h3><%= @use_restrictions_head %></h2>
+<%= content_tag(:h3, @use_restrictions_head) unless @use_restrictions_head.nil? %>
 <% @use_restrictions_values.each do |use_restrictions_value| %>
   <%== apply_ead_to_html_transforms use_restrictions_value %>
 <% end %>
-<h3><%= @preferred_citation_head %></h3>
+<%= content_tag(:h3, @preferred_citation_head) unless @preferred_citation_head.nil? %>
 <% @preferred_citation_values.each do |preferred_citation_value| %>
   <%== apply_ead_to_html_transforms preferred_citation_value %>
 <% end %>
