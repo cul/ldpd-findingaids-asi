@@ -8,7 +8,7 @@ module ArchiveSpace
       XPATH = {
         container: './xmlns:did/xmlns:container',
         date: './xmlns:did/xmlns:unitdate',
-        other_finding_aid_p: './xmlns:otherfindaid/xmlns:p',
+        other_finding_aid_ps: './xmlns:otherfindaid/xmlns:p',
         physical_description: './xmlns:did/xmlns:physdesc',
         title: './xmlns:did/xmlns:unittitle',
         scope_content_ps: './xmlns:scopecontent/xmlns:p',
@@ -17,14 +17,14 @@ module ArchiveSpace
 
       attr_reader *XPATH.keys
       attr_reader :nokogiri_xml
-      attr_reader :scope_content_value
 
       # Takes a Nokogiri::XML::Element (fcd1: verify this)
       # containing a <c lelvel="series"> element
       def parse(nokogiri_xml)
         @nokogiri_xml = nokogiri_xml
-        @title = nokogiri_xml.xpath(XPATH[:title]).text
+        @other_finding_aid_ps = nokogiri_xml.xpath(XPATH[:other_finding_aid_ps])
         @scope_content_ps = nokogiri_xml.xpath(XPATH[:scope_content_ps])
+        @title = nokogiri_xml.xpath(XPATH[:title]).text
       end
 
       def generate_info
@@ -55,7 +55,7 @@ module ArchiveSpace
         separated_material_ps = component.xpath(XPATH[:separated_material_p]).map do |separated_material_p|
           (apply_ead_to_html_transforms separated_material_p).to_s
         end
-        other_finding_aid_ps = component.xpath(XPATH[:other_finding_aid_p]).map do |other_finding_aid_p|
+        other_finding_aid_ps = component.xpath(XPATH[:other_finding_aid_ps]).map do |other_finding_aid_p|
           (apply_ead_to_html_transforms other_finding_aid_p).to_s
         end
         container_nokogiri_elements = component.xpath(XPATH[:container])

@@ -3,6 +3,9 @@
   <% @component_scope_content_ps.each do |scope_content_p| %>
     <%== apply_ead_to_html_transforms scope_content_p %>
   <% end %>
+  <% @other_finding_aid_ps.each do |other_finding_aid_p| %>
+    <%== apply_ead_to_html_transforms other_finding_aid_p %>
+  <% end %>
   <% @last_container_seen = '' %>
   <% @checkbox_id = 0 %>
   <% current_nesting_level = 1 %>

@@ -3,8 +3,9 @@ require 'archive_space/ead/ead_parser.rb'
 require 'archive_space/ead/ead_component_parser.rb'
 
 attributes = [
-  :title, # <c>:<did>:<unititle>
-  :scope_content_value # <c>:<scopecontent>:<p>
+  :other_finding_aid_ps, # <c>:<scopecontent>:<p>
+  :scope_content_ps, # <c>:<scopecontent>:<p>
+  :title # <c>:<did>:<unititle>
 ].freeze
 
 RSpec.describe ArchiveSpace::Ead::EadComponentParser do
@@ -48,6 +49,14 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         @as_ead_series.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
       end
 
+      let (:expected_other_finding_aid_ps) {
+        [
+          "*In addition, a sortable inventory in this downloadable Excel spreadsheet.",
+          "A pdf version is available for download.",
+          "Another finding aid available online."
+        ]
+      }
+
       let (:expected_scope_content_ps) {
         [
           "The drawings in the collection consist of pencil and ink drawings.",
@@ -56,16 +65,21 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         ]
       }
 
+      it 'sets the other_finding_aid_ps correctly' do
+        @as_ead_series.other_finding_aid_ps.each_with_index do |other_finding_aid_p, index|
+          expect(other_finding_aid_p.text).to eq expected_other_finding_aid_ps[index]
+        end
+      end
+
+      it 'sets the scope_content_ps correctly' do
+        @as_ead_series.scope_content_ps.each_with_index do |scope_content_p, index|
+          expect(scope_content_p.text).to eq expected_scope_content_ps[index]
+        end
+      end
+
       it 'sets the title correctly' do
         tested = @as_ead_series.title
         expect(tested).to eq 'Series I: Cataloged Correspondence'
-      end
-
-      it 'sets the scope content correctly' do
-        tested = @as_ead_series.scope_content_ps
-        tested.each_with_index do |scope_content_p, index|
-          expect(scope_content_p.text).to eq expected_scope_content_ps[index]
-        end
       end
     end
 

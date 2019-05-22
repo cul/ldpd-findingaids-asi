@@ -45,6 +45,7 @@ class ComponentsController < ApplicationController
     @component = ArchiveSpace::Ead::EadComponentParser.new
     @component.parse component_nokogiri_xml
     @component_title = @component.title
+    @other_finding_aid_ps = @component.other_finding_aid_ps
     @component_scope_content_ps = @component.scope_content_ps
     @flattened_component_structure = @component.generate_info
   end
