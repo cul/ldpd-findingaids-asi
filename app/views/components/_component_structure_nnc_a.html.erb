@@ -21,37 +21,35 @@
            physical_description,
            date,
            level,
-           access_restrictions_ps,
-           scope_content_ps,
-           separated_material_ps,
-           other_finding_aid_ps,
-           container_info ) = component
-         displayed_component_infos = scope_content_ps +
-                                     separated_material_ps +
-                                     other_finding_aid_ps
+           container_info,
+           component_notes
+	 ) = component
+         misc_component_notes = component_notes.scope_content_ps +
+                                component_notes.separated_material_ps +
+                                component_notes.other_finding_aid_ps
       %>
       <tr style="border-top:1px solid #eee">
         <td style="width:20%"><%= container_info.join(': ') %></td>
         <td style="width:60%;font-weight:bold"> <%= [title, physical_description].reject(&:blank?).join(", ") %> </td>
         <td style="width:20%"><%= date %></td>
       </tr>
-      <% unless access_restrictions_ps.empty? %>
+      <% unless component_notes.access_restrictions_ps.empty? %>
         <tr style="border-top:1px solid #eee">
           <td style="width:20%"></td>
           <td style="width:60%;color:red;">
-            <% access_restrictions_ps.each do |access_restrictions_p| %>
+            <% component_notes.access_restrictions_ps.each do |access_restrictions_p| %>
               <%== access_restrictions_p %>
             <% end %>
 	  </td>
           <td style="width:20%"></td>
         </tr>
       <% end %>
-      <% unless displayed_component_infos.empty? %>
+      <% unless misc_component_notes.empty? %>
         <tr>
           <td style="width:20%"></td>
           <td style="width:60%">
-	    <% displayed_component_infos.each do |displayed_component_info| %>
-	      <%== displayed_component_info %>
+	    <% misc_component_notes.each do |misc_component_note| %>
+	      <%== misc_component_note %>
 	    <% end %>
 	  </td>
           <td style="width:20%"></td>

@@ -23,14 +23,12 @@
          physical_description,
          date,
          level,
-         access_restrictions_ps,
-         scope_content_ps,
-         separated_material_ps,
-         other_finding_aid_ps,
-         container_info ) = component
-       displayed_component_infos = scope_content_ps +
-                                   separated_material_ps +
-                                   other_finding_aid_ps
+         container_info,
+         component_notes
+       ) = component
+       misc_component_notes = component_notes.scope_content_ps +
+                              component_notes.separated_material_ps +
+                              component_notes.other_finding_aid_ps
     %>
     <% if nesting_level > current_nesting_level %>
       <hr style="margin-top:10px;margin-bottom:10px;">
@@ -49,17 +47,17 @@
       <span style="text-align:left;"> <%= [title, date, physical_description].reject(&:blank?).join(", ") %> </span>
       <span style="text-align:right;float:right;"><%=container_info.join(' ') %></span>
     </p>
-    <% unless access_restrictions_ps.empty? %>
+    <% unless component_notes.access_restrictions_ps.empty? %>
       <div style="margin:0;padding-left:1em;color:red;">
-        <% access_restrictions_ps.each do |access_restrictions_p| %>
+        <% component_notes.access_restrictions_ps.each do |access_restrictions_p| %>
           <%== access_restrictions_p %>
         <% end %>
       </div>
     <% end %>
-    <% unless displayed_component_infos.empty? %>
+    <% unless misc_component_notes.empty? %>
       <div style="margin:0;padding-left:1em;">
-        <% displayed_component_infos.each do |displayed_component_info| %>
-          <%== displayed_component_info %>
+        <% misc_component_notes.each do |misc_component_note| %>
+          <%== misc_component_note %>
         <% end %>
       </div>
     <% end %>

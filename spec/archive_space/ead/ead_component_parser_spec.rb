@@ -125,11 +125,9 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           @physical_description,
           @date,
           @level,
-          @access_restrictions_ps,
-          @scope_content_ps,
-          @separated_material_ps,
-          @other_finding_aid_ps,
-          @container_info ) = @as_ead_series.generate_info.first
+          @container_info,
+          @component_notes
+        ) = @as_ead_series.generate_info.first
       end
 
       let (:expected_access_restrictions_ps) {
@@ -181,25 +179,25 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       end
 
       it 'generates the correct access_restrictions_ps values' do
-        @access_restrictions_ps.each_with_index do |access_restrictions_p, index|
+        @component_notes.access_restrictions_ps.each_with_index do |access_restrictions_p, index|
           expect(access_restrictions_p).to eq expected_access_restrictions_ps[index]
         end
       end
 
       it 'generates the correct scope content values' do
-        @scope_content_ps.each_with_index do |scope_content_p, index|
+        @component_notes.scope_content_ps.each_with_index do |scope_content_p, index|
           expect(scope_content_p).to eq expected_scope_content_ps[index]
         end
       end
 
       it 'generates the correct separated material values' do
-        @separated_material_ps.each_with_index do |separated_material_p, index|
+        @component_notes.separated_material_ps.each_with_index do |separated_material_p, index|
           expect(separated_material_p).to eq expected_separated_material_ps[index]
         end
       end
 
       it 'generates the correct other finding aid values' do
-        @other_finding_aid_ps.each_with_index do |other_finding_aid_p, index|
+        @component_notes.other_finding_aid_ps.each_with_index do |other_finding_aid_p, index|
           expect(other_finding_aid_p).to eq expected_other_finding_aid_ps[index]
         end
       end

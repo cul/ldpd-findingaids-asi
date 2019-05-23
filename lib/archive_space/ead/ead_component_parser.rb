@@ -16,6 +16,9 @@ module ArchiveSpace
         title: './xmlns:did/xmlns:unittitle'
       }
 
+      COMPONENT_INFO_MEMBERS = XPATH.keys - [:container, :date, :physical_description, :title]
+      ComponentInfo = Struct.new(*COMPONENT_INFO_MEMBERS)
+
       attr_reader *XPATH.keys
       attr_reader :nokogiri_xml
 
@@ -48,6 +51,34 @@ module ArchiveSpace
       end
 
       def generate_component_info(component, nesting_level = 0)
+        component_notes = ComponentInfo.new
+        title = component.xpath(XPATH[:title]).text
+        physical_description = component.xpath(XPATH[:physical_description]).text
+        date = component.xpath(XPATH[:date]).text
+        level = component.attribute('level').text
+        container_nokogiri_elements = component.xpath(XPATH[:container])
+        container_info = container_nokogiri_elements.map do |container|
+          container_type = container['label'] || container['type']
+          container_value = container.text
+          "#{container_type.titlecase} #{container_value}"
+        end
+        COMPONENT_INFO_MEMBERS.each do |f|
+          component_notes[f] = component.xpath(XPATH[f]).map do |p|
+          (apply_ead_to_html_transforms p).to_s
+          end
+        end
+        @component_info.append [ nesting_level,
+                                 title,
+                                 physical_description,
+                                 date,
+                                 level,
+                                 container_info,
+                                 component_notes
+                               ]
+
+      end
+
+      def generate_component_info_old(component, nesting_level = 0)
         title = component.xpath(XPATH[:title]).text
         physical_description = component.xpath(XPATH[:physical_description]).text
         date = component.xpath(XPATH[:date]).text
