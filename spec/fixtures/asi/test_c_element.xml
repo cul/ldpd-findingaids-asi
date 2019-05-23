@@ -69,6 +69,18 @@
 	  <head>Arrangement</head>
 	  <p>Arranged alphabetically by location.</p>
 	</arrangement>
+	<relatedmaterial>
+	  <head>Related Materials</head>
+	  <p>The related memoirs are cataloged individually(RM)</p>
+	</relatedmaterial>
+	<relatedmaterial>
+	  <head>Related Materials</head>
+	  <p>The related photographs are cataloged individually(RM)</p>
+	</relatedmaterial>
+	<relatedmaterial>
+	  <head>Related Materials</head>
+	  <p>The related recordings are cataloged individually(RM)</p>
+	</relatedmaterial>
 	<c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="series">
 	  <did>
 	    <unittitle>Subseries I: Cataloged Correspondence</unittitle>
@@ -136,6 +148,18 @@
 	    <head>Arrangement</head>
 	    <p>Arranged alphabetically by repo.</p>
 	  </arrangement>
+	  <relatedmaterial>
+	    <head>Related Materials</head>
+	    <p>The related pictures are cataloged individually(RM)</p>
+	  </relatedmaterial>
+	  <relatedmaterial>
+	    <head>Related Materials</head>
+	    <p>The related novels are cataloged individually(RM)</p>
+	  </relatedmaterial>
+	  <relatedmaterial>
+	    <head>Related Materials</head>
+	    <p>The related slides are cataloged individually(RM)</p>
+	  </relatedmaterial>
 	</c>
       </c>
     </dsc>

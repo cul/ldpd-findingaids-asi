@@ -7,6 +7,7 @@
   <% end %>
   <% misc_notes = @notes.scope_content_ps +
                   @notes.arrangement_ps +
+                  @notes.related_material_ps +
                   @notes.separated_material_ps +
                   @notes.other_finding_aid_ps
   %>
@@ -25,6 +26,7 @@
 	 ) = component
          misc_notes = notes.scope_content_ps +
                       notes.arrangement_ps +
+                      notes.related_material_ps +
                       notes.separated_material_ps +
                       notes.other_finding_aid_ps
       %>

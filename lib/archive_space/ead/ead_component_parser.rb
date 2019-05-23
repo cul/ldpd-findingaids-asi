@@ -12,6 +12,7 @@ module ArchiveSpace
         date: './xmlns:did/xmlns:unitdate',
         other_finding_aid_ps: './xmlns:otherfindaid/xmlns:p',
         physical_description: './xmlns:did/xmlns:physdesc',
+        related_material_ps: './xmlns:relatedmaterial/xmlns:p',
         scope_content_ps: './xmlns:scopecontent/xmlns:p',
         separated_material_ps: './xmlns:separatedmaterial/xmlns:p',
         title: './xmlns:did/xmlns:unittitle'

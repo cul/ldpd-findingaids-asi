@@ -5,8 +5,9 @@ require 'archive_space/ead/ead_component_parser.rb'
 attributes = [
   :access_restrictions_ps, # <c>:<accessrestrict>:<p>
   :arrangement_ps, # <c>:<arrangement>:<p>
+  :related_material_ps, # <c>:<relatedmaterial>:<p>
   :scope_content_ps, # <c>:<scopecontent>:<p>
-  :separated_material_ps, # <c>:<sepratedmaterial>:<p>
+  :separated_material_ps, # <c>:<separatedmaterial>:<p>
   :other_finding_aid_ps, # <c>:<scopecontent>:<p>
   :title # <c>:<did>:<unititle>
 ].freeze
@@ -80,6 +81,14 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         ]
       }
 
+      let (:expected_related_material_ps) {
+        [
+          "The related memoirs are cataloged individually(RM)",
+          "The related photographs are cataloged individually(RM)",
+          "The related recordings are cataloged individually(RM)"
+        ]
+      }
+
       let (:expected_scope_content_ps) {
         [
           "The drawings in the collection consist of pencil and ink drawings.",
@@ -111,6 +120,12 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       it 'sets the other_finding_aid_ps correctly' do
         @component.notes.other_finding_aid_ps.each_with_index do |other_finding_aid_p, index|
           expect(other_finding_aid_p.text).to eq expected_other_finding_aid_ps[index]
+        end
+      end
+
+      it 'sets the related_material_ps correctly' do
+        @component.notes.related_material_ps.each_with_index do |related_material_p, index|
+          expect(related_material_p.text).to eq expected_related_material_ps[index]
         end
       end
 
@@ -165,6 +180,14 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         ]
       }
 
+      let (:expected_related_material_ps) {
+        [
+          "<p>The related pictures are cataloged individually(RM)</p>",
+          "<p>The related novels are cataloged individually(RM)</p>",
+          "<p>The related slides are cataloged individually(RM)</p>"
+        ]
+      }
+
       let (:expected_scope_content_ps) {
         [
           "<p>In four boxes, numbered 1-4.</p>",
@@ -214,6 +237,12 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       it 'generates the correct arrangement_ps values' do
         @component_notes.arrangement_ps.each_with_index do |arrangement_p, index|
           expect(arrangement_p).to eq expected_arrangement_ps[index]
+        end
+      end
+
+      it 'generates the correct related material values' do
+        @component_notes.related_material_ps.each_with_index do |related_material_p, index|
+          expect(related_material_p).to eq expected_related_material_ps[index]
         end
       end
 
