@@ -81,6 +81,66 @@
 	  <head>Related Materials</head>
 	  <p>The related recordings are cataloged individually(RM)</p>
 	</relatedmaterial>
+	<odd>
+	  <head>General Note</head>
+	  <p>This collection is nice(ODD)</p>
+	</odd>
+	<odd>
+	  <head>General Note</head>
+	  <p>This repo is nice(ODD)</p>
+	</odd>
+	<odd>
+	  <head>General Note</head>
+	  <p>This series is nice(ODD)</p>
+	</odd>
+	<bioghist>
+	  <head>Historical Note</head>
+	  <p>John ate pizza for lunch.(BH)</p>
+	</bioghist>
+	<bioghist>
+	  <head>Historical Note</head>
+	  <p>John ate a burger for lunch.(BH)</p>
+	</bioghist>
+	<bioghist>
+	  <head>Historical Note</head>
+	  <p>John ate fish for lunch.(BH)</p>
+	</bioghist>
+	<altformavail>
+	  <head>Alternate Form Available</head>
+	  <p>Microforms available.(AF)</p>
+	</altformavail>
+	<altformavail>
+	  <head>Alternate Form Available</head>
+	  <p>Photocopies available.(AF)</p>
+	</altformavail>
+	<altformavail>
+	  <head>Alternate Form Available</head>
+	  <p>Microfiche available.(AF)</p>
+	</altformavail>
+	<acqinfo>
+	  <head>Acquisition</head>
+	  <p>Transferred from NYPL(ACQ)</p>
+	</acqinfo>
+	<acqinfo>
+	  <head>Acquisition</head>
+	  <p>Transferred from CUL(ACQ)</p>
+	</acqinfo>
+	<acqinfo>
+	  <head>Acquisition</head>
+	  <p>Transferred from Metro(ACQ)</p>
+	</acqinfo>
+	<custodhist>
+	  <head>Custodial History</head>
+	  <p>Gift of the ABC Company, 1963.(CH) </p>
+	</custodhist>
+	<custodhist>
+	  <head>Custodial History</head>
+	  <p>Gift of the BCD Company, 1963.(CH) </p>
+	</custodhist>
+	<custodhist>
+	  <head>Custodial History</head>
+	  <p>Gift of the DDD Company, 1963.(CH) </p>
+	</custodhist>
 	<c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="series">
 	  <did>
 	    <unittitle>Subseries I: Cataloged Correspondence</unittitle>
@@ -160,6 +220,66 @@
 	    <head>Related Materials</head>
 	    <p>The related slides are cataloged individually(RM)</p>
 	  </relatedmaterial>
+	  <odd>
+	    <head>General Note</head>
+	    <p>This file is nice(ODD)</p>
+	  </odd>
+	  <odd>
+	    <head>General Note</head>
+	    <p>This manuscript is nice(ODD)</p>
+	  </odd>
+	  <odd>
+	    <head>General Note</head>
+	    <p>This picture is nice(ODD)</p>
+	  </odd>
+	  <bioghist>
+	    <head>Historical Note</head>
+	    <p>John ate pizza for dinner.(BH)</p>
+	  </bioghist>
+	  <bioghist>
+	    <head>Historical Note</head>
+	    <p>John ate a burger for dinner.(BH)</p>
+	  </bioghist>
+	  <bioghist>
+	    <head>Historical Note</head>
+	    <p>John ate fish for dinner.(BH)</p>
+	  </bioghist>
+	  <altformavail>
+	    <head>Alternate Form Available</head>
+	    <p>Film available.(AF)</p>
+	  </altformavail>
+	  <altformavail>
+	    <head>Alternate Form Available</head>
+	    <p>Hard copies available.(AF)</p>
+	  </altformavail>
+	  <altformavail>
+	    <head>Alternate Form Available</head>
+	    <p>Digital files available.(AF)</p>
+	  </altformavail>
+	  <acqinfo>
+	    <head>Acquisition</head>
+	    <p>Transferred from Avery(ACQ)</p>
+	  </acqinfo>
+	  <acqinfo>
+	    <head>Acquisition</head>
+	    <p>Transferred from NYU(ACQ)</p>
+	  </acqinfo>
+	  <acqinfo>
+	    <head>Acquisition</head>
+	    <p>Transferred from next door(ACQ)</p>
+	  </acqinfo>
+	  <custodhist>
+	    <head>Custodial History</head>
+	    <p>Gift of the ZZZ Company, 1963.(CH) </p>
+	  </custodhist>
+	  <custodhist>
+	    <head>Custodial History</head>
+	    <p>Gift of the 123 Company, 1963.(CH) </p>
+	  </custodhist>
+	  <custodhist>
+	    <head>Custodial History</head>
+	    <p>Gift of the Pi Company, 1963.(CH) </p>
+	  </custodhist>
 	</c>
       </c>
     </dsc>
