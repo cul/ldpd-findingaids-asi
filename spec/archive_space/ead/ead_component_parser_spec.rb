@@ -3,10 +3,11 @@ require 'archive_space/ead/ead_parser.rb'
 require 'archive_space/ead/ead_component_parser.rb'
 
 attributes = [
-  :other_finding_aid_ps, # <c>:<scopecontent>:<p>
   :access_restrictions_ps, # <c>:<accessrestrict>:<p>
+  :arrangement_ps, # <c>:<arrangement>:<p>
   :scope_content_ps, # <c>:<scopecontent>:<p>
   :separated_material_ps, # <c>:<sepratedmaterial>:<p>
+  :other_finding_aid_ps, # <c>:<scopecontent>:<p>
   :title # <c>:<did>:<unititle>
 ].freeze
 
@@ -59,6 +60,14 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         ]
       }
 
+      let (:expected_arrangement_ps) {
+        [
+          "Arranged alphabetically by subject.",
+          "Arranged alphabetically by author.",
+          "Arranged alphabetically by location."
+        ]
+      }
+
       let (:expected_other_finding_aid_ps) {
         [
           "*In addition, a sortable inventory in this downloadable Excel spreadsheet.",
@@ -86,6 +95,12 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       it 'sets the access_restrictions_ps correctly' do
         @as_ead_series.access_restrictions_ps.each_with_index do |access_restrictions_p, index|
           expect(access_restrictions_p.text).to eq expected_access_restrictions_ps[index]
+        end
+      end
+
+      it 'sets the arrangement_ps correctly' do
+        @as_ead_series.arrangement_ps.each_with_index do |arrangement_p, index|
+          expect(arrangement_p.text).to eq expected_arrangement_ps[index]
         end
       end
 
@@ -138,6 +153,14 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         ]
       }
 
+      let (:expected_arrangement_ps) {
+        [
+          "<p>Arranged alphabetically by topic.</p>",
+          "<p>Arranged alphabetically by creator.</p>",
+          "<p>Arranged alphabetically by repo.</p>"
+        ]
+      }
+
       let (:expected_scope_content_ps) {
         [
           "<p>In four boxes, numbered 1-4.</p>",
@@ -181,6 +204,12 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       it 'generates the correct access_restrictions_ps values' do
         @component_notes.access_restrictions_ps.each_with_index do |access_restrictions_p, index|
           expect(access_restrictions_p).to eq expected_access_restrictions_ps[index]
+        end
+      end
+
+      it 'generates the correct arrangement_ps values' do
+        @component_notes.arrangement_ps.each_with_index do |arrangement_p, index|
+          expect(arrangement_p).to eq expected_arrangement_ps[index]
         end
       end
 

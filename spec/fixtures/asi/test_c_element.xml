@@ -57,6 +57,18 @@
 	  <head>Conditions Governing Access</head>
 	  <p>[Restricted Until 2020](top-level container)</p>
 	</accessrestrict>
+	<arrangement>
+	  <head>Arrangement</head>
+	  <p>Arranged alphabetically by subject.</p>
+	</arrangement>
+	<arrangement>
+	  <head>Arrangement</head>
+	  <p>Arranged alphabetically by author.</p>
+	</arrangement>
+	<arrangement>
+	  <head>Arrangement</head>
+	  <p>Arranged alphabetically by location.</p>
+	</arrangement>
 	<c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="series">
 	  <did>
 	    <unittitle>Subseries I: Cataloged Correspondence</unittitle>
@@ -112,6 +124,18 @@
 	    <head>Conditions Governing Access</head>
 	    <p>[Restricted Until 2059](child container)</p>
 	  </accessrestrict>
+	  <arrangement>
+	    <head>Arrangement</head>
+	    <p>Arranged alphabetically by topic.</p>
+	  </arrangement>
+	  <arrangement>
+	    <head>Arrangement</head>
+	    <p>Arranged alphabetically by creator.</p>
+	  </arrangement>
+	  <arrangement>
+	    <head>Arrangement</head>
+	    <p>Arranged alphabetically by repo.</p>
+	  </arrangement>
 	</c>
       </c>
     </dsc>

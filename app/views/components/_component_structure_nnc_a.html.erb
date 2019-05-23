@@ -8,6 +8,9 @@
   <% @component_scope_content_ps.each do |scope_content_p| %>
     <%== apply_ead_to_html_transforms scope_content_p %>
   <% end %>
+  <% @arrangement_ps.each do |arrangement_p| %>
+    <%== apply_ead_to_html_transforms arrangement_p %>
+  <% end %>
   <% @separated_material_ps.each do |separated_material_p| %>
     <%== apply_ead_to_html_transforms separated_material_p %>
   <% end %>
@@ -25,6 +28,7 @@
            component_notes
 	 ) = component
          misc_component_notes = component_notes.scope_content_ps +
+	                        component_notes.arrangement_ps +
                                 component_notes.separated_material_ps +
                                 component_notes.other_finding_aid_ps
       %>

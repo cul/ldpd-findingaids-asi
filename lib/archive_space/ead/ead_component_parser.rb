@@ -7,6 +7,7 @@ module ArchiveSpace
 
       XPATH = {
         access_restrictions_ps: './xmlns:accessrestrict/xmlns:p',
+        arrangement_ps: './xmlns:arrangement/xmlns:p',
         container: './xmlns:did/xmlns:container',
         date: './xmlns:did/xmlns:unitdate',
         other_finding_aid_ps: './xmlns:otherfindaid/xmlns:p',
@@ -26,6 +27,7 @@ module ArchiveSpace
       # containing a <c lelvel="series"> element
       def parse(nokogiri_xml)
         @access_restrictions_ps = nokogiri_xml.xpath(XPATH[:access_restrictions_ps])
+        @arrangement_ps = nokogiri_xml.xpath(XPATH[:arrangement_ps])
         @nokogiri_xml = nokogiri_xml
         @other_finding_aid_ps = nokogiri_xml.xpath(XPATH[:other_finding_aid_ps])
         @scope_content_ps = nokogiri_xml.xpath(XPATH[:scope_content_ps])
