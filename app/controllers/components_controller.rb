@@ -44,12 +44,8 @@ class ComponentsController < ApplicationController
     component_nokogiri_xml = @ead.dsc_series[component_num.to_i - 1]
     @component = ArchiveSpace::Ead::EadComponentParser.new
     @component.parse component_nokogiri_xml
-    @access_restrictions_ps = @component.access_restrictions_ps
-    @arrangement_ps = @component.arrangement_ps
     @component_title = @component.title
-    @other_finding_aid_ps = @component.other_finding_aid_ps
-    @separated_material_ps = @component.separated_material_ps
-    @component_scope_content_ps = @component.scope_content_ps
+    @notes = @component.notes
     @flattened_component_structure = @component.generate_info
   end
 

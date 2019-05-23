@@ -19,6 +19,10 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         it "#{attribute}" do
           expect(subject).to respond_to("#{attribute}")
         end
+
+        it 'notes' do
+          expect(subject).to respond_to('notes')
+        end
       end
     end
 
@@ -48,8 +52,8 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       before(:example) do
         xml_input = fixture_file_upload('asi/test_c_element.xml').read
         @nokogiri_xml = Nokogiri::XML(xml_input)
-        @as_ead_series = ArchiveSpace::Ead::EadComponentParser.new
-        @as_ead_series.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
+        @component = ArchiveSpace::Ead::EadComponentParser.new
+        @component.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
       end
 
       let (:expected_access_restrictions_ps) {
@@ -93,37 +97,37 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       }
 
       it 'sets the access_restrictions_ps correctly' do
-        @as_ead_series.access_restrictions_ps.each_with_index do |access_restrictions_p, index|
+        @component.notes.access_restrictions_ps.each_with_index do |access_restrictions_p, index|
           expect(access_restrictions_p.text).to eq expected_access_restrictions_ps[index]
         end
       end
 
       it 'sets the arrangement_ps correctly' do
-        @as_ead_series.arrangement_ps.each_with_index do |arrangement_p, index|
+        @component.notes.arrangement_ps.each_with_index do |arrangement_p, index|
           expect(arrangement_p.text).to eq expected_arrangement_ps[index]
         end
       end
 
       it 'sets the other_finding_aid_ps correctly' do
-        @as_ead_series.other_finding_aid_ps.each_with_index do |other_finding_aid_p, index|
+        @component.notes.other_finding_aid_ps.each_with_index do |other_finding_aid_p, index|
           expect(other_finding_aid_p.text).to eq expected_other_finding_aid_ps[index]
         end
       end
 
       it 'sets the scope_content_ps correctly' do
-        @as_ead_series.scope_content_ps.each_with_index do |scope_content_p, index|
+        @component.notes.scope_content_ps.each_with_index do |scope_content_p, index|
           expect(scope_content_p.text).to eq expected_scope_content_ps[index]
         end
       end
 
       it 'sets the separated_material_ps correctly' do
-        @as_ead_series.separated_material_ps.each_with_index do |separated_material_p, index|
+        @component.notes.separated_material_ps.each_with_index do |separated_material_p, index|
           expect(separated_material_p.text).to eq expected_separated_material_ps[index]
         end
       end
 
       it 'sets the title correctly' do
-        tested = @as_ead_series.title
+        tested = @component.title
         expect(tested).to eq 'Series I: Cataloged Correspondence'
       end
     end
@@ -133,8 +137,8 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       before(:example) do
         xml_input = fixture_file_upload('asi/test_c_element.xml').read
         @nokogiri_xml = Nokogiri::XML(xml_input)
-        @as_ead_series = ArchiveSpace::Ead::EadComponentParser.new
-        @as_ead_series.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
+        @component = ArchiveSpace::Ead::EadComponentParser.new
+        @component.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
         ( @nesting_level,
           @title,
           @physical_description,
@@ -142,7 +146,7 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           @level,
           @container_info,
           @component_notes
-        ) = @as_ead_series.generate_info.first
+        ) = @component.generate_info.first
       end
 
       let (:expected_access_restrictions_ps) {

@@ -1,21 +1,17 @@
 <div class="nnc-a">
   <h1 style="color:#2c5277;font-size:16px;font-weight:bold;"><%= @component_title %></h1>
-  <% @access_restrictions_ps.each do |access_restrictions_p| %>
+  <% @notes.access_restrictions_ps.each do |access_restrictions_p| %>
     <div style="color:red;">
       <%== apply_ead_to_html_transforms access_restrictions_p %>
     </div>
   <% end %>
-  <% @component_scope_content_ps.each do |scope_content_p| %>
-    <%== apply_ead_to_html_transforms scope_content_p %>
-  <% end %>
-  <% @arrangement_ps.each do |arrangement_p| %>
-    <%== apply_ead_to_html_transforms arrangement_p %>
-  <% end %>
-  <% @separated_material_ps.each do |separated_material_p| %>
-    <%== apply_ead_to_html_transforms separated_material_p %>
-  <% end %>
-  <% @other_finding_aid_ps.each do |other_finding_aid_p| %>
-    <%== apply_ead_to_html_transforms other_finding_aid_p %>
+  <% misc_notes = @notes.scope_content_ps +
+                  @notes.arrangement_ps +
+                  @notes.separated_material_ps +
+                  @notes.other_finding_aid_ps
+  %>
+  <% misc_notes.each do |misc_note| %>
+    <%== apply_ead_to_html_transforms misc_note %>
   <% end %>
   <table style="width:100%">
     <% @flattened_component_structure.each do |component| %>
@@ -25,35 +21,35 @@
            date,
            level,
            container_info,
-           component_notes
+           notes
 	 ) = component
-         misc_component_notes = component_notes.scope_content_ps +
-	                        component_notes.arrangement_ps +
-                                component_notes.separated_material_ps +
-                                component_notes.other_finding_aid_ps
+         misc_notes = notes.scope_content_ps +
+                      notes.arrangement_ps +
+                      notes.separated_material_ps +
+                      notes.other_finding_aid_ps
       %>
       <tr style="border-top:1px solid #eee">
         <td style="width:20%"><%= container_info.join(': ') %></td>
         <td style="width:60%;font-weight:bold"> <%= [title, physical_description].reject(&:blank?).join(", ") %> </td>
         <td style="width:20%"><%= date %></td>
       </tr>
-      <% unless component_notes.access_restrictions_ps.empty? %>
+      <% unless notes.access_restrictions_ps.empty? %>
         <tr style="border-top:1px solid #eee">
           <td style="width:20%"></td>
           <td style="width:60%;color:red;">
-            <% component_notes.access_restrictions_ps.each do |access_restrictions_p| %>
+            <% notes.access_restrictions_ps.each do |access_restrictions_p| %>
               <%== access_restrictions_p %>
             <% end %>
 	  </td>
           <td style="width:20%"></td>
         </tr>
       <% end %>
-      <% unless misc_component_notes.empty? %>
+      <% unless misc_notes.empty? %>
         <tr>
           <td style="width:20%"></td>
           <td style="width:60%">
-	    <% misc_component_notes.each do |misc_component_note| %>
-	      <%== misc_component_note %>
+	    <% misc_notes.each do |misc_note| %>
+	      <%== misc_note %>
 	    <% end %>
 	  </td>
           <td style="width:20%"></td>

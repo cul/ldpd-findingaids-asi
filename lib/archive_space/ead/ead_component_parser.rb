@@ -21,17 +21,21 @@ module ArchiveSpace
       ComponentInfo = Struct.new(*COMPONENT_INFO_MEMBERS)
 
       attr_reader *XPATH.keys
-      attr_reader :nokogiri_xml
+      attr_reader :nokogiri_xml, :notes
 
       # Takes a Nokogiri::XML::Element (fcd1: verify this)
       # containing a <c lelvel="series"> element
       def parse(nokogiri_xml)
-        @access_restrictions_ps = nokogiri_xml.xpath(XPATH[:access_restrictions_ps])
-        @arrangement_ps = nokogiri_xml.xpath(XPATH[:arrangement_ps])
         @nokogiri_xml = nokogiri_xml
-        @other_finding_aid_ps = nokogiri_xml.xpath(XPATH[:other_finding_aid_ps])
-        @scope_content_ps = nokogiri_xml.xpath(XPATH[:scope_content_ps])
-        @separated_material_ps = nokogiri_xml.xpath(XPATH[:separated_material_ps])
+        @notes = ComponentInfo.new
+        COMPONENT_INFO_MEMBERS.each do |member|
+          @notes[member] = nokogiri_xml.xpath(XPATH[member])
+        end
+        # @notes.access_restrictions_ps = nokogiri_xml.xpath(XPATH[:access_restrictions_ps])
+        # @notes.arrangement_ps = nokogiri_xml.xpath(XPATH[:arrangement_ps])
+        # @notes.other_finding_aid_ps = nokogiri_xml.xpath(XPATH[:other_finding_aid_ps])
+        # @notes.scope_content_ps = nokogiri_xml.xpath(XPATH[:scope_content_ps])
+        # @notes.separated_material_ps = nokogiri_xml.xpath(XPATH[:separated_material_ps])
         @title = nokogiri_xml.xpath(XPATH[:title]).text
       end
 
@@ -64,9 +68,9 @@ module ArchiveSpace
           container_value = container.text
           "#{container_type.titlecase} #{container_value}"
         end
-        COMPONENT_INFO_MEMBERS.each do |f|
-          component_notes[f] = component.xpath(XPATH[f]).map do |p|
-          (apply_ead_to_html_transforms p).to_s
+        COMPONENT_INFO_MEMBERS.each do |member|
+          component_notes[member] = component.xpath(XPATH[member]).map do |content|
+          (apply_ead_to_html_transforms content).to_s
           end
         end
         @component_info.append [ nesting_level,
