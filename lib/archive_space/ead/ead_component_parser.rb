@@ -31,11 +31,6 @@ module ArchiveSpace
         COMPONENT_INFO_MEMBERS.each do |member|
           @notes[member] = nokogiri_xml.xpath(XPATH[member])
         end
-        # @notes.access_restrictions_ps = nokogiri_xml.xpath(XPATH[:access_restrictions_ps])
-        # @notes.arrangement_ps = nokogiri_xml.xpath(XPATH[:arrangement_ps])
-        # @notes.other_finding_aid_ps = nokogiri_xml.xpath(XPATH[:other_finding_aid_ps])
-        # @notes.scope_content_ps = nokogiri_xml.xpath(XPATH[:scope_content_ps])
-        # @notes.separated_material_ps = nokogiri_xml.xpath(XPATH[:separated_material_ps])
         @title = nokogiri_xml.xpath(XPATH[:title]).text
       end
 
