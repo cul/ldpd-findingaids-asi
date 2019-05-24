@@ -17,7 +17,7 @@
     <%= params[:ComponentTitle_FIXED] %>
   </p>
   <% end %>
-  <%= form_tag do %>
+  <%= form_tag login_aeon_request_path do %>
     <p>
       <b>Rquest Notes</b>
       <br>
@@ -38,5 +38,6 @@
       by staff until a confirmation email is sent. Please schedule off-site items five (5) business days in advance.
     </p>
     <%= submit_tag 'Submit Request' %>
+    <input type="button" id="close" value="Cancel" onclick="window.close()" />
   <% end %>
 </div>

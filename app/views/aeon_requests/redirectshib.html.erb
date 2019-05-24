@@ -1,0 +1,24 @@
+<h1>AeonRequests#redirectshib</h1>
+<%= debug params %>
+<p>Find me in app/views/aeon_requests/redirectshib.html.erb</p>
+<% shib_dll_url = AEON[:shib_dll_url] %>
+<%= form_tag shib_dll_url do %>
+  <input type='hidden' name='AeonForm' value='EADRequest'>
+  <!-- // I think we need a param with this name/value.  Doesn't need to be a button. -->
+  <input type='hidden' name='SubmitButton' value='Submit Request'>
+  <input type="hidden" name="Request" value="ldpd_4079558_2">
+  <input type="hidden" name="ItemVolume_ldpd_4079558_2" value="Box 2">
+  <input type="hidden" name="ItemTitle_ldpd_4079558_2" value="Abraham Lincoln Portraits and Memorabilia, 1860-1940.">
+  <input type="hidden" name="ReferenceNumber_ldpd_4079558_2" value="4079558">
+  <input type="hidden" name="Notes" value="">
+  <input type="hidden" name="UserReview" value="No">
+  <input type="hidden" name="ScheduledDate" value="">
+  <input type='submit' name='Button' value='Login to Aeon' />
+<% end %>
+<script type="text/javascript">
+ $(document).ready(function () {
+   setTimeout(function () {
+     $("#fooform").submit();
+   }, 0);
+ });
+</script>

@@ -35,6 +35,7 @@
 \#*\#
 
 # Ignore config files with sensitive data
+aeon.yml
 archivespace.yml
 credentials.yml.enc
 database.yml

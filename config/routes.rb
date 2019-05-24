@@ -7,5 +7,8 @@ Rails.application.routes.draw do
       end
     end
   end
-  resource :aeon_request, only: [:create]
+  resource :aeon_request, only: [:create] do
+    post 'login'
+    get 'redirectshib'
+  end
 end
