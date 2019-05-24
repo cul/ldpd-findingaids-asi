@@ -12,6 +12,9 @@
     </div>
     <div class="item">
       <a href="<%= "#{repository_finding_aid_path(params[:repository_id], params[:finding_aid_id])}#using_collection" %>">Using the Collection</a>
+      <% if @restricted_access_flag %>
+        <p style="color:red;">Note: some material may be restricted or offsite</p>
+      <% end %>
     </div>
     <div class="item">
       <a href="<%= "#{repository_finding_aid_path(params[:repository_id], params[:finding_aid_id])}#about_findaid" %>">About the Finding Aid / Processing Information</a>

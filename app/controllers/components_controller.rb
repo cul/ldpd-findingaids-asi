@@ -3,6 +3,8 @@ require 'archive_space/ead/ead_parser'
 require 'archive_space/ead/ead_component_parser'
 
 class ComponentsController < ApplicationController
+  include  ArchiveSpace::Ead::EadHelper
+
   before_action :set_bib_id,
                 :validate_repository_code_and_set_repo_id,
                 :validate_bib_id_and_set_resource_id
@@ -36,6 +38,8 @@ class ComponentsController < ApplicationController
     @finding_aid_title =
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @series_titles = @ead.dsc_series_titles
+    @restricted_access_flag =
+      @ead.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
     ead_series_set_properties params[:id]
   end
 
