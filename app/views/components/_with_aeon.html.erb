@@ -11,6 +11,7 @@ Columbia-affiliated users may login with their uni and password.
 <div style="clear:both;">
   <%= yield %>
 </div>
-<%= hidden_field_tag 'ItemTitle_FIXED', @finding_aid_title %>
 <%= hidden_field_tag 'ComponentTitle_FIXED', @component_title %>
+<%= hidden_field_tag 'bib_id', @bib_id %>
+<%= hidden_field_tag 'item_title', @finding_aid_title %>
 <% end %>

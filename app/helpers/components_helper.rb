@@ -1,5 +1,5 @@
 module ComponentsHelper
-  def checkbox_display(container_info)
+  def checkbox_display(component_title, container_info)
     checkbox_html_out = ''
     if (!container_info.nil? and
         container_info != @last_container_seen)
@@ -9,7 +9,7 @@ module ComponentsHelper
         '<input type="checkbox" name="' <<
         "checkbox_#{@checkbox_id}" <<
         '" value="' <<
-        "#{container_info}" <<
+        "#{component_title}COMPONENTTITLECONTAINERINFO#{container_info}" <<
         '" style="text-align:right;float:right;"' <<
         '">' <<
         '<label style="text-align:right;float:right;" for="' <<

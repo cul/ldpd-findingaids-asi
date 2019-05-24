@@ -6,15 +6,16 @@
 <div class="span8">
   <p>
     <b>Item Title</b>
-    <%= params[:ItemTitle_FIXED] %>
+    <%= @item_title %>
   </p>
-  <% @selected_containers.each do |container| %>
+  <% @selected_containers.each do |container_info| %>
+  <% component_title, container_value = container_info.split('COMPONENTTITLECONTAINERINFO') %>
   <p>
     <b>Item Volume</b>
-    <%= container %>
+    <%= container_value %>
     <br>
     <b>Item SubTitle</b>
-    <%= params[:ComponentTitle_FIXED] %>
+    <%= component_title %>
   </p>
   <% end %>
   <%= form_tag login_aeon_request_path do %>
@@ -39,5 +40,8 @@
     </p>
     <%= submit_tag 'Submit Request' %>
     <input type="button" id="close" value="Cancel" onclick="window.close()" />
+    <% params.each do |key, value| %>
+      <%= hidden_field_tag key, value %>
+    <% end %>
   <% end %>
 </div>
