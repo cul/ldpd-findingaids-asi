@@ -5,10 +5,12 @@ require 'archive_space/ead/ead_component_parser.rb'
 attributes = [
   :access_restrictions_ps, # <c>:<accessrestrict>:<p>
   :arrangement_ps, # <c>:<arrangement>:<p>
+  :biography_history_ps, # <c>:<bioghist>:<p>
+  :odd_ps, # <c>:<odd>:<p>
+  :other_finding_aid_ps, # <c>:<scopecontent>:<p>
   :related_material_ps, # <c>:<relatedmaterial>:<p>
   :scope_content_ps, # <c>:<scopecontent>:<p>
   :separated_material_ps, # <c>:<separatedmaterial>:<p>
-  :other_finding_aid_ps, # <c>:<scopecontent>:<p>
   :title # <c>:<did>:<unititle>
 ].freeze
 
@@ -55,89 +57,63 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         @nokogiri_xml = Nokogiri::XML(xml_input)
         @component = ArchiveSpace::Ead::EadComponentParser.new
         @component.parse @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
+        @expected_access_restrictions_ps =
+          [
+            "[Restricted Until 2039](top-level container)",
+            "[Restricted Until 2059](top-level container)",
+            "[Restricted Until 2020](top-level container)"
+          ]
+        @expected_arrangement_ps =
+          [
+            "Arranged alphabetically by subject.",
+            "Arranged alphabetically by author.",
+            "Arranged alphabetically by location."
+          ]
+
+        @expected_biography_history_ps =
+          [
+            "John ate pizza for lunch.(BH)",
+            "John ate a burger for lunch.(BH)",
+            "John ate fish for lunch.(BH)"
+          ]
+        @expected_odd_ps =
+          [
+            "This collection is nice(ODD)",
+            "This repo is nice(ODD)",
+            "This series is nice(ODD)"
+          ]
+        @expected_other_finding_aid_ps =
+          [
+            "*In addition, a sortable inventory in this downloadable Excel spreadsheet.",
+            "A pdf version is available for download.",
+            "Another finding aid available online."
+          ]
+        @expected_related_material_ps =
+          [
+            "The related memoirs are cataloged individually(RM)",
+            "The related photographs are cataloged individually(RM)",
+            "The related recordings are cataloged individually(RM)"
+          ]
+        @expected_scope_content_ps =
+          [
+            "The drawings in the collection consist of pencil and ink drawings.",
+            "Correspondents include: H.J. Heinz.",
+            "Contains  document allowing Bunshaft to practice architecture in Belgium."
+          ]
+        @expected_separated_material_ps =
+          [
+            "Some interviewees' personal papers were separated and described as their own collection.",
+            "Oral history transcripts in this series are drafts and editing copies.",
+            "The personal papers and finalized individual memoirs are cataloged in CLIO."
+          ]
       end
 
-      let (:expected_access_restrictions_ps) {
-        [
-          "[Restricted Until 2039](top-level container)",
-          "[Restricted Until 2059](top-level container)",
-          "[Restricted Until 2020](top-level container)"
-        ]
-      }
-
-      let (:expected_arrangement_ps) {
-        [
-          "Arranged alphabetically by subject.",
-          "Arranged alphabetically by author.",
-          "Arranged alphabetically by location."
-        ]
-      }
-
-      let (:expected_other_finding_aid_ps) {
-        [
-          "*In addition, a sortable inventory in this downloadable Excel spreadsheet.",
-          "A pdf version is available for download.",
-          "Another finding aid available online."
-        ]
-      }
-
-      let (:expected_related_material_ps) {
-        [
-          "The related memoirs are cataloged individually(RM)",
-          "The related photographs are cataloged individually(RM)",
-          "The related recordings are cataloged individually(RM)"
-        ]
-      }
-
-      let (:expected_scope_content_ps) {
-        [
-          "The drawings in the collection consist of pencil and ink drawings.",
-          "Correspondents include: H.J. Heinz.",
-          "Contains  document allowing Bunshaft to practice architecture in Belgium."
-        ]
-      }
-
-      let (:expected_separated_material_ps) {
-        [
-          "Some interviewees' personal papers were separated and described as their own collection.",
-          "Oral history transcripts in this series are drafts and editing copies.",
-          "The personal papers and finalized individual memoirs are cataloged in CLIO."
-        ]
-      }
-
-      it 'sets the access_restrictions_ps correctly' do
-        @component.notes.access_restrictions_ps.each_with_index do |access_restrictions_p, index|
-          expect(access_restrictions_p.text).to eq expected_access_restrictions_ps[index]
-        end
-      end
-
-      it 'sets the arrangement_ps correctly' do
-        @component.notes.arrangement_ps.each_with_index do |arrangement_p, index|
-          expect(arrangement_p.text).to eq expected_arrangement_ps[index]
-        end
-      end
-
-      it 'sets the other_finding_aid_ps correctly' do
-        @component.notes.other_finding_aid_ps.each_with_index do |other_finding_aid_p, index|
-          expect(other_finding_aid_p.text).to eq expected_other_finding_aid_ps[index]
-        end
-      end
-
-      it 'sets the related_material_ps correctly' do
-        @component.notes.related_material_ps.each_with_index do |related_material_p, index|
-          expect(related_material_p.text).to eq expected_related_material_ps[index]
-        end
-      end
-
-      it 'sets the scope_content_ps correctly' do
-        @component.notes.scope_content_ps.each_with_index do |scope_content_p, index|
-          expect(scope_content_p.text).to eq expected_scope_content_ps[index]
-        end
-      end
-
-      it 'sets the separated_material_ps correctly' do
-        @component.notes.separated_material_ps.each_with_index do |separated_material_p, index|
-          expect(separated_material_p.text).to eq expected_separated_material_ps[index]
+      (attributes - [:title]).each do |attribute|
+        it "sets the #{attribute} correctly" do
+          expected_values = instance_variable_get("@expected_#{attribute}")
+          @component.notes[attribute].each_with_index do |attribute_p, index|
+            expect(attribute_p.text).to eq expected_values[index]
+          end
         end
       end
 
@@ -162,55 +138,64 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           @container_info,
           @component_notes
         ) = @component.generate_info.first
+        @expected_access_restrictions_ps =
+          [
+            "<p>[Restricted Until 2049](child container)</p>",
+            "<p>[Restricted Until 2047](child container)</p>",
+            "<p>[Restricted Until 2059](child container)</p>"
+          ]
+        @expected_arrangement_ps =
+          [
+            "<p>Arranged alphabetically by topic.</p>",
+            "<p>Arranged alphabetically by creator.</p>",
+            "<p>Arranged alphabetically by repo.</p>"
+          ]
+        @expected_biography_history_ps =
+          [
+            "<p>John ate pizza for dinner.(BH)</p>",
+            "<p>John ate a burger for dinner.(BH)</p>",
+            "<p>John ate fish for dinner.(BH)</p>"
+          ]
+        @expected_odd_ps =
+          [
+            "<p>This file is nice(ODD)</p>",
+            "<p>This manuscript is nice(ODD)</p>",
+            "<p>This picture is nice(ODD)</p>"
+          ]
+        @expected_other_finding_aid_ps =
+          [
+            "<p>*In addition, a sortable inventory in this downloadable Excel spreadsheet.</p>",
+            "<p>A pdf version is available for download.</p>",
+            "<p>Another finding aid available online.</p>"
+          ]
+        @expected_related_material_ps =
+          [
+            "<p>The related pictures are cataloged individually(RM)</p>",
+            "<p>The related novels are cataloged individually(RM)</p>",
+            "<p>The related slides are cataloged individually(RM)</p>"
+          ]
+        @expected_scope_content_ps =
+          [
+            "<p>In four boxes, numbered 1-4.</p>",
+            "<p>The Builder. Nov 11, 1921. Excerpt;</p>",
+            "<p>Notice de la constitution des societe local.</p>"
+          ]
+        @expected_separated_material_ps =
+          [
+            "<p>Some interviewees' personal papers were separated and described as their own collection.</p>",
+            "<p>Oral history transcripts in this series are drafts and editing copies.</p>",
+            "<p>The personal papers and finalized individual memoirs are cataloged in CLIO.</p>"
+          ]
       end
 
-      let (:expected_access_restrictions_ps) {
-        [
-          "<p>[Restricted Until 2049](child container)</p>",
-          "<p>[Restricted Until 2047](child container)</p>",
-          "<p>[Restricted Until 2059](child container)</p>"
-        ]
-      }
-
-      let (:expected_arrangement_ps) {
-        [
-          "<p>Arranged alphabetically by topic.</p>",
-          "<p>Arranged alphabetically by creator.</p>",
-          "<p>Arranged alphabetically by repo.</p>"
-        ]
-      }
-
-      let (:expected_related_material_ps) {
-        [
-          "<p>The related pictures are cataloged individually(RM)</p>",
-          "<p>The related novels are cataloged individually(RM)</p>",
-          "<p>The related slides are cataloged individually(RM)</p>"
-        ]
-      }
-
-      let (:expected_scope_content_ps) {
-        [
-          "<p>In four boxes, numbered 1-4.</p>",
-          "<p>The Builder. Nov 11, 1921. Excerpt;</p>",
-          "<p>Notice de la constitution des societe local.</p>"
-        ]
-      }
-
-      let (:expected_separated_material_ps) {
-        [
-          "<p>Some interviewees' personal papers were separated and described as their own collection.</p>",
-          "<p>Oral history transcripts in this series are drafts and editing copies.</p>",
-          "<p>The personal papers and finalized individual memoirs are cataloged in CLIO.</p>"
-        ]
-      }
-
-      let (:expected_other_finding_aid_ps) {
-        [
-          "<p>*In addition, a sortable inventory in this downloadable Excel spreadsheet.</p>",
-          "<p>A pdf version is available for download.</p>",
-          "<p>Another finding aid available online.</p>"
-        ]
-      }
+      (attributes - [:title]).each do |attribute|
+        it "generates the correct #{attribute}" do
+          expected_values = instance_variable_get("@expected_#{attribute}")
+          @component_notes[attribute].each_with_index do |attribute_p, index|
+            expect(attribute_p).to eq expected_values[index]
+          end
+        end
+      end
 
       it 'generates the correct nesting level' do
         expect(@nesting_level).to eq 1
@@ -226,42 +211,6 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
 
       it 'generates the correct level' do
         expect(@level).to eq 'series'
-      end
-
-      it 'generates the correct access_restrictions_ps values' do
-        @component_notes.access_restrictions_ps.each_with_index do |access_restrictions_p, index|
-          expect(access_restrictions_p).to eq expected_access_restrictions_ps[index]
-        end
-      end
-
-      it 'generates the correct arrangement_ps values' do
-        @component_notes.arrangement_ps.each_with_index do |arrangement_p, index|
-          expect(arrangement_p).to eq expected_arrangement_ps[index]
-        end
-      end
-
-      it 'generates the correct related material values' do
-        @component_notes.related_material_ps.each_with_index do |related_material_p, index|
-          expect(related_material_p).to eq expected_related_material_ps[index]
-        end
-      end
-
-      it 'generates the correct scope content values' do
-        @component_notes.scope_content_ps.each_with_index do |scope_content_p, index|
-          expect(scope_content_p).to eq expected_scope_content_ps[index]
-        end
-      end
-
-      it 'generates the correct separated material values' do
-        @component_notes.separated_material_ps.each_with_index do |separated_material_p, index|
-          expect(separated_material_p).to eq expected_separated_material_ps[index]
-        end
-      end
-
-      it 'generates the correct other finding aid values' do
-        @component_notes.other_finding_aid_ps.each_with_index do |other_finding_aid_p, index|
-          expect(other_finding_aid_p).to eq expected_other_finding_aid_ps[index]
-        end
       end
 
       it 'generates the correct container info' do

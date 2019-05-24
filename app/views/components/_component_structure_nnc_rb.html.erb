@@ -9,6 +9,8 @@
                   @notes.arrangement_ps +
                   @notes.related_material_ps +
                   @notes.separated_material_ps +
+                  @notes.biography_history_ps +
+                  @notes.odd_ps +
                   @notes.other_finding_aid_ps
   %>
   <% misc_notes.each do |misc_note| %>
@@ -30,6 +32,8 @@
                     notes.arrangement_ps +
                     notes.related_material_ps +
                     notes.separated_material_ps +
+                    @notes.biography_history_ps +
+                    notes.odd_ps +
                     notes.other_finding_aid_ps
     %>
     <% if nesting_level > current_nesting_level %>

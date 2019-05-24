@@ -8,8 +8,10 @@ module ArchiveSpace
       XPATH = {
         access_restrictions_ps: './xmlns:accessrestrict/xmlns:p',
         arrangement_ps: './xmlns:arrangement/xmlns:p',
+        biography_history_ps: './xmlns:bioghist/xmlns:p',
         container: './xmlns:did/xmlns:container',
         date: './xmlns:did/xmlns:unitdate',
+        odd_ps: './xmlns:odd/xmlns:p',
         other_finding_aid_ps: './xmlns:otherfindaid/xmlns:p',
         physical_description: './xmlns:did/xmlns:physdesc',
         related_material_ps: './xmlns:relatedmaterial/xmlns:p',
