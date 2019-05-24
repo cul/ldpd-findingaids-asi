@@ -8,12 +8,14 @@ attributes = [
   :alternative_form_available_ps, # <c>:<altformavail>:<p>
   :arrangement_ps, # <c>:<arrangement>:<p>
   :biography_history_ps, # <c>:<bioghist>:<p>
+  :custodial_history_ps, # <c>:<custodhist>:<p>
   :odd_ps, # <c>:<odd>:<p>
   :other_finding_aid_ps, # <c>:<scopecontent>:<p>
   :related_material_ps, # <c>:<relatedmaterial>:<p>
   :scope_content_ps, # <c>:<scopecontent>:<p>
   :separated_material_ps, # <c>:<separatedmaterial>:<p>
-  :title # <c>:<did>:<unititle>
+  :title, # <c>:<did>:<unititle>
+  :use_restrictions_ps # <c>:<userestrict>:<p>
 ].freeze
 
 RSpec.describe ArchiveSpace::Ead::EadComponentParser do
@@ -89,6 +91,12 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
             "John ate a burger for lunch.(BH)",
             "John ate fish for lunch.(BH)"
           ]
+        @expected_custodial_history_ps =
+          [
+            "Gift of the ABC Company, 1963.(CH)",
+            "Gift of the BCD Company, 1963.(CH)",
+            "Gift of the DDD Company, 1963.(CH)"
+          ]
         @expected_odd_ps =
           [
             "This collection is nice(ODD)",
@@ -118,6 +126,12 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
             "Some interviewees' personal papers were separated and described as their own collection.",
             "Oral history transcripts in this series are drafts and editing copies.",
             "The personal papers and finalized individual memoirs are cataloged in CLIO."
+          ]
+        @expected_use_restrictions_ps =
+          [
+            "Five photocopies may be made for research purposes.(UR)",
+            "One photocopy may be made for research purposes.(UR)",
+            "Single photocopies may be made for research purposes.(UR)"
           ]
       end
 
@@ -181,6 +195,12 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
             "<p>John ate a burger for dinner.(BH)</p>",
             "<p>John ate fish for dinner.(BH)</p>"
           ]
+        @expected_custodial_history_ps =
+          [
+            "<p>Gift of the ZZZ Company, 1963.(CH)</p>",
+            "<p>Gift of the 123 Company, 1963.(CH)</p>",
+            "<p>Gift of the Pi Company, 1963.(CH)</p>"
+          ]
         @expected_odd_ps =
           [
             "<p>This file is nice(ODD)</p>",
@@ -210,6 +230,12 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
             "<p>Some interviewees' personal papers were separated and described as their own collection.</p>",
             "<p>Oral history transcripts in this series are drafts and editing copies.</p>",
             "<p>The personal papers and finalized individual memoirs are cataloged in CLIO.</p>"
+          ]
+        @expected_use_restrictions_ps =
+          [
+            "<p>Four photocopies may be made for research purposes.(UR)</p>",
+            "<p>Ten photocopies may be made for research purposes.(UR)</p>",
+            "<p>Two photocopies may be made for research purposes.(UR)</p>"
           ]
       end
 

@@ -12,6 +12,7 @@ module ArchiveSpace
         arrangement_ps: './xmlns:arrangement/xmlns:p',
         biography_history_ps: './xmlns:bioghist/xmlns:p',
         container: './xmlns:did/xmlns:container',
+        custodial_history_ps: './xmlns:custodhist/xmlns:p',
         date: './xmlns:did/xmlns:unitdate',
         odd_ps: './xmlns:odd/xmlns:p',
         other_finding_aid_ps: './xmlns:otherfindaid/xmlns:p',
@@ -19,7 +20,8 @@ module ArchiveSpace
         related_material_ps: './xmlns:relatedmaterial/xmlns:p',
         scope_content_ps: './xmlns:scopecontent/xmlns:p',
         separated_material_ps: './xmlns:separatedmaterial/xmlns:p',
-        title: './xmlns:did/xmlns:unittitle'
+        title: './xmlns:did/xmlns:unittitle',
+        use_restrictions_ps: './xmlns:userestrict/xmlns:p'
       }
 
       COMPONENT_INFO_MEMBERS = XPATH.keys - [:container, :date, :physical_description, :title]

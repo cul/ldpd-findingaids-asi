@@ -131,16 +131,28 @@
 	</acqinfo>
 	<custodhist>
 	  <head>Custodial History</head>
-	  <p>Gift of the ABC Company, 1963.(CH) </p>
+	  <p>Gift of the ABC Company, 1963.(CH)</p>
 	</custodhist>
 	<custodhist>
 	  <head>Custodial History</head>
-	  <p>Gift of the BCD Company, 1963.(CH) </p>
+	  <p>Gift of the BCD Company, 1963.(CH)</p>
 	</custodhist>
 	<custodhist>
 	  <head>Custodial History</head>
-	  <p>Gift of the DDD Company, 1963.(CH) </p>
+	  <p>Gift of the DDD Company, 1963.(CH)</p>
 	</custodhist>
+	<userestrict>
+	  <head>Terms Governing Use and Reproduction</head>
+	  <p>Five photocopies may be made for research purposes.(UR)</p>
+	</userestrict>
+	<userestrict>
+	  <head>Terms Governing Use and Reproduction</head>
+	  <p>One photocopy may be made for research purposes.(UR)</p>
+	</userestrict>
+	<userestrict>
+	  <head>Terms Governing Use and Reproduction</head>
+	  <p>Single photocopies may be made for research purposes.(UR)</p>
+	</userestrict>
 	<c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="series">
 	  <did>
 	    <unittitle>Subseries I: Cataloged Correspondence</unittitle>
@@ -270,16 +282,28 @@
 	  </acqinfo>
 	  <custodhist>
 	    <head>Custodial History</head>
-	    <p>Gift of the ZZZ Company, 1963.(CH) </p>
+	    <p>Gift of the ZZZ Company, 1963.(CH)</p>
 	  </custodhist>
 	  <custodhist>
 	    <head>Custodial History</head>
-	    <p>Gift of the 123 Company, 1963.(CH) </p>
+	    <p>Gift of the 123 Company, 1963.(CH)</p>
 	  </custodhist>
 	  <custodhist>
 	    <head>Custodial History</head>
-	    <p>Gift of the Pi Company, 1963.(CH) </p>
+	    <p>Gift of the Pi Company, 1963.(CH)</p>
 	  </custodhist>
+	  <userestrict>
+	    <head>Terms Governing Use and Reproduction</head>
+	    <p>Four photocopies may be made for research purposes.(UR)</p>
+	  </userestrict>
+	  <userestrict>
+	    <head>Terms Governing Use and Reproduction</head>
+	    <p>Ten photocopies may be made for research purposes.(UR)</p>
+	  </userestrict>
+	  <userestrict>
+	    <head>Terms Governing Use and Reproduction</head>
+	    <p>Two photocopies may be made for research purposes.(UR)</p>
+	  </userestrict>
 	</c>
       </c>
     </dsc>

@@ -5,12 +5,18 @@
       <%== apply_ead_to_html_transforms access_restrictions_p %>
     </div>
   <% end %>
+  <% @notes.use_restrictions_ps.each do |use_restrictions_p| %>
+    <div style="color:red;">
+      <%== apply_ead_to_html_transforms use_restrictions_p %>
+    </div>
+  <% end %>
   <% misc_notes = @notes.scope_content_ps +
                   @notes.arrangement_ps +
                   @notes.related_material_ps +
                   @notes.separated_material_ps +
                   @notes.alternative_form_available_ps +
                   @notes.biography_history_ps +
+                  @notes.custodial_history_ps +
                   @notes.acquisition_information_ps +
                   @notes.odd_ps +
                   @notes.other_finding_aid_ps
@@ -36,6 +42,7 @@
                     notes.separated_material_ps +
                     notes.alternative_form_available_ps +
                     notes.biography_history_ps +
+                    notes.custodial_history_ps +
                     notes.acquisition_information_ps +
                     notes.odd_ps +
                     notes.other_finding_aid_ps
@@ -61,6 +68,13 @@
       <div style="margin:0;padding-left:1em;color:red;">
         <% notes.access_restrictions_ps.each do |access_restrictions_p| %>
           <%== access_restrictions_p %>
+        <% end %>
+      </div>
+    <% end %>
+    <% unless notes.use_restrictions_ps.empty? %>
+      <div style="margin:0;padding-left:1em;color:red;">
+        <% notes.use_restrictions_ps.each do |use_restrictions_p| %>
+          <%== use_restrictions_p %>
         <% end %>
       </div>
     <% end %>
