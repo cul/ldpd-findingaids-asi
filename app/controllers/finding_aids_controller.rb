@@ -47,6 +47,8 @@ class FindingAidsController < ApplicationController
     @accruals_values = @ead.accruals_values
     @alternative_form_available_head = @ead.alternative_form_available_head
     @alternative_form_available_values = @ead.alternative_form_available_values
+    @arrangement_head = @ead.arrangement_head
+    @arrangement_values = @ead.arrangement_values
     @scope_content_head = @ead.scope_content_head
     @scope_content_values = @ead.scope_content_values
     @publisher = @ead.publicationstmt_publisher

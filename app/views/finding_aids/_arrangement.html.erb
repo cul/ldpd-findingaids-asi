@@ -1,4 +1,7 @@
 <h3>Arrangement</h3>
+<% @arrangement_values.each do |arrangement_value| %>
+  <%== apply_ead_to_html_transforms arrangement_value %>
+<% end %>
 <p>
   <ul>
     <% @series_titles.each_with_index do |series_title, index| %>

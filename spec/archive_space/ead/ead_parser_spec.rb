@@ -7,8 +7,10 @@ attributes = [
   :access_restrictions_values, # <ead>:<archdesc>:<accessrestrict>:<p>
   :accruals_head, # <ead>:<archdesc>:<accruals>:<head>
   :accruals_values, # <ead>:<archdesc>:<accruals>:<p>
-  :alternative_form_available_head, # <ead>:<archdesc>:<accruals>:<head>
-  :alternative_form_available_values, # <ead>:<archdesc>:<accruals>:<p>
+  :alternative_form_available_head, # <ead>:<archdesc>:<altformavail>:<head>
+  :alternative_form_available_values, # <ead>:<archdesc>:<altformavail>:<p>
+  :arrangement_head, # <ead>:<archdesc>:<arrangement>:<head>
+  :arrangement_values, # <ead>:<archdesc>:<arrangement>:<p>
   :biography_history_head, # <ead>:<archdesc>:<bioghist>:<head>
   :biography_history_values, # <ead>:<archdesc>:<bioghist>:<p>
   :control_access_corpnames, # <ead>:<archdesc>:<controlaccess>:<corpname>
@@ -237,6 +239,13 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_arrangement_values) {
+        [
+          "Selected materials cataloged.",
+          "Remainder arranged."
+        ]
+      }
+
       let (:expected_biography_history_values) {
         [
           "Siegfried Loraine Sassoon, CBE, MC was an English poet, writer, and soldier.",
@@ -358,6 +367,17 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       it 'parses the alternative_form_available_values correctly' do
         @as_ead.alternative_form_available_values.each_with_index do |alternative_form_available_value, index|
           expect(alternative_form_available_value.text).to eq expected_alternative_form_available_values[index]
+        end
+      end
+
+      it 'parses the arrangement_head correctly' do
+        tested = @as_ead.arrangement_head
+        expect(tested).to eq 'Arrangement'
+      end
+
+      it 'parses the arrangement_values correctly' do
+        @as_ead.arrangement_values.each_with_index do |arrangement_value, index|
+          expect(arrangement_value.text).to eq expected_arrangement_values[index]
         end
       end
 
