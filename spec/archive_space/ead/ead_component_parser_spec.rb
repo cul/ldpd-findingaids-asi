@@ -4,6 +4,8 @@ require 'archive_space/ead/ead_component_parser.rb'
 
 attributes = [
   :access_restrictions_ps, # <c>:<accessrestrict>:<p>
+  :acquisition_information_ps, # <c>:<acqinfo>:<p>
+  :alternative_form_available_ps, # <c>:<altformavail>:<p>
   :arrangement_ps, # <c>:<arrangement>:<p>
   :biography_history_ps, # <c>:<bioghist>:<p>
   :odd_ps, # <c>:<odd>:<p>
@@ -63,13 +65,24 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
             "[Restricted Until 2059](top-level container)",
             "[Restricted Until 2020](top-level container)"
           ]
+        @expected_acquisition_information_ps =
+          [
+            "Transferred from NYPL(ACQ)",
+            "Transferred from CUL(ACQ)",
+            "Transferred from Metro(ACQ)"
+          ]
+        @expected_alternative_form_available_ps =
+          [
+            "Microforms available.(AF)",
+            "Photocopies available.(AF)",
+            "Microfiche available.(AF)"
+          ]
         @expected_arrangement_ps =
           [
             "Arranged alphabetically by subject.",
             "Arranged alphabetically by author.",
             "Arranged alphabetically by location."
           ]
-
         @expected_biography_history_ps =
           [
             "John ate pizza for lunch.(BH)",
@@ -143,6 +156,18 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
             "<p>[Restricted Until 2049](child container)</p>",
             "<p>[Restricted Until 2047](child container)</p>",
             "<p>[Restricted Until 2059](child container)</p>"
+          ]
+        @expected_acquisition_information_ps =
+          [
+            "<p>Transferred from Avery(ACQ)</p>",
+            "<p>Transferred from NYU(ACQ)</p>",
+            "<p>Transferred from next door(ACQ)</p>"
+          ]
+        @expected_alternative_form_available_ps =
+          [
+            "<p>Film available.(AF)</p>",
+            "<p>Hard copies available.(AF)</p>",
+            "<p>Digital files available.(AF)</p>"
           ]
         @expected_arrangement_ps =
           [

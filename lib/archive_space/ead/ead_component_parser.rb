@@ -7,6 +7,8 @@ module ArchiveSpace
 
       XPATH = {
         access_restrictions_ps: './xmlns:accessrestrict/xmlns:p',
+        acquisition_information_ps: './xmlns:acqinfo/xmlns:p',
+        alternative_form_available_ps: './xmlns:altformavail/xmlns:p',
         arrangement_ps: './xmlns:arrangement/xmlns:p',
         biography_history_ps: './xmlns:bioghist/xmlns:p',
         container: './xmlns:did/xmlns:container',
