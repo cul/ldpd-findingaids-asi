@@ -2,9 +2,15 @@
   <tbody>
     <tr>
       <td class="sidebar">
+        <%
+	  series_titles_urls =
+            @series_titles.map.with_index do |series_title, index|
+              [series_title, repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])]
+            end
+        %>
 	<%=
-	  render partial: 'sidebar'
-	  # locals: {slug: ead_path, slug_to_series_page: method(:series_path)}
+	  render partial: 'sidebar',
+                 locals: {slug: repository_finding_aid_path, series_titles_urls: series_titles_urls}
 	  %>
       </td>
       <td class="ead_content">

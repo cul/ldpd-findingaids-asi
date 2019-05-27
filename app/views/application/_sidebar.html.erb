@@ -1,0 +1,38 @@
+<div class="toc" style="clear:both;">
+  <h2>Table of Contents</h2>
+  <div id="contentMenu1">
+    <div class="item">
+      <a href="<%= "#{slug}#summary" %>">Summary</a>
+    </div>
+    <div class="item">
+      <a href="<%= "#{slug}#arrangement" %>">Arrangement</a>
+    </div>
+    <div class="item">
+      <a href="<%= "#{slug}#description" %>">Description</a>
+    </div>
+    <div class="item">
+      <a href="<%= "#{slug}#using_collection" %>">Using the Collection</a>
+      <% if @restricted_access_flag %>
+        <p style="color:red;">Note: some material may be restricted or offsite</p>
+      <% end %>
+    </div>
+    <div class="item">
+      <a href="<%= "#{slug}#about_findaid" %>">About the Finding Aid / Processing Information</a>
+    </div>
+    <div class="item">
+      <a href="<%= "#{slug}#subjects" %>">Subject Headings</a>
+    </div>
+    <div class="item">
+      <a href="<%= "#{slug}#history" %>">History / Biographical Note</a>
+    </div>
+  </div>
+  <hr style="border-style:solid;border-width:1px">
+  <h2>Container List</h2>
+  <div id="contentMenu1">
+    <% series_titles_urls.each do |title_url| %>
+    <div class="item">
+      <%= link_to title_url.first, title_url.second %>
+    </div>
+    <% end %>    
+  </div>
+</div>
