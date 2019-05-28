@@ -1,6 +1,3 @@
-<h1>AeonRequests#redirectshib</h1>
-<%= debug params %>
-<p>Find me in app/views/aeon_requests/redirectshib.html.erb</p>
 <% shib_dll_url = AEON[:shib_dll_url] %>
 <%= form_tag(shib_dll_url, id:'aeon_form') do %>
   <input type='hidden' name='AeonForm' value='EADRequest'>
@@ -17,7 +14,7 @@
   <input type="hidden" name="Notes" value="<%= @notes %>">
   <input type="hidden" name="UserReview" value="No">
   <input type="hidden" name="ScheduledDate" value="<%= @scheduled_date %>">
-  <input type='submit' name='Button' style="margin-bottom:5px;" value='Confirm Aeon Request' />
+  <input type='submit' name='Button' style="display:none;" value='Confirm Aeon Request' />
 <% end %>
 <%= javascript_tag do %>
  $(document).ready(function () {

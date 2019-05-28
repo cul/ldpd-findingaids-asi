@@ -26,6 +26,7 @@ class AeonRequestsController < ApplicationController
     @item_title = session[:item_title]
     @notes = session[:notes]
     @scheduled_date = session[:scheduled_date]
+    session.clear
   end
 
   def redirectnonshib
@@ -34,5 +35,6 @@ class AeonRequestsController < ApplicationController
     @item_title = session[:item_title]
     @notes = session[:notes]
     @scheduled_date = session[:scheduled_date]
+    session.clear
   end
 end

@@ -12,7 +12,7 @@ module ComponentsHelper
         "#{component_title}COMPONENTTITLECONTAINERINFO#{container_info}" <<
         '" style="text-align:right;float:right;"' <<
         '">' <<
-        '<label style="text-align:right;float:right;" for="' <<
+        '<label style="text-align:right;float:right;padding-right:5px;" for="' <<
         "checkbox_#{@checkbox_id}>" <<
         '">' <<
         "Request #{container_info}" <<

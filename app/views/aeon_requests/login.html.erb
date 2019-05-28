@@ -1,15 +1,12 @@
 <div class="aeon-confirm-request container">
-  <h1>AeonRequests#login</h1>
-  <%= debug params %>
-  <p>Find me in app/views/aeon_requests/login.html.erb</p>
   <div class="aeon-header">
     <div class="aeon-title-name">
       <h3 class="trajanpro">Special Collections Research Account</h3>
     </div>
     <p>To access the system please click the 'Login' button below that represents your affiliation.</p>
   </div>
-  <div class="row">
-    <div class="col-md-6" style="border:1px solid grey">
+  <div class="row" style="padding:5px">
+    <div class="col-md-6" style="border:1px solid grey;">
       <article>
 	<h4>Columbia University Patrons</h4>
 	<p>Columbia University Affiliates include current students, faculty, offices, and staff.</p>
@@ -20,6 +17,8 @@
         <%= hidden_field_tag 'target', redirectshib_aeon_request_url %>
         <%= submit_tag 'Login', {style: "margin-bottom:5px;"} %>
       <% end %>
+      <p><br></p>
+      <p><br></p>
     </div>
     <div class="col-md-6">
       <article>
@@ -29,6 +28,7 @@
       <%= form_tag(redirectnonshib_aeon_request_path, method: :get) do %>
         <%= submit_tag 'Login', {style: "margin-bottom:5px;"} %>
       <% end %>
+    <p>First time user? Click to <a href="https://aeon.cul.columbia.edu/nonshib/aeon.dll?Action=10&Form=79">create an account</a>.<p>
     </div>
   </div>
 </div>
