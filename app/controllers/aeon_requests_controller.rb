@@ -17,7 +17,7 @@ class AeonRequestsController < ApplicationController
     session[:bib_id] = params[:bib_id]
     session[:item_title] = params[:item_title]
     session[:notes] = params[:notes]
-    session[:scheduled_date] = Date.strptime(params[:scheduled_date],'%Y-%m-%d').strftime('%m/%d/%Y')
+    session[:scheduled_date] = Date.strptime(params[:scheduled_date],'%Y-%m-%d').strftime('%m/%d/%Y') unless params[:scheduled_date].empty?
   end
 
   def redirectshib
