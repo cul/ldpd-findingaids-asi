@@ -20,7 +20,7 @@
   <% end %>
   <%= form_tag login_aeon_request_path do %>
     <p>
-      <b>Rquest Notes</b>
+      <b>Request Notes</b>
       <br>
       Use this field to add research notes for your future reference. You may also offer an alternate date
       or range of dates for your requested Scheduled Date. For immediate inquiries or concerns, please
@@ -28,11 +28,12 @@
       <br>
     </p>
     <p>
-      <%= text_area_tag 'Notes', nil, class: 'span8', cols: 60 %>
+      <%= label_tag :notes, 'Notes' %>
+      <%= text_area_tag :notes, nil, class: 'span8', cols: 60 %>
     </p>
     <p>
-      <%= label_tag :datepicker, 'Scheduled Date' %>
-      <%= text_field_tag :datepicker, nil, class: 'hasDatepicker' %>
+      <%= label_tag :scheduled_date, 'Scheduled Date' %>
+      <%= date_field_tag :scheduled_date, nil, class: 'hasDatepicker' %>
     </p>
     <p>
       Please schedule no more than 10 boxes per date. Scheduled dates for off-site materials are pending approval
