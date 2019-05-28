@@ -19,10 +19,8 @@
   <input type="hidden" name="ScheduledDate" value="<%= @scheduled_date %>">
   <input type='submit' name='Button' style="margin-bottom:5px;" value='Confirm Aeon Request' />
 <% end %>
-<script type="text/javascript">
+<%= javascript_tag do %>
  $(document).ready(function () {
-   setTimeout(function () {
      $("#aeon_form").submit();
-   }, 0);
  });
-</script>
+<% end %>
