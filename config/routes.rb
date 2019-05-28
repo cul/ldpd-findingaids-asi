@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   resource :aeon_request, only: [:create] do
     post 'login'
     get 'redirectshib'
+    get 'redirectnonshib'
   end
 end

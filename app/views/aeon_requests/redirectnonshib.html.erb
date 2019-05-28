@@ -1,8 +1,8 @@
 <h1>AeonRequests#redirectshib</h1>
 <%= debug params %>
 <p>Find me in app/views/aeon_requests/redirectshib.html.erb</p>
-<% shib_dll_url = AEON[:shib_dll_url] %>
-<%= form_tag(shib_dll_url, id:'aeon_form') do %>
+<% non_shib_dll_url = AEON[:non_shib_dll_url] %>
+<%= form_tag(non_shib_dll_url, id:'aeon_form') do %>
   <input type='hidden' name='AeonForm' value='EADRequest'>
   <!-- Comment from original php code: // I think we need a param with this name/value.  Doesn't need to be a button. -->
   <input type='hidden' name='SubmitButton' value='Submit Request'>

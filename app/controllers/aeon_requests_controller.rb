@@ -23,4 +23,10 @@ class AeonRequestsController < ApplicationController
     @bib_id = session[:bib_id]
     @item_title = session[:item_title]
   end
+
+  def redirectnonshib
+    @selected_containers = session[:selected_containers]
+    @bib_id = session[:bib_id]
+    @item_title = session[:item_title]
+  end
 end

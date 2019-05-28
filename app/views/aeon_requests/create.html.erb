@@ -38,8 +38,8 @@
       Please schedule no more than 10 boxes per date. Scheduled dates for off-site materials are pending approval
       by staff until a confirmation email is sent. Please schedule off-site items five (5) business days in advance.
     </p>
-    <%= submit_tag 'Submit Request' %>
-    <input type="button" id="close" value="Cancel" onclick="window.close()" />
+    <%= submit_tag 'Submit Request' , {style: "margin-bottom:5px;"} %>
+    <input type="button" id="close" style="margin-bottom:5px" value="Cancel" onclick="window.close()" />
     <% params.each do |key, value| %>
       <%= hidden_field_tag key, value %>
     <% end %>

@@ -18,7 +18,7 @@
       <%= form_tag(aeon_url, method: :get) do %>
         <%= hidden_field_tag 'authenticated', 'true' %>
         <%= hidden_field_tag 'target', redirectshib_aeon_request_url %>
-        <%= submit_tag 'Login' %>
+        <%= submit_tag 'Login', {style: "margin-bottom:5px;"} %>
       <% end %>
     </div>
     <div class="col-md-6">
@@ -26,6 +26,9 @@
 	<h4>Non-Columbia University Patrons</h4>
 	<p>Non-Columbia University patrons include everyone not actively affiliated with the University. Special Borrower card holders, alumni, and staff retiresees are non-Columbia affiliates.</p>
       </article>
+      <%= form_tag(redirectnonshib_aeon_request_path, method: :get) do %>
+        <%= submit_tag 'Login', {style: "margin-bottom:5px;"} %>
+      <% end %>
     </div>
   </div>
 </div>
