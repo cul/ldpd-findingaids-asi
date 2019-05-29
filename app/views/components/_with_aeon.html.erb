@@ -6,6 +6,7 @@ Columbia-affiliated users may login with their uni and password.
   Unaffiliated users may create a new account.
 </p>
 <%= submit_tag 'Submit Request'%>
+<input type="button" id="clear_checkboxes" value="Clear Checkboxes">
 </div>
 <hr>
 <div style="clear:both;">
@@ -14,4 +15,10 @@ Columbia-affiliated users may login with their uni and password.
 <%= hidden_field_tag 'ComponentTitle_FIXED', @component_title %>
 <%= hidden_field_tag 'bib_id', @bib_id %>
 <%= hidden_field_tag 'item_title', @finding_aid_title %>
+<% end %>
+<%= javascript_tag do %>
+$("#clear_checkboxes").click(function() {
+  $(".aeon_checkbox").removeAttr('checked');
+  return false;
+});
 <% end %>

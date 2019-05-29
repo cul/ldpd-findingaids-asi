@@ -11,6 +11,7 @@ module ComponentsHelper
         '" value="' <<
         "#{component_title}COMPONENTTITLECONTAINERINFO#{container_info}" <<
         '" style="text-align:right;float:right;"' <<
+        '" class="aeon_checkbox"' <<
         '">' <<
         '<label style="text-align:right;float:right;padding-right:5px;" for="' <<
         "checkbox_#{@checkbox_id}>" <<
