@@ -4,19 +4,32 @@
   <tbody>
     <tr>
       <td class="sidebar">
-	<%= render partial: 'sidebar'
-	    # locals: {slug: ead_path, slug_to_series_page: method(:series_path)}
+        <%
+          series_titles_urls =
+            @series_titles.map.with_index do |series_title, index|
+              [series_title, repository_finding_aid_component_path(id: index+1)]
+            end
+        %>
+	<%= render partial: 'sidebar',
+                   locals: {slug: repository_finding_aid_path(params[:repository_id], params[:finding_aid_id]),
+                            series_titles_urls: series_titles_urls}
 	    %>
       </td>
       <td class="ead_content">
 	<% repo_suffix = params[:repository_id].gsub('-','_') %>
-        <% @flattened_component_structure_array.each do |structure| %>
+        <% @flattened_component_structure_array.each_with_index do |structure, index| %>
 	<% @flattened_component_structure = structure %>
           <% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
-            <%= render partial: "component_structure_#{repo_suffix}", layout: "with_aeon" %>
+            <%= render partial: "component_structure_#{repo_suffix}",
+                       layout: "with_aeon",
+                       locals: {component_title: @series_titles[index], notes: @notes_array[index]}
+            %>
           <% else %>
-            <%= render partial: "component_structure_#{repo_suffix}", layout: "without_aeon" %>
-          <% end %>
+            <%= render partial: "component_structure_#{repo_suffix}",
+                       layout: "without_aeon",
+                       locals: {component_title: @series_titles[index], notes: @notes_array[index]}
+            %>
+	    <% end %>
         <% end %>
       </td>
     </tr>

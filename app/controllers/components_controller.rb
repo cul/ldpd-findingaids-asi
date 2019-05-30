@@ -26,9 +26,11 @@ class ComponentsController < ApplicationController
     @repository_name = @ead.repository
     @restricted_access_flag =
       @ead.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
+    @notes_array = []
     @flattened_component_structure_array = []
     @series_titles.each_with_index do |title, index|
       ead_series_set_properties(index + 1)
+      @notes_array.append @notes
       @flattened_component_structure_array.append @flattened_component_structure
     end
   end
