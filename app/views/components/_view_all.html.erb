@@ -1,0 +1,7 @@
+<% repo_suffix = params[:repository_id].gsub('-','_') %>
+<% @flattened_component_structure_array.each_with_index do |structure, index| %>
+  <% @flattened_component_structure = structure %>
+  <%= render partial: "component_structure_#{repo_suffix}",
+             locals: {component_title: @series_titles[index], notes: @notes_array[index]}
+  %>
+<% end %>
