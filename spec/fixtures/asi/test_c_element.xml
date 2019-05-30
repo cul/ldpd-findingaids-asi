@@ -6,6 +6,24 @@
 	<did>
 	  <unittitle>Series I: Cataloged Correspondence</unittitle>
 	  <physdesc>(1 folder)</physdesc>
+	  <dao xlink:type="simple"
+	       xlink:href="https://dlc.library.columbia.edu/ifp/partner/secretariat"
+               xlink:actuate="onRequest"
+               xlink:show="new"
+	       xlink:title="Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013">
+            <daodesc>
+              <p>Browse or Search Digital Materials</p>
+            </daodesc>
+          </dao>
+	  <dao xlink:type="simple"
+               xlink:href="https://dlc.library.columbia.edu/ifp/partner/secretariat"
+               xlink:actuate="onRequest"
+               xlink:show="new"
+               xlink:title="Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013">
+	    <daodesc>
+              <p>Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013</p>
+            </daodesc>
+          </dao>
 	  <container label="general manuscripts box" type="box">78</container>
 	  <container type="folder">5</container>
 	</did>
@@ -157,6 +175,24 @@
 	  <did>
 	    <unittitle>Subseries I: Cataloged Correspondence</unittitle>
 	    <physdesc>(1 folder)</physdesc>
+	    <dao xlink:type="simple"
+		 xlink:href="https://dlc.library.columbia.edu/ifp/partner/secretariat"
+		 xlink:actuate="onRequest"
+		 xlink:show="new"
+		 xlink:title="Sub-subseries I.13.B: Secretariat Unrestricted Digital Files, 2001-2013">
+              <daodesc>
+		<p>Browse or Search Digital B Materials</p>
+              </daodesc>
+            </dao>
+	    <dao xlink:type="simple"
+		 xlink:href="https://dlc.library.columbia.edu/ifp/partner/secretariat"
+		 xlink:actuate="onRequest"
+		 xlink:show="new"
+		 xlink:title="Sub-subseries I.13.B: Secretariat Unrestricted Digital Files, 2001-2013">
+	      <daodesc>
+		<p>Sub-subseries I.13.B: Secretariat Unrestricted Digital Files, 2001-2013</p>
+            </daodesc>
+          </dao>
 	    <container label="general manuscripts box" type="box">78</container>
 	    <container type="folder">5</container>
 	  </did>

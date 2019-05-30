@@ -14,6 +14,7 @@ module ArchiveSpace
         container: './xmlns:did/xmlns:container',
         custodial_history_ps: './xmlns:custodhist/xmlns:p',
         date: './xmlns:did/xmlns:unitdate',
+        digital_archival_object: './xmlns:did/xmlns:doa',
         odd_ps: './xmlns:odd/xmlns:p',
         other_finding_aid_ps: './xmlns:otherfindaid/xmlns:p',
         physical_description: './xmlns:did/xmlns:physdesc',

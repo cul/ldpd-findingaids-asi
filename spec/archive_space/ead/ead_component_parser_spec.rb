@@ -9,6 +9,7 @@ attributes = [
   :arrangement_ps, # <c>:<arrangement>:<p>
   :biography_history_ps, # <c>:<bioghist>:<p>
   :custodial_history_ps, # <c>:<custodhist>:<p>
+  :digital_archival_object, # <c>:<did>:<dao>
   :odd_ps, # <c>:<odd>:<p>
   :other_finding_aid_ps, # <c>:<scopecontent>:<p>
   :related_material_ps, # <c>:<relatedmaterial>:<p>
