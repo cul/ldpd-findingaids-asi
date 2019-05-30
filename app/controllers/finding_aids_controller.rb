@@ -39,7 +39,6 @@ class FindingAidsController < ApplicationController
     # fcd1, 05/21/19: Since never display unitdate on it's own, may be able to remove following
     # after further investigation.
     @unit_dates = @ead.unit_dates
-    @physical_description = @ead.physical_description_extent_carrier
     @language = @ead.language
     @access_restrictions_head = @ead.access_restrictions_head
     @access_restrictions_values = @ead.access_restrictions_values
@@ -55,6 +54,7 @@ class FindingAidsController < ApplicationController
     @repository_corpname = @ead.repository
     @odd_head = @ead.odd_head
     @odd_values = @ead.odd_values
+    @physical_description_string = compound_physical_descriptions_into_string @ead.physical_descriptions
     @preferred_citation_head = @ead.preferred_citation_head
     @preferred_citation_values = @ead.preferred_citation_values
     @use_restrictions_head = @ead.use_restrictions_head

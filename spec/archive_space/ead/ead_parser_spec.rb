@@ -24,7 +24,7 @@ attributes = [
   :odd_head, # <ead>:<archdesc>:<odd>:<head>
   :odd_values, # <ead>:<archdesc>:<odd>:<p>
   :origination_creators, # <ead>:<archdesc>:<did>:<origination label="creator">
-  :physical_description_extent_carrier, # <ead>:<archdesc>:<did>:<physdesc>:<extent @altrender="carrier">
+  :physical_descriptions, # <ead>:<archdesc>:<did>:<physdesc>:<extent>
   :preferred_citation_head, # <ead>:<archdesc>:<prefercite>:<head>
   :preferred_citation_values, # <ead>:<archdesc>:<prefercite>:<p>
   :processing_information_head, # <ead>:<archdesc>:<processinfo>:<head>
@@ -158,6 +158,22 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_physical_description_extents_carrier) {
+        [
+          "4 boxes 13 slipcases",
+          "one hard disk",
+          "351 record cartons 15 document boxes and 4 flat boxes"
+        ]
+      }
+
+      let (:expected_physical_description_extents_materialtype_spaceoccupied) {
+        [
+          "3 linear feet",
+          "3.6 Tb Digital",
+          "423 linear feet"
+        ]
+      }
+
       it 'parses the abstracts correctly' do
         tested = @as_ead.abstracts.text
         expect(tested).to eq "This collection is made up of architectural drawings."
@@ -174,11 +190,13 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         end
       end
 
-      # TODO: need to verify how the sibling <extent> elements are parsed
-      it 'parses the physical_description_extent_carrier correctly' do
-        tested = @as_ead.physical_description_extent_carrier
-        expect(tested).to eq '4 boxes 13 slipcases'
-        # expect(tested).to eq '3 linear feet 4 boxes 13 slipcases'
+      it 'parses the physical_descriptions correctly' do
+        @as_ead.physical_descriptions.each_with_index do |physical_description, index|
+          expect(physical_description.xpath('./xmlns:extent[@altrender="carrier"]').text).to eq(
+            expected_physical_description_extents_carrier[index])
+          expect(physical_description.xpath('./xmlns:extent[@altrender="materialtype spaceoccupied"]').text).to eq(
+            expected_physical_description_extents_materialtype_spaceoccupied[index])
+        end
       end
 
       it 'parses the repository correctly' do

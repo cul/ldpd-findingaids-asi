@@ -16,6 +16,16 @@ module ArchiveSpace
         non_bulk_dates.concat(bulk_dates).join(', ')
       end
 
+      def compound_physical_descriptions_into_string physical_descriptions
+        phys_desc_strings = physical_descriptions.map do |physical_description|
+          space_occupied = physical_description.xpath('./xmlns:extent[@altrender="materialtype spaceoccupied"]').text
+          carrier = " (#{physical_description.xpath('./xmlns:extent[@altrender="carrier"]').text})" unless
+            physical_description.xpath('./xmlns:extent[@altrender="carrier"]').text.empty?
+          space_occupied + ( carrier ? carrier : '')
+        end
+        phys_desc_strings.join('; ')
+      end
+
       def apply_ead_to_html_transforms content
         html_content = apply_title_render_italic content
         html_content = apply_extref_type_simple html_content

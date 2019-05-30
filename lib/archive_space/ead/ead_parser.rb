@@ -28,7 +28,7 @@ module ArchiveSpace
         origination_creators: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:origination[@label="creator"]',
         odd_head: '/xmlns:ead/xmlns:archdesc/xmlns:odd/xmlns:head',
         odd_values: '/xmlns:ead/xmlns:archdesc/xmlns:odd/xmlns:p',
-        physical_description_extent_carrier: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:physdesc/xmlns:extent[@altrender="carrier"]',
+        physical_descriptions: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:physdesc',
         preferred_citation_head: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:head',
         preferred_citation_values: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:p',
         processing_information_head: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:head',
@@ -74,7 +74,7 @@ module ArchiveSpace
         @abstracts = nokogiri_xml.xpath(XPATH[:abstracts])
         @language = nokogiri_xml.xpath(XPATH[:language]).map(&:text).max_by(&:length)
         @origination_creators = nokogiri_xml.xpath(XPATH[:origination_creators])
-        @physical_description_extent_carrier = nokogiri_xml.xpath(XPATH[:physical_description_extent_carrier]).text
+        @physical_descriptions = nokogiri_xml.xpath(XPATH[:physical_descriptions])
         @repository = nokogiri_xml.xpath(XPATH[:repository]).text
         @unit_dates = nokogiri_xml.xpath(XPATH[:unit_dates])
         @unit_id = nokogiri_xml.xpath(XPATH[:unit_id]).text

@@ -60,6 +60,14 @@
 	<extent altrender="materialtype spaceoccupied">3 linear feet</extent>
 	<extent altrender="carrier">4 boxes 13 slipcases</extent>
       </physdesc>
+      <physdesc altrender="whole">
+	<extent altrender="materialtype spaceoccupied">3.6 Tb Digital</extent>
+	<extent altrender="carrier">one hard disk</extent>
+      </physdesc>
+      <physdesc altrender="whole">
+        <extent altrender="materialtype spaceoccupied">423 linear feet</extent>
+        <extent altrender="carrier">351 record cartons 15 document boxes and 4 flat boxes</extent>
+      </physdesc>
       <!-- fcd1, 05/21/19: the following combination of unitdate elements might not appear -->
       <!-- in an actual  AS EAD; it is used here for testing the parsing of the different types-->
       <unitdate normal="1914/1989" type="inclusive">1914-1989</unitdate>
