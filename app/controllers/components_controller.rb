@@ -20,6 +20,10 @@ class ComponentsController < ApplicationController
     @finding_aid_title =
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @series_titles = @ead.dsc_series_titles
+    # @creator, @item_date, and @repository_name used when sending aeon request
+    @creator = @ead.origination_creators.first.text unless  @ead.origination_creators.first.nil?
+    @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
+    @repository_name = @ead.repository
     @flattened_component_structure_array = []
     @series_titles.each_with_index do |title, index|
       ead_series_set_properties(index + 1)
@@ -38,6 +42,10 @@ class ComponentsController < ApplicationController
     @finding_aid_title =
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @series_titles = @ead.dsc_series_titles
+    # @creator, @item_date, and @repository_name used when sending aeon request
+    @creator = @ead.origination_creators.first.text unless  @ead.origination_creators.first.nil?
+    @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
+    @repository_name = @ead.repository
     @restricted_access_flag =
       @ead.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
     ead_series_set_properties params[:id]

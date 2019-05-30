@@ -15,6 +15,9 @@ Columbia-affiliated users may login with their uni and password.
 <%= hidden_field_tag 'ComponentTitle_FIXED', @component_title %>
 <%= hidden_field_tag 'bib_id', @bib_id %>
 <%= hidden_field_tag 'item_title', @finding_aid_title %>
+<%= hidden_field_tag 'author', @creator %>
+<%= hidden_field_tag 'item_date', @item_date %>
+<%= hidden_field_tag 'location', @repository_name %>
 <% end %>
 <%= javascript_tag do %>
 $("#clear_checkboxes").click(function() {

@@ -6,6 +6,9 @@ class AeonRequestsController < ApplicationController
     end
     @bib_id = params[:bib_id]
     @item_title = params[:item_title]
+    @author = params[:author]
+    @item_date = params[:item_date]
+    @location = params[:location]
   end
 
   def login
@@ -16,6 +19,9 @@ class AeonRequestsController < ApplicationController
     session[:selected_containers] = @selected_containers.to_a
     session[:bib_id] = params[:bib_id]
     session[:item_title] = params[:item_title]
+    session[:author] = params[:author]
+    session[:item_date] = params[:item_date]
+    session[:location] = params[:location]
     session[:notes] = params[:notes]
     session[:scheduled_date] = Date.strptime(params[:scheduled_date],'%Y-%m-%d').strftime('%m/%d/%Y') unless params[:scheduled_date].empty?
   end
@@ -24,6 +30,9 @@ class AeonRequestsController < ApplicationController
     @selected_containers = session[:selected_containers]
     @bib_id = session[:bib_id]
     @item_title = session[:item_title]
+    @author = session[:author]
+    @item_date = session[:item_date]
+    @location = session[:location]
     @notes = session[:notes]
     @scheduled_date = session[:scheduled_date]
     session.clear
@@ -33,6 +42,9 @@ class AeonRequestsController < ApplicationController
     @selected_containers = session[:selected_containers]
     @bib_id = session[:bib_id]
     @item_title = session[:item_title]
+    @author = session[:author]
+    @item_date = session[:item_date]
+    @location = session[:location]
     @notes = session[:notes]
     @scheduled_date = session[:scheduled_date]
     session.clear
