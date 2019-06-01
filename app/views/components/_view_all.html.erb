@@ -1,7 +1,8 @@
 <% repo_suffix = params[:repository_id].gsub('-','_') %>
 <% @flattened_component_structure_array.each_with_index do |structure, index| %>
   <% @flattened_component_structure = structure %>
+  <!-- component_id needed for the creation of checkboxes for repos using aeon -->
   <%= render partial: "component_structure_#{repo_suffix}",
-             locals: {component_title: @series_titles[index], notes: @notes_array[index]}
+             locals: {component_title: @series_titles[index], component_id: index+1, notes: @notes_array[index]}
   %>
 <% end %>

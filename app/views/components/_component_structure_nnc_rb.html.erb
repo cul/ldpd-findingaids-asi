@@ -59,7 +59,7 @@
        <hr style="margin-top:10px;margin-bottom:10px;">
     <% end %>
     <% current_nesting_level = component[0] %>
-    <%== checkbox_display(@component_title, container_info[0]) unless container_info.empty? %>
+    <%== checkbox_display(component_title, component_id, container_info[0]) unless container_info.empty? %>
     <p style="margin:0">
       <span style="text-align:left;"> <%= [title, date, physical_description].reject(&:blank?).join(", ") %> </span>
       <span style="text-align:right;float:right;"><%=container_info.join(' ') %></span>
