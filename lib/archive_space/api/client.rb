@@ -4,17 +4,25 @@ module ArchiveSpace
   module Api
     class Client
       def get_ead_resource_description(repo_id, resource_id)
-        # move following outside later
-        authenticate
-        repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
-        ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml"
-        get_uri = URI(ead_resource_description_url)
-        get_request = Net::HTTP::Get.new get_uri.request_uri
-        get_request['X-ArchivesSpace-Session'] = @token
-        result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
-          http.request(get_request)
+        if File.exist?("tmp/EAD_repo_#{repo_id}_as_#{resource_id}")
+          Rails.logger.warn("File tmp/EAD_repo_#{repo_id}_as_#{resource_id} exists")
+          open("tmp/EAD_repo_#{repo_id}_as_#{resource_id}") do |b|
+            b.read
+          end
+        else
+          Rails.logger.warn("File tmp/EAD_repo_#{repo_id}_as_#{resource_id} DOES NOT exists")
+          authenticate
+          repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
+          ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml"
+          get_uri = URI(ead_resource_description_url)
+          get_request = Net::HTTP::Get.new get_uri.request_uri
+          get_request['X-ArchivesSpace-Session'] = @token
+          result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
+            http.request(get_request)
+          end
+          File.open("tmp/EAD_repo_#{repo_id}_as_#{resource_id}", "wb") { |file| file.write(result.body) }
+          result.body
         end
-        result.body
       end
 
       # Following gets fixtures that are not under source control. This allows
@@ -25,6 +33,10 @@ module ArchiveSpace
       def get_ead_resource_description_from_local_fixture(repo_id, resource_id)
         filepath =
           "spec/fixtures/asi/local_dev_fixtures/as_ead_repo_#{repo_id}_res_#{resource_id}.xml"
+        open(filepath) do |b|
+          File.open('tmp/foo', "wb") { |file| file.write(b.read) }
+        end
+        puts File.mtime('tmp/foo')
         open(filepath) do |b|
           b.read
         end
@@ -87,6 +99,28 @@ module ArchiveSpace
           # parse out the id
           result_json["results"][0]["id"].gsub("/repositories/#{repo_id}/resources/",'')
         end
+      end
+
+      def get_resource_mtime(repo_id, resource_id)
+        # move following outside later
+        authenticate
+        repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
+        # params = AS_CONFIG[:get_resource_params]
+        # resource_url = "#{repo_url}/resources/#{resource_id}?#{params}"
+        resource_url = "#{repo_url}/resources/#{resource_id}"
+        get_uri = URI(resource_url)
+        get_request = Net::HTTP::Get.new get_uri.request_uri
+        get_request['X-ArchivesSpace-Session'] = @token
+        get_request['Content_Type'] = 'application/json'
+        result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
+          http.request(get_request)
+        end
+        # result.body
+        result_json = JSON.parse result.body
+        mtime_string = result_json['dates'][0]['system_mtime']
+        mtime_time = Time.strptime(mtime_string, '%Y-%m-%dT%H:%M:%S%z')
+        Rails.logger.warn(mtime_time)
+        mtime_time
       end
 
       def authenticate

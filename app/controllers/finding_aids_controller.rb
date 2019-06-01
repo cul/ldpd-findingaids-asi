@@ -20,6 +20,7 @@ class FindingAidsController < ApplicationController
     else
       # @input_xml = @as_api.get_ead_resource_description(@as_repo_id,params[:res_id])
       @input_xml = @as_api.get_ead_resource_description(@as_repo_id,@as_resource_id)
+      @mtime = @as_api.get_resource_mtime(@as_repo_id, @as_resource_id)
     end
     ead_set_properties
   end
