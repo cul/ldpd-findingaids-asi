@@ -1,5 +1,5 @@
 <div class="nnc-a">
-  <h1 style="color:#2c5277;font-size:16px;font-weight:bold;"><%= component_title %></h1>
+  <h2 style="color:#2c5277;font-size:16px;font-weight:bold;"><%= component_title %></h2>
   <% notes.access_restrictions_ps.each do |access_restrictions_p| %>
     <div style="color:red;">
       <%== apply_ead_to_html_transforms access_restrictions_p %>
@@ -47,7 +47,15 @@
       %>
       <tr style="border-top:1px solid #eee">
         <td style="width:20%"><%= container_info.join(': ') %></td>
-        <td style="width:60%;font-weight:bold"> <%= [title, physical_description].reject(&:blank?).join(", ") %> </td>
+        <td style="width:60%;font-weight:bold">
+          <% if (nesting_level == 1 && level == 'subseries') %>
+            <h3 style="color: #999;font-weight: bold;font-size: 14px;border-bottom:none;">
+              <%= [title, physical_description].reject(&:blank?).join(", ") %>
+            </h3>
+          <% else %>
+            <%= [title, physical_description].reject(&:blank?).join(", ") %>
+          <% end %>
+	</td>
         <td style="width:20%"><%= date %></td>
       </tr>
       <% unless notes.access_restrictions_ps.empty? %>
