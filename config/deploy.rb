@@ -6,10 +6,7 @@ set :application, 'findingaids'
 # fcd1, 03/01/19: for now, use ldpd-findingaids-asi repo
 # set :repo_name, "#{fetch(:department)}-#{fetch(:application)}"
 set :repo_name, "ldpd-findingaids-asi"
-# fcd1, 03/01/19: for now, hard code deploy to findingaids_dev
-# so don't deploy to other env by mistake
-# set :deploy_name, "#{fetch(:application)}_#{fetch(:stage)}"
-set :deploy_name, "findingaids_dev"
+set :deploy_name, "#{fetch(:application)}_#{fetch(:stage)}"
 # used to run rake db:migrate, etc
 # Default value for :rails_env is fetch(:stage)
 set :rails_env, fetch(:deploy_name)
