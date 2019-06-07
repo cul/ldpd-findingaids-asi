@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'pages/home'
   scope 'ead' do
     resources :repositories, only: [:index], path: '' do
       resources :finding_aids, only: [:index, :show], path: '' do
@@ -12,4 +13,5 @@ Rails.application.routes.draw do
     get 'redirectshib'
     get 'redirectnonshib'
   end
+  root 'pages#home'
 end

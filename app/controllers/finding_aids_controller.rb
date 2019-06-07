@@ -10,6 +10,8 @@ class FindingAidsController < ApplicationController
                 only: [:show]
 
   def index
+    @repo_id = params[:repository_id]
+    @finding_aids_titles_bib_ids = REPOS[@repo_id][:list_of_finding_aids]
   end
 
   def show

@@ -1,0 +1,10 @@
+<div style="margin-top:60px;"></div>
+<h1>Pages#home</h1>
+<p>Find me in app/views/pages/home.html.erb</p>
+<h2>Columbia University Finding Aids</h2>
+<h3>View finding aids for:</h3>
+<ul>
+  <% REPOS.each do |repo_id, repo| %>
+  <li><%= link_to repo[:name], repository_finding_aids_path(repository_id: repo_id) %> </li>
+  <% end %>
+</ul>

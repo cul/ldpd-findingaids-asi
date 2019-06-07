@@ -1,2 +1,13 @@
+<div style="margin-top:60px;"></div>
 <h1>FindingAids#index</h1>
 <p>Find me in app/views/finding_aids/index.html.erb</p>
+<ul>
+  <% @finding_aids_titles_bib_ids.each do |finding_aid| %>
+    <li>
+      <%= link_to finding_aid[:title],
+                  repository_finding_aid_summary_path(repository_id: @repo_id,
+                                                      finding_aid_id: "ldpd_#{finding_aid[:bib_id]}")
+      %>
+    </li>
+  <% end %>
+</ul>
