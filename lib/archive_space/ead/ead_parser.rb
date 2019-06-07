@@ -42,6 +42,7 @@ module ArchiveSpace
         scope_content_values: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
         separated_material_head: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:head',
         separated_material_values: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:p',
+        subseries_titles: './xmlns:c[@level="subseries"]/xmlns:did/xmlns:unittitle',
         unit_dates: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
         unit_id: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid',
         unit_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle',
@@ -89,6 +90,10 @@ module ArchiveSpace
           series.text
         end
         @dsc_series = nokogiri_xml.xpath(XPATH[:dsc_series])
+        @subseries_titles = []
+        @dsc_series.each do |series|
+          @subseries_titles.append series.xpath(XPATH[:subseries_titles]).map(&:text)
+        end
       end
 
       # make private? Makes unit test harder

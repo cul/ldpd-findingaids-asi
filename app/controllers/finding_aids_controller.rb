@@ -72,6 +72,7 @@ class FindingAidsController < ApplicationController
     @separated_material_head = @ead.separated_material_head
     @separated_material_values = @ead.separated_material_values
     @series_titles = @ead.dsc_series_titles
+    @subseries_titles = @ead.subseries_titles
     @series_scope_content = @ead.get_series_scope_content
     @subjects = (@ead.control_access_corpnames +
                 @ead.control_access_occupations +

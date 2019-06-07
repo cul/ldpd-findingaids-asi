@@ -30,9 +30,22 @@
   <h2>Container List</h2>
   <%= link_to 'View All', "#{slug}/dsc" %>
   <div id="contentMenu1">
-    <% series_titles_urls.each do |title_url| %>
+    <% series_titles_urls.each.with_index do |title_url, series_index| %>
     <div class="item">
+      <% unless @subseries_titles[series_index].empty? %>
+      <a data-toggle="collapse"
+	 href="#collapse_series_<%= series_index + 1 %>"
+	 aria-expanded="false"
+	 aria-controls="collapse_series_<%= series_index + 1 %>">
+	<span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+      <% end %>
       <%= link_to title_url.first, title_url.second %>
+      <div style="padding-left:10px" class="collapse" id="collapse_series_<%= series_index + 1 %>">
+	<% @subseries_titles[series_index].each.with_index do |subseries_title, subseries_index| %>
+          <%= link_to subseries_title, "#{title_url.second}#ser_#{series_index + 1}_sub_#{subseries_index + 1}" %>
+	<% end %>
+      </div>
     </div>
     <% end %>    
   </div>
