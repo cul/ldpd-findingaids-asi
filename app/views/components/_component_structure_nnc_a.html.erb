@@ -25,6 +25,7 @@
     <%== apply_ead_to_html_transforms misc_note %>
   <% end %>
   <table style="width:100%">
+    <% subseries_num = 0 %>
     <% @flattened_component_structure.each do |component| %>
       <% ( nesting_level,
            title,
@@ -49,6 +50,8 @@
         <td style="width:20%"><%= container_info.join(': ') %></td>
         <td style="width:60%;font-weight:bold">
           <% if (nesting_level == 1 && level == 'subseries') %>
+	  <% subseries_num += 1 %>
+	  <a name="<%= "subseries_#{subseries_num}" %>"></a>
             <h3 style="color: #999;font-weight: bold;font-size: 14px;border-bottom:none;">
               <%= [title, physical_description].reject(&:blank?).join(", ") %>
             </h3>

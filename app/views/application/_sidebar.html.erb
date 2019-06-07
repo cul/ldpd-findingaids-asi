@@ -43,7 +43,7 @@
       <%= link_to title_url.first, title_url.second %>
       <div style="padding-left:10px" class="collapse" id="collapse_series_<%= series_index + 1 %>">
 	<% @subseries_titles[series_index].each.with_index do |subseries_title, subseries_index| %>
-          <%= link_to subseries_title, "#{title_url.second}#ser_#{series_index + 1}_sub_#{subseries_index + 1}" %>
+          <p style="margin: 5px 0 5px 0"><%= link_to subseries_title, "#{title_url.second}#subseries_#{subseries_index + 1}" %></p>
 	<% end %>
       </div>
     </div>
