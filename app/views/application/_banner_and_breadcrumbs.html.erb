@@ -1,29 +1,6 @@
-<div style="margin-top:60px;"></div>
-<table style="width:100%">
-  <tbody>
-    <tr>
-      <td class="breadcrumbs">
-	<a href="http://www.columbia.edu/cgi-bin/cul/resolve?lweb0106"
-	   title="Columbia University Libraries Archival Collections"
-	   alt="Columbia University Libraries Archival Collections">
-	  <%= image_tag 'cul-archival.jpg' %>
-	</a>
-      </td>
-      <td valign="middle" align="right"
-	  style="color:#336699;font-family:Georgia, Times, Serif; font-size:18px;padding-right:10px;margin-right:10px;">
-	<a href="<%= REPOS[params[:repository_id]][:url] %>"><%= REPOS[params[:repository_id]][:name] %></a>
-	</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<%= render partial: 'banner' %>
 <div align="center" style="width:100%;margin:0px;height:0px;border-top:2px solid #336699">&#160;</div>
-<p class="breadcrumbs">
-  &nbsp;&nbsp;&nbsp;
-  <a href="http://www.columbia.edu/cgi-bin/cul/resolve?lweb0106">Archival Collections Portal</a> &gt
-  <a href="<%= REPOS[params[:repository_id]][:url] %>"><%= REPOS[params[:repository_id]][:name] %></a> &gt;
-  <%= @finding_aid_title %>
-</p>
+<%= render partial: 'breadcrumbs' %>
 <h1 style="color:#2c5277;font-size:18px;font-weight:bold;margin-left:1em;">
   <%= "#{@finding_aid_title}" %>
 </h1>

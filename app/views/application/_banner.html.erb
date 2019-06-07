@@ -1,0 +1,20 @@
+<div style="margin-top:60px;"></div>
+<table style="width:100%">
+  <tbody>
+    <tr>
+      <td class="breadcrumbs">
+	<a href="http://www.columbia.edu/cgi-bin/cul/resolve?lweb0106"
+	   title="Columbia University Libraries Archival Collections"
+	   alt="Columbia University Libraries Archival Collections">
+	  <%= image_tag 'cul-archival.jpg' %>
+	</a>
+      </td>
+      <td valign="middle" align="right"
+	  style="color:#336699;font-family:Georgia, Times, Serif; font-size:18px;padding-right:10px;margin-right:10px;">
+        <%= link_to(REPOS[params[:repository_id]][:name],
+                    REPOS[params[:repository_id]][:url]) unless params[:repository_id].nil?
+        %>
+      </td>
+    </tr>
+  </tbody>
+</table>

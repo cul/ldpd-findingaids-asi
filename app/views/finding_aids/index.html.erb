@@ -1,6 +1,6 @@
-<div style="margin-top:60px;"></div>
-<h1>FindingAids#index</h1>
-<p>Find me in app/views/finding_aids/index.html.erb</p>
+<%= render partial: 'banner' %>
+<div align="center" style="width:100%;margin:0px;height:0px;border-top:2px solid #336699">&#160;</div>
+<h3>Finding Aids from the <%= REPOS[@repo_id][:name]%></h3>
 <ul>
   <% @finding_aids_titles_bib_ids.each do |finding_aid| %>
     <li>
