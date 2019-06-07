@@ -9,7 +9,6 @@ attributes = [
   :arrangement_ps, # <c>:<arrangement>:<p>
   :biography_history_ps, # <c>:<bioghist>:<p>
   :custodial_history_ps, # <c>:<custodhist>:<p>
-  :digital_archival_object, # <c>:<did>:<dao>
   :odd_ps, # <c>:<odd>:<p>
   :other_finding_aid_ps, # <c>:<scopecontent>:<p>
   :related_material_ps, # <c>:<relatedmaterial>:<p>
@@ -98,6 +97,16 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
             "Gift of the BCD Company, 1963.(CH)",
             "Gift of the DDD Company, 1963.(CH)"
           ]
+        @expected_digital_archival_object_description =
+          [
+            "Browse or Search Digital Materials",
+            "Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013"
+          ]
+        @expected_digital_archival_object_href =
+          [
+            "https://dlc.library.columbia.edu/ifp/partner/secretariat",
+            "https://dlc.library.columbia.edu/ifp/partner/secretariat"
+          ]
         @expected_odd_ps =
           [
             "This collection is nice(ODD)",
@@ -136,12 +145,20 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           ]
       end
 
-      (attributes - [:title]).each do |attribute|
+      (attributes - [:title, :digital_archival_object]).each do |attribute|
         it "sets the #{attribute} correctly" do
           expected_values = instance_variable_get("@expected_#{attribute}")
           @component.notes[attribute].each_with_index do |attribute_p, index|
             expect(attribute_p.text).to eq expected_values[index]
           end
+        end
+      end
+
+      it 'sets the digital archival objects href  correctly' do
+        tested = @component.digital_archival_objects_description_href
+        tested.each.with_index do |dao_info, index|
+          expect(dao_info.first).to eq @expected_digital_archival_object_description[index]
+          expect(dao_info.second).to eq @expected_digital_archival_object_href[index]
         end
       end
 
@@ -162,6 +179,7 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           @title,
           @physical_description,
           @date,
+          @digital_archival_objects_description_href,
           @level,
           @container_info,
           @component_notes
@@ -201,6 +219,16 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
             "<p>Gift of the ZZZ Company, 1963.(CH)</p>",
             "<p>Gift of the 123 Company, 1963.(CH)</p>",
             "<p>Gift of the Pi Company, 1963.(CH)</p>"
+          ]
+        @expected_digital_archival_object_description =
+          [
+            "Browse or Search Digital Materials",
+            "Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013"
+          ]
+        @expected_digital_archival_object_href =
+          [
+            "https://dlc.library.columbia.edu/ifp/partner/secretariat",
+            "https://dlc.library.columbia.edu/ifp/partner/secretariat"
           ]
         @expected_odd_ps =
           [
@@ -246,6 +274,14 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           @component_notes[attribute].each_with_index do |attribute_p, index|
             expect(attribute_p).to eq expected_values[index]
           end
+        end
+      end
+
+      it 'sets the digital archival objects href  correctly' do
+        tested = @digital_archival_objects_description_href
+        tested.each.with_index do |dao_info, index|
+          expect(dao_info.first).to eq @expected_digital_archival_object_description[index]
+          expect(dao_info.second).to eq @expected_digital_archival_object_href[index]
         end
       end
 

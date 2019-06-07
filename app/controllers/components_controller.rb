@@ -64,6 +64,7 @@ class ComponentsController < ApplicationController
     @component.parse component_nokogiri_xml
     @component_title = @component.title
     @notes = @component.notes
+    @daos_description_href = @component.digital_archival_objects_description_href
     @flattened_component_structure = @component.generate_info
   end
 

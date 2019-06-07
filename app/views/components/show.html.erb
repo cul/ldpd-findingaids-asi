@@ -20,12 +20,12 @@
 	<!-- component_id needed for the creation of checkboxes for repos using aeon -->
 	<%= render partial: "component_structure_#{repo_suffix}",
 	    layout: "with_aeon",
-	    locals: {component_title: @component_title, component_id: params[:id], notes: @notes}
+	    locals: {component_title: @component_title, component_id: params[:id], notes: @notes, daos_description_href: @daos_description_href}
 	    %>
 	<% else %>
 	<%= render partial: "component_structure_#{repo_suffix}",
 	    layout: "without_aeon",
-	    locals: {component_title: @component_title, notes: @notes}
+	    locals: {component_title: @component_title, notes: @notes, daos_description_href: @daos_description_href}
 	    %>
 	<% end %>
       </td>

@@ -14,7 +14,8 @@ module ArchiveSpace
         container: './xmlns:did/xmlns:container',
         custodial_history_ps: './xmlns:custodhist/xmlns:p',
         date: './xmlns:did/xmlns:unitdate',
-        digital_archival_object: './xmlns:did/xmlns:doa',
+        digital_archival_object_description_p: './xmlns:daodesc/xmlns:p',
+        digital_archival_objects: './xmlns:did/xmlns:dao',
         odd_ps: './xmlns:odd/xmlns:p',
         other_finding_aid_ps: './xmlns:otherfindaid/xmlns:p',
         physical_description: './xmlns:did/xmlns:physdesc',
@@ -25,11 +26,17 @@ module ArchiveSpace
         use_restrictions_ps: './xmlns:userestrict/xmlns:p'
       }
 
-      COMPONENT_INFO_MEMBERS = XPATH.keys - [:container, :date, :physical_description, :title]
+      COMPONENT_INFO_MEMBERS = XPATH.keys - [:container,
+                                             :date,
+                                             :digital_archival_object_description_p,
+                                             :digital_archival_objects,
+                                             :physical_description,
+                                             :title]
+
       ComponentInfo = Struct.new(*COMPONENT_INFO_MEMBERS)
 
       attr_reader *XPATH.keys
-      attr_reader :nokogiri_xml, :notes
+      attr_reader :nokogiri_xml, :notes, :digital_archival_objects_description_href
 
       # Takes a Nokogiri::XML::Element (fcd1: verify this)
       # containing a <c lelvel="series"> element
@@ -40,6 +47,10 @@ module ArchiveSpace
           @notes[member] = nokogiri_xml.xpath(XPATH[member])
         end
         @title = nokogiri_xml.xpath(XPATH[:title]).text
+        @digital_archival_objects_description_href =
+          nokogiri_xml.xpath(XPATH[:digital_archival_objects]).map do |dao|
+          [dao.xpath(XPATH[:digital_archival_object_description_p]).text, dao.attribute('href').text]
+        end
       end
 
       def generate_info
@@ -64,6 +75,10 @@ module ArchiveSpace
         title = component.xpath(XPATH[:title]).text
         physical_description = component.xpath(XPATH[:physical_description]).text
         date = component.xpath(XPATH[:date]).text
+        digital_archival_objects_description_href =
+          nokogiri_xml.xpath(XPATH[:digital_archival_objects]).map do |dao|
+          [dao.xpath(XPATH[:digital_archival_object_description_p]).text, dao.attribute('href').text]
+        end
         level = component.attribute('level').text
         container_nokogiri_elements = component.xpath(XPATH[:container])
         container_info = container_nokogiri_elements.map do |container|
@@ -80,6 +95,7 @@ module ArchiveSpace
                                  title,
                                  physical_description,
                                  date,
+                                 digital_archival_objects_description_href,
                                  level,
                                  container_info,
                                  component_notes

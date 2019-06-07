@@ -1,5 +1,9 @@
 <div class="nnc-ua">
   <h2 style="color:#2c5277;font-size:16px;font-weight:bold;"><%= component_title %></h2>
+  <% daos_description_href.each do |dao_desc_href| %>
+    <%= link_to dao_desc_href.first, dao_desc_href.second %>
+    <br>
+  <% end %>
   <% notes.access_restrictions_ps.each do |access_restrictions_p| %>
     <div style="color:red;">
       <%== apply_ead_to_html_transforms access_restrictions_p %>
@@ -33,6 +37,7 @@
          title,
          physical_description,
          date,
+         digital_archival_objects_description_href,
          level,
          container_info,
          notes
@@ -73,6 +78,14 @@
       <% end %>
       <span style="text-align:right;float:right;"><%=container_info.join(' ') %></span>
     </p>
+    <% unless digital_archival_objects_description_href.empty? %>
+      <div style="margin:0;padding-left:1em;color:red;">
+        <% digital_archival_objects_description_href.each do |dao_desc_href| %>
+          <%= link_to dao_desc_href.first, dao_desc_href.second %>
+          <br>
+        <% end %>
+      </div>
+    <% end %>
     <% unless notes.access_restrictions_ps.empty? %>
       <div style="margin:0;padding-left:1em;color:red;">
         <% notes.access_restrictions_ps.each do |access_restrictions_p| %>

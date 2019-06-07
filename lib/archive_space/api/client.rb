@@ -13,7 +13,7 @@ module ArchiveSpace
           Rails.logger.warn("File tmp/EAD_repo_#{repo_id}_as_#{resource_id} DOES NOT exists")
           authenticate
           repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
-          ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml"
+          ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml?include_daos=true"
           get_uri = URI(ead_resource_description_url)
           get_request = Net::HTTP::Get.new get_uri.request_uri
           get_request['X-ArchivesSpace-Session'] = @token
