@@ -76,7 +76,7 @@ module ArchiveSpace
         physical_description = component.xpath(XPATH[:physical_description]).text
         date = component.xpath(XPATH[:date]).text
         digital_archival_objects_description_href =
-          nokogiri_xml.xpath(XPATH[:digital_archival_objects]).map do |dao|
+          component.xpath(XPATH[:digital_archival_objects]).map do |dao|
           [dao.xpath(XPATH[:digital_archival_object_description_p]).text, dao.attribute('href').text]
         end
         level = component.attribute('level').text
