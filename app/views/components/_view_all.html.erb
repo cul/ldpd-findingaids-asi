@@ -3,6 +3,9 @@
   <% @flattened_component_structure = structure %>
   <!-- component_id needed for the creation of checkboxes for repos using aeon -->
   <%= render partial: "component_structure_#{repo_suffix}",
-             locals: {component_title: @series_titles[index], component_id: index+1, notes: @notes_array[index]}
+             locals: {component_title: @series_titles[index],
+                      component_id: index+1,
+                      notes: @notes_array[index],
+                      daos_description_href: @daos_description_href_array[index]}
   %>
 <% end %>
