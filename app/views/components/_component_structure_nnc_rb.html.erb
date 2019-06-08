@@ -69,7 +69,7 @@
     <p style="margin:0">
       <% if (nesting_level == 1 && level == 'subseries') %>
         <% subseries_num += 1 %>
-        <a name="<%= "subseries_#{subseries_num}" %>"></a>
+        <a class="subseries_anchor" name="<%= "subseries_#{subseries_num}" %>"></a>
         <span style="text-align:left;color: #999;border-bottom: 1px solid #999;font-weight: bold;font-size: 14px;">
           <%= [title, date, physical_description].reject(&:blank?).join(", ") %>
         </span>

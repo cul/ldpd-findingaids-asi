@@ -55,7 +55,7 @@
         <td style="width:60%;font-weight:bold">
           <% if (nesting_level == 1 && level == 'subseries') %>
 	  <% subseries_num += 1 %>
-	  <a name="<%= "subseries_#{subseries_num}" %>"></a>
+	  <a class="subseries_anchor" name="<%= "subseries_#{subseries_num}" %>"></a>
             <h3 style="color: #999;font-weight: bold;font-size: 14px;border-bottom:none;">
               <%= [title, physical_description].reject(&:blank?).join(", ") %>
             </h3>

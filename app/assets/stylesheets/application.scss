@@ -176,3 +176,10 @@ div.item {
 a[aria-expanded=true] span.glyphicon-chevron-right { transform: rotate(90deg); }
 
 a[aria-expanded=false] span.glyphicon-chevron-right { transform: rotate(0deg);}
+
+a.subseries_anchor, a.fa_anchor {
+    display: block;
+    position: relative;
+    top: -60px;
+    visibility: hidden;
+}
