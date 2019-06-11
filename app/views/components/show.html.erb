@@ -17,16 +17,23 @@
       <td class="ead_content" style="vertical-align:top">
 	<% repo_suffix = params[:repository_id].gsub('-','_') %>
 	<% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
-	<!-- component_id needed for the creation of checkboxes for repos using aeon -->
-	<%= render partial: "component_structure_view_#{REPOS[params[:repository_id]][:view_style]}",
-	    layout: "with_aeon",
-	    locals: {component_title: @component_title, component_id: params[:id], notes: @notes, daos_description_href: @daos_description_href}
-	    %>
+          <!-- component_id needed for the creation of checkboxes for repos using aeon -->
+          <%= render partial: "component_structure_view_#{REPOS[params[:repository_id]][:view_style]}",
+                     layout: "with_aeon",
+                     locals: {component_title: @component_title,
+                              aeon_enabled: true,
+                              component_id: params[:id],
+                              notes: @notes,
+                              daos_description_href: @daos_description_href}
+          %>
 	<% else %>
-	<%= render partial: "component_structure_view_#{REPOS[params[:repository_id]][:view_style]}",
-	    layout: "without_aeon",
-	    locals: {component_title: @component_title, notes: @notes, daos_description_href: @daos_description_href}
-	    %>
+          <%= render partial: "component_structure_view_#{REPOS[params[:repository_id]][:view_style]}",
+                     layout: "without_aeon",
+                     locals: {component_title: @component_title,
+                              aeon_enabled: false,
+                              notes: @notes,
+                              daos_description_href: @daos_description_href}
+          %>
 	<% end %>
       </td>
     </tr>

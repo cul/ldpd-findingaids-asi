@@ -17,11 +17,13 @@
       <td class="ead_content">
         <% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
           <%= render partial: 'view_all',
-                     layout: "with_aeon"
+                     layout: "with_aeon",
+                     locals: {aeon_enabled: true}
           %>
           <% else %>
           <%= render partial: 'view_all',
-                     layout: "without_aeon"
+                     layout: "without_aeon",
+                     locals: {aeon_enabled: false}
           %>
         <% end %>
       </td>

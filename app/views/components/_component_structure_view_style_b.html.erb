@@ -28,8 +28,10 @@
   <% misc_notes.each do |misc_note| %>
     <%== apply_ead_to_html_transforms misc_note %>
   <% end %>
-  <% @last_container_seen = '' %>
-  <% @checkbox_id = 0 %>
+  <% if aeon_enabled %>
+    <% @last_container_seen = '' %>
+    <% @checkbox_id = 0 %>
+  <% end %>
   <% current_nesting_level = 1 %>
   <% subseries_num = 0 %>
   <% @flattened_component_structure.each do |component| %>
@@ -65,7 +67,9 @@
        <hr style="margin-top:10px;margin-bottom:10px;">
     <% end %>
     <% current_nesting_level = component[0] %>
-    <%== checkbox_display(component_title, component_id, container_info[0]) unless container_info.empty? %>
+    <% if aeon_enabled %>
+      <%== checkbox_display(component_title, component_id, container_info[0]) unless container_info.empty? %>
+    <% end %>
     <p style="margin:0">
       <% if (nesting_level == 1 && level == 'subseries') %>
         <% subseries_num += 1 %>
