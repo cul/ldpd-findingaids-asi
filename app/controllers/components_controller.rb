@@ -5,23 +5,17 @@ require 'archive_space/ead/ead_component_parser'
 class ComponentsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
 
-  before_action :set_bib_id,
-                :validate_repository_code_and_set_repo_id,
-                :validate_bib_id_and_set_resource_id
+  before_action :validate_repository_code_and_set_repo_id
 
   def index
-    if CONFIG[:use_fixtures]
-      @input_xml =
-        @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id,@as_resource_id)
-    else
-      @input_xml = @as_api.get_ead_resource_description(@as_repo_id,@as_resource_id)
-    end
+    @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
     @finding_aid_title =
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @series_titles = @ead.dsc_series_titles
     @subseries_titles = @ead.subseries_titles
-    # @creator, @item_date, and @repository_name used when sending aeon request
+    # @bib_id, @creator, @item_date, and @repository_name used when sending aeon request
+    @bib_id = @ead.unit_id
     @creator = @ead.origination_creators.first.text unless  @ead.origination_creators.first.nil?
     @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
     @repository_name = @ead.repository
@@ -39,18 +33,14 @@ class ComponentsController < ApplicationController
   end
 
   def show
-    if CONFIG[:use_fixtures]
-      @input_xml =
-        @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id,@as_resource_id)
-    else
-      @input_xml = @as_api.get_ead_resource_description(@as_repo_id,@as_resource_id)
-    end
+    @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
     @finding_aid_title =
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @series_titles = @ead.dsc_series_titles
     @subseries_titles = @ead.subseries_titles
-    # @creator, @item_date, and @repository_name used when sending aeon request
+    # @bib_id, @creator, @item_date, and @repository_name used when sending aeon request
+    @bib_id = @ead.unit_id
     @creator = @ead.origination_creators.first.text unless  @ead.origination_creators.first.nil?
     @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
     @repository_name = @ead.repository
@@ -68,9 +58,5 @@ class ComponentsController < ApplicationController
     @notes = @component.notes
     @daos_description_href = @component.digital_archival_objects_description_href
     @flattened_component_structure = @component.generate_info
-  end
-
-  def set_bib_id
-    @bib_id = params[:finding_aid_id].delete_prefix('ldpd_').to_i
   end
 end

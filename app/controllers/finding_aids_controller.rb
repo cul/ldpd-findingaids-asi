@@ -4,10 +4,7 @@ require 'archive_space/ead/ead_parser'
 class FindingAidsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
 
-  before_action :set_bib_id,
-                :validate_repository_code_and_set_repo_id,
-                :validate_bib_id_and_set_resource_id,
-                only: [:show]
+  before_action :validate_repository_code_and_set_repo_id, only: [:show]
 
   def index
     @repo_id = params[:repository_id]
@@ -15,15 +12,8 @@ class FindingAidsController < ApplicationController
   end
 
   def show
-    if CONFIG[:use_fixtures]
-      @input_xml =
-        # @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id,params[:id])
-        @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id,@as_resource_id)
-    else
-      # @input_xml = @as_api.get_ead_resource_description(@as_repo_id,params[:res_id])
-      @input_xml = @as_api.get_ead_resource_description(@as_repo_id,@as_resource_id)
-      @mtime = @as_api.get_resource_mtime(@as_repo_id, @as_resource_id)
-    end
+    @input_xml = cached_as_ead params[:id].delete_prefix('ldpd_').to_i
+    # @mtime = @as_api.get_resource_mtime(@as_repo_id, @as_resource_id)
     ead_set_properties
   end
 
@@ -81,9 +71,5 @@ class FindingAidsController < ApplicationController
     @genres_forms = @ead.control_access_genres_forms.sort
     @restricted_access_flag =
       @ead.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
-  end
-
-  def set_bib_id
-    @bib_id = params[:id].delete_prefix('ldpd_').to_i
   end
 end

@@ -4,25 +4,16 @@ module ArchiveSpace
   module Api
     class Client
       def get_ead_resource_description(repo_id, resource_id)
-        if File.exist?("tmp/EAD_repo_#{repo_id}_as_#{resource_id}")
-          Rails.logger.warn("File tmp/EAD_repo_#{repo_id}_as_#{resource_id} exists")
-          open("tmp/EAD_repo_#{repo_id}_as_#{resource_id}") do |b|
-            b.read
-          end
-        else
-          Rails.logger.warn("File tmp/EAD_repo_#{repo_id}_as_#{resource_id} DOES NOT exists")
-          authenticate
-          repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
-          ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml?include_daos=true"
-          get_uri = URI(ead_resource_description_url)
-          get_request = Net::HTTP::Get.new get_uri.request_uri
-          get_request['X-ArchivesSpace-Session'] = @token
-          result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
-            http.request(get_request)
-          end
-          File.open("tmp/EAD_repo_#{repo_id}_as_#{resource_id}", "wb") { |file| file.write(result.body) }
-          result.body
+        authenticate
+        repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
+        ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml?include_daos=true"
+        get_uri = URI(ead_resource_description_url)
+        get_request = Net::HTTP::Get.new get_uri.request_uri
+        get_request['X-ArchivesSpace-Session'] = @token
+        result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
+          http.request(get_request)
         end
+        result.body
       end
 
       # Following gets fixtures that are not under source control. This allows
