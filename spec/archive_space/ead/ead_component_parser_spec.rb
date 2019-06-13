@@ -222,8 +222,8 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           ]
         @expected_digital_archival_object_description =
           [
-            "Browse or Search Digital Materials",
-            "Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013"
+            "Browse or Search Digital B Materials",
+            "Sub-subseries I.13.B: Secretariat Unrestricted Digital Files, 2001-2013"
           ]
         @expected_digital_archival_object_href =
           [
