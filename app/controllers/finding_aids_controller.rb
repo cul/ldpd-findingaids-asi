@@ -5,6 +5,7 @@ class FindingAidsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
 
   before_action :validate_repository_code_and_set_repo_id, only: [:index, :show]
+  before_action :initialize_as_api, only: [:show]
 
   def index
     @repo_id = params[:repository_id]

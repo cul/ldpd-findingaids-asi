@@ -5,7 +5,9 @@ require 'archive_space/ead/ead_component_parser'
 class ComponentsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
 
-  before_action :validate_repository_code_and_set_repo_id
+  before_action :validate_repository_code_and_set_repo_id,
+                :initialize_as_api,
+                only: [:index, :show]
 
   def index
     @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
