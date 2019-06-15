@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= "#{@finding_aid_title} | #{@repository_name} | Columbia University Libraries Finding Aids" %></title>
+    <title><%= [@finding_aid_title, @repository_name, 'Columbia University Libraries Finding Aids'].reject(&:blank?).join(' | ') %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 

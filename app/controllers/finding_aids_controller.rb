@@ -4,7 +4,7 @@ require 'archive_space/ead/ead_parser'
 class FindingAidsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
 
-  before_action :validate_repository_code_and_set_repo_id, only: [:show]
+  before_action :validate_repository_code_and_set_repo_id, only: [:index, :show]
 
   def index
     @repo_id = params[:repository_id]
