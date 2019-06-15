@@ -34,6 +34,11 @@ class ApplicationController < ActionController::Base
           redirect_to '/'
           return
         end
+        # for now, just log as_resource_info for testing purposes. The call to get_as_resource_info
+        # may actually move out of this method after further investigation
+        as_resource_info = as_api.get_as_resource_info(@as_repo_id, as_resource_id)
+        Rails.logger.warn("AS resource #{as_resource_id} system_mtime: #{as_resource_info.modified_time}")
+        Rails.logger.warn("AS resource #{as_resource_id} publish: #{as_resource_info.publish_flag}")
         as_ead = as_api.get_ead_resource_description(@as_repo_id, as_resource_id)
       end
       File.open(cached_file, "wb") do |file|

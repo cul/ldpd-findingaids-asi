@@ -3,6 +3,9 @@ require 'net/http'
 module ArchiveSpace
   module Api
     class Client
+
+      AsResourceInfo = Struct.new(:publish_flag,:modified_time)
+
       def get_ead_resource_description(repo_id, resource_id)
         authenticate
         repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
@@ -92,12 +95,9 @@ module ArchiveSpace
         end
       end
 
-      def get_resource_mtime(repo_id, resource_id)
-        # move following outside later
+      def get_as_resource_info(repo_id, resource_id)
         authenticate
         repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
-        # params = AS_CONFIG[:get_resource_params]
-        # resource_url = "#{repo_url}/resources/#{resource_id}?#{params}"
         resource_url = "#{repo_url}/resources/#{resource_id}"
         get_uri = URI(resource_url)
         get_request = Net::HTTP::Get.new get_uri.request_uri
@@ -106,12 +106,14 @@ module ArchiveSpace
         result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
           http.request(get_request)
         end
-        # result.body
         result_json = JSON.parse result.body
-        mtime_string = result_json['dates'][0]['system_mtime']
+        publish_flag = result_json['publish']
+        mtime_string = result_json['system_mtime']
         mtime_time = Time.strptime(mtime_string, '%Y-%m-%dT%H:%M:%S%z')
-        Rails.logger.warn(mtime_time)
-        mtime_time
+        as_resource_info = AsResourceInfo.new
+        as_resource_info.modified_time = mtime_time
+        as_resource_info.publish_flag = publish_flag
+        as_resource_info
       end
 
       def authenticate
