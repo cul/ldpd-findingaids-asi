@@ -1,12 +1,17 @@
 <%= render partial: 'banner' %>
+<% if @preview_flag %>
+  <% slug_prefix = '/preview' %>
+<% else %>
+  <% slug_prefix = '' %>
+<% end %>
 <div align="center" style="width:100%;margin:0px;height:0px;border-top:2px solid #336699">&#160;</div>
 <h3>Finding Aids from the <%= REPOS[@repo_id][:name]%></h3>
 <ul>
   <% @finding_aids_titles_bib_ids.each do |finding_aid| %>
     <li>
       <%= link_to finding_aid[:title],
-                  repository_finding_aid_summary_path(repository_id: @repo_id,
-                                                      finding_aid_id: "ldpd_#{finding_aid[:bib_id]}")
+                  slug_prefix + repository_finding_aid_summary_path(repository_id: @repo_id,
+                                                                    finding_aid_id: "ldpd_#{finding_aid[:bib_id]}")
       %>
     </li>
   <% end %>

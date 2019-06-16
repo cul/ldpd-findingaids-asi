@@ -15,13 +15,23 @@ class FindingAidsController < ApplicationController
   end
 
   def show
-    @input_xml = cached_as_ead params[:id].delete_prefix('ldpd_').to_i
+    if @preview_flag
+      Rails.logger.warn("Using Preview for #{params[:id]}")
+      @input_xml = preview_as_ead params[:id].delete_prefix('ldpd_').to_i
+    else
+      Rails.logger.warn("Using Cache for #{params[:id]}")
+      @input_xml = cached_as_ead params[:id].delete_prefix('ldpd_').to_i
+    end
     # @mtime = @as_api.get_resource_mtime(@as_repo_id, @as_resource_id)
     ead_set_properties
   end
 
   def summary
-    redirect_to repository_finding_aid_path(id: params[:finding_aid_id])
+    if @preview_flag
+      redirect_to '/preview' + repository_finding_aid_path(id: params[:finding_aid_id])
+    else
+      redirect_to repository_finding_aid_path(id: params[:finding_aid_id])
+    end
   end
 
   private
@@ -93,9 +103,15 @@ class FindingAidsController < ApplicationController
       Rails.logger.warn("AS resource #{@as_resource_id} system_mtime: #{@as_resource_info.modified_time}")
       Rails.logger.warn("AS resource #{@as_resource_id} publish: #{@as_resource_info.publish_flag}")
       unless @as_resource_info.publish_flag
-        Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, don't display")
-        redirect_to '/'
-        return
+        # fcd1, 06/17/19: For now, don't combine above conditional and below conditional in compound statement
+        # because want to log specific messages for info/debug purposes
+        if @preview_flag
+          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, preview mode, DISPLAY")
+        else
+          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, DON'T DISPLAY")
+          redirect_to '/'
+          return
+        end
       end
     end
   end

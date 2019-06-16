@@ -11,7 +11,13 @@ class ComponentsController < ApplicationController
                 only: [:index, :show]
 
   def index
-    @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
+    if @preview_flag
+      Rails.logger.warn("Using Preview for #{params[:finding_aid_id]}")
+      @input_xml = preview_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
+    else
+      Rails.logger.warn("Using Cache for #{params[:finding_aid_id]}")
+      @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
+    end
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
     @finding_aid_title =
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
@@ -36,7 +42,13 @@ class ComponentsController < ApplicationController
   end
 
   def show
-    @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
+    if @preview_flag
+      Rails.logger.warn("Using Preview for #{params[:finding_aid_id]}")
+      @input_xml = preview_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
+    else
+      Rails.logger.warn("Using Cache for #{params[:finding_aid_id]}")
+      @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
+    end
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
     @finding_aid_title =
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
@@ -80,9 +92,15 @@ class ComponentsController < ApplicationController
       Rails.logger.warn("AS resource #{@as_resource_id} system_mtime: #{@as_resource_info.modified_time}")
       Rails.logger.warn("AS resource #{@as_resource_id} publish: #{@as_resource_info.publish_flag}")
       unless @as_resource_info.publish_flag
-        Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, don't display")
-        redirect_to '/'
-        return
+        # fcd1, 06/17/19: For now, don't combine above conditional and below conditional in compound statement
+        # because want to log specific messages for info/debug purposes
+        if @preview_flag
+          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, preview mode, DISPLAY")
+        else
+          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, DON'T DISPLAY")
+          redirect_to '/'
+          return
+        end
       end
     end
   end

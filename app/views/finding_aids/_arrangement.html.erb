@@ -1,3 +1,8 @@
+<% if @preview_flag %>
+  <% slug_prefix = '/preview' %>
+<% else %>
+  <% slug_prefix = '' %>
+<% end %>
 <h3>Arrangement</h3>
 <% @arrangement_values.each do |arrangement_value| %>
   <%== apply_ead_to_html_transforms arrangement_value %>
@@ -6,8 +11,7 @@
   <ul>
     <% @series_titles.each_with_index do |series_title, index| %>
     <li> <%= link_to series_title,
-	     repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])
-	     # slug_to_series_page.call(ser_id: index + 1)
+	     slug_prefix + repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])
 	     %> </li>
     <% end %>
   </ul>

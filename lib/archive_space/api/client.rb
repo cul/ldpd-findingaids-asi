@@ -10,9 +10,15 @@ module ArchiveSpace
         @session_key = authenticate unless CONFIG[:use_fixtures]
       end
 
-      def get_ead_resource_description(repo_id, resource_id)
+      def get_ead_resource_description(repo_id, resource_id, include_unpublished = false)
         repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
-        ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml?include_daos=true"
+        if include_unpublished
+          Rails.logger.warn("API Client: using include_unpublished=true")
+          url_parameters = '?include_daos=true&include_unpublished=true'
+        else
+          url_parameters = '?include_daos=true'
+        end
+        ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml#{url_parameters}"
         get_uri = URI(ead_resource_description_url)
         get_request = Net::HTTP::Get.new get_uri.request_uri
         get_request['X-ArchivesSpace-Session'] = @session_key
