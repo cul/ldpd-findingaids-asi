@@ -97,7 +97,7 @@ module ArchiveSpace
         end
       end
 
-      def get_as_resource_info(repo_id, resource_id)
+      def get_resource_info(repo_id, resource_id)
         repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
         resource_url = "#{repo_url}/resources/#{resource_id}"
         get_uri = URI(resource_url)

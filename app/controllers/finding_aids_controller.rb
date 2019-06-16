@@ -5,7 +5,9 @@ class FindingAidsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
 
   before_action :validate_repository_code_and_set_repo_id, only: [:index, :show]
-  before_action :initialize_as_api, only: [:show]
+  before_action :initialize_as_api,
+                :get_as_resource_info,
+                only: [:show]
 
   def index
     @repo_id = params[:repository_id]
@@ -72,5 +74,29 @@ class FindingAidsController < ApplicationController
     @genres_forms = @ead.control_access_genres_forms.sort
     @restricted_access_flag =
       @ead.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
+  end
+
+  def get_as_resource_info
+    bib_id = params[:id].delete_prefix('ldpd_').to_i
+    if CONFIG[:use_fixtures]
+      @as_resource_id = @as_api.get_resource_id_local_fixture(bib_id)
+    else
+      @as_resource_id = @as_api.get_resource_id(@as_repo_id, bib_id)
+    end
+    unless @as_resource_id
+      Rails.logger.warn('bib ID does not resolve to AS resource')
+      redirect_to '/'
+      return
+    end
+    unless CONFIG[:use_fixtures]
+      @as_resource_info = @as_api.get_resource_info(@as_repo_id, @as_resource_id)
+      Rails.logger.warn("AS resource #{@as_resource_id} system_mtime: #{@as_resource_info.modified_time}")
+      Rails.logger.warn("AS resource #{@as_resource_id} publish: #{@as_resource_info.publish_flag}")
+      unless @as_resource_info.publish_flag
+        Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, don't display")
+        redirect_to '/'
+        return
+      end
+    end
   end
 end
