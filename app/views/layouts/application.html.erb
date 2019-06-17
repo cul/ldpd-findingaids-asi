@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <%= render partial: 'google_analytics' if CONFIG[:google_analytics] %>
     <title><%= [@finding_aid_title, @repository_name, 'Columbia University Libraries Finding Aids'].reject(&:blank?).join(' | ') %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
