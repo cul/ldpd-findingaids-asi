@@ -28,6 +28,8 @@ module ArchiveSpace
         origination_creators: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:origination[@label="creator"]',
         odd_head: '/xmlns:ead/xmlns:archdesc/xmlns:odd/xmlns:head',
         odd_values: '/xmlns:ead/xmlns:archdesc/xmlns:odd/xmlns:p',
+        other_finding_aid_head: '/xmlns:ead/xmlns:archdesc/xmlns:otherfindaid/xmlns:head',
+        other_finding_aid_values: '/xmlns:ead/xmlns:archdesc/xmlns:otherfindaid/xmlns:p',
         physical_descriptions: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:physdesc',
         preferred_citation_head: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:head',
         preferred_citation_values: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:p',
@@ -121,6 +123,9 @@ module ArchiveSpace
         @odd_head = nokogiri_xml.xpath(XPATH[:odd_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:odd_head]).first.nil?
         @odd_values = nokogiri_xml.xpath(XPATH[:odd_values])
+        @other_finding_aid_head = nokogiri_xml.xpath(XPATH[:other_finding_aid_head]).first.text unless
+          nokogiri_xml.xpath(XPATH[:other_finding_aid_head]).first.nil?
+        @other_finding_aid_values = nokogiri_xml.xpath(XPATH[:other_finding_aid_values])
         @preferred_citation_head = nokogiri_xml.xpath(XPATH[:preferred_citation_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:preferred_citation_head]).first.nil?
         @preferred_citation_values = nokogiri_xml.xpath(XPATH[:preferred_citation_values])

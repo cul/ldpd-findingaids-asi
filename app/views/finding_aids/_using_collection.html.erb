@@ -22,6 +22,10 @@
 <% @related_material_values.each do |related_material_value| %>
   <%== apply_ead_to_html_transforms related_material_value %>
 <% end %>
+<%= content_tag(:h3,@other_finding_aid_head) unless @other_finding_aid_head.nil? %>
+<% @other_finding_aid_values.each do |other_finding_aid_value| %>
+  <%== apply_ead_to_html_transforms other_finding_aid_value %>
+<% end %>
 <%= content_tag(:h3,@accruals_head) unless @accruals_head.nil? %>
 <% @accruals_values.each do |accruals_value| %>
   <%== apply_ead_to_html_transforms accruals_value %>

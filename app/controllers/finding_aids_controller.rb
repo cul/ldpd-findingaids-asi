@@ -60,6 +60,8 @@ class FindingAidsController < ApplicationController
     @repository_corpname = @ead.repository
     @odd_head = @ead.odd_head
     @odd_values = @ead.odd_values
+    @other_finding_aid_head = @ead.other_finding_aid_head
+    @other_finding_aid_values = @ead.other_finding_aid_values
     @physical_description_string = compound_physical_descriptions_into_string @ead.physical_descriptions
     @preferred_citation_head = @ead.preferred_citation_head
     @preferred_citation_values = @ead.preferred_citation_values

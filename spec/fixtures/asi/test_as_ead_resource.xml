@@ -101,6 +101,14 @@
       <head>Restrictions on Access</head>
       <p>This collection has no restrictions.</p>
     </accessrestrict>
+    <otherfindaid>
+      <head>Other Finding Aids</head>
+      <p>Use the CDLI (https://cdli.ucla.edu/) to identify tablets by date, genre, etc.</p>
+    </otherfindaid>
+    <otherfindaid>
+      <head>Other Finding Aids</head>
+      <p>Use CLIO to search for other finding aids.</p>
+    </otherfindaid>
     <scopecontent>
       <head>Scope and Content</head>
       <p>The Edith Elmer Wood Collection covers a short but important period in the housing field.</p>

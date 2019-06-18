@@ -24,6 +24,8 @@ attributes = [
   :odd_head, # <ead>:<archdesc>:<odd>:<head>
   :odd_values, # <ead>:<archdesc>:<odd>:<p>
   :origination_creators, # <ead>:<archdesc>:<did>:<origination label="creator">
+  :other_finding_aid_head, # <ead>:<archdesc>:<otherfindaid>:<head>
+  :other_finding_aid_values, # <ead>:<archdesc>:<otherfindaid>:<p>
   :physical_descriptions, # <ead>:<archdesc>:<did>:<physdesc>:<extent>
   :preferred_citation_head, # <ead>:<archdesc>:<prefercite>:<head>
   :preferred_citation_values, # <ead>:<archdesc>:<prefercite>:<p>
@@ -320,6 +322,13 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         ]
       }
 
+      let (:expected_other_finding_aid_values) {
+        [
+          "Use the CDLI (https://cdli.ucla.edu/) to identify tablets by date, genre, etc.",
+          "Use CLIO to search for other finding aids."
+        ]
+      }
+
       let (:expected_processing_information_values) {
         [
           "Papers Entered in AMC 11/29/1990.",
@@ -440,6 +449,17 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       it 'parses the odd_values correctly' do
         @as_ead.odd_values.each_with_index do |odd_value, index|
           expect(odd_value.text).to eq expected_odd_values[index]
+        end
+      end
+
+      it 'parses the other_finding_aid_head correctly' do
+        tested = @as_ead.other_finding_aid_head
+        expect(tested).to eq 'Other Finding Aids'
+      end
+
+      it 'parses the other_finding_aid_values correctly' do
+        @as_ead.other_finding_aid_values.each_with_index do |other_finding_aid_value, index|
+          expect(other_finding_aid_value.text).to eq expected_other_finding_aid_values[index]
         end
       end
 
