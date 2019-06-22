@@ -38,7 +38,7 @@ module ArchiveSpace
         publicationstmt_publisher: '/xmlns:ead/xmlns:eadheader/xmlns:filedesc/xmlns:publicationstmt/xmlns:publisher',
         related_material_head: '/xmlns:ead/xmlns:archdesc/xmlns:relatedmaterial/xmlns:head',
         related_material_values: '/xmlns:ead/xmlns:archdesc/xmlns:relatedmaterial/xmlns:p',
-        repository: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:repository/xmlns:corpname',
+        repository_corpname: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:repository/xmlns:corpname',
         revision_description_changes: '/xmlns:ead/xmlns:eadheader/xmlns:revisiondesc/xmlns:change',
         scope_content_head: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:head',
         scope_content_values: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
@@ -78,7 +78,7 @@ module ArchiveSpace
         @language = nokogiri_xml.xpath(XPATH[:language]).map(&:text).max_by(&:length)
         @origination_creators = nokogiri_xml.xpath(XPATH[:origination_creators])
         @physical_descriptions = nokogiri_xml.xpath(XPATH[:physical_descriptions])
-        @repository = nokogiri_xml.xpath(XPATH[:repository]).text
+        @repository_corpname = nokogiri_xml.xpath(XPATH[:repository_corpname]).text
         @unit_dates = nokogiri_xml.xpath(XPATH[:unit_dates])
         @unit_id = nokogiri_xml.xpath(XPATH[:unit_id]).text
         @unit_title = nokogiri_xml.xpath(XPATH[:unit_title]).text

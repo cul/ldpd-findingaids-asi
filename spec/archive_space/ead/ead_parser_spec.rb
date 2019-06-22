@@ -34,7 +34,7 @@ attributes = [
   :publicationstmt_publisher, # <ead><archheader>:<filedesc>:<publicationstmt>:<publisher>
   :related_material_head, # <ead>:<archdesc>:<relatedmaterial>:<head>
   :related_material_values, # <ead>:<archdesc>:<related_material>:<p>
-  :repository, # <ead><archdesc>:<did>:<repository>:<corpname>
+  :repository_corpname, # <ead><archdesc>:<did>:<repository>:<corpname>
   :revision_description_changes, # <ead>:<archheader>:<revisiondesc>:<change>
   :scope_content_head, # <ead>:<archdesc>:<scopecontent>:<head>
   :scope_content_values, # <ead>:<archdesc>:<scopecontent>:<p>
@@ -201,8 +201,8 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         end
       end
 
-      it 'parses the repository correctly' do
-        tested = @as_ead.repository
+      it 'parses the repository_corpname correctly' do
+        tested = @as_ead.repository_corpname
         expect(tested).to eq 'Rare Book and Manuscript Library'
       end
 

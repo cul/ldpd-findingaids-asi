@@ -1,5 +1,5 @@
-<%= content_tag(:h3,'Abstract') unless @abstracts.empty? %>
-<% @abstracts.each do |abstract| %>
+<%= content_tag(:h3,'Abstract') unless @ead.abstracts.empty? %>
+<% @ead.abstracts.each do |abstract| %>
   <p>
     <%== apply_ead_to_html_transforms abstract %>
   </p>
@@ -22,7 +22,7 @@
     </tr>
     <tr class="odd">
       <th>Creator(s)</th>
-      <td> <%= @creators.map(&:text).join('; ') %></td>
+      <td> <%= @ead.origination_creators.map(&:text).join('; ') %></td>
     </tr>
     <tr class="odd">
       <th>Title</th>
@@ -34,11 +34,11 @@
     </tr>
     <tr class="odd">
       <th>Language(s)</th>
-      <td> <%= @language %></td>
+      <td> <%= @ead.language %></td>
     </tr>
     <tr class="odd">
       <th>Access</th>
-      <td class="accessrestrict"> <%==  @access_restrictions_values %></td>
+      <td class="accessrestrict"> <%==  @ead.access_restrictions_values %></td>
     </tr>
   </tbody>
 </table>

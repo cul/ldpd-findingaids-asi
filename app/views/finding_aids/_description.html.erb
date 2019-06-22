@@ -3,8 +3,8 @@
 <% else %>
   <% slug_prefix = '' %>
 <% end %>
-<h3><%= @scope_content_head %></h3>
-<% @scope_content_values.each do |scope_content_value| %>
+<%= content_tag(:h3, @ead.scope_content_head) unless @ead.scope_content_head.nil? %>
+<% @ead.scope_content_values.each do |scope_content_value| %>
   <%== apply_ead_to_html_transforms scope_content_value %>
 <% end %>
 <p>
@@ -18,7 +18,7 @@
     <% end %>
   </ul>
 </p>
-<%= content_tag(:h3,@odd_head) unless @odd_head.nil? %>
-<% @odd_values.each do |odd_value| %>
+<%= content_tag(:h3,@ead.odd_head) unless @ead.odd_head.nil? %>
+<% @ead.odd_values.each do |odd_value| %>
   <%== apply_ead_to_html_transforms odd_value %>
 <% end %>

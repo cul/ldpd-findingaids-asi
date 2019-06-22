@@ -27,7 +27,6 @@ class ComponentsController < ApplicationController
     @bib_id = @ead.unit_id
     @creator = @ead.origination_creators.first.text unless  @ead.origination_creators.first.nil?
     @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
-    @repository_name = @ead.repository
     @restricted_access_flag =
       @ead.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
     @notes_array = []
@@ -58,7 +57,6 @@ class ComponentsController < ApplicationController
     @bib_id = @ead.unit_id
     @creator = @ead.origination_creators.first.text unless  @ead.origination_creators.first.nil?
     @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
-    @repository_name = @ead.repository
     @restricted_access_flag =
       @ead.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
     ead_series_set_properties params[:id]

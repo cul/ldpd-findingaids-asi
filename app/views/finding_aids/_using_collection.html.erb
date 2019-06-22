@@ -1,6 +1,6 @@
-<p><%= @repository_corpname %></p>
-<%= content_tag(:h3, @access_restrictions_head) unless @access_restrictions_head.nil? %>
-<% @access_restrictions_values.each do |access_restrictions_value| %>
+<p><%= @ead.repository_corpname %></p>
+<%= content_tag(:h3, @ead.access_restrictions_head) unless @ead.access_restrictions_head.nil? %>
+<% @ead.access_restrictions_values.each do |access_restrictions_value| %>
   <% if hightlight_offsite access_restrictions_value.text %>
     <div style="color:red;">
     <%= image_tag 'alert.gif' %>
@@ -10,27 +10,27 @@
     </div>
   <% end %>
 <% end %>
-<%= content_tag(:h3, @use_restrictions_head) unless @use_restrictions_head.nil? %>
-<% @use_restrictions_values.each do |use_restrictions_value| %>
+<%= content_tag(:h3, @ead.use_restrictions_head) unless @ead.use_restrictions_head.nil? %>
+<% @ead.use_restrictions_values.each do |use_restrictions_value| %>
   <%== apply_ead_to_html_transforms use_restrictions_value %>
 <% end %>
-<%= content_tag(:h3, @preferred_citation_head) unless @preferred_citation_head.nil? %>
-<% @preferred_citation_values.each do |preferred_citation_value| %>
+<%= content_tag(:h3, @ead.preferred_citation_head) unless @ead.preferred_citation_head.nil? %>
+<% @ead.preferred_citation_values.each do |preferred_citation_value| %>
   <%== apply_ead_to_html_transforms preferred_citation_value %>
 <% end %>
-<%= content_tag(:h3,@related_material_head) unless @related_material_head.nil? %>
-<% @related_material_values.each do |related_material_value| %>
+<%= content_tag(:h3,@ead.related_material_head) unless @ead.related_material_head.nil? %>
+<% @ead.related_material_values.each do |related_material_value| %>
   <%== apply_ead_to_html_transforms related_material_value %>
 <% end %>
-<%= content_tag(:h3,@other_finding_aid_head) unless @other_finding_aid_head.nil? %>
-<% @other_finding_aid_values.each do |other_finding_aid_value| %>
+<%= content_tag(:h3,@ead.other_finding_aid_head) unless @ead.other_finding_aid_head.nil? %>
+<% @ead.other_finding_aid_values.each do |other_finding_aid_value| %>
   <%== apply_ead_to_html_transforms other_finding_aid_value %>
 <% end %>
-<%= content_tag(:h3,@accruals_head) unless @accruals_head.nil? %>
-<% @accruals_values.each do |accruals_value| %>
+<%= content_tag(:h3,@ead.accruals_head) unless @ead.accruals_head.nil? %>
+<% @ead.accruals_values.each do |accruals_value| %>
   <%== apply_ead_to_html_transforms accruals_value %>
 <% end %>
-<%= content_tag(:h3,@alternative_form_available_head) unless @alternative_form_available_head.nil? %>
-<% @alternative_form_available_values.each do |alternative_form_available_value| %>
+<%= content_tag(:h3,@ead.alternative_form_available_head) unless @ead.alternative_form_available_head.nil? %>
+<% @ead.alternative_form_available_values.each do |alternative_form_available_value| %>
   <%== apply_ead_to_html_transforms alternative_form_available_value %>
 <% end %>

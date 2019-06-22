@@ -1,4 +1,4 @@
-<h3><%= @biography_history_head %></h3>
-<% @biography_history_values.each do |biography_history_value| %>
+<%= content_tag(:h3, @ead.biography_history_head) unless @ead.biography_history_head.nil? %>
+<% @ead.biography_history_values.each do |biography_history_value| %>
   <p><%== apply_ead_to_html_transforms biography_history_value %></p>
 <% end %>

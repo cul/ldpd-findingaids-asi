@@ -3,8 +3,8 @@
 <% else %>
   <% slug_prefix = '' %>
 <% end %>
-<h3>Arrangement</h3>
-<% @arrangement_values.each do |arrangement_value| %>
+<%= content_tag(:h3, @ead.arrangement_head) unless @ead.arrangement_head.nil? %>  
+<% @ead.arrangement_values.each do |arrangement_value| %>
   <%== apply_ead_to_html_transforms arrangement_value %>
 <% end %>
 <p>
