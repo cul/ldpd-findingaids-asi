@@ -7,6 +7,12 @@
 <h3>At a Glance</h3>
 <table class="summaryTable">
   <tbody>
+    <% if @call_number %>
+      <tr class="odd">
+        <th>Call No.:</th>
+        <td> <%= @call_number %></td>
+      </tr>
+    <% end %>
     <tr class="odd">
       <th>Bib ID</th>
       <td>

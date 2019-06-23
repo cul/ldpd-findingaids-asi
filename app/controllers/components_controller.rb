@@ -23,8 +23,10 @@ class ComponentsController < ApplicationController
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @series_titles = @ead.dsc_series_titles
     @subseries_titles = @ead.subseries_titles
-    # @bib_id, @creator, @item_date, and @repository_name used when sending aeon request
+    # @bib_id, @call_number, @creator, and @item_date used when sending aeon request
     @bib_id = @ead.unit_ids.first.text
+    # EAD may or may not contain a second <unitid> containing call number
+    @call_number = @ead.unit_ids[1].text unless @ead.unit_ids.size == 1
     @creator = @ead.origination_creators.first.text unless  @ead.origination_creators.first.nil?
     @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
     @restricted_access_flag =
@@ -53,8 +55,10 @@ class ComponentsController < ApplicationController
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @series_titles = @ead.dsc_series_titles
     @subseries_titles = @ead.subseries_titles
-    # @bib_id, @creator, @item_date, and @repository_name used when sending aeon request
+    # @bib_id, @call_number, @creator, and @item_date used when sending aeon request
     @bib_id = @ead.unit_ids.first.text
+    # EAD may or may not contain a second <unitid> containing call number
+    @call_number = @ead.unit_ids[1].text unless @ead.unit_ids.size == 1
     @creator = @ead.origination_creators.first.text unless  @ead.origination_creators.first.nil?
     @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
     @restricted_access_flag =

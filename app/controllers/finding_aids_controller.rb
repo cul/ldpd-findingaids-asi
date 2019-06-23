@@ -40,6 +40,8 @@ class FindingAidsController < ApplicationController
     @finding_aid_title =
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @bib_id = @ead.unit_ids.first.text
+    # EAD may or may not contain a second <unitid> containing call number
+    @call_number = @ead.unit_ids[1].text unless @ead.unit_ids.size == 1
     @physical_description_string = compound_physical_descriptions_into_string @ead.physical_descriptions
     @series_titles = @ead.dsc_series_titles
     @subseries_titles = @ead.subseries_titles

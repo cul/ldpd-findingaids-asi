@@ -5,6 +5,7 @@ class AeonRequestsController < ApplicationController
       @selected_containers.add checkbox_value
     end
     @bib_id = params[:bib_id]
+    @call_number = params[:call_number]
     @item_title = params[:item_title]
     @author = params[:author]
     @item_date = params[:item_date]
@@ -18,6 +19,7 @@ class AeonRequestsController < ApplicationController
     end
     session[:selected_containers] = @selected_containers.to_a
     session[:bib_id] = params[:bib_id]
+    session[:call_number] = params[:call_number]
     session[:item_title] = params[:item_title]
     session[:author] = params[:author]
     session[:item_date] = params[:item_date]
@@ -29,6 +31,7 @@ class AeonRequestsController < ApplicationController
   def redirectshib
     @selected_containers = session[:selected_containers]
     @bib_id = session[:bib_id]
+    @call_number = session[:call_number]
     @item_title = session[:item_title]
     @author = session[:author]
     @item_date = session[:item_date]
@@ -41,6 +44,7 @@ class AeonRequestsController < ApplicationController
   def redirectnonshib
     @selected_containers = session[:selected_containers]
     @bib_id = session[:bib_id]
+    @call_number = session[:call_number]
     @item_title = session[:item_title]
     @author = session[:author]
     @item_date = session[:item_date]
