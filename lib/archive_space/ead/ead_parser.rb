@@ -46,7 +46,7 @@ module ArchiveSpace
         separated_material_values: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:p',
         subseries_titles: './xmlns:c[@level="subseries"]/xmlns:did/xmlns:unittitle',
         unit_dates: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitdate',
-        unit_id: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid',
+        unit_ids: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid',
         unit_title: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unittitle',
         use_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:head',
         use_restrictions_values: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:p'
@@ -80,7 +80,7 @@ module ArchiveSpace
         @physical_descriptions = nokogiri_xml.xpath(XPATH[:physical_descriptions])
         @repository_corpname = nokogiri_xml.xpath(XPATH[:repository_corpname]).text
         @unit_dates = nokogiri_xml.xpath(XPATH[:unit_dates])
-        @unit_id = nokogiri_xml.xpath(XPATH[:unit_id]).text
+        @unit_ids = nokogiri_xml.xpath(XPATH[:unit_ids])
         @unit_title = nokogiri_xml.xpath(XPATH[:unit_title]).text
       end
 

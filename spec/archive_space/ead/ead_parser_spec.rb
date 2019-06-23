@@ -41,7 +41,7 @@ attributes = [
   :separated_material_head, # <ead>:<archdesc>:<separatedmaterial>:<head>
   :separated_material_values, # <ead>:<archdesc>:<separatedmaterial>:<p>
   :unit_dates, # <ead>:<archdesc>:<did>:<unitdate>
-  :unit_id, # <ead>:<archdesc>:<did>:<unitid>
+  :unit_ids, # <ead>:<archdesc>:<did>:<unitid>
   :unit_title, # <ead>:<archdesc>:<did>:<unititle>
   :use_restrictions_head, # <ead>:<archdesc>:<userestrict>:<head>
   :use_restrictions_values # <ead>:<archdesc>:<userestrict>:<p>
@@ -212,9 +212,10 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
         end
       end
 
-      it 'parses the unit_id correctly' do
-        tested = @as_ead.unit_id
-        expect(tested).to eq '4079591'
+      it 'parses the unit_ids correctly' do
+        tested = @as_ead.unit_ids
+        expect(tested[0].text).to eq '4079591'
+        expect(tested[1].text).to eq 'MS#0030'
       end
 
       it 'parses the unit_title correctly' do

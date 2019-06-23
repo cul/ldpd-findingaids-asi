@@ -24,7 +24,7 @@ class ComponentsController < ApplicationController
     @series_titles = @ead.dsc_series_titles
     @subseries_titles = @ead.subseries_titles
     # @bib_id, @creator, @item_date, and @repository_name used when sending aeon request
-    @bib_id = @ead.unit_id
+    @bib_id = @ead.unit_ids.first.text
     @creator = @ead.origination_creators.first.text unless  @ead.origination_creators.first.nil?
     @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
     @restricted_access_flag =
@@ -54,7 +54,7 @@ class ComponentsController < ApplicationController
     @series_titles = @ead.dsc_series_titles
     @subseries_titles = @ead.subseries_titles
     # @bib_id, @creator, @item_date, and @repository_name used when sending aeon request
-    @bib_id = @ead.unit_id
+    @bib_id = @ead.unit_ids.first.text
     @creator = @ead.origination_creators.first.text unless  @ead.origination_creators.first.nil?
     @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
     @restricted_access_flag =
