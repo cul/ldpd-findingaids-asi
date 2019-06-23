@@ -5,46 +5,47 @@
   </p>
 <% end %>
 <h3>At a Glance</h3>
-<table class="summaryTable">
-  <tbody>
-    <% if @call_number %>
+<div class="summaryDiv">
+  <table class="summaryTable">
+    <tbody>
+      <% if @call_number %>
+        <tr class="odd">
+          <th>Call No.:</th>
+          <td> <%= @call_number %></td>
+        </tr>
+      <% end %>
       <tr class="odd">
-        <th>Call No.:</th>
-        <td> <%= @call_number %></td>
+	<th>Bib ID</th>
+	<td>
+	  <%= @bib_id %>
+	  <% bib_href = "http://www.columbia.edu/cgi-bin/cul/cliosearch?BIBID=#{@bib_id}" %>
+	  <a href= <%= bib_href %>
+	     target="_blank"
+	     class="smaller">
+	    View CLIO record
+	  </a>
+	</td>
       </tr>
-    <% end %>
-    <tr class="odd">
-      <th>Bib ID</th>
-      <td>
-	<%= @bib_id %>
-	<% bib_href = "http://www.columbia.edu/cgi-bin/cul/cliosearch?BIBID=#{@bib_id}" %>
-	<a href= <%= bib_href %>
-	   target="_blank"
-	   class="smaller">
-	  View CLIO record
-	</a>
-
-      </td>
-    </tr>
-    <tr class="odd">
-      <th>Creator(s)</th>
-      <td> <%= @ead.origination_creators.map(&:text).join('; ') %></td>
-    </tr>
-    <tr class="odd">
-      <th>Title</th>
-      <td> <%= @finding_aid_title %></td>
-    </tr>
-    <tr class="odd">
-      <th>Physical Description</th>
-      <td><%= @physical_description_string %></td>
-    </tr>
-    <tr class="odd">
-      <th>Language(s)</th>
-      <td> <%= @ead.language %></td>
-    </tr>
-    <tr class="odd">
-      <th>Access</th>
-      <td class="accessrestrict"> <%==  @ead.access_restrictions_values %></td>
-    </tr>
-  </tbody>
-</table>
+      <tr class="odd">
+	<th>Creator(s)</th>
+	<td> <%= @ead.origination_creators.map(&:text).join('; ') %></td>
+      </tr>
+      <tr class="odd">
+	<th>Title</th>
+	<td> <%= @finding_aid_title %></td>
+      </tr>
+      <tr class="odd">
+	<th>Physical Description</th>
+	<td><%= @physical_description_string %></td>
+      </tr>
+      <tr class="odd">
+	<th>Language(s)</th>
+	<td> <%= @ead.language %></td>
+      </tr>
+      <tr class="odd">
+	<th>Access</th>
+	<td class="accessrestrict"> <%==  @ead.access_restrictions_values %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
