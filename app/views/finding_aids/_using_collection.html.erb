@@ -3,7 +3,7 @@
 <% @ead.access_restrictions_values.each do |access_restrictions_value| %>
   <% if hightlight_offsite access_restrictions_value.text %>
     <div style="color:red;">
-    <%= image_tag 'alert.gif' %>
+      <%= image_tag 'alert.gif', style: 'float:left; padding-right: 5px;' %>
   <% end %>
   <%== apply_ead_to_html_transforms access_restrictions_value %>
   <% if hightlight_offsite access_restrictions_value.text %>
