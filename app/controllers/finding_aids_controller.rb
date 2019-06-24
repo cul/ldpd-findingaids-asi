@@ -1,13 +1,14 @@
 require 'archive_space/api/client'
 require 'archive_space/ead/ead_parser'
+require 'archive_space/ead/ead_component_parser'
 
 class FindingAidsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
 
-  before_action :validate_repository_code_and_set_repo_id, only: [:index, :show]
+  before_action :validate_repository_code_and_set_repo_id, only: [:index, :print, :show]
   before_action :initialize_as_api,
                 :get_as_resource_info,
-                only: [:show]
+                only: [:print, :show]
 
   def index
     @repo_id = params[:repository_id]
@@ -34,6 +35,27 @@ class FindingAidsController < ApplicationController
     end
   end
 
+  def print
+    @print_view = true
+    if @preview_flag
+      Rails.logger.warn("Using Preview for #{params[:id]}")
+      @input_xml = preview_as_ead params[:finiding_aid_id].delete_prefix('ldpd_').to_i
+    else
+      Rails.logger.warn("Using Cache for #{params[:id]}")
+      @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
+    end
+    ead_set_properties
+    @notes_array = []
+    @flattened_component_structure_array = []
+    @daos_description_href_array = []
+    @series_titles.each_with_index do |title, index|
+      ead_series_set_properties(index + 1)
+      @notes_array.append @notes
+      @flattened_component_structure_array.append @flattened_component_structure
+      @daos_description_href_array.append @daos_description_href
+    end
+  end
+
   private
   def ead_set_properties
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
@@ -56,7 +78,11 @@ class FindingAidsController < ApplicationController
   end
 
   def get_as_resource_info
-    bib_id = params[:id].delete_prefix('ldpd_').to_i
+    if @print_view
+      bib_id = params[:finding_aid_id].delete_prefix('ldpd_').to_i
+    else
+      bib_id = params[:id].delete_prefix('ldpd_').to_i
+    end
     if CONFIG[:use_fixtures]
       @as_resource_id = @as_api.get_resource_id_local_fixture(bib_id)
     else

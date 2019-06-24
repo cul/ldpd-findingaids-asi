@@ -8,6 +8,7 @@
   <%== apply_ead_to_html_transforms arrangement_value %>
 <% end %>
 <p>
+  <% unless @print_view %>
   <ul>
     <% @series_titles.each_with_index do |series_title, index| %>
     <li> <%= link_to series_title,
@@ -15,4 +16,5 @@
 	     %> </li>
     <% end %>
   </ul>
+  <% end %>
 </p>

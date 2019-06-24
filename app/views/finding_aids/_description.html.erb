@@ -7,6 +7,7 @@
 <% @ead.scope_content_values.each do |scope_content_value| %>
   <%== apply_ead_to_html_transforms scope_content_value %>
 <% end %>
+<% unless @print_view %>
 <p>
   <ul style="list-style-type:none;">
     <% @series_titles.each_with_index do |series_title, index| %>
@@ -18,6 +19,7 @@
     <% end %>
   </ul>
 </p>
+<% end %>
 <%= content_tag(:h3,@ead.odd_head) unless @ead.odd_head.nil? %>
 <% @ead.odd_values.each do |odd_value| %>
   <%== apply_ead_to_html_transforms odd_value %>

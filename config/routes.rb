@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :repositories, only: [:index], path: '' do
       resources :finding_aids, only: [:index, :show], path: '' do
         get 'summary'
+        get 'print'
         resources :components, only: [:index, :show], path: 'dsc'
       end
     end

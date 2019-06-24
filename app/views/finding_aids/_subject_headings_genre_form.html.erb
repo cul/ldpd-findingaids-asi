@@ -1,15 +1,18 @@
 <h3>Genre/Form</h3>
-<table class="subjectTable">
+<table class="subjectTable" style="width:fit-content;">
   <tbody>
     <tr>
       <th class="firstCell" style="vertical-align:middle;">Heading</th>
+      <% unless @print_view %>
       <th class="firstCell" style="vertical-align:middle;">"CUL Archives:"<br>"Portal"</th>
       <th class="firstCell" style="vertical-align:middle;">"CUL Collections:"<br>"CLIO"</th>
       <th class="firstCell" style="vertical-align:middle;">"Nat'l / Int'l Archives:"<br>"ArchivedGRID"</th>
+      <% end %>
     </tr>
     <% @genres_forms.each do |genre_form| %>
     <tr>
       <td class="firstCell"><%= genre_form %></td>
+      <% unless @print_view %>
       <td>
 	<a target="_blank"
 	  href="<%= "https://archivesportal.library.columbia.edu/results.php?component_text=\"#{genre_form}\"&operator=AND" %>">
@@ -28,6 +31,7 @@
 	  ArchiveGRID
 	</a>
       </td>
+      <% end %>
     </tr>
     <% end %>
   </tbody>

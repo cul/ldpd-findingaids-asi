@@ -1,0 +1,61 @@
+<%= render plain: 'Hi, Fred, would you like to print?' %>
+<div class="printView">
+<table style="width=100%">
+  <tbody>
+      <td class="ead_content">
+        <h2>Summary Information</h2>
+	<%=
+	  render partial: 'summary'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
+	<a class="fa_anchor" name="arrangement"></a>
+        <h2>Arrangement</h2>
+	<%=
+	  render partial: 'arrangement'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
+	<a class="fa_anchor" name="description"></a>
+        <h2>Description</h2>
+	<%=
+	  render partial: 'description'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
+	<a class="fa_anchor" name="using_collection"></a>
+        <h2>Using the Collection</h2>
+	<%=
+	  render partial: 'using_collection'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
+	<a class="fa_anchor" name="about_findaid"></a>
+        <h2>About the Finding Aid / Processing Information</h2>
+	<%=
+	  render partial: 'about_findaid'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
+	<a class="fa_anchor" name="subjects"></a>
+        <h2>Subject Headings</h2>
+	<%=
+	  render partial: 'subject_headings'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
+	<a class="fa_anchor" name="history"></a>
+        <h2>History / Biographical Note</h2>
+	<%=
+	  render partial: 'history'
+	    # locals: {slug_to_series_page: method(:series_path)}
+        %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr style="width:1px;">
+<% repo_suffix = params[:repository_id].gsub('-','_') %>
+<% @flattened_component_structure_array.each_with_index do |structure, index| %>
+  <% @flattened_component_structure = structure %>
+  <%= render partial: 'components/component_structure_view_print',
+             locals: {component_title: @series_titles[index],
+                      notes: @notes_array[index],
+                      daos_description_href: @daos_description_href_array[index]}
+  %>
+<% end %>
+</div>  

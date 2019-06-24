@@ -12,16 +12,11 @@
     font-size: 11px;
     border: 1px solid #eee;
     border-collapse: collapse;
-    background-color: #eee;
 }
 
 .summaryTable td {
     vertical-align: top;
     border: 1px solid #eee;
-}
-
-.summaryTable tr.odd {
-    background-color: #eee;
 }
 
 .summaryTable th {
@@ -64,4 +59,14 @@ table.subjectTable td {
 
 td.accessrestrict p {
     margin: 0px;
+}
+
+div.printView h3, div.printView h2 {
+    color: black;
+    border: none;
+    text-decoration: underline;
+}
+
+div.printView div.summaryDiv {
+    background-color: white;
 }

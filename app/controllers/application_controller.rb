@@ -1,8 +1,18 @@
 class ApplicationController < ActionController::Base
 
-  before_action :set_preview_flag
+  before_action :set_preview_flag, :set_print_view_flag
 
   private
+  def ead_series_set_properties component_num
+    component_nokogiri_xml = @ead.dsc_series[component_num.to_i - 1]
+    @component = ArchiveSpace::Ead::EadComponentParser.new
+    @component.parse component_nokogiri_xml
+    @component_title = @component.title
+    @notes = @component.notes
+    @daos_description_href = @component.digital_archival_objects_description_href
+    @flattened_component_structure = @component.generate_info
+  end
+
   # @as_repo_id => repo ID in ArchiveSpace
   def validate_repository_code_and_set_repo_id
     if REPOS.key? params[:repository_id]
@@ -52,7 +62,10 @@ class ApplicationController < ActionController::Base
   end
 
   def set_preview_flag
-    puts request.path
     @preview_flag = request.path.start_with?('/preview')
+  end
+
+  def set_print_view_flag
+    @print_view = request.path.ends_with?('/print')
   end
 end
