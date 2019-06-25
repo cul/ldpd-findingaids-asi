@@ -9,12 +9,20 @@
 <% end %>
 <p>
   <% unless @print_view %>
-  <ul>
-    <% @series_titles.each_with_index do |series_title, index| %>
-    <li> <%= link_to series_title,
-	     slug_prefix + repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])
-	     %> </li>
-    <% end %>
-  </ul>
+    <ul>
+      <% @series_titles.each_with_index do |series_title, series_index| %>
+        <% series_url = slug_prefix + repository_finding_aid_component_path(id: series_index+1, finding_aid_id: params[:id]) %>
+        <li>
+          <%= link_to series_title, series_url %>
+        </li>
+	<ul>
+          <% @subseries_titles[series_index].each.with_index do |subseries_title, subseries_index| %>
+            <li>
+              <%= link_to subseries_title, "#{series_url}#subseries_#{subseries_index + 1}" %>
+            </li>
+	  <% end %>
+        </ul>
+      <% end %>
+    </ul>
   <% end %>
 </p>
