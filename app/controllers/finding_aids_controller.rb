@@ -67,7 +67,6 @@ class FindingAidsController < ApplicationController
     @physical_description_string = compound_physical_descriptions_into_string @ead.physical_descriptions
     @series_titles = @ead.dsc_series_titles
     @subseries_titles = @ead.subseries_titles
-    @series_scope_content = @ead.get_series_scope_content
     @subjects = (@ead.control_access_corpnames +
                 @ead.control_access_occupations +
                 @ead.control_access_persnames +

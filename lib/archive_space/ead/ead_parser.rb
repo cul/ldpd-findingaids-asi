@@ -146,11 +146,11 @@ module ArchiveSpace
         @use_restrictions_values = nokogiri_xml.xpath(XPATH[:use_restrictions_values])
       end
 
-      def get_series_scope_content
+      def series_scope_content_values
         series_nokogiri_elements =
           @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
         series_scope_content = series_nokogiri_elements.map do |series|
-          series.xpath('./xmlns:scopecontent/xmlns:p').text
+          series.xpath('./xmlns:scopecontent/xmlns:p')
         end
       end
 

@@ -65,6 +65,10 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
     end
 
     context 'has ' do
+      it 'has #series_scope_content_values' do
+        expect(@as_ead).to respond_to(:series_scope_content_values).with(0).arguments
+      end
+
       it 'has #parse_ead_header method' do
         expect(@as_ead).to respond_to(:parse_ead_header).with(1).arguments
       end
@@ -533,10 +537,6 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
   end
 
   context "API/interface" do
-    xit 'has #get_series_scope_content' do
-      expect(subject).to respond_to(:get_series_scope_content).with(0).arguments
-    end
-
     xit 'has #get_files_info_for_series' do
       expect(subject).to respond_to(:get_files_info_for_series).with(1).arguments
     end
