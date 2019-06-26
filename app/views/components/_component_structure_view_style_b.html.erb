@@ -71,6 +71,7 @@
       <%== checkbox_display(component_title, component_id, container_info[0]) unless container_info.empty? %>
     <% end %>
     <p style="margin:0">
+      <span style="text-align:right;float:right;display:block;margin-left:1em;"><%=container_info.join(' ') %></span>
       <% if (nesting_level == 1 && level == 'subseries') %>
         <% subseries_num += 1 %>
         <a class="subseries_anchor" name="<%= "subseries_#{subseries_num}" %>"></a>
@@ -80,7 +81,6 @@
       <% else %>
         <span style="text-align:left;"> <%= [title, date, physical_description].reject(&:blank?).join(", ") %> </span>
       <% end %>
-      <span style="text-align:right;float:right;"><%=container_info.join(' ') %></span>
     </p>
     <% unless digital_archival_objects_description_href.empty? %>
       <div style="margin:0;padding-left:1em;color:red;">
