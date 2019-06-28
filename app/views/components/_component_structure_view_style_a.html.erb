@@ -33,7 +33,7 @@
       <% ( nesting_level,
            title,
            physical_description,
-           date,
+           dates,
            digital_archival_objects_description_href,
            level,
            container_info,
@@ -63,7 +63,7 @@
             <%= [title, physical_description].reject(&:blank?).join(", ") %>
           <% end %>
 	</td>
-        <td style="width:20%"><%= date %></td>
+        <td style="width:20%"><%= @ead.compound_dates_into_string(dates) %></td>
       </tr>
       <% unless daos_description_href.empty? %>
         <tr style="border-top:1px solid #eee">

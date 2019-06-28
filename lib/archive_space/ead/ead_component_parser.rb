@@ -13,7 +13,7 @@ module ArchiveSpace
         biography_history_ps: './xmlns:bioghist/xmlns:p',
         container: './xmlns:did/xmlns:container',
         custodial_history_ps: './xmlns:custodhist/xmlns:p',
-        date: './xmlns:did/xmlns:unitdate',
+        dates: './xmlns:did/xmlns:unitdate',
         digital_archival_object_description_p: './xmlns:daodesc/xmlns:p',
         digital_archival_objects: './xmlns:did/xmlns:dao',
         odd_ps: './xmlns:odd/xmlns:p',
@@ -27,7 +27,7 @@ module ArchiveSpace
       }
 
       COMPONENT_INFO_MEMBERS = XPATH.keys - [:container,
-                                             :date,
+                                             :dates,
                                              :digital_archival_object_description_p,
                                              :digital_archival_objects,
                                              :physical_description,
@@ -74,7 +74,7 @@ module ArchiveSpace
         component_notes = ComponentInfo.new
         title = component.xpath(XPATH[:title]).text
         physical_description = component.xpath(XPATH[:physical_description]).text
-        date = component.xpath(XPATH[:date]).text
+        dates = component.xpath(XPATH[:dates])
         digital_archival_objects_description_href =
           component.xpath(XPATH[:digital_archival_objects]).map do |dao|
           [dao.xpath(XPATH[:digital_archival_object_description_p]).text, dao.attribute('href').text]
@@ -94,7 +94,7 @@ module ArchiveSpace
         @component_info.append [ nesting_level,
                                  title,
                                  physical_description,
-                                 date,
+                                 dates,
                                  digital_archival_objects_description_href,
                                  level,
                                  container_info,
