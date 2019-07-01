@@ -51,6 +51,12 @@ class ComponentsController < ApplicationController
       @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
     end
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
+    # verify given series number (params[:id]) is within range
+    unless (params[:id].to_i < @ead.dsc_series_titles.size + 1 && params[:id].to_i > 0)
+      Rails.logger.warn('dsc number from url params out of range')
+      redirect_to '/'
+      return
+    end
     @finding_aid_title =
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @series_titles = @ead.dsc_series_titles
