@@ -38,7 +38,7 @@
     <% ( nesting_level,
          title,
          physical_description,
-         date,
+         dates,
          digital_archival_objects_description_href,
          level,
          container_info,
@@ -76,10 +76,12 @@
         <% subseries_num += 1 %>
         <a class="subseries_anchor" name="<%= "subseries_#{subseries_num}" %>"></a>
         <span style="text-align:left;color: #999;border-bottom: 1px solid #999;font-weight: bold;font-size: 14px;">
-          <%= [title, date, physical_description].reject(&:blank?).join(", ") %>
+          <%= [title, @ead.compound_dates_into_string(dates), physical_description].reject(&:blank?).join(", ") %>
         </span>
       <% else %>
-        <span style="text-align:left;"> <%= [title, date, physical_description].reject(&:blank?).join(", ") %> </span>
+        <span style="text-align:left;"> <%= [title,
+                                             @ead.compound_dates_into_string(dates),
+                                             physical_description].reject(&:blank?).join(", ") %> </span>
       <% end %>
     </p>
     <% unless digital_archival_objects_description_href.empty? %>

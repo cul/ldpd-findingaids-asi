@@ -9,6 +9,7 @@ attributes = [
   :arrangement_ps, # <c>:<arrangement>:<p>
   :biography_history_ps, # <c>:<bioghist>:<p>
   :custodial_history_ps, # <c>:<custodhist>:<p>
+  :dates, # <c>:<did>:<unitdate>
   :odd_ps, # <c>:<odd>:<p>
   :other_finding_aid_ps, # <c>:<scopecontent>:<p>
   :related_material_ps, # <c>:<relatedmaterial>:<p>
@@ -145,11 +146,11 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           ]
       end
 
-      (attributes - [:title, :digital_archival_object]).each do |attribute|
-        it "sets the #{attribute} correctly" do
-          expected_values = instance_variable_get("@expected_#{attribute}")
-          @component.notes[attribute].each_with_index do |attribute_p, index|
-            expect(attribute_p.text).to eq expected_values[index]
+      (attributes - [:title, :digital_archival_object, :dates]).each do |key|
+        it "sets the notes hash value for key #{key} correctly" do
+          expected_values = instance_variable_get("@expected_#{key}")
+          @component.notes[key].each_with_index do |value_p, index|
+            expect(value_p.text).to eq expected_values[index]
           end
         end
       end
@@ -178,7 +179,7 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
         ( @nesting_level,
           @title,
           @physical_description,
-          @date,
+          @dates,
           @digital_archival_objects_description_href,
           @level,
           @container_info,
@@ -268,11 +269,11 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
           ]
       end
 
-      (attributes - [:title]).each do |attribute|
-        it "generates the correct #{attribute}" do
-          expected_values = instance_variable_get("@expected_#{attribute}")
-          @component_notes[attribute].each_with_index do |attribute_p, index|
-            expect(attribute_p).to eq expected_values[index]
+      (attributes - [:title, :dates]).each do |key|
+        it "generates the correct notes hash value for key #{key}" do
+          expected_values = instance_variable_get("@expected_#{key}")
+          @component_notes[key].each_with_index do |value_p, index|
+            expect(value_p).to eq expected_values[index]
           end
         end
       end
