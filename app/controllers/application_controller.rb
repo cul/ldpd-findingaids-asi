@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
 
   before_action :set_preview_flag, :set_print_view_flag
 
+  attr_accessor :authenticity_token
+
   private
   def ead_series_set_properties component_num
     component_nokogiri_xml = @ead.dsc_series[component_num.to_i - 1]
@@ -26,7 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def cached_as_ead(bib_id)
-    cached_file = "tmp/as_ead_ldpd_#{bib_id}.xml"
+    cached_file = File.join(CONFIG[:ead_cache_dir], "as_ead_ldpd_#{bib_id}.xml")
     if File.exist?(cached_file)
       Rails.logger.warn("Cache: File #{cached_file} exists")
       open(cached_file) do |b|
@@ -43,6 +45,25 @@ class ApplicationController < ActionController::Base
         file.write(as_ead)
       end
       as_ead
+    end
+  end
+
+  def cache_response_html
+    if @dsc_all
+      cached_file = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}_all.html")
+    else
+      cached_file = File.join(CONFIG[:html_cache_dir],
+                              "ldpd_#{@params_bib_id}#{@params_series_num ? '_' + @params_series_num : ''}.html")
+    end
+    if File.exist?(cached_file)
+      Rails.logger.warn("HTML cached file #{File.basename cached_file} exists, no need to create one")
+    else
+      Rails.logger.warn("HTML cached file #{File.basename cached_file} DOES NOT exists, saving html")
+      cached_response_body = response.body
+      cached_response_body = cached_response_body.sub(@authenticity_token, CONFIG[:authenticity_token_placeholder]) if @authenticity_token
+      File.open(cached_file, "wb") do |file|
+        file.write(cached_response_body)
+      end
     end
   end
 

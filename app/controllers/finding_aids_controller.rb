@@ -9,6 +9,7 @@ class FindingAidsController < ApplicationController
   before_action :initialize_as_api,
                 :get_as_resource_info,
                 only: [:print, :show]
+  after_action :cache_response_html, only: [:show]
 
   def index
     @repo_id = params[:repository_id]
@@ -19,8 +20,30 @@ class FindingAidsController < ApplicationController
     if @preview_flag
       Rails.logger.warn("Using Preview for #{params[:id]}")
       @input_xml = preview_as_ead params[:id].delete_prefix('ldpd_').to_i
+      ead_set_properties
     else
-      Rails.logger.warn("Using Cache for #{params[:id]}")
+      cached_html_filename = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}.html")
+      if File.exist?(cached_html_filename)
+        Rails.logger.warn("Using Cached HTML file for #{params[:id]}")
+        cached_html_file = open(cached_html_filename) do |file|
+          file.read
+        end
+        render html: cached_html_file.html_safe
+        return
+      else
+        Rails.logger.warn("Using EAD Cache for #{params[:id]}")
+        @input_xml = cached_as_ead params[:id].delete_prefix('ldpd_').to_i
+        ead_set_properties
+      end
+    end
+  end
+
+  def show_legacy_no_html_caching
+    if @preview_flag
+      Rails.logger.warn("Using Preview for #{params[:id]}")
+      @input_xml = preview_as_ead params[:id].delete_prefix('ldpd_').to_i
+    else
+      Rails.logger.warn("Using EAD Cache for #{params[:id]}")
       @input_xml = cached_as_ead params[:id].delete_prefix('ldpd_').to_i
     end
     # @mtime = @as_api.get_resource_mtime(@as_repo_id, @as_resource_id)
@@ -41,7 +64,7 @@ class FindingAidsController < ApplicationController
       Rails.logger.warn("Using Preview for #{params[:id]}")
       @input_xml = preview_as_ead params[:finiding_aid_id].delete_prefix('ldpd_').to_i
     else
-      Rails.logger.warn("Using Cache for #{params[:id]}")
+      Rails.logger.warn("Using EAD Cache for #{params[:id]}")
       @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
     end
     ead_set_properties
@@ -92,6 +115,8 @@ class FindingAidsController < ApplicationController
       redirect_to '/'
       return
     end
+    # @params_bib_id used by html caching functionality
+    @params_bib_id = bib_id.to_s
     unless CONFIG[:use_fixtures]
       @as_resource_info = @as_api.get_resource_info(@as_repo_id, @as_resource_id)
       Rails.logger.warn("AS resource #{@as_resource_id} system_mtime: #{@as_resource_info.modified_time}")

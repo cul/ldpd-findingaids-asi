@@ -1,4 +1,4 @@
-<%= form_tag(aeon_request_path, {target: '_blank'}) do %>
+<%= form_tag(aeon_request_path, {target: '_blank', authenticity_token: @authenticity_token}) do %>
 <div class="aeon_blurb">
 <p>Submit a request for access to the archival material.
 All users will need to register the first time they make a request.
