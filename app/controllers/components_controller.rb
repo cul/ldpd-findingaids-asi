@@ -14,13 +14,13 @@ class ComponentsController < ApplicationController
   def index
     @dsc_all = true
     if @preview_flag
-      Rails.logger.warn("Using Preview for #{params[:finding_aid_id]}")
+      Rails.logger.info("Using Preview for #{params[:finding_aid_id]}")
       @input_xml = preview_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
       index_helper_process_ead
     else
       cached_html_filename = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}_all.html")
       if File.exist?(cached_html_filename)
-        Rails.logger.warn("Using Cached HTML file for #{params[:finding_aid_id]}")
+        Rails.logger.info("Using Cached HTML file for #{params[:finding_aid_id]}")
         cached_html_file = open(cached_html_filename) do |file|
           file.read
         end
@@ -29,7 +29,7 @@ class ComponentsController < ApplicationController
         return
       else
         @authenticity_token = form_authenticity_token
-        Rails.logger.warn("Using EAD Cache for #{params[:finding_aid_id]}")
+        Rails.logger.warn("Using EAD Cache for #{params[:finding_aid_id]} View All")
         @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
         index_helper_process_ead
       end
@@ -65,13 +65,13 @@ class ComponentsController < ApplicationController
     # @params_series_number used by html caching functionality
     @params_series_num = params[:id]
     if @preview_flag
-      Rails.logger.warn("Using Preview for #{params[:finding_aid_id]}")
+      Rails.logger.info("Using Preview for #{params[:finding_aid_id]}")
       @input_xml = preview_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
       show_helper_process_ead
     else
       cached_html_filename = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}_#{@params_series_num}.html")
       if File.exist?(cached_html_filename)
-        Rails.logger.warn("Using Cached HTML file for #{params[:finding_aid_id]} dsc #{@params_series_num}")
+        Rails.logger.info("Using Cached HTML file for #{params[:finding_aid_id]} dsc #{@params_series_num}")
         cached_html_file = open(cached_html_filename) do |file|
           file.read
         end
@@ -80,7 +80,7 @@ class ComponentsController < ApplicationController
         return
       else
         @authenticity_token = form_authenticity_token
-        Rails.logger.warn("Using EAD Cache for #{params[:finding_aid_id]}")
+        Rails.logger.warn("Using EAD Cache for #{params[:finding_aid_id]} dsc #{@params_series_num}")
         @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
         show_helper_process_ead
       end
@@ -112,10 +112,10 @@ class ComponentsController < ApplicationController
 
   def index_legacy_no_html_caching
     if @preview_flag
-      Rails.logger.warn("Using Preview for #{params[:finding_aid_id]}")
+      Rails.logger.info("Using Preview for #{params[:finding_aid_id]}")
       @input_xml = preview_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
     else
-      Rails.logger.warn("Using Cache for #{params[:finding_aid_id]}")
+      Rails.logger.warn("Using EAD Cache for #{params[:finding_aid_id]}")
       @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
     end
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
@@ -144,10 +144,10 @@ class ComponentsController < ApplicationController
 
   def show_legacy_no_html_caching
     if @preview_flag
-      Rails.logger.warn("Using Preview for #{params[:finding_aid_id]}")
+      Rails.logger.info("Using Preview for #{params[:finding_aid_id]}")
       @input_xml = preview_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
     else
-      Rails.logger.warn("Using Cache for #{params[:finding_aid_id]}")
+      Rails.logger.warn("Using EAD Cache for #{params[:finding_aid_id]}")
       @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
     end
     @ead = ArchiveSpace::Ead::EadParser.new @input_xml
@@ -189,13 +189,13 @@ class ComponentsController < ApplicationController
     @params_bib_id = bib_id.to_s
     unless CONFIG[:use_fixtures]
       @as_resource_info = @as_api.get_resource_info(@as_repo_id, @as_resource_id)
-      Rails.logger.warn("AS resource #{@as_resource_id} system_mtime: #{@as_resource_info.modified_time}")
-      Rails.logger.warn("AS resource #{@as_resource_id} publish: #{@as_resource_info.publish_flag}")
+      Rails.logger.info("AS resource #{@as_resource_id} system_mtime: #{@as_resource_info.modified_time}")
+      Rails.logger.info("AS resource #{@as_resource_id} publish: #{@as_resource_info.publish_flag}")
       unless @as_resource_info.publish_flag
         # fcd1, 06/17/19: For now, don't combine above conditional and below conditional in compound statement
         # because want to log specific messages for info/debug purposes
         if @preview_flag
-          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, preview mode, DISPLAY")
+          Rails.logger.info("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, preview mode, DISPLAY")
         else
           Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, DON'T DISPLAY")
           redirect_to '/'

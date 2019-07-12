@@ -18,13 +18,13 @@ class FindingAidsController < ApplicationController
 
   def show
     if @preview_flag
-      Rails.logger.warn("Using Preview for #{params[:id]}")
+      Rails.logger.info("Using Preview for #{params[:id]}")
       @input_xml = preview_as_ead params[:id].delete_prefix('ldpd_').to_i
       ead_set_properties
     else
       cached_html_filename = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}.html")
       if File.exist?(cached_html_filename)
-        Rails.logger.warn("Using Cached HTML file for #{params[:id]}")
+        Rails.logger.info("Using Cached HTML file for #{params[:id]}")
         cached_html_file = open(cached_html_filename) do |file|
           file.read
         end
@@ -40,7 +40,7 @@ class FindingAidsController < ApplicationController
 
   def show_legacy_no_html_caching
     if @preview_flag
-      Rails.logger.warn("Using Preview for #{params[:id]}")
+      Rails.logger.info("Using Preview for #{params[:id]}")
       @input_xml = preview_as_ead params[:id].delete_prefix('ldpd_').to_i
     else
       Rails.logger.warn("Using EAD Cache for #{params[:id]}")
@@ -61,10 +61,10 @@ class FindingAidsController < ApplicationController
   def print
     @print_view = true
     if @preview_flag
-      Rails.logger.warn("Using Preview for #{params[:id]}")
+      Rails.logger.info("Using Preview for #{params[:finding_aid_id]} print view")
       @input_xml = preview_as_ead params[:finiding_aid_id].delete_prefix('ldpd_').to_i
     else
-      Rails.logger.warn("Using EAD Cache for #{params[:id]}")
+      Rails.logger.warn("Using EAD Cache for #{params[:finding_aid_id]} print view")
       @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
     end
     ead_set_properties
@@ -119,13 +119,13 @@ class FindingAidsController < ApplicationController
     @params_bib_id = bib_id.to_s
     unless CONFIG[:use_fixtures]
       @as_resource_info = @as_api.get_resource_info(@as_repo_id, @as_resource_id)
-      Rails.logger.warn("AS resource #{@as_resource_id} system_mtime: #{@as_resource_info.modified_time}")
-      Rails.logger.warn("AS resource #{@as_resource_id} publish: #{@as_resource_info.publish_flag}")
+      Rails.logger.info("AS resource #{@as_resource_id} system_mtime: #{@as_resource_info.modified_time}")
+      Rails.logger.info("AS resource #{@as_resource_id} publish: #{@as_resource_info.publish_flag}")
       unless @as_resource_info.publish_flag
         # fcd1, 06/17/19: For now, don't combine above conditional and below conditional in compound statement
         # because want to log specific messages for info/debug purposes
         if @preview_flag
-          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, preview mode, DISPLAY")
+          Rails.logger.info("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, preview mode, DISPLAY")
         else
           Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, DON'T DISPLAY")
           redirect_to '/'
