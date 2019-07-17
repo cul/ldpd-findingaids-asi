@@ -31,7 +31,8 @@
     </p>
     <p>
       <%= label_tag :scheduled_date, 'Scheduled Date' %>
-      <%= date_field_tag :scheduled_date, nil, class: 'hasDatepicker' %>
+      <%= date_field_tag :scheduled_date, nil, class: 'hasDatepicker', placeholder: 'YYYY-MM-DD' %>
+      <span>(Please use date format shown in input field)</span>
     </p>
     <p>
       Please schedule no more than 10 boxes per date. Scheduled dates for off-site materials are pending approval
