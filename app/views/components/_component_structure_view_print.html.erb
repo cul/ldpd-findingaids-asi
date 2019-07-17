@@ -1,7 +1,7 @@
 <div class="c-view-print">
   <h2 style="color:#2c5277;font-size:16px;font-weight:bold;"><%= component_title %></h2>
   <% daos_description_href.each do |dao_desc_href| %>
-    <%= link_to dao_desc_href.first, dao_desc_href.second %>
+    <%= link_to 'View digital content: ' + dao_desc_href.first, dao_desc_href.second %>
     <br>
   <% end %>
   <% notes.access_restrictions_ps.each do |access_restrictions_p| %>
@@ -77,7 +77,7 @@
     <% unless digital_archival_objects_description_href.empty? %>
       <div style="margin:0;padding-left:1em;color:red;">
         <% digital_archival_objects_description_href.each do |dao_desc_href| %>
-          <%= link_to dao_desc_href.first, dao_desc_href.second %>
+          <%= link_to 'View digital content: ' + dao_desc_href.first, dao_desc_href.second %>
           <br>
         <% end %>
       </div>
