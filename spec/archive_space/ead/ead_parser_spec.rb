@@ -91,7 +91,7 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
   describe 'Testing functionality (NEW): ' do
     before(:context) do
       xml_input = fixture_file_upload('asi/test_as_ead_resource.xml').read
-      @as_ead = ArchiveSpace::Ead::EadParser.new xml_input
+      @as_ead = ArchiveSpace::Ead::EadParser.new(xml_input,true)
       nokogiri_xml = Nokogiri::XML(xml_input)
       # @as_ead.parse_arch_desc_dsc nokogiri_xml
     end

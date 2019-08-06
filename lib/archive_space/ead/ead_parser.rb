@@ -54,8 +54,16 @@ module ArchiveSpace
 
       attr_reader *XPATH.keys
 
-      def initialize(xml_input)
-        @nokogiri_xml = Nokogiri::XML(xml_input)
+      def initialize(xml_input, recover_mode = false)
+        if recover_mode
+          # The RECOVER parse option is set by default, where Nokogiri will attempt to recover from errors
+          @nokogiri_xml = Nokogiri::XML(xml_input)
+        else
+          # turn RECOVER parse option off. Will throw a Nokogiri::XML::SyntaxError if parsing error encountered
+          @nokogiri_xml = Nokogiri::XML(xml_input) do |config|
+            config.norecover
+          end
+        end
         parse_ead_header(@nokogiri_xml)
         parse_arch_desc_did(@nokogiri_xml)
         parse_arch_desc_dsc(@nokogiri_xml)

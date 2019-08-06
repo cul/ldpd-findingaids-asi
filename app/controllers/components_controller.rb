@@ -37,7 +37,16 @@ class ComponentsController < ApplicationController
   end
 
   def index_helper_process_ead
-    @ead = ArchiveSpace::Ead::EadParser.new @input_xml
+    begin
+      @ead = ArchiveSpace::Ead::EadParser.new(@input_xml)
+    rescue Nokogiri::XML::SyntaxError => e
+      Rails.logger.error("Bib ID #{@params_bib_id}, Nokogiri parsing error:")
+      Rails.logger.error("Nokogiri::XML::SyntaxError: #{e}")
+      Rails.logger.error("Using Nokogiri recover mode for #{@params_bib_id}")
+      # Nokogiri RECOVER parsing mode is recommended for malformed or invalid documents
+      # setting second argument to true will use RECOVER mode when parsing xml
+      @ead = ArchiveSpace::Ead::EadParser.new(@input_xml, true)
+    end
     @finding_aid_title =
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
     @series_titles = @ead.dsc_series_titles
@@ -88,69 +97,16 @@ class ComponentsController < ApplicationController
   end
 
   def show_helper_process_ead
-    @ead = ArchiveSpace::Ead::EadParser.new @input_xml
-    # verify given series number (params[:id]) is within range
-    unless (params[:id].to_i < @ead.dsc_series_titles.size + 1 && params[:id].to_i > 0)
-      Rails.logger.warn('dsc number from url params out of range')
-      redirect_to '/'
-      return
+    begin
+      @ead = ArchiveSpace::Ead::EadParser.new(@input_xml)
+    rescue Nokogiri::XML::SyntaxError => e
+      Rails.logger.error("Bib ID #{@params_bib_id}, Nokogiri parsing error:")
+      Rails.logger.error("Nokogiri::XML::SyntaxError: #{e}")
+      Rails.logger.error("Using Nokogiri recover mode for #{@params_bib_id}")
+      # Nokogiri RECOVER parsing mode is recommended for malformed or invalid documents
+      # setting second argument to true will use RECOVER mode when parsing xml
+      @ead = ArchiveSpace::Ead::EadParser.new(@input_xml, true)
     end
-    @finding_aid_title =
-      [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
-    @series_titles = @ead.dsc_series_titles
-    @subseries_titles = @ead.subseries_titles
-    # @bib_id, @call_number, @creator, and @item_date used when sending aeon request
-    @bib_id = @ead.unit_ids.first.text
-    # EAD may or may not contain a second <unitid> containing call number
-    @call_number = @ead.unit_ids[1].text unless @ead.unit_ids.size == 1
-    @creator = @ead.origination_creators.first.text unless  @ead.origination_creators.first.nil?
-    @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
-    @restricted_access_flag =
-      @ead.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
-    ead_series_set_properties params[:id]
-  end
-
-  def index_legacy_no_html_caching
-    if @preview_flag
-      Rails.logger.info("Using Preview for #{params[:finding_aid_id]}")
-      @input_xml = preview_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
-    else
-      Rails.logger.warn("Using EAD Cache for #{params[:finding_aid_id]}")
-      @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
-    end
-    @ead = ArchiveSpace::Ead::EadParser.new @input_xml
-    @finding_aid_title =
-      [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')
-    @series_titles = @ead.dsc_series_titles
-    @subseries_titles = @ead.subseries_titles
-    # @bib_id, @call_number, @creator, and @item_date used when sending aeon request
-    @bib_id = @ead.unit_ids.first.text
-    # EAD may or may not contain a second <unitid> containing call number
-    @call_number = @ead.unit_ids[1].text unless @ead.unit_ids.size == 1
-    @creator = @ead.origination_creators.first.text unless  @ead.origination_creators.first.nil?
-    @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
-    @restricted_access_flag =
-      @ead.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
-    @notes_array = []
-    @flattened_component_structure_array = []
-    @daos_description_href_array = []
-    @series_titles.each_with_index do |title, index|
-      ead_series_set_properties(index + 1)
-      @notes_array.append @notes
-      @flattened_component_structure_array.append @flattened_component_structure
-      @daos_description_href_array.append @daos_description_href
-    end
-  end
-
-  def show_legacy_no_html_caching
-    if @preview_flag
-      Rails.logger.info("Using Preview for #{params[:finding_aid_id]}")
-      @input_xml = preview_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
-    else
-      Rails.logger.warn("Using EAD Cache for #{params[:finding_aid_id]}")
-      @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
-    end
-    @ead = ArchiveSpace::Ead::EadParser.new @input_xml
     # verify given series number (params[:id]) is within range
     unless (params[:id].to_i < @ead.dsc_series_titles.size + 1 && params[:id].to_i > 0)
       Rails.logger.warn('dsc number from url params out of range')
