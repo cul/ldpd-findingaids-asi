@@ -26,7 +26,7 @@ RSpec.describe ArchiveSpace::Ead::Did do
   ########################################## Functionality
   describe 'Testing functionality' do
     before(:context) do
-      input_xml = fixture_file_upload('asi/did.xml').read
+      input_xml = fixture_file_upload('asi/did_element_inside_archdesc_element.xml').read
       nokogiri_document = Nokogiri::XML(input_xml)
       # puts nokogiri_document.inspect
       @nokogiri_node_set = Nokogiri::XML(input_xml).xpath('/xmlns:ead/xmlns:archdesc')
