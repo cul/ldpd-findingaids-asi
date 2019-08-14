@@ -1,3 +1,4 @@
+<% require 'archive_space/ead/did' %>
 <% if @preview_flag %>
   <% slug_prefix = '/preview' %>
 <% else %>
@@ -10,15 +11,19 @@
 <p>
   <% unless @print_view %>
     <ul>
-      <% @series_titles.each_with_index do |series_title, series_index| %>
-        <% series_url = slug_prefix + repository_finding_aid_component_path(id: series_index+1, finding_aid_id: params[:id]) %>
+      <% @ead.dsc_series.each_with_index do |series, series_index| %>
+        <% series_unit_title = ArchiveSpace::Ead::Did.unit_titles(series).first.text %>
+        <% series_unit_dates = ArchiveSpace::Ead::Did.unit_dates(series) %>
+        <% dates_string = @ead.compound_dates_into_string(series_unit_dates) %>
+        <% series_link_name = [series_unit_title, dates_string].reject(&:blank?).join(', ') %>
+        <% series_link_url = slug_prefix + repository_finding_aid_component_path(id: series_index+1, finding_aid_id: params[:id]) %>
         <li>
-          <%= link_to series_title, series_url %>
+          <%= link_to series_link_name, series_link_url %>
         </li>
 	<ul>
           <% @subseries_titles[series_index].each.with_index do |subseries_title, subseries_index| %>
             <li>
-              <%= link_to subseries_title, "#{series_url}#subseries_#{subseries_index + 1}" %>
+              <%= link_to subseries_title, "#{series_link_url}#subseries_#{subseries_index + 1}" %>
             </li>
 	  <% end %>
         </ul>
