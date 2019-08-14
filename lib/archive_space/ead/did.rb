@@ -11,7 +11,7 @@ module ArchiveSpace
 
       XPATH = {
         unit_dates: './xmlns:did/xmlns:unitdate',
-        unit_title: './xmlns:did/xmlns:unittitle'
+        unit_titles: './xmlns:did/xmlns:unittitle'
       }.freeze
 
       class << self
