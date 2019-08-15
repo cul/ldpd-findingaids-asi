@@ -4,8 +4,8 @@
 # of the <did>
 require 'archive_space/ead/ead_helper'
 
-module ArchiveSpace
-  module Ead
+module Ead
+  module Elements
     class Did
       include  ArchiveSpace::Ead::EadHelper
 

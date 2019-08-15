@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'archive_space/ead/did.rb'
+require 'ead/elements/did.rb'
 
 attributes = [
   :unit_dates, # <did>:<unitdate>
@@ -7,7 +7,7 @@ attributes = [
 ].freeze
 
 
-RSpec.describe ArchiveSpace::Ead::Did do
+RSpec.describe Ead::Elements::Did do
   ########################################## API/interface
   describe 'API/interface' do
     context 'has' do
@@ -36,7 +36,7 @@ RSpec.describe ArchiveSpace::Ead::Did do
 
     context 'unit_dates' do
       it 'takes an EAD element containg a <did> (an <archdesc> in this case) and returns the dates (3 in this case)' do
-        dates = ArchiveSpace::Ead::Did.unit_dates(@nokogiri_node_set)
+        dates = Ead::Elements::Did.unit_dates(@nokogiri_node_set)
         expect(dates[0].text).to eq '1914-1989'
         expect(dates[1].text).to eq '1958-1980'
         expect(dates[2].text).to eq '1894-1966'
@@ -45,7 +45,7 @@ RSpec.describe ArchiveSpace::Ead::Did do
 
     context 'unit_titles' do
       it 'takes an EAD element containg a <did> (an <archdesc> in this case) and returns the titles (1 in this case)' do
-        titles = ArchiveSpace::Ead::Did.unit_titles(@nokogiri_node_set)
+        titles = Ead::Elements::Did.unit_titles(@nokogiri_node_set)
         expect(titles[0].text).to eq 'Siegfried Sassoon papers'
       end
     end

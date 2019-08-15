@@ -1,4 +1,4 @@
-<% require 'archive_space/ead/did' %>
+<% require 'ead/elements/did' %>
 <% if @preview_flag %>
   <% slug_prefix = '/preview' %>
 <% else %>
@@ -12,8 +12,8 @@
   <% unless @print_view %>
     <ul>
       <% @ead.dsc_series.each_with_index do |series, series_index| %>
-        <% series_unit_title = ArchiveSpace::Ead::Did.unit_titles(series).first.text %>
-        <% series_unit_dates = ArchiveSpace::Ead::Did.unit_dates(series) %>
+        <% series_unit_title = Ead::Elements::Did.unit_titles(series).first.text %>
+        <% series_unit_dates = Ead::Elements::Did.unit_dates(series) %>
         <% dates_string = @ead.compound_dates_into_string(series_unit_dates) %>
         <% series_link_name = [series_unit_title, dates_string].reject(&:blank?).join(', ') %>
         <% series_link_url = slug_prefix + repository_finding_aid_component_path(id: series_index+1, finding_aid_id: params[:id]) %>
