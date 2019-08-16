@@ -6,8 +6,6 @@ class ComponentsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
 
   before_action :validate_repository_code_and_set_repo_id,
-                :initialize_as_api,
-                :get_as_resource_info,
                 only: [:index, :show]
   after_action :cache_response_html, only: [:index, :show]
 
@@ -18,6 +16,8 @@ class ComponentsController < ApplicationController
       @input_xml = preview_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
       index_helper_process_ead
     else
+      # @params_bib_id used by html caching functionality
+      @params_bib_id = params[:finding_aid_id].delete_prefix('ldpd_').to_i
       cached_html_filename = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}_all.html")
       if File.exist?(cached_html_filename)
         Rails.logger.info("Using Cached HTML file for #{params[:finding_aid_id]}")
@@ -78,6 +78,8 @@ class ComponentsController < ApplicationController
       @input_xml = preview_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
       show_helper_process_ead
     else
+      # @params_bib_id used by html caching functionality
+      @params_bib_id = params[:finding_aid_id].delete_prefix('ldpd_').to_i
       cached_html_filename = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}_#{@params_series_num}.html")
       if File.exist?(cached_html_filename)
         Rails.logger.info("Using Cached HTML file for #{params[:finding_aid_id]} dsc #{@params_series_num}")

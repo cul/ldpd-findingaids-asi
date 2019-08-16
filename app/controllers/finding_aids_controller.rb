@@ -6,9 +6,6 @@ class FindingAidsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
 
   before_action :validate_repository_code_and_set_repo_id, only: [:index, :print, :show]
-  before_action :initialize_as_api,
-                :get_as_resource_info,
-                only: [:print, :show]
   after_action :cache_response_html, only: [:show]
 
   def index
@@ -22,6 +19,8 @@ class FindingAidsController < ApplicationController
       @input_xml = preview_as_ead params[:id].delete_prefix('ldpd_').to_i
       ead_set_properties
     else
+      # @params_bib_id used by html caching functionality
+      @params_bib_id = params[:id].delete_prefix('ldpd_').to_i
       cached_html_filename = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}.html")
       if File.exist?(cached_html_filename)
         Rails.logger.info("Using Cached HTML file for #{params[:id]}")
@@ -48,6 +47,8 @@ class FindingAidsController < ApplicationController
 
   def print
     @print_view = true
+    # @params_bib_id used by html caching functionality
+    @params_bib_id = params[:finding_aid_id].delete_prefix('ldpd_').to_i
     if @preview_flag
       Rails.logger.info("Using Preview for #{params[:finding_aid_id]} print view")
       @input_xml = preview_as_ead params[:finiding_aid_id].delete_prefix('ldpd_').to_i
@@ -68,6 +69,7 @@ class FindingAidsController < ApplicationController
   end
 
   private
+
   def ead_set_properties
     begin
       @ead = ArchiveSpace::Ead::EadParser.new(@input_xml)

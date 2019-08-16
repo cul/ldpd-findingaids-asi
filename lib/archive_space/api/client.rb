@@ -11,6 +11,8 @@ module ArchiveSpace
       end
 
       def get_ead_resource_description(repo_id, resource_id, include_unpublished = false)
+        Rails.logger.debug("ArchiveSpace::Api::Client#get_ead_resource_description called:")
+        Rails.logger.debug("repo_id: #{repo_id}, resource_id: #{resource_id}, include_unpublished: #{include_unpublished}")
         repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
         if include_unpublished
           Rails.logger.warn("API Client: using include_unpublished=true")
@@ -50,6 +52,8 @@ module ArchiveSpace
       end
 
       def get_resource_id(repo_id, bib_id)
+        Rails.logger.debug("ArchiveSpace::Api::Client#get_resource_id called:")
+        Rails.logger.debug("repo_id: #{repo_id}, bib_id: #{bib_id}")
         type_filter = {
 	  jsonmodel_type: 'field_query',
 	  field: 'primary_type',
@@ -104,6 +108,8 @@ module ArchiveSpace
       end
 
       def get_resource_info(repo_id, resource_id)
+        Rails.logger.debug("ArchiveSpace::Api::Client#get_resource_info called:")
+        Rails.logger.debug("repo_id: #{repo_id}, resource_id: #{resource_id}")
         repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
         resource_url = "#{repo_url}/resources/#{resource_id}"
         get_uri = URI(resource_url)
@@ -124,6 +130,7 @@ module ArchiveSpace
       end
 
       def authenticate
+        Rails.logger.debug("ArchiveSpace::Api::Client#authenticate called")
         post_uri = URI(AS_CONFIG[:auth_url])
         post_request = Net::HTTP::Post.new post_uri.request_uri
         post_request.set_form_data('password' => AS_CONFIG[:password])

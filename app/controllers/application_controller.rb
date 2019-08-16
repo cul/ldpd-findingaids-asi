@@ -27,6 +27,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def redirect_if_publish_flag_false(bib_id)
+    initialize_as_api
+    @as_resource_id = @as_api.get_resource_id(@as_repo_id, bib_id)
+    unless @as_api.get_resource_info(@as_repo_id, @as_resource_id).publish_flag
+      Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, DON'T DISPLAY")
+      redirect_to '/'
+      return
+    end
+  end
+
   def cached_as_ead(bib_id)
     cached_file = File.join(CONFIG[:ead_cache_dir], "as_ead_ldpd_#{bib_id}.xml")
     if File.exist?(cached_file)
@@ -37,9 +47,19 @@ class ApplicationController < ActionController::Base
     else
       Rails.logger.warn("EAD cached file #{File.basename cached_file} DOES NOT exist, AS API call required")
       if CONFIG[:use_fixtures]
+        initialize_as_api
+        @as_resource_id = @as_api.get_resource_id_local_fixture(bib_id)
         as_ead = @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id, @as_resource_id)
       else
-        as_ead = @as_api.get_ead_resource_description(@as_repo_id, @as_resource_id)
+        initialize_as_api
+        @as_resource_id = @as_api.get_resource_id(@as_repo_id, bib_id)
+        if @as_api.get_resource_info(@as_repo_id, @as_resource_id).publish_flag
+          as_ead = @as_api.get_ead_resource_description(@as_repo_id, @as_resource_id)
+        else
+          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, DON'T DISPLAY")
+          redirect_to '/'
+          return
+        end
       end
       File.open(cached_file, "wb") do |file|
         file.write(as_ead)
@@ -70,9 +90,11 @@ class ApplicationController < ActionController::Base
   def preview_as_ead(bib_id)
     if CONFIG[:use_fixtures]
       Rails.logger.warn("Preview for ldpd_#{bib_id}, using fixtures")
+      initialize_as_api
       as_ead = @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id, @as_resource_id)
     else
       Rails.logger.warn("Preview for ldpd_#{bib_id}, AS API call required with include_unpublished=true")
+      initialize_as_api
       as_ead = @as_api.get_ead_resource_description(@as_repo_id, @as_resource_id, true)
     end
     as_ead
