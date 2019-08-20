@@ -91,10 +91,12 @@ class ApplicationController < ActionController::Base
     if CONFIG[:use_fixtures]
       Rails.logger.warn("Preview for ldpd_#{bib_id}, using fixtures")
       initialize_as_api
+      @as_resource_id = @as_api.get_resource_id_local_fixture(bib_id)
       as_ead = @as_api.get_ead_resource_description_from_local_fixture(@as_repo_id, @as_resource_id)
     else
       Rails.logger.warn("Preview for ldpd_#{bib_id}, AS API call required with include_unpublished=true")
       initialize_as_api
+      @as_resource_id = @as_api.get_resource_id(@as_repo_id, bib_id)
       as_ead = @as_api.get_ead_resource_description(@as_repo_id, @as_resource_id, true)
     end
     as_ead
