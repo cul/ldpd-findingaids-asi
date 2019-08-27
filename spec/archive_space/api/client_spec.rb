@@ -8,11 +8,6 @@ RSpec.describe ArchiveSpace::Api::Client do
       expect(subject).to respond_to(:get_ead_resource_description).with(2).arguments
     end
 
-    # Following uses local fixture file instead of API call. Used during dev and test
-    it 'has #get_ead_resource_description_from_local_fixture method' do
-      expect(subject).to respond_to(:get_ead_resource_description_from_local_fixture).with(2).arguments
-    end
-
     # Use Search API call:
     # http://archivesspace.github.io/archivesspace/api/#search-this-repository
     it 'get_resource_id' do

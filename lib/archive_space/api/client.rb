@@ -30,23 +30,6 @@ module ArchiveSpace
         result.body
       end
 
-      # Following gets fixtures that are not under source control. This allows
-      # the use of actual ArchiveSpace-generated EADs that can be quite large.
-      # It would be space-inefficient to store these in the source control tree.
-      # It also allows testing with a specific locally stored EAD (see the filepath
-      # variable below for the filename template).
-      def get_ead_resource_description_from_local_fixture(repo_id, resource_id)
-        filepath =
-          "spec/fixtures/asi/local_dev_fixtures/as_ead_repo_#{repo_id}_res_#{resource_id}.xml"
-        open(filepath) do |b|
-          File.open('tmp/foo', "wb") { |file| file.write(b.read) }
-        end
-        puts File.mtime('tmp/foo')
-        open(filepath) do |b|
-          b.read
-        end
-      end
-
       def get_resource_id_local_fixture(bib_id)
         LOCAL_FIXTURES[:map_bib_id_to_as_reource_id][bib_id]
       end
