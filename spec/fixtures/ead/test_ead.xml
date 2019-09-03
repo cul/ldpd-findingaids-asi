@@ -11,6 +11,7 @@
       <unittitle>Siegfried Sassoon papers</unittitle>
       <origination label="creator"><corpname>Columbia University. Teachers College</corpname></origination>
       <origination label="creator"><famname>Romanov family</famname></origination>
+      <origination label="collector"><famname>Doe, Jane</famname></origination>
       <origination label="creator"><persname>Sassoon, Siegfried, 1886-1967</persname></origination>
       <unitid>4079591</unitid>
       <unitid>MS#0030</unitid>
@@ -23,8 +24,8 @@
 	<extent altrender="carrier">one hard disk</extent>
       </physdesc>
       <physdesc altrender="whole">
-        <extent altrender="materialtype spaceoccupied">423 linear feet</extent>
-        <extent altrender="carrier">351 record cartons 15 document boxes and 4 flat boxes</extent>
+	<extent altrender="materialtype spaceoccupied">423 linear feet</extent>
+	<extent altrender="carrier">351 record cartons 15 document boxes and 4 flat boxes</extent>
       </physdesc>
       <!-- fcd1, 05/21/19: the following combination of unitdate elements might not appear -->
       <!-- in an actual  AS EAD; it is used here for testing the parsing of the different types-->
@@ -35,6 +36,7 @@
       <langmaterial><language langcode="eng">Dutch</language></langmaterial>
       <langmaterial>Material is in English and in French, with some materials in Dutch.</langmaterial>
       <abstract>This collection is made up of architectural drawings.</abstract>
+      <abstract>This collection is also made up of architectural photographs.</abstract>
     </did>
     <accessrestrict>
       <head>Restrictions on Access</head>

@@ -4,10 +4,12 @@ require 'ead/elements/did.rb'
 class_methods = [
   :abstract_array, # <abstract> Abstract
   :langmaterial_array, # <langmaterial> Language of the Material
-  :origination_array, # <origination> Origination
-  :physdesc_extent_array, # <physdesc> Physical Description, <extent> Extent
+  :origination_label_attribute_creator_array, # <origination> Origination, <origination label="creator">
+  :physdesc_array, # <physdesc> Physical Description
+  :repository_corpname_array, # <repository> Repository, <corpname> Corporate Name
   :unitdate_array, # <unitdate> Date of the Unit
-  :unittitle # <unittitle> Title of the Unit
+  :unitid_array, # <unitid> ID of the Unit
+  :unittitle_array # <unittitle> Title of the Unit
 ].freeze
 
 
@@ -31,15 +33,6 @@ RSpec.describe Ead::Elements::Did do
       @nokogiri_node_set = Nokogiri::XML(input_xml).xpath('/xmlns:ead/xmlns:archdesc/xmlns:did')
     end
 
-    describe ' class methods that return a single element:' do
-      context 'class method .unittitle' do
-        it 'takes a <did> and returns an <unititle>' do
-          title = Ead::Elements::Did.unittitle(@nokogiri_node_set)
-          expect(title.text).to eq 'Siegfried Sassoon papers'
-        end
-      end
-    end
-
     describe ' class methods that return an array:' do
       context 'class method' do
         # <abstract> Abstract
@@ -58,8 +51,8 @@ RSpec.describe Ead::Elements::Did do
           ]
         }
 
-        # <origination> Origination
-        let (:expected_origination_array) {
+        # <origination> Origination, <origination label="creator">
+        let (:expected_origination_label_attribute_creator_array) {
           [
             "Columbia University. Teachers College",
             "Romanov family",
@@ -71,14 +64,18 @@ RSpec.describe Ead::Elements::Did do
         # <extent> Extent
         # <exten> is a <physdesc> subelement for information about the quantity of the materials
         # being described or an expression of the physical space they occupy
-        let (:expected_physdesc_extent_array) {
+        let (:expected_physdesc_array) {
           [
-            "3 linear feet",
-            "4 boxes 13 slipcases",
-            "3.6 Tb Digital",
-            "one hard disk",
-            "423 linear feet",
-            "351 record cartons 15 document boxes and 4 flat boxes"
+            "3 linear feet 4 boxes 13 slipcases",
+            "3.6 Tb Digital one hard disk",
+            "423 linear feet 351 record cartons 15 document boxes and 4 flat boxes"
+          ]
+        }
+
+        # <repository> Repository, <corpname> Corporate Name
+        let (:expected_repository_corpname_array) {
+          [
+            'Rare Book and Manuscript Library'
           ]
         }
 
@@ -91,8 +88,16 @@ RSpec.describe Ead::Elements::Did do
           ]
         }
 
+        # <unitid> ID of the Unit
+        let (:expected_unitid_array) {
+          [
+            '4079591',
+            'MS#0030'
+          ]
+        }
+
         # <unittitle> Title of the Unit
-        let (:expected_unittitle) {
+        let (:expected_unittitle_array) {
           [
             'Siegfried Sassoon papers'
           ]
@@ -104,7 +109,7 @@ RSpec.describe Ead::Elements::Did do
             values = Ead::Elements::Did.send(class_method,@nokogiri_node_set)
             expected_values = eval "expected_#{class_method}"
             expected_values.each_with_index do |expected_value, index|
-              expect(values[index].text).to eq expected_value
+              expect(values[index].text.squish).to eq expected_value
             end
           end
         end
