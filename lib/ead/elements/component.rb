@@ -14,9 +14,14 @@ module Ead
   module Elements
     class Component < ArchdescComponentCommonality
       XPATH = {
+        c: './xmlns:c'
       }.freeze
 
       class << self
+        # returns: array of Nokogiri::XML::Element instances of <c>
+        def c_array(nokogiri_element)
+          nokogiri_element.xpath(XPATH[:c])
+        end
       end
     end
   end

@@ -7,7 +7,7 @@ require 'ead/elements/component.rb'
 # Ead::Elements::ArchdescComponentCommonality, which defines the following
 # class methods. NOTE: only the class methods currently used by the app to
 # parse a <c> element are listed here.
-common_class_methods = [
+class_methods = [
   :accessrestrict_head_array, # <accessrestrict><head>
   :accessrestrict_p_array, # <accessrestrict><p>
   :altformavail_head_array,  # <altformavail><head>
@@ -16,6 +16,7 @@ common_class_methods = [
   :arrangement_p_array, # <arrangement><p>
   :bioghist_head_array, # <bioghist><head>
   :bioghist_p_array, # <bioghist><p>
+  :c_array, # <c>
   :did, # <did>
   :odd_head_array, # <odd><head>
   :odd_p_array, # <odd><p>
@@ -35,7 +36,7 @@ RSpec.describe Ead::Elements::Component do
   ########################################## API/interface
   describe '-- Validate API/interface --' do
     context 'has class method' do
-      common_class_methods.each do |class_method|
+      class_methods.each do |class_method|
         it "#{class_method}" do
           expect(subject.class).to respond_to("#{class_method}")
         end
@@ -48,7 +49,8 @@ RSpec.describe Ead::Elements::Component do
     before(:context) do
       input_xml = fixture_file_upload('ead/test_ead.xml').read
       nokogiri_document = Nokogiri::XML(input_xml)
-      @nokogiri_node_set = Nokogiri::XML(input_xml).xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c')
+      # test_ead_.xml contains two top-level <c> elements. Retrieve the first one as a test fixture
+      @nokogiri_node_set = Nokogiri::XML(input_xml).xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c').first
     end
 
     describe ' class methods that return an array of composite elements:' do
@@ -68,6 +70,7 @@ RSpec.describe Ead::Elements::Component do
         let (:expected_accessrestrict_head_array) {
 	  [
             "Conditions Governing Access",
+            "Conditions Governing Access",
             "Conditions Governing Access"
 	  ]
         }
@@ -82,6 +85,7 @@ RSpec.describe Ead::Elements::Component do
         # <acqinfo> Acquisition Information
         let (:expected_acqinfo_head_array) {
 	  [
+            "Acquisition",
             "Acquisition",
             "Acquisition"
 	  ]
@@ -98,6 +102,7 @@ RSpec.describe Ead::Elements::Component do
         let (:expected_altformavail_head_array) {
 	  [
             "Alternate Form Available",
+            "Alternate Form Available",
             "Alternate Form Available"
 	  ]
         }
@@ -112,6 +117,7 @@ RSpec.describe Ead::Elements::Component do
         # <arrangement> Arrangement
         let (:expected_arrangement_head_array) {
 	  [
+            "Arrangement",
             "Arrangement",
             "Arrangement"
 	  ]
@@ -128,6 +134,7 @@ RSpec.describe Ead::Elements::Component do
         let (:expected_bioghist_head_array) {
 	  [
             "Historical Note",
+            "Historical Note",
             "Historical Note"
 	  ]
         }
@@ -139,9 +146,18 @@ RSpec.describe Ead::Elements::Component do
 	  ]
         }
 
+        # <c><did><unittile>, used to validate retrieved <c> elements
+        let (:expected_child_component_unittitles) {
+	  [
+            "Subseries 1: Cataloged Correspondence -- Letters",
+            "Subseries 2: Cataloged Correspondence - Postcards"
+	  ]
+        }
+
         # <odd> Other Descriptive Data
         let (:expected_odd_head_array) {
 	  [
+            "General Note",
             "General Note",
             "General Note"
 	  ]
@@ -158,6 +174,7 @@ RSpec.describe Ead::Elements::Component do
         let (:expected_otherfindaid_head_array) {
 	  [
             "Other Finding Aids",
+            "Other Finding Aids",
             "Other Finding Aids"
 	  ]
         }
@@ -172,6 +189,7 @@ RSpec.describe Ead::Elements::Component do
         # <relatedmaterial> Related Material
         let (:expected_relatedmaterial_head_array) {
 	  [
+            "Related Materials",
             "Related Materials",
             "Related Materials"
 	  ]
@@ -188,6 +206,7 @@ RSpec.describe Ead::Elements::Component do
         let (:expected_scopecontent_head_array) {
 	  [
             "Scope and Contents",
+            "Scope and Contents",
             "Scope and Contents"            
 	  ]
         }
@@ -202,6 +221,7 @@ RSpec.describe Ead::Elements::Component do
         # <separatedmaterial> Separated Material
         let (:expected_separatedmaterial_head_array) {
 	  [
+            "Separated Materials",
             "Separated Materials",
             "Separated Materials"
 	  ]
@@ -218,6 +238,7 @@ RSpec.describe Ead::Elements::Component do
         let (:expected_userestrict_head_array) {
 	  [
             "Terms Governing Use and Reproduction",
+            "Terms Governing Use and Reproduction",
             "Terms Governing Use and Reproduction"
 	  ]
         }
@@ -229,11 +250,23 @@ RSpec.describe Ead::Elements::Component do
 	  ]
         }
 
-	array_class_methods = common_class_methods.find_all { |class_method| "#{class_method}".ends_with? "_array"}
-        (array_class_methods - [:controlaccess_array]).each do |class_method|
-          it ".#{class_method} takes a <did> and returns an array of <#{class_method.to_s.chomp('_array')}>" do
-            values = Ead::Elements::Archdesc.send(class_method,@nokogiri_node_set)
+        # Testing .c_array functionality
+        it '.c_array takes a <c> element and returns an array of <c> elements (the direct children that are <c> elements)' do
+          child_components = Ead::Elements::Component.c_array(@nokogiri_node_set)
+          expect(child_components.size).to eq expected_child_component_unittitles.size
+          expected_child_component_unittitles.each_with_index do |expected_child_component_unittitle, index|
+            expect(child_components[index].xpath('./xmlns:did/xmlns:unittitle').text).to eq expected_child_component_unittitle
+          end
+        end
+
+        # NOTE: Testing the .c_array and .controlaccess_array functionality is more involved, so this functionality is not tested
+        # in the following example. Instead, the functionality for these class methods is tested in separate examples
+        array_class_methods = class_methods.find_all { |class_method| "#{class_method}".ends_with? "_array"}
+        (array_class_methods - [:controlaccess_array, :c_array]).each do |class_method|
+          it ".#{class_method} takes a <c> element and returns an array of <#{class_method.to_s.chomp('_array')}>" do
+            values = Ead::Elements::Component.send(class_method,@nokogiri_node_set)
             expected_values = eval "expected_#{class_method}"
+            expect(values.size).to eq expected_values.size
             expected_values.each_with_index do |expected_value, index|
               expect(values[index].text).to eq expected_value
             end

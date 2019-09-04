@@ -41,7 +41,7 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionDscParser do
       let (:expected_series_compound_title_array) {
         [
           'Series I: Cataloged Correspondence, 1914-1989, 1894-1967, bulk 1958-1980',
-          'Series II: Cataloged Pictures, 1914-1989, 1897-1967, bulk 1958-1980'
+          'Series II: Cataloged Drawings, 1914-1989, 1897-1967, bulk 1958-1980'
         ]
       }
 

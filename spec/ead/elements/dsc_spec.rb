@@ -32,7 +32,7 @@ RSpec.describe Ead::Elements::Dsc do
         let (:expected_series_unittitles) {
           [
             'Series I: Cataloged Correspondence',
-            'Series II: Cataloged Pictures'
+            'Series II: Cataloged Drawings'
           ]
         }
         
