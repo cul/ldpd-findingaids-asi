@@ -157,6 +157,11 @@
     <dsc>
       <c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="series">
 	<did>
+	  <!-- fcd1, 05/21/19: the following combination of unitdate elements might not appear -->
+	  <!-- in an actual  AS EAD; it is used here for testing the parsing of the different types-->
+	  <unitdate normal="1915/1989" type="inclusive">1914-1989</unitdate>
+	  <unitdate normal="1958/1981" type="bulk">1958-1980</unitdate>
+	  <unitdate>1894-1967</unitdate>
 	  <unittitle>Series I: Cataloged Correspondence</unittitle>
 	  <physdesc>(1 folder)</physdesc>
 	  <dao xlink:type="simple"
@@ -324,7 +329,352 @@
 	  <head>Terms Governing Use and Reproduction</head>
 	  <p>Single photocopies may be made for research purposes.(UR)</p>
 	</userestrict>
-	<c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="series">
+	<c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="subseries">
+	  <did>
+	    <unittitle>Subseries I: Cataloged Correspondence</unittitle>
+	    <physdesc>(1 folder)</physdesc>
+	    <dao xlink:type="simple"
+		 xlink:href="https://dlc.library.columbia.edu/ifp/partner/secretariat"
+		 xlink:actuate="onRequest"
+		 xlink:show="new"
+		 xlink:title="Sub-subseries I.13.B: Secretariat Unrestricted Digital Files, 2001-2013">
+              <daodesc>
+		<p>Browse or Search Digital B Materials</p>
+              </daodesc>
+            </dao>
+	    <dao xlink:type="simple"
+		 xlink:href="https://dlc.library.columbia.edu/ifp/partner/secretariat"
+		 xlink:actuate="onRequest"
+		 xlink:show="new"
+		 xlink:title="Sub-subseries I.13.B: Secretariat Unrestricted Digital Files, 2001-2013">
+	      <daodesc>
+		<p>Sub-subseries I.13.B: Secretariat Unrestricted Digital Files, 2001-2013</p>
+            </daodesc>
+          </dao>
+	    <container label="general manuscripts box" type="box">78</container>
+	    <container type="folder">5</container>
+	  </did>
+	  <scopecontent id="aspace_c35fc09c1d77badb7e08caaa0d60dccf">
+	    <head>Scope and Contents</head>
+	    <p>In four boxes, numbered 1-4.</p>
+	  </scopecontent>
+	  <scopecontent id="aspace_dad8ab5d0f38f7a1ef59b34e26956d4c">
+	    <head>Scope and Contents</head>
+	    <p>The Builder. Nov 11, 1921. Excerpt;</p>
+	  </scopecontent>
+	  <scopecontent id="aspace_d49890c77e0051ced6786539d459c7ae">
+	    <head>Scope and Contents</head>
+	    <p>Notice de la constitution des societe local.</p>
+	  </scopecontent>
+	  <separatedmaterial>
+	    <head>Separated Materials</head>
+	    <p>Some interviewees' personal papers were separated and described as their own collection.</p>
+	  </separatedmaterial>
+	  <separatedmaterial>
+	    <head>Separated Materials</head>
+	    <p>Oral history transcripts in this series are drafts and editing copies.</p>
+	  </separatedmaterial>
+	  <separatedmaterial>
+	    <head>Separated Materials</head>
+	    <p>The personal papers and finalized individual memoirs are cataloged in CLIO.</p>
+	  </separatedmaterial>
+	  <otherfindaid id="aspace_e21a175ee1704a70bd7f04d1f5cd4bf7">
+	    <head>Other Finding Aids</head>
+	    <p>*In addition, a sortable inventory in this downloadable Excel spreadsheet.</p>
+	  </otherfindaid>
+	  <otherfindaid id="aspace_e21a175ee1704a70bd7f04d1f5cd4bf7">
+	    <head>Other Finding Aids</head>
+	    <p>A pdf version is available for download.</p>
+	  </otherfindaid>
+	  <otherfindaid id="aspace_e21a175ee1704a70bd7f04d1f5cd4bf7">
+	    <head>Other Finding Aids</head>
+	    <p>Another finding aid available online.</p>
+	  </otherfindaid>
+	  <accessrestrict>
+	    <head>Conditions Governing Access</head>
+	    <p>[Restricted Until 2049](child container)</p>
+	  </accessrestrict>
+	  <accessrestrict>
+	    <head>Conditions Governing Access</head>
+	    <p>[Restricted Until 2047](child container)</p>
+	  </accessrestrict>
+	  <accessrestrict>
+	    <head>Conditions Governing Access</head>
+	    <p>[Restricted Until 2059](child container)</p>
+	  </accessrestrict>
+	  <arrangement>
+	    <head>Arrangement</head>
+	    <p>Arranged alphabetically by topic.</p>
+	  </arrangement>
+	  <arrangement>
+	    <head>Arrangement</head>
+	    <p>Arranged alphabetically by creator.</p>
+	  </arrangement>
+	  <arrangement>
+	    <head>Arrangement</head>
+	    <p>Arranged alphabetically by repo.</p>
+	  </arrangement>
+	  <relatedmaterial>
+	    <head>Related Materials</head>
+	    <p>The related pictures are cataloged individually(RM)</p>
+	  </relatedmaterial>
+	  <relatedmaterial>
+	    <head>Related Materials</head>
+	    <p>The related novels are cataloged individually(RM)</p>
+	  </relatedmaterial>
+	  <relatedmaterial>
+	    <head>Related Materials</head>
+	    <p>The related slides are cataloged individually(RM)</p>
+	  </relatedmaterial>
+	  <odd>
+	    <head>General Note</head>
+	    <p>This file is nice(ODD)</p>
+	  </odd>
+	  <odd>
+	    <head>General Note</head>
+	    <p>This manuscript is nice(ODD)</p>
+	  </odd>
+	  <odd>
+	    <head>General Note</head>
+	    <p>This picture is nice(ODD)</p>
+	  </odd>
+	  <bioghist>
+	    <head>Historical Note</head>
+	    <p>John ate pizza for dinner.(BH)</p>
+	  </bioghist>
+	  <bioghist>
+	    <head>Historical Note</head>
+	    <p>John ate a burger for dinner.(BH)</p>
+	  </bioghist>
+	  <bioghist>
+	    <head>Historical Note</head>
+	    <p>John ate fish for dinner.(BH)</p>
+	  </bioghist>
+	  <altformavail>
+	    <head>Alternate Form Available</head>
+	    <p>Film available.(AF)</p>
+	  </altformavail>
+	  <altformavail>
+	    <head>Alternate Form Available</head>
+	    <p>Hard copies available.(AF)</p>
+	  </altformavail>
+	  <altformavail>
+	    <head>Alternate Form Available</head>
+	    <p>Digital files available.(AF)</p>
+	  </altformavail>
+	  <acqinfo>
+	    <head>Acquisition</head>
+	    <p>Transferred from Avery(ACQ)</p>
+	  </acqinfo>
+	  <acqinfo>
+	    <head>Acquisition</head>
+	    <p>Transferred from NYU(ACQ)</p>
+	  </acqinfo>
+	  <acqinfo>
+	    <head>Acquisition</head>
+	    <p>Transferred from next door(ACQ)</p>
+	  </acqinfo>
+	  <custodhist>
+	    <head>Custodial History</head>
+	    <p>Gift of the ZZZ Company, 1963.(CH)</p>
+	  </custodhist>
+	  <custodhist>
+	    <head>Custodial History</head>
+	    <p>Gift of the 123 Company, 1963.(CH)</p>
+	  </custodhist>
+	  <custodhist>
+	    <head>Custodial History</head>
+	    <p>Gift of the Pi Company, 1963.(CH)</p>
+	  </custodhist>
+	  <userestrict>
+	    <head>Terms Governing Use and Reproduction</head>
+	    <p>Four photocopies may be made for research purposes.(UR)</p>
+	  </userestrict>
+	  <userestrict>
+	    <head>Terms Governing Use and Reproduction</head>
+	    <p>Ten photocopies may be made for research purposes.(UR)</p>
+	  </userestrict>
+	  <userestrict>
+	    <head>Terms Governing Use and Reproduction</head>
+	    <p>Two photocopies may be made for research purposes.(UR)</p>
+	  </userestrict>
+	</c>
+      </c>
+      <c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="series">
+	<did>
+	  <!-- fcd1, 05/21/19: the following combination of unitdate elements might not appear -->
+	  <!-- in an actual  AS EAD; it is used here for testing the parsing of the different types-->
+	  <unitdate normal="1917/1989" type="inclusive">1914-1989</unitdate>
+	  <unitdate normal="1959/1981" type="bulk">1958-1980</unitdate>
+	  <unitdate>1897-1967</unitdate>
+	  <unittitle>Series II: Cataloged Pictures</unittitle>
+	  <physdesc>(1 folder)</physdesc>
+	  <dao xlink:type="simple"
+	       xlink:href="https://dlc.library.columbia.edu/ifp/partner/secretariat"
+               xlink:actuate="onRequest"
+               xlink:show="new"
+	       xlink:title="Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013">
+            <daodesc>
+              <p>Browse or Search Digital Materials</p>
+            </daodesc>
+          </dao>
+	  <dao xlink:type="simple"
+               xlink:href="https://dlc.library.columbia.edu/ifp/partner/secretariat"
+               xlink:actuate="onRequest"
+               xlink:show="new"
+               xlink:title="Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013">
+	    <daodesc>
+              <p>Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013</p>
+            </daodesc>
+          </dao>
+	  <container label="general manuscripts box" type="box">78</container>
+	  <container type="folder">5</container>
+	</did>
+	<accessrestrict>
+	  <head>Conditions Governing Access</head>
+	  <p>[Restricted Until 2039](top-level container)</p>
+	</accessrestrict>
+	<accessrestrict>
+	  <head>Conditions Governing Access</head>
+	  <p>[Restricted Until 2059](top-level container)</p>
+	</accessrestrict>
+	<accessrestrict>
+	  <head>Conditions Governing Access</head>
+	  <p>[Restricted Until 2020](top-level container)</p>
+	</accessrestrict>
+	<acqinfo>
+	  <head>Acquisition</head>
+	  <p>Transferred from NYPL(ACQ)</p>
+	</acqinfo>
+	<acqinfo>
+	  <head>Acquisition</head>
+	  <p>Transferred from CUL(ACQ)</p>
+	</acqinfo>
+	<acqinfo>
+	  <head>Acquisition</head>
+	  <p>Transferred from Metro(ACQ)</p>
+	</acqinfo>
+	<altformavail>
+	  <head>Alternate Form Available</head>
+	  <p>Microforms available.(AF)</p>
+	</altformavail>
+	<altformavail>
+	  <head>Alternate Form Available</head>
+	  <p>Photocopies available.(AF)</p>
+	</altformavail>
+	<altformavail>
+	  <head>Alternate Form Available</head>
+	  <p>Microfiche available.(AF)</p>
+	</altformavail>
+	<arrangement>
+	  <head>Arrangement</head>
+	  <p>Arranged alphabetically by subject.</p>
+	</arrangement>
+	<arrangement>
+	  <head>Arrangement</head>
+	  <p>Arranged alphabetically by author.</p>
+	</arrangement>
+	<arrangement>
+	  <head>Arrangement</head>
+	  <p>Arranged alphabetically by location.</p>
+	</arrangement>
+	<bioghist>
+	  <head>Historical Note</head>
+	  <p>John ate pizza for lunch.(BH)</p>
+	</bioghist>
+	<bioghist>
+	  <head>Historical Note</head>
+	  <p>John ate a burger for lunch.(BH)</p>
+	</bioghist>
+	<bioghist>
+	  <head>Historical Note</head>
+	  <p>John ate fish for lunch.(BH)</p>
+	</bioghist>
+	<custodhist>
+	  <head>Custodial History</head>
+	  <p>Gift of the ABC Company, 1963.(CH)</p>
+	</custodhist>
+	<custodhist>
+	  <head>Custodial History</head>
+	  <p>Gift of the BCD Company, 1963.(CH)</p>
+	</custodhist>
+	<custodhist>
+	  <head>Custodial History</head>
+	  <p>Gift of the DDD Company, 1963.(CH)</p>
+	</custodhist>
+	<odd>
+	  <head>General Note</head>
+	  <p>This collection is nice(ODD)</p>
+	</odd>
+	<odd>
+	  <head>General Note</head>
+	  <p>This repo is nice(ODD)</p>
+	</odd>
+	<odd>
+	  <head>General Note</head>
+	  <p>This series is nice(ODD)</p>
+	</odd>
+	<otherfindaid id="aspace_e21a175ee1704a70bd7f04d1f5cd4bf7">
+	  <head>Other Finding Aids</head>
+	  <p>*In addition, a sortable inventory in this downloadable Excel spreadsheet.</p>
+	</otherfindaid>
+	<otherfindaid id="aspace_e21a175ee1704a70bd7f04d1f5cd4bf7">
+	  <head>Other Finding Aids</head>
+	  <p>A pdf version is available for download.</p>
+	</otherfindaid>
+	<otherfindaid id="aspace_e21a175ee1704a70bd7f04d1f5cd4bf7">
+	  <head>Other Finding Aids</head>
+	  <p>Another finding aid available online.</p>
+	</otherfindaid>
+	<relatedmaterial>
+	  <head>Related Materials</head>
+	  <p>The related memoirs are cataloged individually(RM)</p>
+	</relatedmaterial>
+	<relatedmaterial>
+	  <head>Related Materials</head>
+	  <p>The related photographs are cataloged individually(RM)</p>
+	</relatedmaterial>
+	<relatedmaterial>
+	  <head>Related Materials</head>
+	  <p>The related recordings are cataloged individually(RM)</p>
+	</relatedmaterial>
+	<scopecontent id="aspace_c35fc09c1d77badb7e08caaa0d60dccf">
+	  <head>Scope and Contents</head>
+	  <p>The drawings in the collection consist of pencil and ink drawings.</p>
+	</scopecontent>
+	<scopecontent id="aspace_dad8ab5d0f38f7a1ef59b34e26956d4c">
+	  <head>Scope and Contents</head>
+	  <p>Correspondents include: H.J. Heinz.</p>
+	</scopecontent>
+	<scopecontent id="aspace_d49890c77e0051ced6786539d459c7ae">
+	  <head>Scope and Contents</head>
+	  <p>Contains  document allowing Bunshaft to practice architecture in Belgium.</p>
+	</scopecontent>
+	<separatedmaterial>
+	  <head>Separated Materials</head>
+	  <p>Some interviewees' personal papers were separated and described as their own collection.</p>
+	</separatedmaterial>
+	<separatedmaterial>
+	  <head>Separated Materials</head>
+	  <p>Oral history transcripts in this series are drafts and editing copies.</p>
+	</separatedmaterial>
+	<separatedmaterial>
+	  <head>Separated Materials</head>
+	  <p>The personal papers and finalized individual memoirs are cataloged in CLIO.</p>
+	</separatedmaterial>
+	<userestrict>
+	  <head>Terms Governing Use and Reproduction</head>
+	  <p>Five photocopies may be made for research purposes.(UR)</p>
+	</userestrict>
+	<userestrict>
+	  <head>Terms Governing Use and Reproduction</head>
+	  <p>One photocopy may be made for research purposes.(UR)</p>
+	</userestrict>
+	<userestrict>
+	  <head>Terms Governing Use and Reproduction</head>
+	  <p>Single photocopies may be made for research purposes.(UR)</p>
+	</userestrict>
+	<c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="subseries">
 	  <did>
 	    <unittitle>Subseries I: Cataloged Correspondence</unittitle>
 	    <physdesc>(1 folder)</physdesc>
