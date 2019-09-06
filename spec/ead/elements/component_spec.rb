@@ -17,6 +17,7 @@ class_methods = [
   :bioghist_head_array, # <bioghist><head>
   :bioghist_p_array, # <bioghist><p>
   :c_array, # <c>
+  :c_level_attribute_subseries_array, # <c level="subseries">
   :did, # <did>
   :odd_head_array, # <odd><head>
   :odd_p_array, # <odd><p>
@@ -30,6 +31,13 @@ class_methods = [
   :separatedmaterial_p_array, # <separatedmaterial><p>
   :userestrict_head_array, # <userestrict><head>
   :userestrict_p_array # <userestrict><p>
+].freeze
+
+# following is a subset of the above array
+class_methods_tested_individually = [
+  :c_array,
+  :c_level_attribute_subseries_array,
+  :controlaccess_array
 ].freeze
 
 RSpec.describe Ead::Elements::Component do
@@ -150,6 +158,15 @@ RSpec.describe Ead::Elements::Component do
         let (:expected_child_component_unittitles) {
 	  [
             "Subseries 1: Cataloged Correspondence -- Letters",
+            "Alan Alda Transcript",
+            "Subseries 2: Cataloged Correspondence - Postcards"
+	  ]
+        }
+
+        # <c level="subseries"><did><unittile>, used to validate retrieved <c level="subseries"> elements
+        let (:expected_child_component_level_subseries_unittitles) {
+	  [
+            "Subseries 1: Cataloged Correspondence -- Letters",
             "Subseries 2: Cataloged Correspondence - Postcards"
 	  ]
         }
@@ -259,10 +276,19 @@ RSpec.describe Ead::Elements::Component do
           end
         end
 
-        # NOTE: Testing the .c_array and .controlaccess_array functionality is more involved, so this functionality is not tested
-        # in the following example. Instead, the functionality for these class methods is tested in separate examples
+        # Testing .c_level_attribute_subseries_array functionality
+        it '.c_level_attribute_subseries_array takes a <c> element and returns an array of <c level="subseries"> elements (direct children)' do
+          child_subseries_components = Ead::Elements::Component.c_level_attribute_subseries_array(@nokogiri_node_set)
+          expect(child_subseries_components.size).to eq expected_child_component_level_subseries_unittitles.size
+          expected_child_component_level_subseries_unittitles.each_with_index do |expected_child_component_level_subseries_unittitle, index|
+            expect(child_subseries_components[index].xpath('./xmlns:did/xmlns:unittitle').text).to eq expected_child_component_level_subseries_unittitle
+          end
+        end
+
+        # NOTE: Testing the class methods in the class_methods_tested_individually array is more involved, so the functionality
+        # is not tested in the following example. Instead, the functionality for these class methods is tested in separate examples
         array_class_methods = class_methods.find_all { |class_method| "#{class_method}".ends_with? "_array"}
-        (array_class_methods - [:controlaccess_array, :c_array]).each do |class_method|
+        (array_class_methods - class_methods_tested_individually).each do |class_method|
           it ".#{class_method} takes a <c> element and returns an array of <#{class_method.to_s.chomp('_array')}>" do
             values = Ead::Elements::Component.send(class_method,@nokogiri_node_set)
             expected_values = eval "expected_#{class_method}"

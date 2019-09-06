@@ -6,7 +6,8 @@ module ArchiveSpace
     class ArchivalDescriptionDscParser
 
       ATTRIBUTES = [
-        :series_compound_title_array
+        :series_compound_title_array,
+        :subseries_compound_title_array_for_each_series_array
 #        :series_date_string_array, # <ead>:<archdesc>:<c level="series">:<did>:<unitdate>
 #        :series_title_array # <ead>:<archdesc>:<c level="series">:<did>:<unittile>
       ]
@@ -26,15 +27,23 @@ module ArchiveSpace
         arch_desc_dsc = nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc')
         series_array = ::Ead::Elements::Dsc.c_level_attribute_series_array(arch_desc_dsc)
         @series_compound_title_array = []
+        @subseries_compound_title_array_for_each_series_array = []
         series_array.each do |series|
-          did = ::Ead::Elements::Component.did(series)
+          @series_compound_title_array.append compound_title(series)
+          subseries_compound_title_array = []
+          ::Ead::Elements::Component.c_level_attribute_subseries_array(series).each do |subseries|
+            subseries_compound_title_array.append compound_title(subseries)
+          end
+          @subseries_compound_title_array_for_each_series_array.append subseries_compound_title_array
+        end
+      end
+
+      def compound_title component
+          did = ::Ead::Elements::Component.did(component)
           unit_title = ::Ead::Elements::Did.unittitle_array(did).first
           unit_dates_string = compound_dates_into_string(::Ead::Elements::Did.unitdate_array(did))
           # compound_title contains the unit title and the unit date(s)
-          compound_title = [unit_title, unit_dates_string].reject(&:blank?).join(', ')
-          @series_compound_title_array.append compound_title
-        end
-        @series_compound_title_array
+          [unit_title, unit_dates_string].reject(&:blank?).join(', ')
       end
 
       def compound_physical_descriptions_into_string physical_descriptions

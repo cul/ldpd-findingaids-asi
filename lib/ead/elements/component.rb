@@ -14,13 +14,19 @@ module Ead
   module Elements
     class Component < ArchdescComponentCommonality
       XPATH = {
-        c: './xmlns:c'
+        c: './xmlns:c',
+        c_level_attribute_subseries: './xmlns:c[@level="subseries"]'
       }.freeze
 
       class << self
         # returns: array of Nokogiri::XML::Element instances of <c>
         def c_array(nokogiri_element)
           nokogiri_element.xpath(XPATH[:c])
+        end
+
+        # returns: array of Nokogiri::XML::Element instances of <c level="subseries">
+        def c_level_attribute_subseries_array(nokogiri_element)
+          nokogiri_element.xpath(XPATH[:c_level_attribute_subseries])
         end
       end
     end

@@ -332,6 +332,11 @@
 	<c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="subseries">
 	  <did>
 	    <unittitle>Subseries 1: Cataloged Correspondence -- Letters</unittitle>
+	    <!-- fcd1, 05/21/19: the following combination of unitdate elements might not appear -->
+	    <!-- in an actual  AS EAD; it is used here for testing the parsing of the different types-->
+	    <unitdate normal="1914/1989" type="inclusive">1914-1915</unitdate>
+	    <unitdate normal="1958/1980" type="bulk">1958-1960</unitdate>
+	    <unitdate>1894-1960</unitdate>
 	    <physdesc>(1 folder)</physdesc>
 	    <dao xlink:type="simple"
 		 xlink:href="https://dlc.library.columbia.edu/ifp/partner/secretariat"
@@ -499,9 +504,30 @@
 	    <p>Two photocopies may be made for research purposes.(UR)</p>
 	  </userestrict>
 	</c>
+	<!-- fcd1, 09/05/19: the following <c level="file"> element would probably not occur between -->
+	<!-- two sibling <c level="subseries:> element in an actual  AS EAD; it is used here for testing -->
+	<c id="aspace_996e7775fb2b0df093fc00d89e378879" level="file">
+	  <did>
+	    <unittitle>Alan Alda Transcript</unittitle>
+	    <physdesc altrender="whole">
+	      <extent altrender="materialtype spaceoccupied">95 pages</extent>
+	    </physdesc>
+	    <unitdate>1993 February 11,</unitdate>
+	    <container id="aspace_361d5b61dc5f3f33649a45aaca94fe28" label="box" type="box">1</container>
+	  </did>
+	  <userestrict id="aspace_a6ecbf61f35c2d6229964cef455b391a">
+	    <head>Conditions Governing Use</head>
+	    <p>Copyright held by Alan Alda.</p>
+	  </userestrict>
+	</c>
 	<c id="aspace_184c64f7d4ab5f9ee55a1fa6641e2b41" level="subseries">
 	  <did>
 	    <unittitle>Subseries 2: Cataloged Correspondence - Postcards</unittitle>
+	    <!-- fcd1, 05/21/19: the following combination of unitdate elements might not appear -->
+	    <!-- in an actual  AS EAD; it is used here for testing the parsing of the different types-->
+	    <unitdate normal="1914/1989" type="inclusive">1914-1916</unitdate>
+	    <unitdate normal="1958/1980" type="bulk">1958-1961</unitdate>
+	    <unitdate>1894-1961</unitdate>
 	    <physdesc>(1 folder)</physdesc>
 	    <dao xlink:type="simple"
 		 xlink:href="https://dlc.library.columbia.edu/ifp/partner/secretariat"
@@ -848,6 +874,11 @@
 	  <did>
 	    <unittitle>Subseries 1: Cataloged Drawings -- Sketches</unittitle>
 	    <physdesc>(1 folder)</physdesc>
+	    <!-- fcd1, 05/21/19: the following combination of unitdate elements might not appear -->
+	    <!-- in an actual  AS EAD; it is used here for testing the parsing of the different types-->
+	    <unitdate normal="1914/1989" type="inclusive">1914-1920</unitdate>
+	    <unitdate normal="1958/1980" type="bulk">1958-1970</unitdate>
+	    <unitdate>1894-1970</unitdate>
 	    <dao xlink:type="simple"
 		 xlink:href="https://dlc.library.columbia.edu/ifp/partner/secretariat"
 		 xlink:actuate="onRequest"
@@ -1018,6 +1049,11 @@
 	  <did>
 	    <unittitle>Subseries 2: Cataloged Drawings -- Blueprints</unittitle>
 	    <physdesc>(1 folder)</physdesc>
+	    <!-- fcd1, 05/21/19: the following combination of unitdate elements might not appear -->
+	    <!-- in an actual  AS EAD; it is used here for testing the parsing of the different types-->
+	    <unitdate normal="1914/1989" type="inclusive">1914-1940</unitdate>
+	    <unitdate normal="1958/1980" type="bulk">1958-1980</unitdate>
+	    <unitdate>1894-1980</unitdate>
 	    <dao xlink:type="simple"
 		 xlink:href="https://dlc.library.columbia.edu/ifp/partner/secretariat"
 		 xlink:actuate="onRequest"

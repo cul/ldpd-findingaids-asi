@@ -10,7 +10,7 @@ module Ead
       include  ArchiveSpace::Ead::EadHelper
 
       XPATH = {
-        c_level_attribute_series: './xmlns:c[@level="series"]',
+        c_level_attribute_series: './xmlns:c[@level="series"]'
       }.freeze
 
       class << self
