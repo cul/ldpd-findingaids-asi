@@ -12,7 +12,7 @@ module Ead
       XPATH = {
         abstract: './xmlns:abstract',
         langmaterial: './xmlns:langmaterial',
-        origination_label_attribute_creator: './xmlns:origination[@label="creator"]',
+        origination_label_attribute_creator: './xmlns:origination[@label="Creator"]',
         physdesc: './xmlns:physdesc',
         repository_corpname: './xmlns:repository/xmlns:corpname',
         unitdate: './xmlns:unitdate',
