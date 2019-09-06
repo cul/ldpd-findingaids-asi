@@ -25,7 +25,7 @@ module ArchiveSpace
         dsc_series: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]',
         dsc_series_titles: '/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]/xmlns:did/xmlns:unittitle',
         language: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:langmaterial',
-        origination_creators: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:origination[@label="creator"]',
+        origination_creators: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:origination[@label="Creator"]',
         odd_head: '/xmlns:ead/xmlns:archdesc/xmlns:odd/xmlns:head',
         odd_values: '/xmlns:ead/xmlns:archdesc/xmlns:odd/xmlns:p',
         other_finding_aid_head: '/xmlns:ead/xmlns:archdesc/xmlns:otherfindaid/xmlns:head',

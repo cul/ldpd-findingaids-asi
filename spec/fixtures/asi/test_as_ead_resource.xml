@@ -52,9 +52,9 @@
 	<corpname>Rare Book and Manuscript Library</corpname>
       </repository>
       <unittitle>Siegfried Sassoon papers</unittitle>
-      <origination label="creator"><corpname>Columbia University. Teachers College</corpname></origination>
-      <origination label="creator"><famname>Romanov family</famname></origination>
-      <origination label="creator"><persname>Sassoon, Siegfried, 1886-1967</persname></origination>
+      <origination label="Creator"><corpname>Columbia University. Teachers College</corpname></origination>
+      <origination label="Creator"><famname>Romanov family</famname></origination>
+      <origination label="Creator"><persname>Sassoon, Siegfried, 1886-1967</persname></origination>
       <unitid>4079591</unitid>
       <unitid>MS#0030</unitid>
       <physdesc altrender="whole">

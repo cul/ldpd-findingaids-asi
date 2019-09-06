@@ -191,8 +191,9 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       end
 
       it 'parses the originations_creators correctly' do
-        @as_ead.origination_creators.each_with_index do |creator, index|
-          expect(creator.text).to eq expected_origination_creators[index]
+        creators = @as_ead.origination_creators
+        expected_origination_creators.each_with_index do |expected_creator, index|
+          expect(creators[index].text).to eq expected_creator
         end
       end
 
