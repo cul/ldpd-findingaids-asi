@@ -13,7 +13,7 @@ class FindingAidsController < ApplicationController
     @finding_aids_titles_bib_ids = REPOS[@repo_id][:list_of_finding_aids]
   end
 
-  def show
+  def show_legacy
     if @preview_flag
       Rails.logger.info("Using Preview for #{params[:id]}")
       @input_xml = preview_as_ead params[:id].delete_prefix('ldpd_').to_i
@@ -33,6 +33,30 @@ class FindingAidsController < ApplicationController
         Rails.logger.warn("Using EAD Cache for #{params[:id]}")
         @input_xml = cached_as_ead params[:id].delete_prefix('ldpd_').to_i
         ead_set_properties
+      end
+    end
+  end
+
+  def show
+    if @preview_flag
+      Rails.logger.info("Using Preview for #{params[:id]}")
+      input_xml = preview_as_ead params[:id].delete_prefix('ldpd_').to_i
+      @ead_nokogiri_doc = process_ead input_xml
+    else
+      # @params_bib_id used by html caching functionality
+      @params_bib_id = params[:id].delete_prefix('ldpd_').to_i
+      cached_html_filename = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}.html")
+      if File.exist?(cached_html_filename)
+        Rails.logger.info("Using Cached HTML file for #{params[:id]}")
+        cached_html_file = open(cached_html_filename) do |file|
+          file.read
+        end
+        render html: cached_html_file.html_safe
+        return
+      else
+        Rails.logger.warn("Using EAD Cache for #{params[:id]}")
+        input_xml = cached_as_ead params[:id].delete_prefix('ldpd_').to_i
+        @ead_nokogiri_doc = process_ead input_xml
       end
     end
   end
@@ -65,6 +89,19 @@ class FindingAidsController < ApplicationController
       @notes_array.append @notes
       @flattened_component_structure_array.append @flattened_component_structure
       @daos_description_href_array.append @daos_description_href
+    end
+  end
+
+  def process_ead input_xml
+    begin
+      ArchiveSpace::Parsers::EadParser.parse input_xml
+    rescue Nokogiri::XML::SyntaxError => e
+      Rails.logger.error("Bib ID #{@params_bib_id}, Nokogiri parsing error:")
+      Rails.logger.error("Nokogiri::XML::SyntaxError: #{e}")
+      Rails.logger.error("Using Nokogiri recover mode for #{@params_bib_id}")
+      # Nokogiri RECOVER parsing mode is recommended for malformed or invalid documents
+      # setting second argument to true will use RECOVER mode when parsing xml
+      ArchiveSpace::Parsers::EadParser.parse(input_xml, true)
     end
   end
 
