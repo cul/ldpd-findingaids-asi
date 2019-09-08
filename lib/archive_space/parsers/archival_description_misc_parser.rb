@@ -43,18 +43,8 @@ module ArchiveSpace
 
       attr_reader *XPATH.keys
 
-      def parse(xml_input, recover_mode = false)
-        if recover_mode
-          # The RECOVER parse option is set by default, where Nokogiri will attempt to recover from errors
-          nokogiri_xml = Nokogiri::XML(xml_input)
-        else
-          # turn RECOVER parse option off. Will throw a Nokogiri::XML::SyntaxError if parsing error encountered
-          nokogiri_xml = Nokogiri::XML(xml_input) do |config|
-            config.norecover
-          end
-        end
-        # puts nokogiri_xml.inspect
-        arch_desc = nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc')
+      def parse(nokogiri_xml_document)
+        arch_desc = nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc')
         @access_restrictions_head = ::Ead::Elements::Archdesc.accessrestrict_head_array(arch_desc).first.text unless
           ::Ead::Elements::Archdesc.accessrestrict_head_array(arch_desc).empty?
         @access_restrictions_values = ::Ead::Elements::Archdesc.accessrestrict_p_array(arch_desc).map(&:text)

@@ -21,9 +21,9 @@ RSpec.describe FindingAidsController, type: :controller do
     @xml_input = fixture_file_upload('ead/test_ead.xml').read
   end
 
-  describe 'process_ead' do
-    it 'process_ead' do
-      nokogiri_doc = subject.process_ead @xml_input
+  describe 'create_nokogiri_xml_document' do
+    it 'create_nokogiri_xml_document' do
+      nokogiri_doc = subject.create_nokogiri_xml_document @xml_input
       expect(nokogiri_doc).to be_instance_of Nokogiri::XML::Document
     end
   end

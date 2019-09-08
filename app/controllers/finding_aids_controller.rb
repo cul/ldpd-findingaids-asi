@@ -41,7 +41,7 @@ class FindingAidsController < ApplicationController
     if @preview_flag
       Rails.logger.info("Using Preview for #{params[:id]}")
       input_xml = preview_as_ead params[:id].delete_prefix('ldpd_').to_i
-      @ead_nokogiri_doc = process_ead input_xml
+      @ead_nokogiri_xml_doc = create_nokogiri_xml_document input_xml
     else
       # @params_bib_id used by html caching functionality
       @params_bib_id = params[:id].delete_prefix('ldpd_').to_i
@@ -56,7 +56,7 @@ class FindingAidsController < ApplicationController
       else
         Rails.logger.warn("Using EAD Cache for #{params[:id]}")
         input_xml = cached_as_ead params[:id].delete_prefix('ldpd_').to_i
-        @ead_nokogiri_doc = process_ead input_xml
+        @ead_nokogiri_xml_doc = create_nokogiri_xml_document input_xml
       end
     end
   end
@@ -92,7 +92,7 @@ class FindingAidsController < ApplicationController
     end
   end
 
-  def process_ead input_xml
+  def create_nokogiri_xml_document input_xml
     begin
       ArchiveSpace::Parsers::EadParser.parse input_xml
     rescue Nokogiri::XML::SyntaxError => e

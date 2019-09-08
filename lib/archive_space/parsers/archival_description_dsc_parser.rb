@@ -14,17 +14,8 @@ module ArchiveSpace
 
       attr_reader *ATTRIBUTES
 
-      def parse(xml_input, recover_mode = false)
-        if recover_mode
-          # The RECOVER parse option is set by default, where Nokogiri will attempt to recover from errors
-          nokogiri_xml = Nokogiri::XML(xml_input)
-        else
-          # turn RECOVER parse option off. Will throw a Nokogiri::XML::SyntaxError if parsing error encountered
-          nokogiri_xml = Nokogiri::XML(xml_input) do |config|
-            config.norecover
-          end
-        end
-        arch_desc_dsc = nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc')
+      def parse(nokogiri_xml_document)
+        arch_desc_dsc = nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc')
         series_array = ::Ead::Elements::Dsc.c_level_attribute_series_array(arch_desc_dsc)
         @series_compound_title_array = []
         @subseries_compound_title_array_for_each_series_array = []

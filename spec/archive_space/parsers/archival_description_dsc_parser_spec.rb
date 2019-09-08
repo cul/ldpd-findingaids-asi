@@ -38,8 +38,11 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionDscParser do
   describe '-- Validate functionality -- ' do
     before(:context) do
       xml_input = fixture_file_upload('ead/test_ead.xml').read
+      nokogiri_xml_document = Nokogiri::XML(xml_input) do |config|
+        config.norecover
+      end
       @arch_desc_dsc_parser = ArchiveSpace::Parsers::ArchivalDescriptionDscParser.new
-      @arch_desc_dsc_parser.parse xml_input
+      @arch_desc_dsc_parser.parse nokogiri_xml_document
     end
 
     ########################################## parse
