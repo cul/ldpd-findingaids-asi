@@ -23,6 +23,13 @@ single_value_attributes = [
   :unit_title
 ].freeze
 
+# following is a subset of the above array
+attributes_tested_individually = [
+  :abstracts
+].freeze
+
+
+
 RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionDidParser do
   ########################################## API/interface
   describe 'API/interface' do
@@ -100,8 +107,17 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionDidParser do
         'Siegfried Sassoon papers'
       }
 
+      context 'abstract' do
+        it 'sets the abstract attribute correctly' do
+          values = @arch_desc_did_parser.abstracts
+          expected_abstracts.each_with_index do |expected_abstract, index|
+            expect(values[index].text).to eq expected_abstract
+          end
+        end
+      end
+
       context 'sets correctly attributes that return an array:' do
-        (all_attributes - single_value_attributes).each do |attribute|
+        (all_attributes - single_value_attributes - attributes_tested_individually).each do |attribute|
           it "sets the #{attribute} attribute correctly" do
             expected_values = eval "expected_#{attribute}"
             expected_values.each_with_index do |expected_value, index|
@@ -112,7 +128,7 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionDidParser do
       end
 
       context 'sets correctly attributes that return an single value:' do
-        single_value_attributes.each do |attribute|
+        (single_value_attributes - attributes_tested_individually).each do |attribute|
           it "sets the #{attribute} attribute correctly" do
             expected_value = eval "expected_#{attribute}"
             expect(@arch_desc_did_parser.instance_variable_get("@#{attribute}")).to eq expected_value

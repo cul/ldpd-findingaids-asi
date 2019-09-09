@@ -1,6 +1,10 @@
 require 'archive_space/api/client'
 require 'archive_space/ead/ead_parser'
 require 'archive_space/ead/ead_component_parser'
+require 'archive_space/parsers/ead_parser'
+require 'archive_space/parsers/archival_description_did_parser'
+require 'archive_space/parsers/archival_description_dsc_parser'
+require 'archive_space/parsers/archival_description_misc_parser'
 
 class FindingAidsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
@@ -59,6 +63,14 @@ class FindingAidsController < ApplicationController
         @ead_nokogiri_xml_doc = create_nokogiri_xml_document input_xml
       end
     end
+    @arch_desc_did = ArchiveSpace::Parsers::ArchivalDescriptionDidParser.new
+    @arch_desc_did.parse @ead_nokogiri_xml_doc
+    @arch_desc_dsc = ArchiveSpace::Parsers::ArchivalDescriptionDscParser.new
+    @arch_desc_did.parse @ead_nokogiri_xml_doc
+    @arch_desc_misc = ArchiveSpace::Parsers::ArchivalDescriptionMiscParser.new
+    @arch_desc_misc.parse @ead_nokogiri_xml_doc
+    @finding_aid_title =
+      [@arch_desc_did.unit_title, @arch_desc_did.unit_dates_string].join(', ')
   end
 
   def summary
