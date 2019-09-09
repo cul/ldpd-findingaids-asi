@@ -7,6 +7,10 @@ module ArchiveSpace
 
       ATTRIBUTES = [
         :series_compound_title_array,
+        # Following attribute is a hash, with each key being a series compound title, and the value
+        # for that key is an array of the subseries compound titles for the subseries
+        # contained within that series
+        :series_subseries_compound_titles_hash,
         :subseries_compound_title_array_for_each_series_array
 #        :series_date_string_array, # <ead>:<archdesc>:<c level="series">:<did>:<unitdate>
 #        :series_title_array # <ead>:<archdesc>:<c level="series">:<did>:<unittile>
@@ -18,13 +22,17 @@ module ArchiveSpace
         arch_desc_dsc = nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc')
         series_array = ::Ead::Elements::Dsc.c_level_attribute_series_array(arch_desc_dsc)
         @series_compound_title_array = []
+        @series_subseries_compound_titles_hash = {}
         @subseries_compound_title_array_for_each_series_array = []
         series_array.each do |series|
-          @series_compound_title_array.append ArchiveSpace::Parsers::EadHelper.compound_title(series)
+          series_compound_title = ArchiveSpace::Parsers::EadHelper.compound_title(series)
+          @series_compound_title_array.append series_compound_title
           subseries_compound_title_array = []
           ::Ead::Elements::Component.c_level_attribute_subseries_array(series).each do |subseries|
             subseries_compound_title_array.append ArchiveSpace::Parsers::EadHelper.compound_title(subseries)
           end
+          @series_subseries_compound_titles_hash[series_compound_title] =
+            subseries_compound_title_array
           @subseries_compound_title_array_for_each_series_array.append subseries_compound_title_array
         end
       end

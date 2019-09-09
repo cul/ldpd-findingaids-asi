@@ -3,6 +3,10 @@ require 'archive_space/parsers/archival_description_dsc_parser.rb'
 
 all_attributes = [
   :series_compound_title_array,
+  # Following attribute is a hash, with each key being a series compound title, and the value
+  # for that key is an array of the subseries compound titles for the subseries
+  # contained within that series
+  :series_subseries_compound_titles_hash,
   :subseries_compound_title_array_for_each_series_array
 #  :series_date_string_array, # <ead>:<archdesc>:<c level="series">:<did>:<unitdate>
 #  :series_title_array, # <ead>:<archdesc>:<c level="series">:<did>:<unittile>
@@ -10,6 +14,7 @@ all_attributes = [
 
 # following is a subset of the above array
 attributes_tested_individually = [
+  :series_subseries_compound_titles_hash,
   :subseries_compound_title_array_for_each_series_array
 ].freeze
 
@@ -66,6 +71,33 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionDscParser do
           ]
         ]
       }
+
+      let (:expected_series_subseries_compound_titles_hash) {
+        {
+          'Series I: Cataloged Correspondence, 1914-1989, 1894-1967, bulk 1958-1980' =>
+          [
+            'Subseries 1: Cataloged Correspondence -- Letters, 1914-1915, 1894-1960, bulk 1958-1960',
+            'Subseries 2: Cataloged Correspondence - Postcards, 1914-1916, 1894-1961, bulk 1958-1961'
+          ],
+          'Series II: Cataloged Drawings, 1914-1989, 1897-1967, bulk 1958-1980' =>
+          [
+            'Subseries 1: Cataloged Drawings -- Sketches, 1914-1920, 1894-1970, bulk 1958-1970',
+            'Subseries 2: Cataloged Drawings -- Blueprints, 1914-1940, 1894-1980, bulk 1958-1980'
+          ]
+        }
+      }
+
+      context 'given 2 series with 2 subseries each' do
+        it "sets the series_subseries_compound_title_hash correctly" do
+          series_subseries_hash = @arch_desc_dsc_parser.series_subseries_compound_titles_hash
+          expect(series_subseries_hash.size).to eq expected_series_subseries_compound_titles_hash.size
+          expected_series_subseries_compound_titles_hash.each do |expected_series_compound_title, expected_subseries_compound_titles_array|
+            expect(series_subseries_hash).to have_key(expected_series_compound_title)
+            subseries_compound_titles_array = series_subseries_hash[expected_series_compound_title]
+            expect(subseries_compound_titles_array).to eq expected_subseries_compound_titles_array
+          end
+        end
+      end
 
       context 'given 2 series with 2 subseries each' do
         it "sets the subseries_compound_title_array_for_each_series_array attribute correctly" do

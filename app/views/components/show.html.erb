@@ -4,14 +4,14 @@
     <tr>
       <td class="sidebar">
         <%
-          series_titles_urls =
-            @series_titles.map.with_index do |series_title, index|
-              [series_title, repository_finding_aid_component_path(id: index+1)]
-            end
+#          series_titles_urls =
+#            @series_titles.map.with_index do |series_title, index|
+#              [series_title, repository_finding_aid_component_path(id: index+1)]
+#            end
         %>
-	<%= render partial: 'sidebar',
-                   locals: {slug: repository_finding_aid_path(params[:repository_id], params[:finding_aid_id]),
-                            series_titles_urls: series_titles_urls}
+	<%= # render partial: 'sidebar',
+#                   locals: {slug: repository_finding_aid_path(params[:repository_id], params[:finding_aid_id]),
+#                            series_titles_urls: series_titles_urls}
         %>
       </td>
       <td class="ead_content" style="vertical-align:top">

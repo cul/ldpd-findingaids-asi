@@ -4,15 +4,16 @@
     <tr>
       <td class="sidebar">
         <%
-#	  series_titles_urls =
-#            @series_titles.map.with_index do |series_title, index|
-#              [series_title, repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])]
-#            end
+          series_titles_urls =
+            @arch_desc_dsc.series_compound_title_array.map.with_index do |series_title, index|
+              [series_title, repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])]
+            end
         %>
-	<%=
-#	  render partial: 'sidebar',
-#                 locals: {slug: repository_finding_aid_path, series_titles_urls: series_titles_urls}
-	  %>
+        <%= render partial: 'sidebar',
+                   locals: { slug: repository_finding_aid_path,
+                             series_titles_urls: series_titles_urls,
+                             subseries_titles: @arch_desc_dsc.subseries_compound_title_array_for_each_series_array }
+        %>
       </td>
       <td class="ead_content">
         <h2>Summary Information</h2>
