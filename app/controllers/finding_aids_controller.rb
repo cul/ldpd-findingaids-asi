@@ -66,7 +66,7 @@ class FindingAidsController < ApplicationController
     @arch_desc_did = ArchiveSpace::Parsers::ArchivalDescriptionDidParser.new
     @arch_desc_did.parse @ead_nokogiri_xml_doc
     @arch_desc_dsc = ArchiveSpace::Parsers::ArchivalDescriptionDscParser.new
-    @arch_desc_did.parse @ead_nokogiri_xml_doc
+    @arch_desc_dsc.parse @ead_nokogiri_xml_doc
     @arch_desc_misc = ArchiveSpace::Parsers::ArchivalDescriptionMiscParser.new
     @arch_desc_misc.parse @ead_nokogiri_xml_doc
     @finding_aid_title =

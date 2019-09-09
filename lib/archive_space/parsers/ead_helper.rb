@@ -1,9 +1,20 @@
 # fcd1, 05/22/19: Currently being tested via ead_parser_spec.rb
 # and finding_aids_helper_spec.rb
+
+require 'ead/elements/component'
+
 module ArchiveSpace
   module Parsers
     module EadHelper
       class << self
+        def compound_title component
+          did = ::Ead::Elements::Component.did(component)
+          unit_title = ::Ead::Elements::Did.unittitle_array(did).first
+          unit_dates_string = compound_dates_into_string(::Ead::Elements::Did.unitdate_array(did))
+          # compound_title contains the unit title and the unit date(s)
+          [unit_title, unit_dates_string].reject(&:blank?).join(', ')
+        end
+
         def compound_dates_into_string unit_dates
           bulk_dates = []
           non_bulk_dates = []

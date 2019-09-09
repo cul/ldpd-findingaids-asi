@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'archive_space/parsers/archival_description_misc_parser.rb'
+# fcd1, 09/09/19: TODO: Control Access test.
 
 attributes = [
   :access_restrictions_head, # <ead>:<archdesc>:<accessrestrict>:<head>
@@ -35,6 +36,16 @@ attributes = [
   :separated_material_values # <ead>:<archdesc>:<separatedmaterial>:<p>
 ].freeze
 
+# following is a subset of the attributes array. The control access
+# attributes are tested differently -- no need to call the .text
+# method on them, contents are already text
+control_access_attributes = [
+  :control_access_corporate_name_values,
+  :control_access_genre_form_values,
+  :control_access_occupation_values,
+  :control_access_personal_name_values,
+  :control_access_subject_values
+].freeze
 
 RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionMiscParser do
   ########################################## API/interface
@@ -226,12 +237,22 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionMiscParser do
         end
       end
 
-      value_attributes = attributes.find_all { |attribute| "#{attribute}".ends_with? "values"}
+      value_attributes = attributes.find_all { |attribute| "#{attribute}".ends_with? "values"} - control_access_attributes
       value_attributes.each do |value_attribute|
         it "sets the attribute #{value_attribute} correctly" do
           expected_values = eval "expected_#{value_attribute}"
           expected_values.each_with_index do |expected_value, index|
-            expect(@arch_desc_misc_parser.instance_variable_get("@#{value_attribute}")[index]).to eq expected_value
+            expect(@arch_desc_misc_parser.instance_variable_get("@#{value_attribute}")[index].text).to eq expected_value
+          end
+        end
+      end
+
+      # Following tested separately because no need to use '.text' on the values
+      control_access_attributes.each do |control_access_attribute|
+        it "sets the attribute #{control_access_attribute} correctly" do
+          expected_values = eval "expected_#{control_access_attribute}"
+          expected_values.each_with_index do |expected_value, index|
+            expect(@arch_desc_misc_parser.instance_variable_get("@#{control_access_attribute}")[index]).to eq expected_value
           end
         end
       end
