@@ -229,8 +229,8 @@ RSpec.describe Ead::Elements::Component do
         }
         let (:expected_scopecontent_p_array) {
 	  [
-            "The drawings in the collection consist of pencil and ink drawings.",
-            "Correspondents include: H.J. Heinz.",
+            "The correspondence in the collection consist of letters and postcards.",
+            "Correspondents include: James Joyce.",
             "Contains  document allowing Bunshaft to practice architecture in Belgium."
 	  ]
         }

@@ -6,6 +6,7 @@ module ArchiveSpace
     class ArchivalDescriptionDscParser
 
       ATTRIBUTES = [
+        :scope_content_values_for_each_series,
         :series_compound_title_array,
         # Following attribute is a hash, with each key being a series compound title, and the value
         # for that key is an array of the subseries compound titles for the subseries
@@ -21,6 +22,7 @@ module ArchiveSpace
       def parse(nokogiri_xml_document)
         arch_desc_dsc = nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc')
         series_array = ::Ead::Elements::Dsc.c_level_attribute_series_array(arch_desc_dsc)
+        @scope_content_values_for_each_series = []
         @series_compound_title_array = []
         @series_subseries_compound_titles_hash = {}
         @subseries_compound_title_array_for_each_series_array = []
@@ -34,6 +36,8 @@ module ArchiveSpace
           @series_subseries_compound_titles_hash[series_compound_title] =
             subseries_compound_title_array
           @subseries_compound_title_array_for_each_series_array.append subseries_compound_title_array
+          scope_content_array = ::Ead::Elements::Component.scopecontent_p_array(series)
+          @scope_content_values_for_each_series.append scope_content_array
         end
       end
     end
