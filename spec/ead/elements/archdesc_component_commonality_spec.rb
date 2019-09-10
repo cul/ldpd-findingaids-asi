@@ -17,6 +17,8 @@ common_class_methods = [
   :bioghist_head_array, # <bioghist><head>
   :bioghist_p_array, # <bioghist><p>
   :controlaccess_array, # <controlaccess>
+  :custodhist_head_array, # <custodhist><head>
+  :custodhist_p_array, # <custodhist><p>
   :did, # <did>
   :dsc, # <dsc>
   :odd_head_array, # <odd><head>

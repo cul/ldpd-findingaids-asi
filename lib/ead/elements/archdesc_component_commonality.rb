@@ -25,7 +25,9 @@ module Ead
         arrangement_p: './xmlns:arrangement/xmlns:p',
         bioghist_head: './xmlns:bioghist/xmlns:head',
         bioghist_p: './xmlns:bioghist/xmlns:p',
-        controlaccess_array: './xmlns:controlaccess',
+        controlaccess: './xmlns:controlaccess',
+        custodhist_head: './xmlns:custodhist/xmlns:head',
+        custodhist_p: './xmlns:custodhist/xmlns:p',
         did: './xmlns:did',
         dsc: './xmlns:dsc',
         odd_head: './xmlns:odd/xmlns:head',
@@ -109,7 +111,17 @@ module Ead
 
         # returns: array of  Nokogiri::XML::Element instances for <controlaccess>
         def controlaccess_array(input_element)
-          input_element.xpath(XPATH[:controlaccess_array])
+          input_element.xpath(XPATH[:controlaccess])
+        end
+
+        # returns: value of the first <custodhist><head>
+        def custodhist_head_array(input_element)
+          input_element.xpath(XPATH[:custodhist_head])
+        end
+
+        # returns: array of  Nokogiri::XML::Element instances for <custodhist><p>
+        def custodhist_p_array(input_element)
+          input_element.xpath(XPATH[:custodhist_p])
         end
 
         # returns: Nokogiri::XML::Element instance for <did>
