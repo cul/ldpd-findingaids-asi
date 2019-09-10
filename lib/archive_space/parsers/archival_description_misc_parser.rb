@@ -1,47 +1,48 @@
 # this class parses the pertinent child elements of the <archdesc> that are NOT contained within the child <did> or <dsc>
 require 'archive_space/ead/ead_helper'
-require 'ead/elements/archdesc.rb'
+require 'ead/elements/archdesc'
+require 'ead/elements/controlaccess'
 
 module ArchiveSpace
   module Parsers
     class ArchivalDescriptionMiscParser
       include  ArchiveSpace::Ead::EadHelper
 
-      XPATH = {
-        access_restrictions_head: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:head',
-        access_restrictions_values: '/xmlns:ead/xmlns:archdesc/xmlns:accessrestrict/xmlns:p',
-        accruals_head: '/xmlns:ead/xmlns:archdesc/xmlns:accruals/xmlns:head',
-        accruals_values: '/xmlns:ead/xmlns:archdesc/xmlns:accruals/xmlns:p',
-        alternative_form_available_head: '/xmlns:ead/xmlns:archdesc/xmlns:altformavail/xmlns:head',
-        alternative_form_available_values: '/xmlns:ead/xmlns:archdesc/xmlns:altformavail/xmlns:p',
-        arrangement_head: '/xmlns:ead/xmlns:archdesc/xmlns:arrangement/xmlns:head',
-        arrangement_values: '/xmlns:ead/xmlns:archdesc/xmlns:arrangement/xmlns:p',
-        biography_history_head: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:head',
-        biography_history_values: '/xmlns:ead/xmlns:archdesc/xmlns:bioghist/xmlns:p',
-        control_access_corporate_name_values: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:corpname',
-        control_access_genre_form_values: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:genreform',
-        control_access_occupation_values: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:occupation',
-        control_access_personal_name_values: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:persname',
-        control_access_subject_values: '/xmlns:ead/xmlns:archdesc/xmlns:controlaccess/xmlns:subject',
-        conditions_governing_use_head: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:head',
-        conditions_governing_use_values: '/xmlns:ead/xmlns:archdesc/xmlns:userestrict/xmlns:p',
-        other_descriptive_data_head: '/xmlns:ead/xmlns:archdesc/xmlns:odd/xmlns:head',
-        other_descriptive_data_values: '/xmlns:ead/xmlns:archdesc/xmlns:odd/xmlns:p',
-        other_finding_aid_head: '/xmlns:ead/xmlns:archdesc/xmlns:otherfindaid/xmlns:head',
-        other_finding_aid_values: '/xmlns:ead/xmlns:archdesc/xmlns:otherfindaid/xmlns:p',
-        preferred_citation_head: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:head',
-        preferred_citation_values: '/xmlns:ead/xmlns:archdesc/xmlns:prefercite/xmlns:p',
-        processing_information_head: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:head',
-        processing_information_values: '/xmlns:ead/xmlns:archdesc/xmlns:processinfo/xmlns:p',
-        related_material_head: '/xmlns:ead/xmlns:archdesc/xmlns:relatedmaterial/xmlns:head',
-        related_material_values: '/xmlns:ead/xmlns:archdesc/xmlns:relatedmaterial/xmlns:p',
-        scope_and_content_head: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:head',
-        scope_and_content_values: '/xmlns:ead/xmlns:archdesc/xmlns:scopecontent/xmlns:p',
-        separated_material_head: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:head',
-        separated_material_values: '/xmlns:ead/xmlns:archdesc/xmlns:separatedmaterial/xmlns:p'
-      }
+      ATTRIBUTES = [
+        :access_restrictions_head,
+        :access_restrictions_values,
+        :accruals_head,
+        :accruals_values,
+        :alternative_form_available_head,
+        :alternative_form_available_values,
+        :arrangement_head,
+        :arrangement_values,
+        :biography_history_head,
+        :biography_history_values,
+        :control_access_corporate_name_values,
+        :control_access_genre_form_values,
+        :control_access_occupation_values,
+        :control_access_personal_name_values,
+        :control_access_subject_values,
+        :conditions_governing_use_head,
+        :conditions_governing_use_values,
+        :other_descriptive_data_head,
+        :other_descriptive_data_values,
+        :other_finding_aid_head,
+        :other_finding_aid_values,
+        :preferred_citation_head,
+        :preferred_citation_values,
+        :processing_information_head,
+        :processing_information_values,
+        :related_material_head,
+        :related_material_values,
+        :scope_and_content_head,
+        :scope_and_content_values,
+        :separated_material_head,
+        :separated_material_values
+      ]
 
-      attr_reader *XPATH.keys
+      attr_reader *ATTRIBUTES
 
       def parse(nokogiri_xml_document)
         arch_desc = nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc')
@@ -67,11 +68,11 @@ module ArchiveSpace
         @control_access_personal_name_values = []
         @control_access_subject_values = []
         control_access_array.each do |control_access|
-          @control_access_corporate_name_values.concat control_access.xpath('./xmlns:corpname').map(&:text)
-          @control_access_genre_form_values.concat control_access.xpath('./xmlns:genreform').map(&:text)
-          @control_access_occupation_values.concat control_access.xpath('./xmlns:occupation').map(&:text)
-          @control_access_personal_name_values.concat control_access.xpath('./xmlns:persname').map(&:text)
-          @control_access_subject_values.concat control_access.xpath('./xmlns:subject').map(&:text)
+          @control_access_corporate_name_values.concat ::Ead::Elements::Controlaccess.corpname_array(control_access).map(&:text)
+          @control_access_genre_form_values.concat ::Ead::Elements::Controlaccess.genreform_array(control_access).map(&:text)
+          @control_access_occupation_values.concat ::Ead::Elements::Controlaccess.occupation_array(control_access).map(&:text)
+          @control_access_personal_name_values.concat ::Ead::Elements::Controlaccess.persname_array(control_access).map(&:text)
+          @control_access_subject_values.concat ::Ead::Elements::Controlaccess.subject_array(control_access).map(&:text)
         end
         @conditions_governing_use_head = ::Ead::Elements::Archdesc.userestrict_head_array(arch_desc).first.text unless
           ::Ead::Elements::Archdesc.userestrict_head_array(arch_desc).empty?
