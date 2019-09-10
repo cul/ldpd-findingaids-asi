@@ -5,6 +5,7 @@ require 'archive_space/parsers/ead_parser'
 require 'archive_space/parsers/archival_description_did_parser'
 require 'archive_space/parsers/archival_description_dsc_parser'
 require 'archive_space/parsers/archival_description_misc_parser'
+require 'archive_space/parsers/ead_header_parser'
 
 class FindingAidsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
@@ -69,6 +70,8 @@ class FindingAidsController < ApplicationController
     @arch_desc_dsc.parse @ead_nokogiri_xml_doc
     @arch_desc_misc = ArchiveSpace::Parsers::ArchivalDescriptionMiscParser.new
     @arch_desc_misc.parse @ead_nokogiri_xml_doc
+    @ead_header = ArchiveSpace::Parsers::EadHeaderParser.new
+    @ead_header.parse @ead_nokogiri_xml_doc
     @finding_aid_title =
       [@arch_desc_did.unit_title, @arch_desc_did.unit_dates_string].join(', ')
   end
