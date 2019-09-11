@@ -42,7 +42,7 @@ RSpec.describe Ead::Elements::Dao do
       context 'given argument Nokogiri::XML::Element representing <dao>' do
         it '.daodesc_p_node_set returns correct Nokogiri::XML::NodeSet' do
           value = subject.class.daodesc_p_node_set(@nokogiri_xml_element)
-          expect(value).to be_instance_of Nokogiri::XML::Element
+          expect(value).to be_instance_of Nokogiri::XML::NodeSet
           expect(value.text).to eq 'Browse or Search Digital Materials'
         end
 
