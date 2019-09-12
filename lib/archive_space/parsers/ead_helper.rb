@@ -9,8 +9,8 @@ module ArchiveSpace
       class << self
         def compound_title component
           did = ::Ead::Elements::Component.did(component)
-          unit_title = ::Ead::Elements::Did.unittitle_array(did).first
-          unit_dates_string = compound_dates_into_string(::Ead::Elements::Did.unitdate_array(did))
+          unit_title = ::Ead::Elements::Did.unittitle_node_set(did).first
+          unit_dates_string = compound_dates_into_string(::Ead::Elements::Did.unitdate_node_set(did))
           # compound_title contains the unit title and the unit date(s)
           [unit_title, unit_dates_string].reject(&:blank?).join(', ')
         end

@@ -1,17 +1,26 @@
+# Ead::Elements::Did describes the EAD element <did>
+# Descriptive Identification (https://www.loc.gov/ead/tglib/elements/did.html)
+# and supplies class methods to retrieve pertinent child elements
+# of the <did> element
 require 'rails_helper'
 require 'ead/elements/did.rb'
 
 class_methods = [
-  :abstract_array, # <abstract> Abstract
-  :langmaterial_array, # <langmaterial> Language of the Material
-  :origination_label_attribute_creator_array, # <origination> Origination, <origination label="creator">
-  :physdesc_array, # <physdesc> Physical Description
-  :repository_corpname_array, # <repository> Repository, <corpname> Corporate Name
-  :unitdate_array, # <unitdate> Date of the Unit
-  :unitid_array, # <unitid> ID of the Unit
-  :unittitle_array # <unittitle> Title of the Unit
+  :abstract_node_set, # <abstract> Abstract
+  :dao_node_set, # <dao> Digital Archival Object
+  :langmaterial_node_set, # <langmaterial> Language of the Material
+  :origination_label_attribute_creator_node_set, # <origination> Origination, <origination label="creator">
+  :physdesc_node_set, # <physdesc> Physical Description
+  :repository_corpname_node_set, # <repository> Repository, <corpname> Corporate Name
+  :unitdate_node_set, # <unitdate> Date of the Unit
+  :unitid_node_set, # <unitid> ID of the Unit
+  :unittitle_node_set # <unittitle> Title of the Unit
 ].freeze
 
+# following is a subset of the above array
+class_methods_tested_individually = [
+  :dao_node_set
+].freeze
 
 RSpec.describe Ead::Elements::Did do
   ########################################## API/interface
@@ -36,14 +45,14 @@ RSpec.describe Ead::Elements::Did do
     describe ' class methods that return an array:' do
       context 'class method' do
         # <abstract> Abstract
-        let (:expected_abstract_array) {
+        let (:expected_abstract_node_set) {
           [
             "This collection is made up of architectural drawings."
           ]
         }
 
         # <langmaterial> Language of the Material
-        let (:expected_langmaterial_array) {
+        let (:expected_langmaterial_node_set) {
           [
             "English",
             "Dutch",
@@ -52,7 +61,7 @@ RSpec.describe Ead::Elements::Did do
         }
 
         # <origination> Origination, <origination label="creator">
-        let (:expected_origination_label_attribute_creator_array) {
+        let (:expected_origination_label_attribute_creator_node_set) {
           [
             "Columbia University. Teachers College",
             "Romanov family",
@@ -64,7 +73,7 @@ RSpec.describe Ead::Elements::Did do
         # <extent> Extent
         # <exten> is a <physdesc> subelement for information about the quantity of the materials
         # being described or an expression of the physical space they occupy
-        let (:expected_physdesc_array) {
+        let (:expected_physdesc_node_set) {
           [
             "3 linear feet 4 boxes 13 slipcases",
             "3.6 Tb Digital one hard disk",
@@ -73,14 +82,14 @@ RSpec.describe Ead::Elements::Did do
         }
 
         # <repository> Repository, <corpname> Corporate Name
-        let (:expected_repository_corpname_array) {
+        let (:expected_repository_corpname_node_set) {
           [
             'Rare Book and Manuscript Library'
           ]
         }
 
         # <unitdate> Date of the Unit
-        let (:expected_unitdate_array) {
+        let (:expected_unitdate_node_set) {
           [
             '1914-1989',
             '1958-1980',
@@ -89,7 +98,7 @@ RSpec.describe Ead::Elements::Did do
         }
 
         # <unitid> ID of the Unit
-        let (:expected_unitid_array) {
+        let (:expected_unitid_node_set) {
           [
             '4079591',
             'MS#0030'
@@ -97,15 +106,16 @@ RSpec.describe Ead::Elements::Did do
         }
 
         # <unittitle> Title of the Unit
-        let (:expected_unittitle_array) {
+        let (:expected_unittitle_node_set) {
           [
             'Siegfried Sassoon papers'
           ]
         }
 
-        array_class_methods = class_methods.find_all { |class_method| "#{class_method}".ends_with? "_array"}
-        array_class_methods.each do |class_method|
-          it ".#{class_method} takes a <did> and returns an array of <#{class_method.to_s.chomp('_array')}>" do
+        # NOTE: Testing the class methods listed the class_methods_tested_individually array is more involved, so the functionality
+        # is not tested in the following example. Instead, the functionality for these class methods is tested in separate examples
+        (class_methods - class_methods_tested_individually).each do |class_method|
+          it ".#{class_method} takes a <did> and returns an array of <#{class_method.to_s.chomp('_node_set')}>" do
             values = Ead::Elements::Did.send(class_method,@nokogiri_node_set)
             expected_values = eval "expected_#{class_method}"
             expected_values.each_with_index do |expected_value, index|
