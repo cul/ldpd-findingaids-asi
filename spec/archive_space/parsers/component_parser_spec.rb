@@ -2,6 +2,8 @@ require 'rails_helper'
 require 'archive_space/parsers/component_parser.rb'
 
 attributes = [
+  # Note on comments: <a>:<b>:<c> means <c> elements that are direct children of <b> which
+  # themselves are direct children of <a>
 #  :accruals_head, # <ead>:<archdesc>:<dsc>:<c>:<accruals>:<head>
 #  :accruals_values, # <ead>:<archdesc>:<dsc>:<c>:<accruals>:<p>
   :alternative_form_available_head, # <ead>:<archdesc>:<dsc>:<c>:<altformavail>:<head>
@@ -18,6 +20,7 @@ attributes = [
   :conditions_governing_use_values, # <ead>:<archdesc>:<dsc>:<c>:<accessrestrict>:<p>
   :custodial_history_head, # <ead>:<archdesc>:<dsc>:<c>:<custodhist>:<head>
   :custodial_history_values, # <ead>:<archdesc>:<dsc>:<c>:<custodhist>:<p>
+  :digital_archival_objects, # <ead>:<archdesc>:<dsc>:<c>:<did>:<dao>
   :other_descriptive_data_head, # <ead>:<archdesc>:<dsc>:<c>:<odd>:<head>
   :other_descriptive_data_values, # <ead>:<archdesc>:<dsc>:<c>:<odd>:<p>
   :other_finding_aid_head, # <ead>:<archdesc>:<dsc>:<c>:<otherfindaid>:<head>
@@ -141,6 +144,19 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         ]
       }
 
+      let (:expected_digital_archival_objects) {
+        [
+          {
+            href: 'https://dlc.library.columbia.edu/ifp/search',
+            description: 'Browse or Search Digital Materials'
+          },
+          {
+            href: 'https://dlc.library.columbia.edu/ifp/partner/secretariat',
+            description: 'Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013'
+          }
+        ]
+      }
+
       let (:expected_other_descriptive_data_values) {
         [
           'This collection is nice(ODD)',
@@ -180,6 +196,15 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
           'The personal papers and finalized individual memoirs are cataloged in CLIO.'
         ]
       }
+
+      it 'sets digital_archival_objects correctly' do
+        digital_archival_objects = @component_parser.digital_archival_objects
+        expect(expected_digital_archival_objects.size).to eq digital_archival_objects.size
+        expected_digital_archival_objects.each_with_index do |expected_digital_archival_object, index|
+          expect(digital_archival_objects[index].href).to eq expected_digital_archival_object[:href]
+          expect(digital_archival_objects[index].description).to eq expected_digital_archival_object[:description]
+        end
+      end
 
       head_attributes = attributes.find_all { |attribute| "#{attribute}".ends_with? "head"}
       head_attributes.each do |head_attribute|

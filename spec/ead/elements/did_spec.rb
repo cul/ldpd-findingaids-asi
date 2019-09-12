@@ -51,6 +51,14 @@ RSpec.describe Ead::Elements::Did do
           ]
         }
 
+        # <dao><daodesc><p>
+        let (:expected_dao_daodesc_p_values) {
+          [
+            "Image logo for the collection",
+            "CUL logo"
+          ]
+        }
+
         # <langmaterial> Language of the Material
         let (:expected_langmaterial_node_set) {
           [
@@ -111,6 +119,15 @@ RSpec.describe Ead::Elements::Did do
             'Siegfried Sassoon papers'
           ]
         }
+
+        # Testing .dao_node_set
+        it '.dao_node_set takes a <did> element and returns an Nokogiri::XML::NodeSet of <dao> elements' do
+          dao_node_set = Ead::Elements::Did.dao_node_set(@nokogiri_node_set)
+          expect(dao_node_set.size).to eq expected_dao_daodesc_p_values.size
+          expected_dao_daodesc_p_values.each_with_index do |expected_dao_desc_p_value, index|
+            expect(dao_node_set[index].xpath('./xmlns:daodesc/xmlns:p').text).to eq expected_dao_desc_p_value
+          end
+        end
 
         # NOTE: Testing the class methods listed the class_methods_tested_individually array is more involved, so the functionality
         # is not tested in the following example. Instead, the functionality for these class methods is tested in separate examples

@@ -24,6 +24,7 @@ module ArchiveSpace
         :conditions_governing_use_values,
         :custodial_history_head,
         :custodial_history_values,
+        :digital_archival_objects,
         :other_descriptive_data_head,
         :other_descriptive_data_values,
         :other_finding_aid_head,
@@ -41,6 +42,8 @@ module ArchiveSpace
       ]
 
       attr_reader *ATTRIBUTES
+
+      DigitalArchivalObject = Struct.new(:href, :description)
 
       def parse(nokogiri_xml_document, series_num)
         arch_desc_dsc = nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc')
@@ -70,6 +73,12 @@ module ArchiveSpace
         @custodial_history_head = ::Ead::Elements::Component.custodhist_head_array(series).first.text unless
           ::Ead::Elements::Component.custodhist_head_array(series).empty?
         @custodial_history_values = ::Ead::Elements::Component.custodhist_p_array(series)
+        @digital_archival_objects = []
+        # first retrieve the <did> element, then get the <dao> elements from the <did>
+        ::Ead::Elements::Did.dao_node_set(::Ead::Elements::Component.did(series)).each do |dao|
+          @digital_archival_objects.append DigitalArchivalObject.new(::Ead::Elements::Dao.href_attribute_node_set(dao).text,
+                                                                     ::Ead::Elements::Dao.daodesc_p_node_set(dao).text)
+        end
         @other_descriptive_data_head = ::Ead::Elements::Component.odd_head_array(series).first.text unless
           ::Ead::Elements::Component.odd_head_array(series).empty?
         @other_descriptive_data_values = ::Ead::Elements::Component.odd_p_array(series)

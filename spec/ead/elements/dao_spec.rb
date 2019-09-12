@@ -49,7 +49,7 @@ RSpec.describe Ead::Elements::Dao do
         it '.href_attribute_node_set returns correct Nokogiri::XML::NodeSet' do
           value = subject.class.href_attribute_node_set(@nokogiri_xml_element)
           expect(value).to be_instance_of Nokogiri::XML::NodeSet
-          expect(value.text).to eq 'https://dlc.library.columbia.edu/ifp/partner/secretariat'
+          expect(value.text).to eq 'https://dlc.library.columbia.edu/ifp/search'
         end
       end
     end
