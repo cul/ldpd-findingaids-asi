@@ -9,6 +9,42 @@ class ComponentsController < ApplicationController
                 only: [:index, :show]
   after_action :cache_response_html, only: [:index, :show]
 
+  def show
+    # @params_bib_id used by html caching functionality and error logging
+    @params_bib_id = params[:finding_aid_id].delete_prefix('ldpd_').to_i
+    # @params_series_number used by html caching functionality
+    @params_series_num = params[:id]
+    if @preview_flag
+      Rails.logger.info("Using Preview for #{params[:finding_aid_id]}")
+      input_xml = preview_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
+      @ead_nokogiri_xml_doc = create_nokogiri_xml_document input_xml
+      # show_helper_process_ead
+    else
+      cached_html_filename = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}_#{@params_series_num}.html")
+      if File.exist?(cached_html_filename)
+        Rails.logger.info("Using Cached HTML file for #{params[:finding_aid_id]} dsc #{@params_series_num}")
+        cached_html_file = open(cached_html_filename) do |file|
+          file.read
+        end
+        cached_html_file.sub!(CONFIG[:authenticity_token_placeholder], form_authenticity_token)
+        render html: cached_html_file.html_safe
+        return
+      else
+        @authenticity_token = form_authenticity_token
+        Rails.logger.warn("Using EAD Cache for #{params[:finding_aid_id]} dsc #{@params_series_num}")
+        input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
+        @ead_nokogiri_xml_doc = create_nokogiri_xml_document input_xml
+        # show_helper_process_ead
+      end
+    end
+    # fcd1, 09/12/19: For now, assume all top-level <c> elements are series. However, when other
+    # types of top-level <c> elements are allowed, modify the following code, including changing
+    # variable name from @series to, for example, @top_level_component (more generic), or check
+    # for the type of component here and create appropriate variable
+    @series = ArchiveSpace::Parsers::Component.new
+    @series.parse(@ead_nokogiri_xml_doc, @params_series_num)
+  end
+
   def index
     @dsc_all = true
     if @preview_flag
@@ -70,7 +106,7 @@ class ComponentsController < ApplicationController
     end
   end
 
-  def show
+  def show_legacy
     # @params_series_number used by html caching functionality
     @params_series_num = params[:id]
     if @preview_flag
@@ -95,6 +131,19 @@ class ComponentsController < ApplicationController
         @input_xml = cached_as_ead params[:finding_aid_id].delete_prefix('ldpd_').to_i
         show_helper_process_ead
       end
+    end
+  end
+
+  def create_nokogiri_xml_document input_xml
+    begin
+      ArchiveSpace::Parsers::EadParser.parse input_xml
+    rescue Nokogiri::XML::SyntaxError => e
+      Rails.logger.error("Bib ID #{@params_bib_id}, Nokogiri parsing error:")
+      Rails.logger.error("Nokogiri::XML::SyntaxError: #{e}")
+      Rails.logger.error("Using Nokogiri recover mode for #{@params_bib_id}")
+      # Nokogiri RECOVER parsing mode is recommended for malformed or invalid documents
+      # setting second argument to true will use RECOVER mode when parsing xml
+      ArchiveSpace::Parsers::EadParser.parse(input_xml, true)
     end
   end
 
