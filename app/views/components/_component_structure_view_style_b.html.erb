@@ -1,4 +1,5 @@
 <div class="c-view-style-b">
+  <!-- INFORMATION FOR TOP-LEVEL <c> ELEMENT, CURRENTLY A SERIES -->
   <h2 style="color:#2c5277;font-size:16px;font-weight:bold;"><%= component_title %></h2>
   <% @series.digital_archival_objects.each do |digital_archival_object| %>
     <%= link_to 'View digital content: ' + digital_archival_object.description, digital_archival_object.href %>
@@ -31,4 +32,5 @@
   <% misc_notes.each do |misc_note| %>
     <%== apply_ead_to_html_transforms misc_note %>
   <% end %>
+  <!-- INFORMATION FOR SECOND LEVEL <C> ELEMENTS AND CONTAINED <C> ELEMENTS AT LOWER LEVELS -->  
 </div>

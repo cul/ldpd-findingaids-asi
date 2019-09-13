@@ -6,10 +6,10 @@ attributes = [
   # themselves are direct children of <a>
 #  :accruals_head, # <ead>:<archdesc>:<dsc>:<c>:<accruals>:<head>
 #  :accruals_values, # <ead>:<archdesc>:<dsc>:<c>:<accruals>:<p>
-  :alternative_form_available_head, # <ead>:<archdesc>:<dsc>:<c>:<altformavail>:<head>
-  :alternative_form_available_values, # <ead>:<archdesc>:<dsc>:<c>:<altformavail>:<p>
   :acquisition_information_head, # <ead>:<archdesc>:<dsc>:<c>:<acqinfo>:<head>
   :acquisition_information_values, # <ead>:<archdesc>:<dsc>:<c>:<acqinfo>:<p>
+  :alternative_form_available_head, # <ead>:<archdesc>:<dsc>:<c>:<altformavail>:<head>
+  :alternative_form_available_values, # <ead>:<archdesc>:<dsc>:<c>:<altformavail>:<p>
   :arrangement_head, # <ead>:<archdesc>:<dsc>:<c>:<arrangement>:<head>
   :arrangement_values, # <ead>:<archdesc>:<dsc>:<c>:<arrangement>:<p>
   :biography_or_history_head, # <ead>:<archdesc>:<dsc>:<c>:<bioghist>:<head>
@@ -47,10 +47,15 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         end
       end
     end
+    #:lower_level_components_in_flattened_structure, # flattened structure containing enclosed lower level <c> elements
 
     context 'has ' do
-      it 'has #parse method' do
+      it '#parse method' do
         expect(subject).to respond_to(:parse).with(2).arguments
+      end
+
+      it '#generate_structure_containing_lower_level_components' do
+        expect(subject).to respond_to(:generate_structure_containing_lower_level_components).with(2).arguments
       end
     end
   end
