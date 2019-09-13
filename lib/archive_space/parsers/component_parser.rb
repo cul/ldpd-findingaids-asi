@@ -1,6 +1,9 @@
 # this class parses the pertinent child elements of the <c> element
 require 'archive_space/ead/ead_helper'
 require 'ead/elements/component'
+require 'ead/elements/dao'
+require 'ead/elements/did'
+require 'ead/elements/dsc'
 
 module ArchiveSpace
   module Parsers
@@ -52,12 +55,12 @@ module ArchiveSpace
 #        @accruals_head = ::Ead::Elements::Component.accruals_head_array(series).first.text unless
 #          ::Ead::Elements::Component.accruals_head_array(series).empty?
 #        @accruals_values = ::Ead::Elements::Component.accruals_p_array(series)
-        @alternative_form_available_head = ::Ead::Elements::Component.altformavail_head_array(series).first.text unless
-          ::Ead::Elements::Component.altformavail_head_array(series).empty?
-        @alternative_form_available_values = ::Ead::Elements::Component.altformavail_p_array(series)
         @acquisition_information_head = ::Ead::Elements::Component.acqinfo_head_array(series).first.text unless
           ::Ead::Elements::Component.acqinfo_head_array(series).empty?
         @acquisition_information_values = ::Ead::Elements::Component.acqinfo_p_array(series)
+        @alternative_form_available_head = ::Ead::Elements::Component.altformavail_head_array(series).first.text unless
+          ::Ead::Elements::Component.altformavail_head_array(series).empty?
+        @alternative_form_available_values = ::Ead::Elements::Component.altformavail_p_array(series)
         @arrangement_head = ::Ead::Elements::Component.arrangement_head_array(series).first.text unless
           ::Ead::Elements::Component.arrangement_head_array(series).empty?
         @arrangement_values = ::Ead::Elements::Component.arrangement_p_array(series)

@@ -1,6 +1,11 @@
+# fcd1, 09/13/19: Check if I still need the following 3 require statements
 require 'archive_space/api/client'
 require 'archive_space/ead/ead_parser'
 require 'archive_space/ead/ead_component_parser'
+
+require 'archive_space/parsers/component_parser'
+require 'archive_space/parsers/ead_parser'
+require 'archive_space/parsers/archival_description_did_parser'
 
 class ComponentsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
@@ -41,8 +46,11 @@ class ComponentsController < ApplicationController
     # types of top-level <c> elements are allowed, modify the following code, including changing
     # variable name from @series to, for example, @top_level_component (more generic), or check
     # for the type of component here and create appropriate variable
-    @series = ArchiveSpace::Parsers::Component.new
-    @series.parse(@ead_nokogiri_xml_doc, @params_series_num)
+    @series = ArchiveSpace::Parsers::ComponentParser.new
+    @series.parse(@ead_nokogiri_xml_doc, @params_series_num.to_i)
+    # Need top-level finding aids information for the aeon request
+    @archival_description_descriptive_identification = ArchiveSpace::Parsers::ArchivalDescriptionDidParser.new
+    @archival_description_descriptive_identification.parse @ead_nokogiri_xml_doc
   end
 
   def index
