@@ -14,6 +14,7 @@ attributes = [
   :arrangement_values, # <ead>:<archdesc>:<dsc>:<c>:<arrangement>:<p>
   :biography_or_history_head, # <ead>:<archdesc>:<dsc>:<c>:<bioghist>:<head>
   :biography_or_history_values, # <ead>:<archdesc>:<dsc>:<c>:<bioghist>:<p>
+  :compound_title_string, # string based on <unittitle> and <unitdate> elements
   :conditions_governing_access_head, # <ead>:<archdesc>:<dsc>:<c>:<accessrestrict>:<head>
   :conditions_governing_access_values, # <ead>:<archdesc>:<dsc>:<c>:<accessrestrict>:<p>
   :conditions_governing_use_head, # <ead>:<archdesc>:<dsc>:<c>:<accessrestrict>:<head>
@@ -34,7 +35,9 @@ attributes = [
   :scope_and_content_head, # <ead>:<archdesc>:<dsc>:<c>:<scopecontent>:<head>
   :scope_and_content_values, # <ead>:<archdesc>:<dsc>:<c>:<scopecontent>:<p>
   :separated_material_head, # <ead>:<archdesc>:<dsc>:<c>:<separatedmaterial>:<head>
-  :separated_material_values # <ead>:<archdesc>:<dsc>:<c>:<separatedmaterial>:<p>
+  :separated_material_values, # <ead>:<archdesc>:<dsc>:<c>:<separatedmaterial>:<p>
+  :unit_dates, # <ead>:<archdesc>:<dsc>:<c>:<did>:<unitdate>
+  :unit_title # <ead>:<archdesc>:<dsc>:<c>:<did>:<unittitle>
 ].freeze
 
 RSpec.describe ArchiveSpace::Parsers::ComponentParser do
@@ -62,7 +65,121 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
 
   ########################################## Functionality
   describe 'Testing functionality: ' do
-    ########################################## parse_arch_desc_misc
+    ########################################## generate_component_info
+    describe 'generate_component_info' do
+      before(:context) do
+        xml_input = fixture_file_upload('ead/test_ead.xml').read
+        nokogiri_xml_document = Nokogiri::XML(xml_input) do |config|
+          config.norecover
+        end
+        component_xml_nokogiri_element =  nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]').first
+        component_parser = ArchiveSpace::Parsers::ComponentParser.new
+        @component_info = component_parser.generate_component_info(component_xml_nokogiri_element, 1)
+        @expected_component_info = ArchiveSpace::Parsers::ComponentParser::ComponentInfo.new
+        @expected_component_info.compound_title_string = 'Series I: Cataloged Correspondence, 1914-1989, 1894-1967, bulk 1958-1980'
+        @expected_component_info.unit_dates = ['1914-1989', '1958-1980', '1894-1967']
+        @expected_component_info.unit_title = 'Series I: Cataloged Correspondence'
+        @expected_component_info.acquisition_information_values = [
+          '<p>Transferred from NYPL(ACQ)</p>',
+          '<p>Transferred from CUL(ACQ)</p>',
+          "<p>Transferred from Metro(ACQ)</p>"
+        ]
+        @expected_component_info.alternative_form_available_values = [
+          '<p>Microforms available.(AF)</p>',
+          '<p>Photocopies available.(AF)</p>',
+          '<p>Microfiche available.(AF)</p>'
+        ]
+        @expected_component_info.arrangement_values = [
+          '<p>Arranged alphabetically by subject.</p>',
+          '<p>Arranged alphabetically by author.</p>',
+          '<p>Arranged alphabetically by location.</p>'
+        ]
+        @expected_component_info.biography_or_history_values = [
+          '<p>John ate pizza for lunch.(BH)</p>',
+          '<p>John ate a burger for lunch.(BH)</p>',
+          '<p>John ate fish for lunch.(BH)</p>'
+        ]
+        @expected_component_info.conditions_governing_access_values = [
+          '<p>[Restricted Until 2039](top-level container)</p>',
+          '<p>[Restricted Until 2059](top-level container)</p>',
+          '<p>[Restricted Until 2020](top-level container)</p>'
+        ]
+        @expected_component_info.conditions_governing_use_values = [
+          '<p>Five photocopies may be made for research purposes.(UR)</p>',
+          '<p>One photocopy may be made for research purposes.(UR)</p>',
+          '<p>Single photocopies may be made for research purposes.(UR)</p>'
+        ]
+        @expected_component_info.custodial_history_values = [
+          '<p>Gift of the ABC Company, 1963.(CH)</p>',
+          '<p>Gift of the BCD Company, 1963.(CH)</p>',
+          '<p>Gift of the DDD Company, 1963.(CH)</p>'
+        ]
+        @expected_component_info.other_descriptive_data_values = [
+          '<p>This collection is nice(ODD)</p>',
+          '<p>This repo is nice(ODD)</p>',
+          '<p>This series is nice(ODD)</p>'
+        ]
+        @expected_component_info.other_finding_aid_values = [
+          '<p>*In addition, a sortable inventory in this downloadable Excel spreadsheet.</p>',
+          '<p>A pdf version is available for download.</p>',
+          '<p>Another finding aid available online.</p>'
+        ]
+        @expected_component_info.related_material_values = [
+          '<p>The related memoirs are cataloged individually(RM)</p>',
+          '<p>The related photographs are cataloged individually(RM)</p>',
+          '<p>The related recordings are cataloged individually(RM)</p>'
+        ]
+        @expected_component_info.scope_and_content_values = [
+          '<p>The correspondence in the collection consist of letters and postcards.</p>',
+          '<p>Correspondents include: James Joyce.</p>',
+          '<p>Contains  document allowing Bunshaft to practice architecture in Belgium.</p>'
+        ]
+        @expected_component_info.separated_material_values = [
+          "<p>Some interviewees' personal papers were separated and described as their own collection.</p>",
+          '<p>Oral history transcripts in this series are drafts and editing copies.</p>',
+          '<p>The personal papers and finalized individual memoirs are cataloged in CLIO.</p>'
+        ]
+      end
+
+      context 'given NOKOGIRI::XML::ELEMENT, representing a <c>, as an argument' do
+        let (:expected_digital_archival_objects) {
+          [
+            {
+              href: 'https://dlc.library.columbia.edu/ifp/search',
+              description: 'Browse or Search Digital Materials'
+            },
+            {
+              href: 'https://dlc.library.columbia.edu/ifp/partner/secretariat',
+              description: 'Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013'
+            }
+          ]
+        }
+
+        it 'sets the digital_archival_objects correctly' do
+          digital_archival_objects = @component_info.digital_archival_objects
+          expect(expected_digital_archival_objects.size).to eq digital_archival_objects.size
+          expected_digital_archival_objects.each_with_index do |expected_digital_archival_object, index|
+            expect(digital_archival_objects[index].href).to eq expected_digital_archival_object[:href]
+            expect(digital_archival_objects[index].description).to eq expected_digital_archival_object[:description]
+          end
+        end
+        test_members =
+          ArchiveSpace::Parsers::ComponentParser::ComponentInfo.new.members  - [:digital_archival_objects]
+        test_members.each do |member|
+          it "sets the #{member} member of ComponentInfo correctly" do
+            if "#{member}".ends_with? 'string'
+              expect(@component_info[member]).to eq @expected_component_info[member]
+            elsif "#{member}" == 'unit_title'
+              expect(@component_info[member].text).to eq @expected_component_info[member]
+            else
+              expect(@component_info[member]).to eq @expected_component_info[member]
+            end
+          end
+        end
+      end
+    end
+
+    ########################################## parse
     describe 'parse' do
       before(:context) do
         xml_input = fixture_file_upload('ead/test_ead.xml').read
@@ -202,6 +319,14 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         ]
       }
 
+      let (:expected_unit_dates) {
+        [
+          '1914-1989',
+          '1958-1980',
+          '1894-1967'
+        ]
+      }
+
       context 'given NOKOGIRI::XML::DOCUMENT as an argument' do
         it 'sets digital_archival_objects correctly' do
           digital_archival_objects = @component_parser.digital_archival_objects
@@ -210,6 +335,16 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
             expect(digital_archival_objects[index].href).to eq expected_digital_archival_object[:href]
             expect(digital_archival_objects[index].description).to eq expected_digital_archival_object[:description]
           end
+        end
+
+        it 'sets the unit_dates attribute correctly' do
+          expected_unit_dates.each_with_index do |expected_unit_date, index|
+            expect(@component_parser.unit_dates[index].text).to eq expected_unit_date
+          end
+        end
+
+        it 'sets the unit_title attribute correctly' do
+          expect(@component_parser.unit_title.text).to eq 'Series I: Cataloged Correspondence'
         end
 
         head_attributes = attributes.find_all { |attribute| "#{attribute}".ends_with? "head"}

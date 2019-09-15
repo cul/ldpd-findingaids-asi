@@ -21,6 +21,7 @@ module ArchiveSpace
         :arrangement_values,
         :biography_or_history_head,
         :biography_or_history_values,
+        :compound_title_string,
         :conditions_governing_access_head,
         :conditions_governing_access_values,
         :conditions_governing_use_head,
@@ -41,15 +42,38 @@ module ArchiveSpace
         :scope_and_content_head,
         :scope_and_content_values,
         :separated_material_head,
-        :separated_material_values
+        :separated_material_values,
+        :unit_dates,
+        :unit_title
       ]
+
+      EAD_ELEMENT_COMPONENT_METHODS = {
+        acquisition_information_values: :acqinfo_p_array,
+        alternative_form_available_values: :altformavail_p_array,
+        arrangement_values: :arrangement_p_array,
+        biography_or_history_values: :bioghist_p_array,
+        conditions_governing_access_values: :accessrestrict_p_array,
+        conditions_governing_use_values: :userestrict_p_array,
+        custodial_history_values: :custodhist_p_array,
+        other_descriptive_data_values: :odd_p_array,
+        other_finding_aid_values: :otherfindaid_p_array,
+#        :preferred_citation_head,
+#        :preferred_citation_values,
+#        :processing_information_head,
+#        :processing_information_values,
+        related_material_values: :relatedmaterial_p_array,
+        scope_and_content_values: :scopecontent_p_array,
+        separated_material_values: :separatedmaterial_p_array
+      }
 
       attr_reader *ATTRIBUTES
 
       DigitalArchivalObject = Struct.new(:href, :description)
 
-      ComponentInfo = Struct.new(:acquisition_information_values,
-                                 :alternative_form_available_values)
+      # fcd1, 09/15/19: may not need/use compound_title_string
+      # for second-level <c> elements and lower levels <c> elements, the <head> chidlren are not
+      # displayed currently, so won't include them in the ComponentInfo Struct.
+      ComponentInfo = Struct.new(*ATTRIBUTES.reject { |attribute| "#{attribute}".ends_with? "head" })
 
       # returns a recursively-created array of nested array represent the tree structure of the
       # descendant <c> components -- a <c> can contain another <c> element which itself may contain
@@ -73,6 +97,56 @@ module ArchiveSpace
       end
 
       def generate_component_info(component, nesting_level = 0)
+        component_info = ComponentInfo.new
+        EAD_ELEMENT_COMPONENT_METHODS.each do |member, class_method|
+          component_info[member] = ::Ead::Elements::Component.send(class_method,component).map do |value|
+            (apply_ead_to_html_transforms value).to_s
+          end
+        end
+        component_info.digital_archival_objects = []
+        # first retrieve the <did> element, then get the <dao> elements from the <did>
+        ::Ead::Elements::Did.dao_node_set(::Ead::Elements::Component.did(component)).each do |dao|
+          component_info.digital_archival_objects.append DigitalArchivalObject.new(::Ead::Elements::Dao.href_attribute_node_set(dao).text,
+                                                                     ::Ead::Elements::Dao.daodesc_p_node_set(dao).text)
+        end
+        component_info.compound_title_string = ArchiveSpace::Parsers::EadHelper.compound_title component
+        # fcd1, 09/15/19: Assume only one <unititle> element is expected. If more are encountered, return first one.
+        component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did component).first
+        component_info.unit_dates =
+          ::Ead::Elements::Did.unitdate_node_set(::Ead::Elements::Component.did component).map(&:text)
+        component_info
+      end
+
+      def generate_component_info_first_attempt(component, nesting_level = 0)
+        component_info = ComponentInfo.new
+        component_info.compound_title_string = ArchiveSpace::Parsers::EadHelper.compound_title component
+        # fcd1, 09/15/19: Assume only one <unititle> element is expected. If more are encountered, return first one.
+        component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did component).first
+        component_info.unit_dates =
+          ::Ead::Elements::Did.unitdate_node_set(::Ead::Elements::Component.did component).map(&:text)
+        component_info.acquisition_information_values = ::Ead::Elements::Component.acqinfo_p_array(component).map(&:to_s)
+        component_info.alternative_form_available_values = ::Ead::Elements::Component.altformavail_p_array(component).map(&:to_s)
+        component_info.arrangement_values = ::Ead::Elements::Component.arrangement_p_array(component).map(&:to_s)
+        component_info.biography_or_history_values = ::Ead::Elements::Component.bioghist_p_array(component).map(&:to_s)
+        component_info.conditions_governing_access_values = ::Ead::Elements::Component.accessrestrict_p_array(component).map(&:to_s)
+        component_info.conditions_governing_use_values = ::Ead::Elements::Component.userestrict_p_array(component).map(&:to_s)
+        component_info.custodial_history_values = ::Ead::Elements::Component.custodhist_p_array(component).map(&:to_s)
+        component_info.digital_archival_objects = []
+        # first retrieve the <did> element, then get the <dao> elements from the <did>
+        ::Ead::Elements::Did.dao_node_set(::Ead::Elements::Component.did(component)).each do |dao|
+          component_info.digital_archival_objects.append DigitalArchivalObject.new(::Ead::Elements::Dao.href_attribute_node_set(dao).text,
+                                                                     ::Ead::Elements::Dao.daodesc_p_node_set(dao).text)
+        end
+        component_info.other_descriptive_data_values = ::Ead::Elements::Component.odd_p_array(component).map(&:to_s)
+        component_info.other_finding_aid_values = ::Ead::Elements::Component.otherfindaid_p_array(component).map(&:to_s)
+        component_info.related_material_values = ::Ead::Elements::Component.relatedmaterial_p_array(component).map(&:to_s)
+        component_info.scope_and_content_values = ::Ead::Elements::Component.scopecontent_p_array(component).map(&:to_s)
+        component_info.separated_material_values = ::Ead::Elements::Component.separatedmaterial_p_array(component).map(&:to_s)
+        # Assume AS EAD <did>s will only contain one <unittitle>
+        component_info
+      end
+
+      def generate_component_info_legacy_copy(component, nesting_level = 0)
         component_notes = ComponentInfo.new
         title = component.xpath(XPATH[:title]).text
         physical_description = component.xpath(XPATH[:physical_description]).text
@@ -160,6 +234,9 @@ module ArchiveSpace
         @separated_material_head = ::Ead::Elements::Component.separatedmaterial_head_array(series).first.text unless
           ::Ead::Elements::Component.separatedmaterial_head_array(series).empty?
         @separated_material_values = ::Ead::Elements::Component.separatedmaterial_p_array(series)
+        # Assume AS EAD <did>s will only contain one <unittitle>
+        @unit_dates = ::Ead::Elements::Did.unitdate_node_set(::Ead::Elements::Component.did(series))
+        @unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did(series)).first
       end
 
       # legacy component struture methods
