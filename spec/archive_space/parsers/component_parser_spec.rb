@@ -62,17 +62,17 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
 
   ########################################## Functionality
   describe 'Testing functionality: ' do
-    before(:context) do
-      xml_input = fixture_file_upload('ead/test_ead.xml').read
-      nokogiri_xml_document = Nokogiri::XML(xml_input) do |config|
-        config.norecover
-      end
-      @component_parser = ArchiveSpace::Parsers::ComponentParser.new
-      @component_parser.parse(nokogiri_xml_document, 1)
-    end
-
     ########################################## parse_arch_desc_misc
-    context 'parse' do
+    describe 'parse' do
+      before(:context) do
+        xml_input = fixture_file_upload('ead/test_ead.xml').read
+        nokogiri_xml_document = Nokogiri::XML(xml_input) do |config|
+          config.norecover
+        end
+        @component_parser = ArchiveSpace::Parsers::ComponentParser.new
+        @component_parser.parse(nokogiri_xml_document, 1)
+      end
+
       let (:expected_heads) {
         {
 #          accruals_head: 'Accruals',
@@ -202,29 +202,31 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         ]
       }
 
-      it 'sets digital_archival_objects correctly' do
-        digital_archival_objects = @component_parser.digital_archival_objects
-        expect(expected_digital_archival_objects.size).to eq digital_archival_objects.size
-        expected_digital_archival_objects.each_with_index do |expected_digital_archival_object, index|
-          expect(digital_archival_objects[index].href).to eq expected_digital_archival_object[:href]
-          expect(digital_archival_objects[index].description).to eq expected_digital_archival_object[:description]
+      context 'given NOKOGIRI::XML::DOCUMENT as an argument' do
+        it 'sets digital_archival_objects correctly' do
+          digital_archival_objects = @component_parser.digital_archival_objects
+          expect(expected_digital_archival_objects.size).to eq digital_archival_objects.size
+          expected_digital_archival_objects.each_with_index do |expected_digital_archival_object, index|
+            expect(digital_archival_objects[index].href).to eq expected_digital_archival_object[:href]
+            expect(digital_archival_objects[index].description).to eq expected_digital_archival_object[:description]
+          end
         end
-      end
 
-      head_attributes = attributes.find_all { |attribute| "#{attribute}".ends_with? "head"}
-      head_attributes.each do |head_attribute|
-        it "sets the attribute #{head_attribute} correctly" do
-          expected_head = expected_heads[head_attribute]
-          expect(@component_parser.instance_variable_get("@#{head_attribute}")).to eq expected_head
+        head_attributes = attributes.find_all { |attribute| "#{attribute}".ends_with? "head"}
+        head_attributes.each do |head_attribute|
+          it "sets the attribute #{head_attribute} correctly" do
+            expected_head = expected_heads[head_attribute]
+            expect(@component_parser.instance_variable_get("@#{head_attribute}")).to eq expected_head
+          end
         end
-      end
 
-      value_attributes = attributes.find_all { |attribute| "#{attribute}".ends_with? "values"}
-      value_attributes.each do |value_attribute|
-        it "sets the attribute #{value_attribute} correctly" do
-          expected_values = eval "expected_#{value_attribute}"
-          expected_values.each_with_index do |expected_value, index|
-            expect(@component_parser.instance_variable_get("@#{value_attribute}")[index].text).to eq expected_value
+        value_attributes = attributes.find_all { |attribute| "#{attribute}".ends_with? "values"}
+        value_attributes.each do |value_attribute|
+          it "sets the attribute #{value_attribute} correctly" do
+            expected_values = eval "expected_#{value_attribute}"
+            expected_values.each_with_index do |expected_value, index|
+              expect(@component_parser.instance_variable_get("@#{value_attribute}")[index].text).to eq expected_value
+            end
           end
         end
       end
