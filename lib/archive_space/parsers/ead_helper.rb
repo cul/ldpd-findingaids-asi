@@ -8,7 +8,7 @@ module ArchiveSpace
     module EadHelper
       class << self
         def compound_title component
-          did = ::Ead::Elements::Component.did(component)
+          did = ::Ead::Elements::Component.did_node_set(component).first
           unit_title = ::Ead::Elements::Did.unittitle_node_set(did).first
           unit_dates_string = compound_dates_into_string(::Ead::Elements::Did.unitdate_node_set(did))
           # compound_title contains the unit title and the unit date(s)

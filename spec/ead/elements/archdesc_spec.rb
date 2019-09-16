@@ -8,35 +8,35 @@ require 'ead/elements/archdesc.rb'
 # class methods. NOTE: only the class methods currently used by the app to
 # parse a <archdesc> element are listed here.
 common_class_methods = [
-  :accessrestrict_head_array, # <accessrestrict><head>
-  :accessrestrict_p_array, # <accessrestrict><p>
-  :accruals_head_array, # <accruals><head>
-  :accruals_p_array, # <accruals><p>
-  :altformavail_head_array,  # <altformavail><head>
-  :altformavail_p_array, # <altformavail><p>
-  :arrangement_head_array, # <arrangement><head>
-  :arrangement_p_array, # <arrangement><p>
-  :bioghist_head_array, # <bioghist><head>
-  :bioghist_p_array, # <bioghist><p>
-  :controlaccess_array, # <controlaccess>
-  :did, # <did>
-  :dsc, # <dsc>
-  :odd_head_array, # <odd><head>
-  :odd_p_array, # <odd><p>
-  :otherfindaid_head_array, # <otherfindaid><head>
-  :otherfindaid_p_array, # <otherfindaid><p>
-  :prefercite_head_array, # <prefercite><head>
-  :prefercite_p_array, # <prefercite><p>
-  :processinfo_head_array, # <processinfo><head>
-  :processinfo_p_array, # <processinfo><p>
-  :relatedmaterial_head_array, # <relatedmaterial><head>
-  :relatedmaterial_p_array, # <relatedmaterial><p>
-  :scopecontent_head_array, # <scopecontent><head>
-  :scopecontent_p_array, # <scopecontent><p>
-  :separatedmaterial_head_array, # <separatedmaterial><head>
-  :separatedmaterial_p_array, # <separatedmaterial><p>
-  :userestrict_head_array, # <userestrict><head>
-  :userestrict_p_array # <userestrict><p>
+  :accessrestrict_head_node_set, # <accessrestrict><head>
+  :accessrestrict_p_node_set, # <accessrestrict><p>
+  :accruals_head_node_set, # <accruals><head>
+  :accruals_p_node_set, # <accruals><p>
+  :altformavail_head_node_set,  # <altformavail><head>
+  :altformavail_p_node_set, # <altformavail><p>
+  :arrangement_head_node_set, # <arrangement><head>
+  :arrangement_p_node_set, # <arrangement><p>
+  :bioghist_head_node_set, # <bioghist><head>
+  :bioghist_p_node_set, # <bioghist><p>
+  :controlaccess_node_set, # <controlaccess>
+  :did_node_set, # <did>
+  :dsc_node_set, # <dsc>
+  :odd_head_node_set, # <odd><head>
+  :odd_p_node_set, # <odd><p>
+  :otherfindaid_head_node_set, # <otherfindaid><head>
+  :otherfindaid_p_node_set, # <otherfindaid><p>
+  :prefercite_head_node_set, # <prefercite><head>
+  :prefercite_p_node_set, # <prefercite><p>
+  :processinfo_head_node_set, # <processinfo><head>
+  :processinfo_p_node_set, # <processinfo><p>
+  :relatedmaterial_head_node_set, # <relatedmaterial><head>
+  :relatedmaterial_p_node_set, # <relatedmaterial><p>
+  :scopecontent_head_node_set, # <scopecontent><head>
+  :scopecontent_p_node_set, # <scopecontent><p>
+  :separatedmaterial_head_node_set, # <separatedmaterial><head>
+  :separatedmaterial_p_node_set, # <separatedmaterial><p>
+  :userestrict_head_node_set, # <userestrict><head>
+  :userestrict_p_node_set # <userestrict><p>
 ].freeze
 
 RSpec.describe Ead::Elements::Archdesc do
@@ -59,20 +59,20 @@ RSpec.describe Ead::Elements::Archdesc do
       @nokogiri_node_set = Nokogiri::XML(input_xml).xpath('/xmlns:ead/xmlns:archdesc')
     end
 
-    describe ' class methods that return an array of composite elements:' do
+    describe ' class methods that return Nokogiri::XML::NodeSet of composite elements:' do
       # <controlaccess> Controlled Access Headings
-      context 'class method controlaccess_array' do
-        it 'takes an <archdesc> and returns an array of <controlaccess>' do
-          controlaccess_array = Ead::Elements::Archdesc.controlaccess_array(@nokogiri_node_set)
-          expect(controlaccess_array.first).to be_instance_of Nokogiri::XML::Element
-          expect(controlaccess_array.first.name).to eq 'controlaccess'
+      context 'class method controlaccess_node_set' do
+        it 'takes an <archdesc> and returns Nokogiri::XML::NodeSet of <controlaccess>' do
+          controlaccess_node_set = Ead::Elements::Archdesc.controlaccess_node_set(@nokogiri_node_set)
+          expect(controlaccess_node_set.first).to be_instance_of Nokogiri::XML::Element
+          expect(controlaccess_node_set.first.name).to eq 'controlaccess'
         end
       end
 
       # <did> Descriptive Identification
-      context 'class method did' do
-        it 'takes an <archdesc> and returns the <did>' do
-          did = Ead::Elements::Archdesc.did(@nokogiri_node_set)
+      context 'class method did_node_set' do
+        it 'takes an <archdesc> and returns a Nokogiri::XML::NodeSet of <did>' do
+          did = Ead::Elements::Archdesc.did_node_set(@nokogiri_node_set).first
           expect(did).to be_instance_of Nokogiri::XML::Element
           expect(did.name).to eq 'did'
         end
@@ -80,24 +80,24 @@ RSpec.describe Ead::Elements::Archdesc do
 
       # <dsc> Description of Subordinate Components
       context 'class method dsc' do
-        it 'takes an <archdesc> and returns a <dsc>' do
-          dsc = Ead::Elements::Archdesc.dsc(@nokogiri_node_set)
+        it 'takes an <archdesc> and returns a Nokogiri::XML::NodeSet of <dsc>' do
+          dsc = Ead::Elements::Archdesc.dsc_node_set(@nokogiri_node_set).first
           expect(dsc).to be_instance_of Nokogiri::XML::Element
           expect(dsc.name).to eq 'dsc'
         end
       end
     end
 
-    describe ' class methods that return an array:' do
+    describe ' class methods that return Nokogiri::XML::NodeSet:' do
       context 'class method' do
         # <accessrestrict> Conditions Governing Access
-        let (:expected_accessrestrict_head_array) {
+        let (:expected_accessrestrict_head_node_set) {
 	  [
             "Restrictions on Access",
             "Restrictions on Access"
 	  ]
         }
-        let (:expected_accessrestrict_p_array) {
+        let (:expected_accessrestrict_p_node_set) {
 	  [
             "This collection is located on-site.",
             "This collection has no restrictions."
@@ -105,13 +105,13 @@ RSpec.describe Ead::Elements::Archdesc do
         }
 
         # <accruals> Accruals
-        let (:expected_accruals_head_array) {
+        let (:expected_accruals_head_node_set) {
 	  [
             "Accruals",
             "Accruals"
 	  ]
         }
-        let (:expected_accruals_p_array) {
+        let (:expected_accruals_p_node_set) {
 	  [
             "No additional material is expected in the short term.",
             "Additional material is expected in the long term."
@@ -119,13 +119,13 @@ RSpec.describe Ead::Elements::Archdesc do
         }
 
         # <altformavail> Alternative Form Available
-        let (:expected_altformavail_head_array) {
+        let (:expected_altformavail_head_node_set) {
 	  [
             "Alternate Form Available",
             "Alternate Form Available"
 	  ]
         }
-        let (:expected_altformavail_p_array) {
+        let (:expected_altformavail_p_node_set) {
 	  [
             "Selected manuscripts are on: microfilm.",
             "Selected manuscripts are on: microfiche."
@@ -133,13 +133,13 @@ RSpec.describe Ead::Elements::Archdesc do
         }
 
         # <arrangement> Arrangement
-        let (:expected_arrangement_head_array) {
+        let (:expected_arrangement_head_node_set) {
 	  [
             "Arrangement",
             "Arrangement"
 	  ]
         }
-        let (:expected_arrangement_p_array) {
+        let (:expected_arrangement_p_node_set) {
 	  [
             "Selected materials cataloged.",
             "Remainder arranged."
@@ -147,13 +147,13 @@ RSpec.describe Ead::Elements::Archdesc do
         }
 
         # <bioghist> Biography or History
-        let (:expected_bioghist_head_array) {
+        let (:expected_bioghist_head_node_set) {
 	  [
             "Biographical note",
             "Biographical note"
 	  ]
         }
-        let (:expected_bioghist_p_array) {
+        let (:expected_bioghist_p_node_set) {
 	  [
             "Siegfried Loraine Sassoon, CBE, MC was an English poet, writer, and soldier.",
             "Decorated for bravery on the Western Front."
@@ -161,13 +161,13 @@ RSpec.describe Ead::Elements::Archdesc do
         }
 
         # <odd> Other Descriptive Data
-        let (:expected_odd_head_array) {
+        let (:expected_odd_head_node_set) {
 	  [
             "General Note",
             "General Note"
 	  ]
         }
-        let (:expected_odd_p_array) {
+        let (:expected_odd_p_node_set) {
 	  [
             "Other collections of Rockwell Kent materials are at: SUNY-Plattsburgh (Rockwell Kent Collection).",
             "This is the collection-level record for which 700 associated project-level records were created."
@@ -175,13 +175,13 @@ RSpec.describe Ead::Elements::Archdesc do
         }
 
         # <otherfindaid> Other Finding Aid
-        let (:expected_otherfindaid_head_array) {
+        let (:expected_otherfindaid_head_node_set) {
 	  [
             "Other Finding Aids",
             "Other Finding Aids"
 	  ]
         }
-        let (:expected_otherfindaid_p_array) {
+        let (:expected_otherfindaid_p_node_set) {
 	  [
             "Use the CDLI (https://cdli.ucla.edu/) to identify tablets by date, genre, etc.",
             "Use CLIO to search for other finding aids."
@@ -189,13 +189,13 @@ RSpec.describe Ead::Elements::Archdesc do
         }
 
         # <prefercite> Preferred Citation
-        let (:expected_prefercite_head_array) {
+        let (:expected_prefercite_head_node_set) {
 	  [
             "Preferred Citation",
             "Preferred Citation"
 	  ]
         }
-        let (:expected_prefercite_p_array) {
+        let (:expected_prefercite_p_node_set) {
 	  [
             "Identification of specific item.",
             "Date and Provenance of specific item."
@@ -203,13 +203,13 @@ RSpec.describe Ead::Elements::Archdesc do
         }
 
         # <processinfo> Processing Information
-        let (:expected_processinfo_head_array) {
+        let (:expected_processinfo_head_node_set) {
 	  [
             "Processing Information",
             "Processing Information"
 	  ]
         }
-        let (:expected_processinfo_p_array) {
+        let (:expected_processinfo_p_node_set) {
 	  [
             "Papers Entered in AMC 11/29/1990.",
             "4 letters of Arnold Bennett Cataloged HR 11/25/1991."
@@ -217,13 +217,13 @@ RSpec.describe Ead::Elements::Archdesc do
         }
 
         # <relatedmaterial> Related Material
-        let (:expected_relatedmaterial_head_array) {
+        let (:expected_relatedmaterial_head_node_set) {
 	  [
             "Related Materials",
             "Related Materials"
 	  ]
         }
-        let (:expected_relatedmaterial_p_array) {
+        let (:expected_relatedmaterial_p_node_set) {
 	  [
             "The following are the finalized memoirs are cataloged individually:",
             "Reminiscences of Choy Jun-ke"
@@ -231,13 +231,13 @@ RSpec.describe Ead::Elements::Archdesc do
         }
 
         # <scopecontent> Scope and Content
-        let (:expected_scopecontent_head_array) {
+        let (:expected_scopecontent_head_node_set) {
 	  [
             "Scope and Content",
             "Scope and Content"            
 	  ]
         }
-        let (:expected_scopecontent_p_array) {
+        let (:expected_scopecontent_p_node_set) {
 	  [
             "The Edith Elmer Wood Collection covers a short but important period in the housing field.",
             "The collection documents this period."            
@@ -245,13 +245,13 @@ RSpec.describe Ead::Elements::Archdesc do
         }
 
         # <separatedmaterial> Separated Material
-        let (:expected_separatedmaterial_head_array) {
+        let (:expected_separatedmaterial_head_node_set) {
 	  [
             "Separated Materials",
             "Separated Materials"
 	  ]
         }
-        let (:expected_separatedmaterial_p_array) {
+        let (:expected_separatedmaterial_p_node_set) {
 	  [
             "Interviewees' personal papers were separated.",
             "Researchers may find the personal papers on CLIO."
@@ -259,22 +259,22 @@ RSpec.describe Ead::Elements::Archdesc do
         }
 
         # <userestrict> Conditions Governing Use
-        let (:expected_userestrict_head_array) {
+        let (:expected_userestrict_head_node_set) {
 	  [
             "Terms Governing Use and Reproduction",
             "Terms Governing Use and Reproduction"
 	  ]
         }
-        let (:expected_userestrict_p_array) {
+        let (:expected_userestrict_p_node_set) {
 	  [
             "Readers must use microfilm of materials specified above.",
             "Single photocopies may be made for research purposes."
 	  ]
         }
 
-	array_class_methods = common_class_methods.find_all { |class_method| "#{class_method}".ends_with? "_array"}
-        (array_class_methods - [:controlaccess_array]).each do |class_method|
-          it ".#{class_method} takes a <did> and returns an array of <#{class_method.to_s.chomp('_array')}>" do
+	node_set_class_methods = common_class_methods.find_all { |class_method| "#{class_method}".ends_with? "_node_set"}
+        (node_set_class_methods - [:controlaccess_node_set, :did_node_set, :dsc_node_set]).each do |class_method|
+          it ".#{class_method} takes a <archdesc> and returns an Nokogiri::XML::NodeSet of <#{class_method.to_s.chomp('_node_set')}>" do
             values = Ead::Elements::Archdesc.send(class_method,@nokogiri_node_set)
             expected_values = eval "expected_#{class_method}"
             expected_values.each_with_index do |expected_value, index|

@@ -30,13 +30,13 @@ module ArchiveSpace
           series_compound_title = ArchiveSpace::Parsers::EadHelper.compound_title(series)
           @series_compound_title_array.append series_compound_title
           subseries_compound_title_array = []
-          ::Ead::Elements::Component.c_level_attribute_subseries_array(series).each do |subseries|
+          ::Ead::Elements::Component.c_level_attribute_subseries_node_set(series).each do |subseries|
             subseries_compound_title_array.append ArchiveSpace::Parsers::EadHelper.compound_title(subseries)
           end
           @series_subseries_compound_titles_hash[series_compound_title] =
             subseries_compound_title_array
           @subseries_compound_title_array_for_each_series_array.append subseries_compound_title_array
-          scope_content_array = ::Ead::Elements::Component.scopecontent_p_array(series)
+          scope_content_array = ::Ead::Elements::Component.scopecontent_p_node_set(series)
           @scope_content_values_for_each_series.append scope_content_array
         end
       end

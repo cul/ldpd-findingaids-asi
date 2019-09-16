@@ -19,14 +19,14 @@ module Ead
       }.freeze
 
       class << self
-        # returns: array of Nokogiri::XML::Element instances of <c>
-        def c_array(nokogiri_element)
-          nokogiri_element.xpath(XPATH[:c])
+        # returns: Nokogiri::XML::NodeSet of <c>
+        def c_node_set(input_element)
+          input_element.xpath(XPATH[:c])
         end
 
-        # returns: array of Nokogiri::XML::Element instances of <c level="subseries">
-        def c_level_attribute_subseries_array(nokogiri_element)
-          nokogiri_element.xpath(XPATH[:c_level_attribute_subseries])
+        # returns: Nokogiri::XML::NodeSet of <c level="subseries">
+        def c_level_attribute_subseries_node_set(input_element)
+          input_element.xpath(XPATH[:c_level_attribute_subseries])
         end
       end
     end

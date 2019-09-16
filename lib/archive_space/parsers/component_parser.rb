@@ -49,22 +49,22 @@ module ArchiveSpace
       ]
 
       EAD_ELEMENT_COMPONENT_METHODS = {
-        acquisition_information_values: :acqinfo_p_array,
-        alternative_form_available_values: :altformavail_p_array,
-        arrangement_values: :arrangement_p_array,
-        biography_or_history_values: :bioghist_p_array,
-        conditions_governing_access_values: :accessrestrict_p_array,
-        conditions_governing_use_values: :userestrict_p_array,
-        custodial_history_values: :custodhist_p_array,
-        other_descriptive_data_values: :odd_p_array,
-        other_finding_aid_values: :otherfindaid_p_array,
+        acquisition_information_values: :acqinfo_p_node_set,
+        alternative_form_available_values: :altformavail_p_node_set,
+        arrangement_values: :arrangement_p_node_set,
+        biography_or_history_values: :bioghist_p_node_set,
+        conditions_governing_access_values: :accessrestrict_p_node_set,
+        conditions_governing_use_values: :userestrict_p_node_set,
+        custodial_history_values: :custodhist_p_node_set,
+        other_descriptive_data_values: :odd_p_node_set,
+        other_finding_aid_values: :otherfindaid_p_node_set,
 #        :preferred_citation_head,
 #        :preferred_citation_values,
 #        :processing_information_head,
 #        :processing_information_values,
-        related_material_values: :relatedmaterial_p_array,
-        scope_and_content_values: :scopecontent_p_array,
-        separated_material_values: :separatedmaterial_p_array
+        related_material_values: :relatedmaterial_p_node_set,
+        scope_and_content_values: :scopecontent_p_node_set,
+        separated_material_values: :separatedmaterial_p_node_set
       }
 
       attr_reader *ATTRIBUTES
@@ -89,7 +89,7 @@ module ArchiveSpace
 
       def generate_child_components_info(component_arg, previous_nesting_level = 0)
         current_nesting_level = previous_level + 1
-        components = ::Ead::Elements::Component.c_array(component_arg)
+        components = ::Ead::Elements::Component.c_node_set(component_arg)
         return if components.empty?
         components.each do |component|
           generate_component_info(component, current_nesting_level)
@@ -106,16 +106,17 @@ module ArchiveSpace
         end
         component_info.digital_archival_objects = []
         # first retrieve the <did> element, then get the <dao> elements from the <did>
-        ::Ead::Elements::Did.dao_node_set(::Ead::Elements::Component.did(component)).each do |dao|
+        ::Ead::Elements::Did.dao_node_set(::Ead::Elements::Component.did_node_set(component).first).each do |dao|
           component_info.digital_archival_objects.append DigitalArchivalObject.new(::Ead::Elements::Dao.href_attribute_node_set(dao).text,
                                                                      ::Ead::Elements::Dao.daodesc_p_node_set(dao).text)
         end
         component_info.compound_title_string = ArchiveSpace::Parsers::EadHelper.compound_title component
         # fcd1, 09/15/19: Assume only one <unititle> element is expected. If more are encountered, return first one.
-        component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did component).first
+        component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did_node_set(component).first).first
         component_info.unit_dates =
-          ::Ead::Elements::Did.unitdate_node_set(::Ead::Elements::Component.did component).map(&:text)
-        component_info.container_info_strings = ::Ead::Elements::Did.container_node_set(::Ead::Elements::Component.did(component)).map do |container|
+          ::Ead::Elements::Did.unitdate_node_set(::Ead::Elements::Component.did_node_set(component).first).map(&:text)
+        component_info.container_info_strings =
+          ::Ead::Elements::Did.container_node_set(::Ead::Elements::Component.did_node_set(component).first).map do |container|
           # container_type = container['label'] || container['type']
           # Assumption: at least one of the 'label' or 'type' attribute is present.
           container_type = (::Ead::Elements::Container.label_attribute(container) ||
@@ -123,34 +124,6 @@ module ArchiveSpace
           container_value = container.text
           "#{container_type.titlecase} #{container_value}"
         end
-        component_info
-      end
-
-      def generate_component_info_first_attempt(component, nesting_level = 0)
-        component_info = ComponentInfo.new
-        component_info.compound_title_string = ArchiveSpace::Parsers::EadHelper.compound_title component
-        # fcd1, 09/15/19: Assume only one <unititle> element is expected. If more are encountered, return first one.
-        component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did component).first
-        component_info.unit_dates =
-          ::Ead::Elements::Did.unitdate_node_set(::Ead::Elements::Component.did component).map(&:text)
-        component_info.acquisition_information_values = ::Ead::Elements::Component.acqinfo_p_array(component).map(&:to_s)
-        component_info.alternative_form_available_values = ::Ead::Elements::Component.altformavail_p_array(component).map(&:to_s)
-        component_info.arrangement_values = ::Ead::Elements::Component.arrangement_p_array(component).map(&:to_s)
-        component_info.biography_or_history_values = ::Ead::Elements::Component.bioghist_p_array(component).map(&:to_s)
-        component_info.conditions_governing_access_values = ::Ead::Elements::Component.accessrestrict_p_array(component).map(&:to_s)
-        component_info.conditions_governing_use_values = ::Ead::Elements::Component.userestrict_p_array(component).map(&:to_s)
-        component_info.custodial_history_values = ::Ead::Elements::Component.custodhist_p_array(component).map(&:to_s)
-        component_info.digital_archival_objects = []
-        # first retrieve the <did> element, then get the <dao> elements from the <did>
-        ::Ead::Elements::Did.dao_node_set(::Ead::Elements::Component.did(component)).each do |dao|
-          component_info.digital_archival_objects.append DigitalArchivalObject.new(::Ead::Elements::Dao.href_attribute_node_set(dao).text,
-                                                                     ::Ead::Elements::Dao.daodesc_p_node_set(dao).text)
-        end
-        component_info.other_descriptive_data_values = ::Ead::Elements::Component.odd_p_array(component).map(&:to_s)
-        component_info.other_finding_aid_values = ::Ead::Elements::Component.otherfindaid_p_array(component).map(&:to_s)
-        component_info.related_material_values = ::Ead::Elements::Component.relatedmaterial_p_array(component).map(&:to_s)
-        component_info.scope_and_content_values = ::Ead::Elements::Component.scopecontent_p_array(component).map(&:to_s)
-        component_info.separated_material_values = ::Ead::Elements::Component.separatedmaterial_p_array(component).map(&:to_s)
         component_info
       end
 
@@ -194,25 +167,25 @@ module ArchiveSpace
 #        @accruals_head = ::Ead::Elements::Component.accruals_head_array(series).first.text unless
 #          ::Ead::Elements::Component.accruals_head_array(series).empty?
 #        @accruals_values = ::Ead::Elements::Component.accruals_p_array(series)
-        @acquisition_information_head = ::Ead::Elements::Component.acqinfo_head_array(series).first.text unless
-          ::Ead::Elements::Component.acqinfo_head_array(series).empty?
-        @acquisition_information_values = ::Ead::Elements::Component.acqinfo_p_array(series)
-        @alternative_form_available_head = ::Ead::Elements::Component.altformavail_head_array(series).first.text unless
-          ::Ead::Elements::Component.altformavail_head_array(series).empty?
-        @alternative_form_available_values = ::Ead::Elements::Component.altformavail_p_array(series)
-        @arrangement_head = ::Ead::Elements::Component.arrangement_head_array(series).first.text unless
-          ::Ead::Elements::Component.arrangement_head_array(series).empty?
-        @arrangement_values = ::Ead::Elements::Component.arrangement_p_array(series)
-        @biography_or_history_head = ::Ead::Elements::Component.bioghist_head_array(series).first.text unless
-          ::Ead::Elements::Component.bioghist_head_array(series).empty?
-        @biography_or_history_values = ::Ead::Elements::Component.bioghist_p_array(series)
-        @conditions_governing_access_head = ::Ead::Elements::Component.accessrestrict_head_array(series).first.text unless
-          ::Ead::Elements::Component.accessrestrict_head_array(series).empty?
-        @conditions_governing_access_values = ::Ead::Elements::Component.accessrestrict_p_array(series)
-        @conditions_governing_use_head = ::Ead::Elements::Component.userestrict_head_array(series).first.text unless
-          ::Ead::Elements::Component.userestrict_head_array(series).empty?
-        @conditions_governing_use_values = ::Ead::Elements::Component.userestrict_p_array(series)
-        @container_info_strings = ::Ead::Elements::Did.container_node_set(::Ead::Elements::Component.did(series)).map do |container|
+        @acquisition_information_head = ::Ead::Elements::Component.acqinfo_head_node_set(series).first.text unless
+          ::Ead::Elements::Component.acqinfo_head_node_set(series).empty?
+        @acquisition_information_values = ::Ead::Elements::Component.acqinfo_p_node_set(series)
+        @alternative_form_available_head = ::Ead::Elements::Component.altformavail_head_node_set(series).first.text unless
+          ::Ead::Elements::Component.altformavail_head_node_set(series).empty?
+        @alternative_form_available_values = ::Ead::Elements::Component.altformavail_p_node_set(series)
+        @arrangement_head = ::Ead::Elements::Component.arrangement_head_node_set(series).first.text unless
+          ::Ead::Elements::Component.arrangement_head_node_set(series).empty?
+        @arrangement_values = ::Ead::Elements::Component.arrangement_p_node_set(series)
+        @biography_or_history_head = ::Ead::Elements::Component.bioghist_head_node_set(series).first.text unless
+          ::Ead::Elements::Component.bioghist_head_node_set(series).empty?
+        @biography_or_history_values = ::Ead::Elements::Component.bioghist_p_node_set(series)
+        @conditions_governing_access_head = ::Ead::Elements::Component.accessrestrict_head_node_set(series).first.text unless
+          ::Ead::Elements::Component.accessrestrict_head_node_set(series).empty?
+        @conditions_governing_access_values = ::Ead::Elements::Component.accessrestrict_p_node_set(series)
+        @conditions_governing_use_head = ::Ead::Elements::Component.userestrict_head_node_set(series).first.text unless
+          ::Ead::Elements::Component.userestrict_head_node_set(series).empty?
+        @conditions_governing_use_values = ::Ead::Elements::Component.userestrict_p_node_set(series)
+        @container_info_strings = ::Ead::Elements::Did.container_node_set(::Ead::Elements::Component.did_node_set(series).first).map do |container|
           # container_type = container['label'] || container['type']
           # Assumption: at least one of the 'label' or 'type' attribute is present.
           container_type = (::Ead::Elements::Container.label_attribute(container) ||
@@ -220,39 +193,39 @@ module ArchiveSpace
           container_value = container.text
           "#{container_type.titlecase} #{container_value}"
         end
-        @custodial_history_head = ::Ead::Elements::Component.custodhist_head_array(series).first.text unless
-          ::Ead::Elements::Component.custodhist_head_array(series).empty?
-        @custodial_history_values = ::Ead::Elements::Component.custodhist_p_array(series)
+        @custodial_history_head = ::Ead::Elements::Component.custodhist_head_node_set(series).first.text unless
+          ::Ead::Elements::Component.custodhist_head_node_set(series).empty?
+        @custodial_history_values = ::Ead::Elements::Component.custodhist_p_node_set(series)
         @digital_archival_objects = []
         # first retrieve the <did> element, then get the <dao> elements from the <did>
-        ::Ead::Elements::Did.dao_node_set(::Ead::Elements::Component.did(series)).each do |dao|
+        ::Ead::Elements::Did.dao_node_set(::Ead::Elements::Component.did_node_set(series).first).each do |dao|
           @digital_archival_objects.append DigitalArchivalObject.new(::Ead::Elements::Dao.href_attribute_node_set(dao).text,
                                                                      ::Ead::Elements::Dao.daodesc_p_node_set(dao).text)
         end
-        @other_descriptive_data_head = ::Ead::Elements::Component.odd_head_array(series).first.text unless
-          ::Ead::Elements::Component.odd_head_array(series).empty?
-        @other_descriptive_data_values = ::Ead::Elements::Component.odd_p_array(series)
-        @other_finding_aid_head = ::Ead::Elements::Component.otherfindaid_head_array(series).first.text unless
-          ::Ead::Elements::Component.otherfindaid_head_array(series).empty?
-        @other_finding_aid_values = ::Ead::Elements::Component.otherfindaid_p_array(series)
+        @other_descriptive_data_head = ::Ead::Elements::Component.odd_head_node_set(series).first.text unless
+          ::Ead::Elements::Component.odd_head_node_set(series).empty?
+        @other_descriptive_data_values = ::Ead::Elements::Component.odd_p_node_set(series)
+        @other_finding_aid_head = ::Ead::Elements::Component.otherfindaid_head_node_set(series).first.text unless
+          ::Ead::Elements::Component.otherfindaid_head_node_set(series).empty?
+        @other_finding_aid_values = ::Ead::Elements::Component.otherfindaid_p_node_set(series)
 #        @preferred_citation_head = ::Ead::Elements::Component.prefercite_head_array(series).first.text unless
 #          ::Ead::Elements::Component.prefercite_head_array(series).empty?
 #        @preferred_citation_values = ::Ead::Elements::Component.prefercite_p_array(series)
 #        @processing_information_head = ::Ead::Elements::Component.processinfo_head_array(series).first.text unless
 #          ::Ead::Elements::Component.processinfo_head_array(series).empty?
 #        @processing_information_values = ::Ead::Elements::Component.processinfo_p_array(series)
-        @related_material_head = ::Ead::Elements::Component.relatedmaterial_head_array(series).first.text unless
-          ::Ead::Elements::Component.relatedmaterial_head_array(series).empty?
-        @related_material_values = ::Ead::Elements::Component.relatedmaterial_p_array(series)
-        @scope_and_content_head = ::Ead::Elements::Component.scopecontent_head_array(series).first.text unless
-          ::Ead::Elements::Component.scopecontent_head_array(series).empty?
-        @scope_and_content_values = ::Ead::Elements::Component.scopecontent_p_array(series)
-        @separated_material_head = ::Ead::Elements::Component.separatedmaterial_head_array(series).first.text unless
-          ::Ead::Elements::Component.separatedmaterial_head_array(series).empty?
-        @separated_material_values = ::Ead::Elements::Component.separatedmaterial_p_array(series)
+        @related_material_head = ::Ead::Elements::Component.relatedmaterial_head_node_set(series).first.text unless
+          ::Ead::Elements::Component.relatedmaterial_head_node_set(series).empty?
+        @related_material_values = ::Ead::Elements::Component.relatedmaterial_p_node_set(series)
+        @scope_and_content_head = ::Ead::Elements::Component.scopecontent_head_node_set(series).first.text unless
+          ::Ead::Elements::Component.scopecontent_head_node_set(series).empty?
+        @scope_and_content_values = ::Ead::Elements::Component.scopecontent_p_node_set(series)
+        @separated_material_head = ::Ead::Elements::Component.separatedmaterial_head_node_set(series).first.text unless
+          ::Ead::Elements::Component.separatedmaterial_head_node_set(series).empty?
+        @separated_material_values = ::Ead::Elements::Component.separatedmaterial_p_node_set(series)
         # Assume AS EAD <did>s will only contain one <unittitle>
-        @unit_dates = ::Ead::Elements::Did.unitdate_node_set(::Ead::Elements::Component.did(series))
-        @unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did(series)).first
+        @unit_dates = ::Ead::Elements::Did.unitdate_node_set(::Ead::Elements::Component.did_node_set(series).first)
+        @unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did_node_set(series).first).first
       end
 
       # legacy component struture methods

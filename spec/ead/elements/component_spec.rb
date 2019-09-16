@@ -8,36 +8,37 @@ require 'ead/elements/component.rb'
 # class methods. NOTE: only the class methods currently used by the app to
 # parse a <c> element are listed here.
 class_methods = [
-  :accessrestrict_head_array, # <accessrestrict><head>
-  :accessrestrict_p_array, # <accessrestrict><p>
-  :altformavail_head_array,  # <altformavail><head>
-  :altformavail_p_array, # <altformavail><p>
-  :arrangement_head_array, # <arrangement><head>
-  :arrangement_p_array, # <arrangement><p>
-  :bioghist_head_array, # <bioghist><head>
-  :bioghist_p_array, # <bioghist><p>
-  :c_array, # <c>
-  :c_level_attribute_subseries_array, # <c level="subseries">
-  :did, # <did>
-  :odd_head_array, # <odd><head>
-  :odd_p_array, # <odd><p>
-  :otherfindaid_head_array, # <otherfindaid><head>
-  :otherfindaid_p_array, # <otherfindaid><p>
-  :relatedmaterial_head_array, # <relatedmaterial><head>
-  :relatedmaterial_p_array, # <relatedmaterial><p>
-  :scopecontent_head_array, # <scopecontent><head>
-  :scopecontent_p_array, # <scopecontent><p>
-  :separatedmaterial_head_array, # <separatedmaterial><head>
-  :separatedmaterial_p_array, # <separatedmaterial><p>
-  :userestrict_head_array, # <userestrict><head>
-  :userestrict_p_array # <userestrict><p>
+  :accessrestrict_head_node_set, # <accessrestrict><head>
+  :accessrestrict_p_node_set, # <accessrestrict><p>
+  :altformavail_head_node_set,  # <altformavail><head>
+  :altformavail_p_node_set, # <altformavail><p>
+  :arrangement_head_node_set, # <arrangement><head>
+  :arrangement_p_node_set, # <arrangement><p>
+  :bioghist_head_node_set, # <bioghist><head>
+  :bioghist_p_node_set, # <bioghist><p>
+  :c_node_set, # <c>
+  :c_level_attribute_subseries_node_set, # <c level="subseries">
+  :did_node_set, # <did>
+  :odd_head_node_set, # <odd><head>
+  :odd_p_node_set, # <odd><p>
+  :otherfindaid_head_node_set, # <otherfindaid><head>
+  :otherfindaid_p_node_set, # <otherfindaid><p>
+  :relatedmaterial_head_node_set, # <relatedmaterial><head>
+  :relatedmaterial_p_node_set, # <relatedmaterial><p>
+  :scopecontent_head_node_set, # <scopecontent><head>
+  :scopecontent_p_node_set, # <scopecontent><p>
+  :separatedmaterial_head_node_set, # <separatedmaterial><head>
+  :separatedmaterial_p_node_set, # <separatedmaterial><p>
+  :userestrict_head_node_set, # <userestrict><head>
+  :userestrict_p_node_set # <userestrict><p>
 ].freeze
 
 # following is a subset of the above array
 class_methods_tested_individually = [
-  :c_array,
-  :c_level_attribute_subseries_array,
-  :controlaccess_array
+  :c_node_set,
+  :c_level_attribute_subseries_node_set,
+  :controlaccess_node_set,
+  :did_node_set
 ].freeze
 
 RSpec.describe Ead::Elements::Component do
@@ -65,7 +66,7 @@ RSpec.describe Ead::Elements::Component do
       # <did> Descriptive Identification
       context 'class method did' do
         it 'takes an <archdesc> and returns the <did>' do
-          did = Ead::Elements::Component.did(@nokogiri_node_set)
+          did = Ead::Elements::Component.did_node_set(@nokogiri_node_set).first
           expect(did).to be_instance_of Nokogiri::XML::Element
           expect(did.name).to eq 'did'
         end
@@ -75,14 +76,14 @@ RSpec.describe Ead::Elements::Component do
     describe ' class methods that return an array:' do
       context 'class method' do
         # <accessrestrict> Conditions Governing Access
-        let (:expected_accessrestrict_head_array) {
+        let (:expected_accessrestrict_head_node_set) {
 	  [
             "Conditions Governing Access",
             "Conditions Governing Access",
             "Conditions Governing Access"
 	  ]
         }
-        let (:expected_accessrestrict_p_array) {
+        let (:expected_accessrestrict_p_node_set) {
 	  [
             "[Restricted Until 2039](top-level container)",
             "[Restricted Until 2059](top-level container)",
@@ -91,14 +92,14 @@ RSpec.describe Ead::Elements::Component do
         }
 
         # <acqinfo> Acquisition Information
-        let (:expected_acqinfo_head_array) {
+        let (:expected_acqinfo_head_node_set) {
 	  [
             "Acquisition",
             "Acquisition",
             "Acquisition"
 	  ]
         }
-        let (:expected_acqinfo_p_array) {
+        let (:expected_acqinfo_p_node_set) {
 	  [
             "Transferred from NYPL(ACQ)",
             "Transferred from CUL(ACQ)",
@@ -107,14 +108,14 @@ RSpec.describe Ead::Elements::Component do
         }
 
         # <altformavail> Alternative Form Available
-        let (:expected_altformavail_head_array) {
+        let (:expected_altformavail_head_node_set) {
 	  [
             "Alternate Form Available",
             "Alternate Form Available",
             "Alternate Form Available"
 	  ]
         }
-        let (:expected_altformavail_p_array) {
+        let (:expected_altformavail_p_node_set) {
 	  [
             "Microforms available.(AF)",
             "Photocopies available.(AF)",
@@ -123,14 +124,14 @@ RSpec.describe Ead::Elements::Component do
         }
 
         # <arrangement> Arrangement
-        let (:expected_arrangement_head_array) {
+        let (:expected_arrangement_head_node_set) {
 	  [
             "Arrangement",
             "Arrangement",
             "Arrangement"
 	  ]
         }
-        let (:expected_arrangement_p_array) {
+        let (:expected_arrangement_p_node_set) {
 	  [
             "Arranged alphabetically by subject.",
             "Arranged alphabetically by author.",
@@ -139,14 +140,14 @@ RSpec.describe Ead::Elements::Component do
         }
 
         # <bioghist> Biography or History
-        let (:expected_bioghist_head_array) {
+        let (:expected_bioghist_head_node_set) {
 	  [
             "Historical Note",
             "Historical Note",
             "Historical Note"
 	  ]
         }
-        let (:expected_bioghist_p_array) {
+        let (:expected_bioghist_p_node_set) {
 	  [
             "John ate pizza for lunch.(BH)",
             "John ate a burger for lunch.(BH)",
@@ -172,14 +173,14 @@ RSpec.describe Ead::Elements::Component do
         }
 
         # <odd> Other Descriptive Data
-        let (:expected_odd_head_array) {
+        let (:expected_odd_head_node_set) {
 	  [
             "General Note",
             "General Note",
             "General Note"
 	  ]
         }
-        let (:expected_odd_p_array) {
+        let (:expected_odd_p_node_set) {
 	  [
             "This collection is nice(ODD)",
             "This repo is nice(ODD)",
@@ -188,14 +189,14 @@ RSpec.describe Ead::Elements::Component do
         }
 
         # <otherfindaid> Other Finding Aid
-        let (:expected_otherfindaid_head_array) {
+        let (:expected_otherfindaid_head_node_set) {
 	  [
             "Other Finding Aids",
             "Other Finding Aids",
             "Other Finding Aids"
 	  ]
         }
-        let (:expected_otherfindaid_p_array) {
+        let (:expected_otherfindaid_p_node_set) {
 	  [
             "*In addition, a sortable inventory in this downloadable Excel spreadsheet.",
             "A pdf version is available for download.",
@@ -204,14 +205,14 @@ RSpec.describe Ead::Elements::Component do
         }
 
         # <relatedmaterial> Related Material
-        let (:expected_relatedmaterial_head_array) {
+        let (:expected_relatedmaterial_head_node_set) {
 	  [
             "Related Materials",
             "Related Materials",
             "Related Materials"
 	  ]
         }
-        let (:expected_relatedmaterial_p_array) {
+        let (:expected_relatedmaterial_p_node_set) {
 	  [
             "The related memoirs are cataloged individually(RM)",
             "The related photographs are cataloged individually(RM)",
@@ -220,14 +221,14 @@ RSpec.describe Ead::Elements::Component do
         }
 
         # <scopecontent> Scope and Content
-        let (:expected_scopecontent_head_array) {
+        let (:expected_scopecontent_head_node_set) {
 	  [
             "Scope and Contents",
             "Scope and Contents",
             "Scope and Contents"            
 	  ]
         }
-        let (:expected_scopecontent_p_array) {
+        let (:expected_scopecontent_p_node_set) {
 	  [
             "The correspondence in the collection consist of letters and postcards.",
             "Correspondents include: James Joyce.",
@@ -236,14 +237,14 @@ RSpec.describe Ead::Elements::Component do
         }
 
         # <separatedmaterial> Separated Material
-        let (:expected_separatedmaterial_head_array) {
+        let (:expected_separatedmaterial_head_node_set) {
 	  [
             "Separated Materials",
             "Separated Materials",
             "Separated Materials"
 	  ]
         }
-        let (:expected_separatedmaterial_p_array) {
+        let (:expected_separatedmaterial_p_node_set) {
 	  [
             "Some interviewees' personal papers were separated and described as their own collection.",
             "Oral history transcripts in this series are drafts and editing copies.",
@@ -252,14 +253,14 @@ RSpec.describe Ead::Elements::Component do
         }
 
         # <userestrict> Conditions Governing Use
-        let (:expected_userestrict_head_array) {
+        let (:expected_userestrict_head_node_set) {
 	  [
             "Terms Governing Use and Reproduction",
             "Terms Governing Use and Reproduction",
             "Terms Governing Use and Reproduction"
 	  ]
         }
-        let (:expected_userestrict_p_array) {
+        let (:expected_userestrict_p_node_set) {
 	  [
             "Five photocopies may be made for research purposes.(UR)",
             "One photocopy may be made for research purposes.(UR)",
@@ -267,18 +268,18 @@ RSpec.describe Ead::Elements::Component do
 	  ]
         }
 
-        # Testing .c_array functionality
-        it '.c_array takes a <c> element and returns an array of <c> elements (the direct children that are <c> elements)' do
-          child_components = Ead::Elements::Component.c_array(@nokogiri_node_set)
+        # Testing .c_node_set functionality
+        it '.c_node_set takes a <c> element and returns an array of <c> elements (the direct children that are <c> elements)' do
+          child_components = Ead::Elements::Component.c_node_set(@nokogiri_node_set)
           expect(child_components.size).to eq expected_child_component_unittitles.size
           expected_child_component_unittitles.each_with_index do |expected_child_component_unittitle, index|
             expect(child_components[index].xpath('./xmlns:did/xmlns:unittitle').text).to eq expected_child_component_unittitle
           end
         end
 
-        # Testing .c_level_attribute_subseries_array functionality
-        it '.c_level_attribute_subseries_array takes a <c> element and returns an array of <c level="subseries"> elements (direct children)' do
-          child_subseries_components = Ead::Elements::Component.c_level_attribute_subseries_array(@nokogiri_node_set)
+        # Testing .c_level_attribute_subseries_node_set functionality
+        it '.c_level_attribute_subseries_node_set takes a <c> element and returns an array of <c level="subseries"> elements (direct children)' do
+          child_subseries_components = Ead::Elements::Component.c_level_attribute_subseries_node_set(@nokogiri_node_set)
           expect(child_subseries_components.size).to eq expected_child_component_level_subseries_unittitles.size
           expected_child_component_level_subseries_unittitles.each_with_index do |expected_child_component_level_subseries_unittitle, index|
             expect(child_subseries_components[index].xpath('./xmlns:did/xmlns:unittitle').text).to eq expected_child_component_level_subseries_unittitle
@@ -287,9 +288,9 @@ RSpec.describe Ead::Elements::Component do
 
         # NOTE: Testing the class methods in the class_methods_tested_individually array is more involved, so the functionality
         # is not tested in the following example. Instead, the functionality for these class methods is tested in separate examples
-        array_class_methods = class_methods.find_all { |class_method| "#{class_method}".ends_with? "_array"}
-        (array_class_methods - class_methods_tested_individually).each do |class_method|
-          it ".#{class_method} takes a <c> element and returns an array of <#{class_method.to_s.chomp('_array')}>" do
+        node_set_class_methods = class_methods.find_all { |class_method| "#{class_method}".ends_with? "_node_set"}
+        (node_set_class_methods - class_methods_tested_individually).each do |class_method|
+          it ".#{class_method} takes a <c> element and returns a Nokogiri::XML::NodeSet of <#{class_method.to_s.chomp('_node_set')}>" do
             values = Ead::Elements::Component.send(class_method,@nokogiri_node_set)
             expected_values = eval "expected_#{class_method}"
             expect(values.size).to eq expected_values.size
