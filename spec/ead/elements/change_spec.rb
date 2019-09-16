@@ -2,8 +2,8 @@ require 'rails_helper'
 require 'ead/elements/change.rb'
 
 class_methods = [
-  :date, # <date> Date
-  :item # <item> Item
+  :date_node_set, # <date> Date
+  :item_node_set # <item> Item
 ].freeze
 
 
@@ -23,21 +23,20 @@ RSpec.describe Ead::Elements::Change do
   describe '-- Validate functionality --' do
     before(:context) do
       input_xml = fixture_file_upload('ead/test_ead.xml').read
-      nokogiri_document = Nokogiri::XML(input_xml)
-      @nokogiri_node_set = Nokogiri::XML(input_xml).xpath('/xmlns:ead/xmlns:eadheader/xmlns:revisiondesc/xmlns:change').first
+      @nokogiri_xml_element = Nokogiri::XML(input_xml).xpath('/xmlns:ead/xmlns:eadheader/xmlns:revisiondesc/xmlns:change').first
     end
 
     describe 'class methods:' do
       context 'given <change> as argument' do
-        it '.date class method return correct information' do
-          value = Ead::Elements::Change.date(@nokogiri_node_set)
+        it '.date_node_set class method return correct information' do
+          value = Ead::Elements::Change.date_node_set(@nokogiri_xml_element)
           expect(value.text).to eq '2015-02-28'
         end
       end
 
-      context 'given <item> as argument' do
-        it '.item class method return correct information' do
-          value = Ead::Elements::Change.item(@nokogiri_node_set)
+      context 'given <change> as argument' do
+        it '.item_node_set class method return correct information' do
+          value = Ead::Elements::Change.item_node_set(@nokogiri_xml_element)
           expect(value.text).to eq 'File created.'
         end
       end

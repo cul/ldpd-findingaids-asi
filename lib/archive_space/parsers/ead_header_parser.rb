@@ -20,8 +20,8 @@ module ArchiveSpace
         @publication_statement_publisher = ::Ead::Elements::Eadheader.filedesc_publicationstmt_publisher(ead_header).text
         @revision_description_changes = []
         ::Ead::Elements::Eadheader.revisiondesc_change_array(ead_header).each do |change|
-          @revision_description_changes.append Change.new(::Ead::Elements::Change.date(change).text,
-                                                          ::Ead::Elements::Change.item(change).text)
+          @revision_description_changes.append Change.new(::Ead::Elements::Change.date_node_set(change).text,
+                                                          ::Ead::Elements::Change.item_node_set(change).text)
         end
       end
     end

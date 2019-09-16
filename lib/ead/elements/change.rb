@@ -1,7 +1,7 @@
-# Following class describes the EAD element <change>
-# (see https://www.loc.gov/ead/tglib/elements/did.html)
+# Following class describes the EAD element <change> Change
+# (https://www.loc.gov/ead/tglib/elements/change.html)
 # and supplies class methods to retrieve pertinent child elements
-# of the <change>
+# of the <change> element
 
 module Ead
   module Elements
@@ -13,16 +13,16 @@ module Ead
       }.freeze
 
       class << self
-        # returns: Nokogiri::XML::Element instance for <date> contained with a <change>
+        # returns: Nokogiri::XML::NodeSet of <date>
         # <date> Date
-        def date(nokogiri_element)
-          nokogiri_element.xpath(XPATH[:date])
+        def date_node_set(input_element)
+          input_element.xpath(XPATH[:date])
         end
 
-        # returns: Nokogiri::XML::Element instance for <item> contained with a <change>
+        # returns: Nokogiri::XML::NodeSet of <item>
         # <item> Item
-        def item(nokogiri_element)
-          nokogiri_element.xpath(XPATH[:item])
+        def item_node_set(input_element)
+          input_element.xpath(XPATH[:item])
         end
       end
     end
