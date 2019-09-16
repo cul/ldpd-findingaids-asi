@@ -23,6 +23,7 @@ attributes = [
   :custodial_history_head, # <ead>:<archdesc>:<dsc>:<c>:<custodhist>:<head>
   :custodial_history_values, # <ead>:<archdesc>:<dsc>:<c>:<custodhist>:<p>
   :digital_archival_objects, # <ead>:<archdesc>:<dsc>:<c>:<did>:<dao>
+  :flattened_component_tree_structure,
   :other_descriptive_data_head, # <ead>:<archdesc>:<dsc>:<c>:<odd>:<head>
   :other_descriptive_data_values, # <ead>:<archdesc>:<dsc>:<c>:<odd>:<p>
   :other_finding_aid_head, # <ead>:<archdesc>:<dsc>:<c>:<otherfindaid>:<head>
@@ -61,11 +62,43 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
       it '#generate_structure_containing_lower_level_components' do
         expect(subject).to respond_to(:generate_structure_containing_lower_level_components).with(2).arguments
       end
+
+      it '#generate_child_components_info' do
+        expect(subject).to respond_to(:generate_child_components_info).with(2).arguments
+      end
     end
   end
 
   ########################################## Functionality
   describe 'Testing functionality: ' do
+    ########################################## generate_component_info
+    describe 'generate_child_components_info' do
+      before(:context) do
+        xml_input = fixture_file_upload('ead/test_ead.xml').read
+        nokogiri_xml_document = Nokogiri::XML(xml_input) do |config|
+          config.norecover
+        end
+        component_xml_nokogiri_element =  nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]').first
+        @component_parser = ArchiveSpace::Parsers::ComponentParser.new
+        # need to initialize @flattened_component_tree_structure by hand, normally initialized by
+        # the generate_structure_containing_lower_level_components method, which is the method that
+        # calls #generate_child_components_info
+        @component_parser.instance_variable_set(:@flattened_component_tree_structure, [])
+        @component_parser.generate_child_components_info(component_xml_nokogiri_element)
+      end
+      context 'given NOKOGIRI::XML::ELEMENT, representing a <c>, as an argument' do
+        it 'the flattened_component_tree_structure is set correctly' do
+          result = @component_parser.flattened_component_tree_structure
+          expect(result[0][:unit_title]).to eq 'Subseries 1: Cataloged Correspondence -- Letters'
+          expect(result[0][:scope_and_content_values][1]).to eq '<p>The Builder. Nov 11, 1921. Excerpt;</p>'
+          expect(result[0][:nesting_level]).to eq 1
+          expect(result[1][:unit_title]).to eq 'Herbert Brandon studio (Usonia, NY)'
+          expect(result[1][:scope_and_content_values][0]).to eq '<p>In twenty boxes</p>'
+          expect(result[1][:nesting_level]).to eq 2
+        end
+      end
+    end
+
     ########################################## generate_component_info
     describe 'generate_component_info' do
       before(:context) do
@@ -160,6 +193,10 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
           ]
         }
 
+        it 'set the nesting_level member of ComponentInfo correctly' do
+          expect(@component_info.nesting_level).to eq 1
+        end
+
         it 'sets the digital_archival_objects correctly' do
           digital_archival_objects = @component_info.digital_archival_objects
           expect(expected_digital_archival_objects.size).to eq digital_archival_objects.size
@@ -169,13 +206,11 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
           end
         end
         test_members =
-          ArchiveSpace::Parsers::ComponentParser::ComponentInfo.new.members  - [:digital_archival_objects]
+          ArchiveSpace::Parsers::ComponentParser::ComponentInfo.new.members  - [:digital_archival_objects, :nesting_level]
         test_members.each do |member|
           it "sets the #{member} member of ComponentInfo correctly" do
             if "#{member}".ends_with? 'string'
               expect(@component_info[member]).to eq @expected_component_info[member]
-            elsif "#{member}" == 'unit_title'
-              expect(@component_info[member].text).to eq @expected_component_info[member]
             else
               expect(@component_info[member]).to eq @expected_component_info[member]
             end

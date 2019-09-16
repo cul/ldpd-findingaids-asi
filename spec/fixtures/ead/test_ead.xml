@@ -568,6 +568,17 @@
 	    <head>Terms Governing Use and Reproduction</head>
 	    <p>Two photocopies may be made for research purposes.(UR)</p>
 	  </userestrict>
+	  <c id="aspace_d2899a51535f0d28ef49e48258542275" level="file">
+	    <did>
+	      <unittitle>Herbert Brandon studio (Usonia, NY)</unittitle>
+	      <unitdate>1975</unitdate>
+	      <container id="aspace_58237fb20ef1b4675802068c7c5b054c" label="roll" type="roll">A162.04</container>
+	    </did>
+	    <scopecontent id="aspace_c35fc09c1d77badb7e08caaa0d60dccf">
+              <head>Scope and Contents</head>
+              <p>In twenty boxes</p>
+            </scopecontent>
+	  </c>
 	</c>
 	<!-- fcd1, 09/05/19: the following <c level="file"> element would probably not occur between -->
 	<!-- two sibling <c level="subseries:> element in an actual  AS EAD; it is used here for testing -->

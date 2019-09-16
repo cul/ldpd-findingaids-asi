@@ -30,6 +30,7 @@ module ArchiveSpace
         :custodial_history_head,
         :custodial_history_values,
         :digital_archival_objects,
+        :flattened_component_tree_structure,
         :other_descriptive_data_head,
         :other_descriptive_data_values,
         :other_finding_aid_head,
@@ -74,26 +75,24 @@ module ArchiveSpace
       # fcd1, 09/15/19: may not need/use compound_title_string
       # for second-level <c> elements and lower levels <c> elements, the <head> chidlren are not
       # displayed currently, so won't include them in the ComponentInfo Struct.
-      ComponentInfo = Struct.new(*ATTRIBUTES.reject { |attribute| "#{attribute}".ends_with? "head" })
+      ComponentInfo = Struct.new(*ATTRIBUTES.reject { |attribute| "#{attribute}".ends_with? "head" } + [:nesting_level])
 
       # returns a recursively-created array of nested array represent the tree structure of the
       # descendant <c> components -- a <c> can contain another <c> element which itself may contain
       # a nested <c> element and so on. The most efficient to process this nested information at
       # display time is to flatten out the tree structure.
       def generate_structure_containing_lower_level_components(nokogiri_xml_document, series_num)
-        components_info = []
-        # generate_component_info(@nokogiri_xml)
+        @flattened_component_tree_structure = []
         generate_child_components_info(nokogiri_xml_document)
-        components_info
       end
 
-      def generate_child_components_info(component_arg, previous_nesting_level = 0)
-        current_nesting_level = previous_level + 1
-        components = ::Ead::Elements::Component.c_node_set(component_arg)
-        return if components.empty?
-        components.each do |component|
-          generate_component_info(component, current_nesting_level)
-          generate_child_components_info(component, current_nesting_level)
+      def generate_child_components_info(component, previous_nesting_level = 0)
+        current_nesting_level = previous_nesting_level + 1
+        child_components = ::Ead::Elements::Component.c_node_set(component)
+        return if child_components.empty?
+        child_components.each do |child_component|
+          @flattened_component_tree_structure.append generate_component_info(child_component, current_nesting_level)
+          generate_child_components_info(child_component, current_nesting_level)
         end
       end
 
@@ -112,7 +111,7 @@ module ArchiveSpace
         end
         component_info.compound_title_string = ArchiveSpace::Parsers::EadHelper.compound_title component
         # fcd1, 09/15/19: Assume only one <unititle> element is expected. If more are encountered, return first one.
-        component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did_node_set(component).first).first
+        component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did_node_set(component).first).first.text
         component_info.unit_dates =
           ::Ead::Elements::Did.unitdate_node_set(::Ead::Elements::Component.did_node_set(component).first).map(&:text)
         component_info.container_info_strings =
@@ -124,6 +123,7 @@ module ArchiveSpace
           container_value = container.text
           "#{container_type.titlecase} #{container_value}"
         end
+        component_info.nesting_level = nesting_level
         component_info
       end
 
