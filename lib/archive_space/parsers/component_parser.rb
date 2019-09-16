@@ -26,6 +26,7 @@ module ArchiveSpace
         :conditions_governing_access_values,
         :conditions_governing_use_head,
         :conditions_governing_use_values,
+        :container_info_strings,
         :custodial_history_head,
         :custodial_history_values,
         :digital_archival_objects,
@@ -114,6 +115,14 @@ module ArchiveSpace
         component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did component).first
         component_info.unit_dates =
           ::Ead::Elements::Did.unitdate_node_set(::Ead::Elements::Component.did component).map(&:text)
+        component_info.container_info_strings = ::Ead::Elements::Did.container_node_set(::Ead::Elements::Component.did(component)).map do |container|
+          # container_type = container['label'] || container['type']
+          # Assumption: at least one of the 'label' or 'type' attribute is present.
+          container_type = (::Ead::Elements::Container.label_attribute(container) ||
+                            ::Ead::Elements::Container.type_attribute(container)).text
+          container_value = container.text
+          "#{container_type.titlecase} #{container_value}"
+        end
         component_info
       end
 
@@ -142,7 +151,6 @@ module ArchiveSpace
         component_info.related_material_values = ::Ead::Elements::Component.relatedmaterial_p_array(component).map(&:to_s)
         component_info.scope_and_content_values = ::Ead::Elements::Component.scopecontent_p_array(component).map(&:to_s)
         component_info.separated_material_values = ::Ead::Elements::Component.separatedmaterial_p_array(component).map(&:to_s)
-        # Assume AS EAD <did>s will only contain one <unittitle>
         component_info
       end
 
@@ -204,6 +212,14 @@ module ArchiveSpace
         @conditions_governing_use_head = ::Ead::Elements::Component.userestrict_head_array(series).first.text unless
           ::Ead::Elements::Component.userestrict_head_array(series).empty?
         @conditions_governing_use_values = ::Ead::Elements::Component.userestrict_p_array(series)
+        @container_info_strings = ::Ead::Elements::Did.container_node_set(::Ead::Elements::Component.did(series)).map do |container|
+          # container_type = container['label'] || container['type']
+          # Assumption: at least one of the 'label' or 'type' attribute is present.
+          container_type = (::Ead::Elements::Container.label_attribute(container) ||
+                            ::Ead::Elements::Container.type_attribute(container)).text
+          container_value = container.text
+          "#{container_type.titlecase} #{container_value}"
+        end
         @custodial_history_head = ::Ead::Elements::Component.custodhist_head_array(series).first.text unless
           ::Ead::Elements::Component.custodhist_head_array(series).empty?
         @custodial_history_values = ::Ead::Elements::Component.custodhist_p_array(series)

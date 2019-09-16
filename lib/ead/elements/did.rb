@@ -10,6 +10,7 @@ module Ead
 
       XPATH = {
         abstract: './xmlns:abstract',
+        container: './xmlns:container',
         dao: './xmlns:dao',
         langmaterial: './xmlns:langmaterial',
         origination_label_attribute_creator: './xmlns:origination[@label="Creator"]',
@@ -24,6 +25,10 @@ module Ead
         # returns: array of Nokogiri::XML::Element instances for <abstract>
         def abstract_node_set(nokogiri_element)
           nokogiri_element.xpath(XPATH[:abstract])
+        end
+
+        def container_node_set(nokogiri_element)
+          nokogiri_element.xpath(XPATH[:container])
         end
 
         # argument: Nokogiri::XML::Element representing a <did> element

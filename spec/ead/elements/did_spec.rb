@@ -7,6 +7,7 @@ require 'ead/elements/did.rb'
 
 class_methods = [
   :abstract_node_set, # <abstract> Abstract
+  :container_node_set, # <container> Container
   :dao_node_set, # <dao> Digital Archival Object
   :langmaterial_node_set, # <langmaterial> Language of the Material
   :origination_label_attribute_creator_node_set, # <origination> Origination, <origination label="creator">
@@ -48,6 +49,14 @@ RSpec.describe Ead::Elements::Did do
         let (:expected_abstract_node_set) {
           [
             "This collection is made up of architectural drawings."
+          ]
+        }
+
+        # <container> Container
+        let (:expected_container_node_set) {
+          [
+            '78',
+            '5'
           ]
         }
 

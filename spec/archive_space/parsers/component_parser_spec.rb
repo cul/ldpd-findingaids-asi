@@ -19,6 +19,7 @@ attributes = [
   :conditions_governing_access_values, # <ead>:<archdesc>:<dsc>:<c>:<accessrestrict>:<p>
   :conditions_governing_use_head, # <ead>:<archdesc>:<dsc>:<c>:<accessrestrict>:<head>
   :conditions_governing_use_values, # <ead>:<archdesc>:<dsc>:<c>:<accessrestrict>:<p>
+  :container_info_strings, # array of container info strings
   :custodial_history_head, # <ead>:<archdesc>:<dsc>:<c>:<custodhist>:<head>
   :custodial_history_values, # <ead>:<archdesc>:<dsc>:<c>:<custodhist>:<p>
   :digital_archival_objects, # <ead>:<archdesc>:<dsc>:<c>:<did>:<dao>
@@ -108,6 +109,10 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
           '<p>Five photocopies may be made for research purposes.(UR)</p>',
           '<p>One photocopy may be made for research purposes.(UR)</p>',
           '<p>Single photocopies may be made for research purposes.(UR)</p>'
+        ]
+        @expected_component_info.container_info_strings = [
+          'General Manuscripts Box 78',
+          'Folder 5'
         ]
         @expected_component_info.custodial_history_values = [
           '<p>Gift of the ABC Company, 1963.(CH)</p>',
@@ -266,6 +271,13 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         ]
       }
 
+      let (:expected_container_info_strings) {
+        [
+          'General Manuscripts Box 78',
+          'Folder 5'
+        ]
+      }
+
       let (:expected_digital_archival_objects) {
         [
           {
@@ -328,6 +340,14 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
       }
 
       context 'given NOKOGIRI::XML::DOCUMENT as an argument' do
+        it 'sets the container_info_strings attribute correctly' do
+          container_info_strings = @component_parser.container_info_strings
+          expect(expected_container_info_strings.size).to eq container_info_strings.size
+          expected_container_info_strings.each_with_index do |expected_info_string, index|
+            expect(@component_parser.container_info_strings[index]).to eq expected_info_string
+          end
+        end
+
         it 'sets digital_archival_objects correctly' do
           digital_archival_objects = @component_parser.digital_archival_objects
           expect(expected_digital_archival_objects.size).to eq digital_archival_objects.size

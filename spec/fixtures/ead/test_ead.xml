@@ -96,6 +96,10 @@
           <p>CUL logo</p>
         </daodesc>
       </dao>
+      <!-- fcd1, 09/15/19: normally would not have container information at the archdesc level. -->
+      <!-- However, have a couple of <container> elements here to test parser -->
+      <container label="general envelopes box" type="envelope">78</container>
+      <container type="shoebox">5</container>
     </did>
     <accessrestrict>
       <head>Restrictions on Access</head>
@@ -241,6 +245,8 @@
               <p>Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013</p>
             </daodesc>
           </dao>
+	  <!-- fcd1, 09/15/19: normally would not have container information at the series level. -->
+	  <!-- However, have a couple of <container> elements here to test parser -->
 	  <container label="general manuscripts box" type="box">78</container>
 	  <container type="folder">5</container>
 	</did>
