@@ -15,17 +15,17 @@ module Ead
 
       class << self
         # <filedesc> File Description, <publicationstmt> Publication Statement, <publisher> Publisher
-        # <publicationstmt> is not repeatable
-        # returns: array of one Nokogiri::XML::Element representing the <publisher> element
-        def filedesc_publicationstmt_publisher(nokogiri_element)
-          nokogiri_element.xpath(XPATH[:filedesc_publicationstmt_publisher]).first
+        # <filedesc> and <publicationstmt> are not repeatable, but <publisher> is
+        # returns: Nokogiri::XML::NodeSet of <publisher>
+        def filedesc_publicationstmt_publisher_node_set(input_element)
+          input_element.xpath(XPATH[:filedesc_publicationstmt_publisher])
         end
 
         # <revisiondesc> Revision Description, https://www.loc.gov/ead/tglib/elements/revisiondesc.html
         # <change> Change, https://www.loc.gov/ead/tglib/elements/change.html
-        # returns: array of Nokogiri::XML::Element instances representing the <change> element(s)
-        def revisiondesc_change_array(nokogiri_element)
-          nokogiri_element.xpath(XPATH[:revisiondesc_change])
+        # returns: Nokogiri::XML::NodeSet of <change>
+        def revisiondesc_change_node_set(input_element)
+          input_element.xpath(XPATH[:revisiondesc_change])
         end
       end
     end
