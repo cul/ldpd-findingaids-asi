@@ -13,12 +13,12 @@ module Ead
       }.freeze
 
       class << self
-        def label_attribute(nokogiri_element)
-          nokogiri_element.xpath(XPATH[:label_attribute]).first
+        def label_attribute_node_set(input_element)
+          input_element.xpath(XPATH[:label_attribute])
         end
 
-        def type_attribute(nokogiri_element)
-          nokogiri_element.xpath(XPATH[:type_attribute]).first
+        def type_attribute_node_set(input_element)
+          input_element.xpath(XPATH[:type_attribute])
         end
       end
     end

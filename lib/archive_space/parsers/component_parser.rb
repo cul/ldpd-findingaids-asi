@@ -118,8 +118,8 @@ module ArchiveSpace
           ::Ead::Elements::Did.container_node_set(::Ead::Elements::Component.did_node_set(component).first).map do |container|
           # container_type = container['label'] || container['type']
           # Assumption: at least one of the 'label' or 'type' attribute is present.
-          container_type = (::Ead::Elements::Container.label_attribute(container) ||
-                            ::Ead::Elements::Container.type_attribute(container)).text
+          container_type = (::Ead::Elements::Container.label_attribute_node_set(container).first ||
+                            ::Ead::Elements::Container.type_attribute_node_set(container).first).text
           container_value = container.text
           "#{container_type.titlecase} #{container_value}"
         end
@@ -188,8 +188,8 @@ module ArchiveSpace
         @container_info_strings = ::Ead::Elements::Did.container_node_set(::Ead::Elements::Component.did_node_set(series).first).map do |container|
           # container_type = container['label'] || container['type']
           # Assumption: at least one of the 'label' or 'type' attribute is present.
-          container_type = (::Ead::Elements::Container.label_attribute(container) ||
-                            ::Ead::Elements::Container.type_attribute(container)).text
+          container_type = (::Ead::Elements::Container.label_attribute_node_set(container).first ||
+                            ::Ead::Elements::Container.type_attribute_node_set(container).first).text
           container_value = container.text
           "#{container_type.titlecase} #{container_value}"
         end
