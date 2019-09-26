@@ -72,7 +72,7 @@ module ArchiveSpace
 
       DigitalArchivalObject = Struct.new(:href, :description)
 
-      # fcd1, 09/15/19: may not need/use compound_title_string
+      # fcd1, 09/15/19: may not need/use compound_title_string for second and lower-level <c> elements
       # for second-level <c> elements and lower levels <c> elements, the <head> chidlren are not
       # displayed currently, so won't include them in the ComponentInfo Struct.
       ComponentInfo = Struct.new(*ATTRIBUTES.reject { |attribute| "#{attribute}".ends_with? "head" } + [:nesting_level])
@@ -109,6 +109,8 @@ module ArchiveSpace
           component_info.digital_archival_objects.append DigitalArchivalObject.new(::Ead::Elements::Dao.href_attribute_node_set(dao).text,
                                                                      ::Ead::Elements::Dao.daodesc_p_node_set(dao).text)
         end
+        # fcd1, 09/15/19: may not need/use compound_title_string for second and lower-level <c> elements
+        # if so, can remove the following
         component_info.compound_title_string = ArchiveSpace::Parsers::EadHelper.compound_title component
         # fcd1, 09/15/19: Assume only one <unititle> element is expected. If more are encountered, return first one.
         component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did_node_set(component).first).first.text
@@ -179,6 +181,7 @@ module ArchiveSpace
         @biography_or_history_head = ::Ead::Elements::Component.bioghist_head_node_set(series).first.text unless
           ::Ead::Elements::Component.bioghist_head_node_set(series).empty?
         @biography_or_history_values = ::Ead::Elements::Component.bioghist_p_node_set(series)
+        @compound_title_string = ArchiveSpace::Parsers::EadHelper.compound_title series
         @conditions_governing_access_head = ::Ead::Elements::Component.accessrestrict_head_node_set(series).first.text unless
           ::Ead::Elements::Component.accessrestrict_head_node_set(series).empty?
         @conditions_governing_access_values = ::Ead::Elements::Component.accessrestrict_p_node_set(series)

@@ -290,6 +290,10 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         ]
       }
 
+       let (:expected_compound_title_string) {
+         'Series I: Cataloged Correspondence, 1914-1989, 1894-1967, bulk 1958-1980'
+      }
+
       let (:expected_conditions_governing_use_values) {
         [
           'Five photocopies may be made for research purposes.(UR)',
@@ -375,6 +379,10 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
       }
 
       context 'given NOKOGIRI::XML::DOCUMENT as an argument' do
+        it 'sets the compound_title_string attribute correctly' do
+          expect(@component_parser.compound_title_string).to eq expected_compound_title_string
+        end
+
         it 'sets the container_info_strings attribute correctly' do
           container_info_strings = @component_parser.container_info_strings
           expect(expected_container_info_strings.size).to eq container_info_strings.size
