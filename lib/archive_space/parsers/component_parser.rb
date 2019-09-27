@@ -1,6 +1,7 @@
 # this class parses the pertinent child elements of the <c> element
 require 'archive_space/ead/ead_helper'
 require 'ead/elements/component'
+require 'ead/elements/container'
 require 'ead/elements/dao'
 require 'ead/elements/did'
 require 'ead/elements/dsc'
