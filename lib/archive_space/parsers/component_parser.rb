@@ -40,6 +40,7 @@ module ArchiveSpace
 #        :preferred_citation_values,
 #        :processing_information_head,
 #        :processing_information_values,
+        :physical_description_extents_string,
         :related_material_head,
         :related_material_values,
         :scope_and_content_head,
@@ -50,6 +51,8 @@ module ArchiveSpace
         :unit_title
       ]
 
+      # Following hash maps attributes in this class to the class
+      # methods in Ead::Elements::Component used to set the attribute value.
       EAD_ELEMENT_COMPONENT_METHODS = {
         acquisition_information_values: :acqinfo_p_node_set,
         alternative_form_available_values: :altformavail_p_node_set,
@@ -82,23 +85,24 @@ module ArchiveSpace
       # descendant <c> components -- a <c> can contain another <c> element which itself may contain
       # a nested <c> element and so on. The most efficient to process this nested information at
       # display time is to flatten out the tree structure.
-      def generate_structure_containing_lower_level_components(nokogiri_xml_document, series_num)
+      def generate_structure_containing_lower_level_components(root_component, series_num)
         @flattened_component_tree_structure = []
-        generate_child_components_info(nokogiri_xml_document)
+        generate_children_components_info(root_component)
       end
 
-      def generate_child_components_info(component, previous_nesting_level = 0)
+      def generate_children_components_info(component, previous_nesting_level = 0)
         current_nesting_level = previous_nesting_level + 1
         child_components = ::Ead::Elements::Component.c_node_set(component)
         return if child_components.empty?
         child_components.each do |child_component|
-          @flattened_component_tree_structure.append generate_component_info(child_component, current_nesting_level)
-          generate_child_components_info(child_component, current_nesting_level)
+          @flattened_component_tree_structure.append generate_child_component_info(child_component, current_nesting_level)
+          generate_children_components_info(child_component, current_nesting_level)
         end
       end
 
-      def generate_component_info(component, nesting_level = 0)
+      def generate_child_component_info(component, nesting_level = 0)
         component_info = ComponentInfo.new
+        did = ::Ead::Elements::Component.did_node_set(component).first
         EAD_ELEMENT_COMPONENT_METHODS.each do |member, class_method|
           component_info[member] = ::Ead::Elements::Component.send(class_method,component).map do |value|
             (apply_ead_to_html_transforms value).to_s
@@ -106,7 +110,7 @@ module ArchiveSpace
         end
         component_info.digital_archival_objects = []
         # first retrieve the <did> element, then get the <dao> elements from the <did>
-        ::Ead::Elements::Did.dao_node_set(::Ead::Elements::Component.did_node_set(component).first).each do |dao|
+        ::Ead::Elements::Did.dao_node_set(did).each do |dao|
           component_info.digital_archival_objects.append DigitalArchivalObject.new(::Ead::Elements::Dao.href_attribute_node_set(dao).text,
                                                                      ::Ead::Elements::Dao.daodesc_p_node_set(dao).text)
         end
@@ -114,11 +118,9 @@ module ArchiveSpace
         # if so, can remove the following
         component_info.compound_title_string = ArchiveSpace::Parsers::EadHelper.compound_title component
         # fcd1, 09/15/19: Assume only one <unititle> element is expected. If more are encountered, return first one.
-        component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did_node_set(component).first).first.text
-        component_info.unit_dates =
-          ::Ead::Elements::Did.unitdate_node_set(::Ead::Elements::Component.did_node_set(component).first).map(&:text)
-        component_info.container_info_strings =
-          ::Ead::Elements::Did.container_node_set(::Ead::Elements::Component.did_node_set(component).first).map do |container|
+        component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(did).first.text
+        component_info.unit_dates = ::Ead::Elements::Did.unitdate_node_set(did).map(&:text)
+        component_info.container_info_strings = ::Ead::Elements::Did.container_node_set(did).map do |container|
           # container_type = container['label'] || container['type']
           # Assumption: at least one of the 'label' or 'type' attribute is present.
           container_type = (::Ead::Elements::Container.label_attribute_node_set(container).first ||
@@ -127,6 +129,9 @@ module ArchiveSpace
           "#{container_type.titlecase} #{container_value}"
         end
         component_info.nesting_level = nesting_level
+        physical_descriptions = ::Ead::Elements::Did.physdesc_node_set(did)
+        component_info.physical_description_extents_string =
+          ArchiveSpace::Parsers::EadHelper.compound_physical_descriptions_into_string physical_descriptions
         component_info
       end
 
@@ -166,6 +171,7 @@ module ArchiveSpace
       def parse(nokogiri_xml_document, series_num)
         arch_desc_dsc = nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc')
         series = ::Ead::Elements::Dsc.c_level_attribute_series_array(arch_desc_dsc)[series_num -1]
+        did = ::Ead::Elements::Component.did_node_set(series).first
         # puts series.inspect
 #        @accruals_head = ::Ead::Elements::Component.accruals_head_array(series).first.text unless
 #          ::Ead::Elements::Component.accruals_head_array(series).empty?
@@ -189,7 +195,7 @@ module ArchiveSpace
         @conditions_governing_use_head = ::Ead::Elements::Component.userestrict_head_node_set(series).first.text unless
           ::Ead::Elements::Component.userestrict_head_node_set(series).empty?
         @conditions_governing_use_values = ::Ead::Elements::Component.userestrict_p_node_set(series)
-        @container_info_strings = ::Ead::Elements::Did.container_node_set(::Ead::Elements::Component.did_node_set(series).first).map do |container|
+        @container_info_strings = ::Ead::Elements::Did.container_node_set(did).map do |container|
           # container_type = container['label'] || container['type']
           # Assumption: at least one of the 'label' or 'type' attribute is present.
           container_type = (::Ead::Elements::Container.label_attribute_node_set(container).first ||
@@ -202,7 +208,7 @@ module ArchiveSpace
         @custodial_history_values = ::Ead::Elements::Component.custodhist_p_node_set(series)
         @digital_archival_objects = []
         # first retrieve the <did> element, then get the <dao> elements from the <did>
-        ::Ead::Elements::Did.dao_node_set(::Ead::Elements::Component.did_node_set(series).first).each do |dao|
+        ::Ead::Elements::Did.dao_node_set(did).each do |dao|
           @digital_archival_objects.append DigitalArchivalObject.new(::Ead::Elements::Dao.href_attribute_node_set(dao).text,
                                                                      ::Ead::Elements::Dao.daodesc_p_node_set(dao).text)
         end
@@ -228,8 +234,12 @@ module ArchiveSpace
           ::Ead::Elements::Component.separatedmaterial_head_node_set(series).empty?
         @separated_material_values = ::Ead::Elements::Component.separatedmaterial_p_node_set(series)
         # Assume AS EAD <did>s will only contain one <unittitle>
-        @unit_dates = ::Ead::Elements::Did.unitdate_node_set(::Ead::Elements::Component.did_node_set(series).first)
-        @unit_title = ::Ead::Elements::Did.unittitle_node_set(::Ead::Elements::Component.did_node_set(series).first).first
+        @unit_dates = ::Ead::Elements::Did.unitdate_node_set(did)
+        @unit_title = ::Ead::Elements::Did.unittitle_node_set(did).first
+        physical_descriptions = ::Ead::Elements::Did.physdesc_node_set(did)
+        @physical_description_extents_string =
+          ArchiveSpace::Parsers::EadHelper.compound_physical_descriptions_into_string physical_descriptions
+        generate_structure_containing_lower_level_components(series, series_num)
       end
 
       # legacy component struture methods

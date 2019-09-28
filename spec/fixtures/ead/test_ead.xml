@@ -226,7 +226,6 @@
 	  <unitdate normal="1958/1981" type="bulk">1958-1980</unitdate>
 	  <unitdate>1894-1967</unitdate>
 	  <unittitle>Series I: Cataloged Correspondence</unittitle>
-	  <physdesc>(1 folder)</physdesc>
 	  <dao xlink:type="simple"
 	       xlink:href="https://dlc.library.columbia.edu/ifp/search"
                xlink:actuate="onRequest"
@@ -245,6 +244,18 @@
               <p>Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013</p>
             </daodesc>
           </dao>
+	  <physdesc altrender="whole">
+	    <extent altrender="materialtype spaceoccupied">5 linear feet</extent>
+	    <extent altrender="carrier">4 boxes 14 slipcases</extent>
+	  </physdesc>
+	  <physdesc altrender="whole">
+	    <extent altrender="materialtype spaceoccupied">7.6 Tb Digital</extent>
+	    <extent altrender="carrier">one hard disk</extent>
+	  </physdesc>
+	  <physdesc altrender="whole">
+	    <extent altrender="materialtype spaceoccupied">444 linear feet</extent>
+	    <extent altrender="carrier">355 record cartons 15 document boxes and 4 flat boxes</extent>
+	  </physdesc>
 	  <!-- fcd1, 09/15/19: normally would not have container information at the series level. -->
 	  <!-- However, have a couple of <container> elements here to test parser -->
 	  <container label="general manuscripts box" type="box">78</container>
@@ -419,8 +430,20 @@
 		 xlink:title="Sub-subseries I.13.B: Secretariat Unrestricted Digital Files, 2001-2013">
 	      <daodesc>
 		<p>Sub-subseries I.13.B: Secretariat Unrestricted Digital Files, 2001-2013</p>
-            </daodesc>
-          </dao>
+              </daodesc>
+            </dao>
+	    <physdesc altrender="whole">
+	      <extent altrender="materialtype spaceoccupied">9 linear feet</extent>
+	      <extent altrender="carrier">4 boxes 33 slipcases</extent>
+	    </physdesc>
+	    <physdesc altrender="whole">
+	      <extent altrender="materialtype spaceoccupied">9.6 Tb Digital</extent>
+	      <extent altrender="carrier">one hard disk</extent>
+	    </physdesc>
+	    <physdesc altrender="whole">
+	      <extent altrender="materialtype spaceoccupied">4231 linear feet</extent>
+	      <extent altrender="carrier">351 record cartons 55 document boxes and 4 flat boxes</extent>
+	    </physdesc>
 	    <container label="general manuscripts box" type="box">78</container>
 	    <container type="folder">5</container>
 	  </did>

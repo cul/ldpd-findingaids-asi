@@ -32,6 +32,7 @@ attributes = [
 #  :preferred_citation_values, # <ead>:<archdesc>:<dsc>:<c>:<prefercite>:<p>
 #  :processing_information_head, # <ead>:<archdesc>:<dsc>:<c>:<processinfo>:<head>
 #  :processing_information_values, # <ead>:<archdesc>:<dsc>:<c>:<processinfo>:<p>
+  :physical_description_extents_string,
   :related_material_head, # <ead>:<archdesc>:<dsc>:<c>:<relatedmaterial>:<head>
   :related_material_values, # <ead>:<archdesc>:<dsc>:<c>:<related_material>:<p>
   :scope_and_content_head, # <ead>:<archdesc>:<dsc>:<c>:<scopecontent>:<head>
@@ -63,16 +64,20 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         expect(subject).to respond_to(:generate_structure_containing_lower_level_components).with(2).arguments
       end
 
-      it '#generate_child_components_info' do
-        expect(subject).to respond_to(:generate_child_components_info).with(2).arguments
+      it '#generate_children_components_info' do
+        expect(subject).to respond_to(:generate_children_components_info).with(2).arguments
+      end
+
+      it '#generate_child_component_info' do
+        expect(subject).to respond_to(:generate_child_component_info).with(2).arguments
       end
     end
   end
 
   ########################################## Functionality
   describe 'Testing functionality: ' do
-    ########################################## generate_component_info
-    describe 'generate_child_components_info' do
+    ########################################## generate_children_components_info
+    describe 'generate_children_components_info' do
       before(:context) do
         xml_input = fixture_file_upload('ead/test_ead.xml').read
         nokogiri_xml_document = Nokogiri::XML(xml_input) do |config|
@@ -84,7 +89,7 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         # the generate_structure_containing_lower_level_components method, which is the method that
         # calls #generate_child_components_info
         @component_parser.instance_variable_set(:@flattened_component_tree_structure, [])
-        @component_parser.generate_child_components_info(component_xml_nokogiri_element)
+        @component_parser.generate_children_components_info(component_xml_nokogiri_element)
       end
       context 'given NOKOGIRI::XML::ELEMENT, representing a <c>, as an argument' do
         it 'the flattened_component_tree_structure is set correctly' do
@@ -99,8 +104,8 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
       end
     end
 
-    ########################################## generate_component_info
-    describe 'generate_component_info' do
+    ########################################## generate_child_component_info
+    describe 'generate_child_component_info' do
       before(:context) do
         xml_input = fixture_file_upload('ead/test_ead.xml').read
         nokogiri_xml_document = Nokogiri::XML(xml_input) do |config|
@@ -108,7 +113,7 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         end
         component_xml_nokogiri_element =  nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]').first
         component_parser = ArchiveSpace::Parsers::ComponentParser.new
-        @component_info = component_parser.generate_component_info(component_xml_nokogiri_element, 1)
+        @component_info = component_parser.generate_child_component_info(component_xml_nokogiri_element, 1)
         @expected_component_info = ArchiveSpace::Parsers::ComponentParser::ComponentInfo.new
         @expected_component_info.compound_title_string = 'Series I: Cataloged Correspondence, 1914-1989, 1894-1967, bulk 1958-1980'
         @expected_component_info.unit_dates = ['1914-1989', '1958-1980', '1894-1967']
@@ -162,6 +167,11 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
           '<p>A pdf version is available for download.</p>',
           '<p>Another finding aid available online.</p>'
         ]
+        @expected_component_info.physical_description_extents_string =
+          ["5 linear feet (4 boxes 14 slipcases);",
+           "7.6 Tb Digital (one hard disk);",
+           "444 linear feet (355 record cartons 15 document boxes and 4 flat boxes)"
+          ].join ' '
         @expected_component_info.related_material_values = [
           '<p>The related memoirs are cataloged individually(RM)</p>',
           '<p>The related photographs are cataloged individually(RM)</p>',
@@ -346,6 +356,13 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         ]
       }
 
+      let (:expected_physical_description_extents_string) {
+        ["5 linear feet (4 boxes 14 slipcases);",
+         "7.6 Tb Digital (one hard disk);",
+         "444 linear feet (355 record cartons 15 document boxes and 4 flat boxes)"
+        ].join ' '
+      }
+
       let (:expected_related_material_values) {
         [
           'The related memoirs are cataloged individually(RM)',
@@ -398,6 +415,10 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
             expect(digital_archival_objects[index].href).to eq expected_digital_archival_object[:href]
             expect(digital_archival_objects[index].description).to eq expected_digital_archival_object[:description]
           end
+        end
+
+        it 'sets the physical_description_extents_string attribute correctly' do
+          expect(@component_parser.physical_description_extents_string).to eq expected_physical_description_extents_string
         end
 
         it 'sets the unit_dates attribute correctly' do
