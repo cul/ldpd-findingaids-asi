@@ -598,9 +598,9 @@
 	      <container id="aspace_58237fb20ef1b4675802068c7c5b054c" label="roll" type="roll">A162.04</container>
 	    </did>
 	    <scopecontent id="aspace_c35fc09c1d77badb7e08caaa0d60dccf">
-              <head>Scope and Contents</head>
-              <p>In twenty boxes</p>
-            </scopecontent>
+	      <head>Scope and Contents</head>
+	      <p>In twenty boxes</p>
+	    </scopecontent>
 	  </c>
 	</c>
 	<!-- fcd1, 09/05/19: the following <c level="file"> element would probably not occur between -->

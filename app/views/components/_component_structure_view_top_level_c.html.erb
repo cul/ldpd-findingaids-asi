@@ -27,6 +27,7 @@
                 @series.related_material_values +
                 @series.separated_material_values
 %>
+<%= @series.physical_description_extents_string %>
 <% misc_notes.each do |misc_note| %>
   <%== apply_ead_to_html_transforms misc_note %>
 <% end %>
