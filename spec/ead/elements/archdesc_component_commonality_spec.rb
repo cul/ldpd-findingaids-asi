@@ -21,6 +21,7 @@ common_class_methods = [
   :custodhist_p_node_set, # <custodhist><p>
   :did_node_set, # <did>
   :dsc_node_set, # <dsc>
+  :level_attribute_node_set, # <c level= >
   :odd_head_node_set, # <odd><head>
   :odd_p_node_set, # <odd><p>
   :otherfindaid_head_node_set, # <otherfindaid><head>

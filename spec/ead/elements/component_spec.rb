@@ -19,6 +19,7 @@ class_methods = [
   :c_node_set, # <c>
   :c_level_attribute_subseries_node_set, # <c level="subseries">
   :did_node_set, # <did>
+  :level_attribute_node_set, # <c level= >
   :odd_head_node_set, # <odd><head>
   :odd_p_node_set, # <odd><p>
   :otherfindaid_head_node_set, # <otherfindaid><head>
@@ -169,6 +170,13 @@ RSpec.describe Ead::Elements::Component do
 	  [
             "Subseries 1: Cataloged Correspondence -- Letters",
             "Subseries 2: Cataloged Correspondence - Postcards"
+	  ]
+        }
+
+        # <c level > level attribute
+        let (:expected_level_attribute_node_set) {
+	  [
+            'series'
 	  ]
         }
 

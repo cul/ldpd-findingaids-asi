@@ -32,6 +32,7 @@ module ArchiveSpace
         :custodial_history_values,
         :digital_archival_objects,
         :flattened_component_tree_structure,
+        :level_attribute,
         :other_descriptive_data_head,
         :other_descriptive_data_values,
         :other_finding_aid_head,
@@ -132,6 +133,8 @@ module ArchiveSpace
         physical_descriptions = ::Ead::Elements::Did.physdesc_node_set(did)
         component_info.physical_description_extents_string =
           ArchiveSpace::Parsers::EadHelper.compound_physical_descriptions_into_string physical_descriptions
+        component_info.level_attribute = ::Ead::Elements::Component.level_attribute_node_set(component).first.text unless
+          ::Ead::Elements::Component.level_attribute_node_set(component).empty?
         component_info
       end
 
@@ -212,6 +215,8 @@ module ArchiveSpace
           @digital_archival_objects.append DigitalArchivalObject.new(::Ead::Elements::Dao.href_attribute_node_set(dao).text,
                                                                      ::Ead::Elements::Dao.daodesc_p_node_set(dao).text)
         end
+        @level_attribute = ::Ead::Elements::Component.level_attribute_node_set(series).first.text unless
+          ::Ead::Elements::Component.level_attribute_node_set(series).empty?
         @other_descriptive_data_head = ::Ead::Elements::Component.odd_head_node_set(series).first.text unless
           ::Ead::Elements::Component.odd_head_node_set(series).empty?
         @other_descriptive_data_values = ::Ead::Elements::Component.odd_p_node_set(series)

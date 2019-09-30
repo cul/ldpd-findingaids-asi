@@ -27,6 +27,7 @@ module Ead
         custodhist_p: './xmlns:custodhist/xmlns:p',
         did: './xmlns:did',
         dsc: './xmlns:dsc',
+        level_attribute: './@level',
         odd_head: './xmlns:odd/xmlns:head',
         odd_p: './xmlns:odd/xmlns:p',
         otherfindaid_head: './xmlns:otherfindaid/xmlns:head',
@@ -129,6 +130,11 @@ module Ead
         # returns: Nokogiri::XML::NodeSet of <dsc>
         def dsc_node_set(input_element)
           input_element.xpath(XPATH[:dsc])
+        end
+
+        # returns: Nokogiri::XML::NodeSet of level attribute of <c>
+        def level_attribute_node_set(input_element)
+          input_element.xpath(XPATH[:level_attribute])
         end
 
         # returns: Nokogiri::XML::NodeSet of <odd><head>

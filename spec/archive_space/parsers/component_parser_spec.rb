@@ -24,6 +24,7 @@ attributes = [
   :custodial_history_values, # <ead>:<archdesc>:<dsc>:<c>:<custodhist>:<p>
   :digital_archival_objects, # <ead>:<archdesc>:<dsc>:<c>:<did>:<dao>
   :flattened_component_tree_structure,
+  :level_attribute,
   :other_descriptive_data_head, # <ead>:<archdesc>:<dsc>:<c>:<odd>:<head>
   :other_descriptive_data_values, # <ead>:<archdesc>:<dsc>:<c>:<odd>:<p>
   :other_finding_aid_head, # <ead>:<archdesc>:<dsc>:<c>:<otherfindaid>:<head>
@@ -157,6 +158,7 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
           '<p>Gift of the BCD Company, 1963.(CH)</p>',
           '<p>Gift of the DDD Company, 1963.(CH)</p>'
         ]
+        @expected_component_info.level_attribute = 'series'
         @expected_component_info.other_descriptive_data_values = [
           '<p>This collection is nice(ODD)</p>',
           '<p>This repo is nice(ODD)</p>',
@@ -340,6 +342,10 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         ]
       }
 
+       let (:expected_level_attribute) {
+         'series'
+      }
+
       let (:expected_other_descriptive_data_values) {
         [
           'This collection is nice(ODD)',
@@ -415,6 +421,10 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
             expect(digital_archival_objects[index].href).to eq expected_digital_archival_object[:href]
             expect(digital_archival_objects[index].description).to eq expected_digital_archival_object[:description]
           end
+        end
+
+        it 'sets the level_attribute attribute correctly' do
+          expect(@component_parser.level_attribute).to eq expected_level_attribute
         end
 
         it 'sets the physical_description_extents_string attribute correctly' do
