@@ -2,4 +2,84 @@
   <!-- INFORMATION FOR TOP-LEVEL <c> ELEMENT, CURRENTLY A SERIES -->
   <%= render partial: 'component_structure_view_top_level_c' %>
   <!-- INFORMATION FOR SECOND LEVEL <C> ELEMENTS AND CONTAINED <C> ELEMENTS AT LOWER LEVELS -->  
+  <% if aeon_enabled %>
+    <% @last_container_seen = '' %>
+    <% @checkbox_id = 0 %>
+  <% end %>
+  <% current_nesting_level = 1 %>
+  <% subseries_num = 0 %>
+  <% @series.flattened_component_tree_structure.each do |component| %>
+    <% if component.nesting_level > current_nesting_level %>
+      <hr style="margin-top:10px;margin-bottom:10px;">
+      <div class="component_entry" style="margin-left:1em;">
+    <% elsif component.nesting_level < current_nesting_level %>
+       <hr style="margin-top:10px;margin-bottom:10px;">
+       <% (component.nesting_level...current_nesting_level).each do %>
+        </div>
+      <% end %>
+    <% else %>
+       <hr style="margin-top:10px;margin-bottom:10px;">
+    <% end %>
+    <% current_nesting_level = component.nesting_level %>
+    <% if aeon_enabled %>
+      <%== checkbox_display(component.unit_title, component_id, component.container_info_strings.first) unless component.container_info_strings.empty? %>
+    <% end %>
+    <p style="margin:0">
+      <span style="text-align:right;float:right;display:block;margin-left:1em;"><%=component.container_info_strings.join(' ') %></span>
+      <% if (component.nesting_level == 1 && component.level_attribute == 'subseries') %>
+        <% subseries_num += 1 %>
+        <a class="subseries_anchor" name="<%= "subseries_#{subseries_num}" %>"></a>
+        <span style="text-align:left;color: #999;border-bottom: 1px solid #999;font-weight: bold;font-size: 14px;">
+          <%= [component.unit_title,
+	      ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
+	      component.physical_description_extents_string].reject(&:blank?).join(", ") %>
+        </span>
+      <% else %>
+      <span style="text-align:left;"> <%= [component.unit_title,
+					  ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
+					  component.physical_description_extents_string].reject(&:blank?).join(", ") %>
+      </span>
+      <% end %>
+    </p>
+    <% unless component.digital_archival_objects.empty? %>
+      <div style="margin:0;padding-left:1em;color:red;">
+        <% component.digital_archival_objects.each do |dao| %>
+          <%= link_to 'View digital content: ' + dao.description, dao.href %>
+          <br>
+        <% end %>
+      </div>
+    <% end %>
+    <% unless component.conditions_governing_access_values.empty? %>
+      <div style="margin:0;padding-left:1em;color:red;">
+        <% component.conditions_governing_access_values.each do |access_restrictions_value| %>
+          <%== access_restrictions_value %>
+        <% end %>
+      </div>
+    <% end %>
+    <% unless component.conditions_governing_use_values.empty? %>
+      <div style="margin:0;padding-left:1em;color:red;">
+        <% component.conditions_governing_use_values.each do |use_restrictions_value| %>
+          <%== use_restrictions_value %>
+        <% end %>
+      </div>
+    <% end %>
+    <% misc_notes = component.scope_and_content_values +
+                    component.arrangement_values +
+                    component.related_material_values +
+                    component.separated_material_values +
+                    component.alternative_form_available_values +
+                    component.biography_or_history_values +
+                    component.custodial_history_values +
+                    component.acquisition_information_values +
+                    component.other_descriptive_data_values +
+                    component.other_finding_aid_values
+    %>
+    <% unless misc_notes.empty? %>
+      <div style="margin:0;padding-left:1em;">
+        <% misc_notes.each do |misc_note| %>
+          <%== misc_note %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
 </div>
