@@ -209,6 +209,14 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
           expect(@component_info.nesting_level).to eq 1
         end
 
+        it 'set the unit_dates members of ComponentInfo correctly' do
+          unit_dates = @component_info.unit_dates
+          expect(@expected_component_info.unit_dates.size).to eq unit_dates.size
+          @expected_component_info.unit_dates.each_with_index do |expected_unit_date, index|
+            expect(unit_dates[index].text).to eq expected_unit_date
+          end
+        end
+
         it 'sets the digital_archival_objects correctly' do
           digital_archival_objects = @component_info.digital_archival_objects
           expect(expected_digital_archival_objects.size).to eq digital_archival_objects.size
@@ -218,7 +226,7 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
           end
         end
         test_members =
-          ArchiveSpace::Parsers::ComponentParser::ComponentInfo.new.members  - [:digital_archival_objects, :nesting_level]
+          ArchiveSpace::Parsers::ComponentParser::ComponentInfo.new.members  - [:digital_archival_objects, :nesting_level, :unit_dates]
         test_members.each do |member|
           it "sets the #{member} member of ComponentInfo correctly" do
             if "#{member}".ends_with? 'string'

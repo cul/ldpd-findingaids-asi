@@ -120,7 +120,8 @@ module ArchiveSpace
         component_info.compound_title_string = ArchiveSpace::Parsers::EadHelper.compound_title component
         # fcd1, 09/15/19: Assume only one <unititle> element is expected. If more are encountered, return first one.
         component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(did).first.text
-        component_info.unit_dates = ::Ead::Elements::Did.unitdate_node_set(did).map(&:text)
+        # component_info.unit_dates = ::Ead::Elements::Did.unitdate_node_set(did).map(&:text)
+        component_info.unit_dates = ::Ead::Elements::Did.unitdate_node_set(did)
         component_info.container_info_strings = ::Ead::Elements::Did.container_node_set(did).map do |container|
           # container_type = container['label'] || container['type']
           # Assumption: at least one of the 'label' or 'type' attribute is present.
