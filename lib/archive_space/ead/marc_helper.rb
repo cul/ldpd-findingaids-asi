@@ -77,15 +77,20 @@ module ArchiveSpace
         elements
       end
 
-      # nnc-rb, nnc-a, nnc-m, nnc-ua, nnc-ut, nnc-ea
+      # nnc-rb, nnc-a, nnc-m, nnc-ua, nnc-ut, nnc-ea, nynycoh
       def repository_code(marc)
-        canonical_values = %w(nnc-rb nnc-a nnc-m nnc-ua nnc-ut nnc-ea)
+        canonical_values = REPOS.keys
         sf = marc['040'].subfields.detect {|s| s.code == 'a' }
         return nil unless sf
         sf = sf.value.downcase
         return sf if canonical_values.include?(sf)
         # TODO identify variants used in the legacy script
         return 'nnc-a' if sf.eql?('nnc-av')
+        if marc['996']
+          name = marc['996']['a']
+          code, attrs = REPOS.detect {|code, attrs| attrs['name'] == name }
+          return code
+        end
       end
 
       def archdesc_elements(marc)
@@ -289,12 +294,20 @@ module ArchiveSpace
       def langmaterial_elements(marc)
         langmaterial = { name: 'langmaterial', children: [] }
         lang_codes = marc['041']
-        lang_codes.subfields.select {|sf| sf.code == 'a' }.map(&:value).each do |lang_code|
-          langmaterial[:children] << {
-            name: 'language',
-            attrs: { langcode: lang_code },
-            value: ISO_639.find(lang_code).english_name
-          }
+        if lang_codes
+          lang_codes.subfields.select {|sf| sf.code == 'a' }.map(&:value).each do |lang_code|
+            langmaterial[:children] << {
+              name: 'language',
+              attrs: { langcode: lang_code },
+              value: ISO_639.find(lang_code).english_name
+            }
+          end
+        else
+            langmaterial[:children] << {
+              name: 'language',
+              attrs: { langcode: 'und' },
+              value: 'undetermined'
+            }
         end
         [langmaterial]
       end
