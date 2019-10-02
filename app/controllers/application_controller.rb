@@ -69,53 +69,7 @@ class ApplicationController < ActionController::Base
   end
 
   # stub ead from a bib id per the legacy ACFA app
-  # the stub data was generated historically from stub ead (see ead path) generated from MARC (see marc logic):
-  ## (link to CLIO)
-  ## bib id
-  ### ead xpath: ead/archdesc/did/unitid[@type = 'clio']
-  ## repository code
-  ### ead xpath: ead/archdesc/did/unitid[1]/@repositorycode
-  ## repository
-  ### ead path: ead/archdesc/did/repository/corpname/subarea
-  ## Creator
-  ### ead xpath: ead/archdesc/did/origination
-  ## Physical Description
-  ### ead xpath: ead/archdesc/did/physdesc
-  ## Call Number
-  ### ead xpath: ead/archdesc/did/unitid[@type = 'call_num'][string-length(./text()) &gt; 0][1]
-  ## Location
-  ## Biographical Note
-  ### ead xpath: ead/archdesc/bioghist/p
-  ### marc logic: 545 field values concatenated with ' '
-  ## Scope and Contents
-  ### ead xpath: ead/archdesc/scopecontent/p
-  ### marc logic: 520 field values concatenated with ' '
-  ## Subjects
-  ### ead xpath: ead/archdesc/controlaccess/*
-  ### ead xpath: ./corpname
-  ### marc logic:
-  #### [610,611,710,711,697] field subfield values where code not in [0,2]
-  ### ead xpath: ./persname
-  ### marc logic:
-  #### [600,700] field subfield values where code not in [0,2]
-  ### ead xpath: ./geogname
-  ### marc logic:
-  #### 651 field subfield values where code not in [0,2]
-  ### ead xpath: ./subject
-  ### marc logic:
-  #### 650 field subfield values where code not in [0,2]
-  ### ead xpath: ./genreform
-  ### marc logic:
-  #### 655 field subfield values where code not in [0,2]
-  ### ead xpath: ./occupation
-  ### marc logic:
-  #### 656 field subfield values where code is not 2
-  ### ead xpath: ./function
-  ### marc logic:
-  #### 657 field values
-  ### ead xpath: ./title
-  ### marc logic: [630] field values, [730] subfield values
-
+  # see marc_helper
   # return nil if bib_id is nil or if it does not resolve to a collection record in CLIO
   def stub_ead_from_clio(bib_id)
     return unless bib_id.present?
