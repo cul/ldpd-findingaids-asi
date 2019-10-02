@@ -63,11 +63,17 @@ module ArchiveSpace
         elements = [{ name: 'eadheader' }]
         # eadheader/filedesc/publicationstmt/publisher
         last = %w(filedesc publicationstmt publisher).inject(elements[0]) do |parent, tag|
-          parent[:children] = []
+          parent[:children] ||= []
           parent[:children] << { name: tag }
-          parent[:children][0]
+          parent[:children][-1]
         end
         last[:value] = CGI.escapeHTML(REPOS[repository_code(marc)]['name'])
+        last = %w(profiledesc creation).inject(elements[0]) do |parent, tag|
+          parent[:children] ||= []
+          parent[:children] << { name: tag }
+          parent[:children][-1]
+        end
+        last[:value] = "This stub finding aid was produced from CLIO data on <date>#{Time.now.utc}</date>."
         elements
       end
 
