@@ -103,10 +103,12 @@ module ArchiveSpace
           http.request(get_request)
         end
         result_json = JSON.parse result.body
-        publish_flag = result_json['publish']
-        mtime_string = result_json['system_mtime']
-        mtime_time = Time.strptime(mtime_string, '%Y-%m-%dT%H:%M:%S%z')
         as_resource_info = AsResourceInfo.new
+        publish_flag = result_json['publish']
+        mtime_string = result_json['system_mtime'] || result_json['create_time']
+        # if response had no timestamps, assume it is not available in AS
+        return as_resource_info unless mtime_string
+        mtime_time = Time.strptime(mtime_string, '%Y-%m-%dT%H:%M:%S%z')
         as_resource_info.modified_time = mtime_time
         as_resource_info.publish_flag = publish_flag
         as_resource_info
