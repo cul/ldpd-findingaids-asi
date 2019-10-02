@@ -6,6 +6,7 @@ require 'archive_space/ead/ead_component_parser'
 require 'archive_space/parsers/component_parser'
 require 'archive_space/parsers/ead_parser'
 require 'archive_space/parsers/archival_description_did_parser'
+require 'archive_space/parsers/archival_description_dsc_parser'
 
 class ComponentsController < ApplicationController
   include  ArchiveSpace::Ead::EadHelper
@@ -51,6 +52,10 @@ class ComponentsController < ApplicationController
     # Need top-level finding aids information for the aeon request
     @archival_description_descriptive_identification = ArchiveSpace::Parsers::ArchivalDescriptionDidParser.new
     @archival_description_descriptive_identification.parse @ead_nokogiri_xml_doc
+    # need to parse the <archdesc><dsc> to get the list of top-level <c>s and enclosed second-level <c>s
+    # in order to build the lhs sidebar navigation menu
+    @arch_desc_dsc = ArchiveSpace::Parsers::ArchivalDescriptionDscParser.new
+    @arch_desc_dsc.parse @ead_nokogiri_xml_doc
   end
 
   def index
