@@ -41,18 +41,20 @@ class ApplicationController < ActionController::Base
   end
 
   def cached_as_ead(bib_id)
-    cached_file = File.join(CONFIG[:ead_cache_dir], "as_ead_ldpd_#{bib_id}.xml")
-    if File.exist?(cached_file)
+    ead_cache_paths = Dir[CONFIG[:ead_cache_dir] + "/*_ead_ldpd_#{bib_id}.xml"].sort
+    if ead_cache_paths.first && File.exist?(ead_cache_paths.first)
+      cached_file = ead_cache_paths.first
       Rails.logger.info("EAD cached file #{File.basename cached_file} exists")
       open(cached_file) do |b|
         b.read
       end
     else
-      Rails.logger.warn("EAD cached file #{File.basename cached_file} DOES NOT exist, AS API call required")
+      Rails.logger.warn("EAD cached file *_ead_ldpd_#{bib_id}.xml DOES NOT exist, AS API call required")
       initialize_as_api
       @as_resource_id = @as_api.get_resource_id(@as_repo_id, bib_id)
       if @as_api.get_resource_info(@as_repo_id, @as_resource_id).publish_flag
         as_ead = @as_api.get_ead_resource_description(@as_repo_id, @as_resource_id)
+        cached_file = File.join(CONFIG[:ead_cache_dir], "as_ead_ldpd_#{bib_id}.xml")
       else
         as_ead = stub_ead_from_clio(bib_id)
         unless as_ead.present?
@@ -60,6 +62,7 @@ class ApplicationController < ActionController::Base
           redirect_to '/'
           return
         end
+        cached_file = File.join(CONFIG[:ead_cache_dir], "clio_ead_ldpd_#{bib_id}.xml")
       end
       File.open(cached_file, "wb") do |file|
         file.write(as_ead)
