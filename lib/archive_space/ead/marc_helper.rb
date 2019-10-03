@@ -143,8 +143,8 @@ module ArchiveSpace
                 children: [
                   {
                     name: 'extref',
-                    attrs: { href: field['u'] },
-                    value: field['3']
+                    value: field['3'],
+                    attrs: { href: field['u'], :"xlink:type" => 'simple' }
                   }
                 ]
               }

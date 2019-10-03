@@ -26,11 +26,16 @@ module ArchiveSpace
         phys_desc_strings.join('; ')
       end
 
+      # @param content [Nokogiri::XML::Element]
+      # @return [String] HTML-safe content
       def apply_ead_to_html_transforms content
         html_content = apply_title_render_italic content
         html_content = apply_extref_type_simple html_content
+        html_content.to_s.html_safe
       end
 
+      # @param content [Nokogiri::XML::Element]
+      # @return [Nokogiri::XML::Element]
       def apply_title_render_italic content
         titles_render_italic = content.xpath('./xmlns:title[@render="italic"]')
         titles_render_italic.each do |title_italic|
@@ -39,12 +44,14 @@ module ArchiveSpace
         content
       end
 
+      # @param content [Nokogiri::XML::Element]
+      # @return [Nokogiri::XML::Element]
       def apply_extref_type_simple content
         extrefs_type_simple = content.xpath('./xmlns:extref[@xlink:type="simple"]')
         extrefs_type_simple.each do |extref|
-          href = "\"#{extref.attribute('href')}\""
+          href = extref.attribute('href')
           link_text = extref.text
-          extref.replace "<a href=#{href}>#{link_text}</a>"
+          extref.replace "<a href=\"#{href}\">#{link_text}</a>"
         end
         content
       end
