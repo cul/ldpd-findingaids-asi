@@ -31,7 +31,7 @@ class FindingAidsController < ApplicationController
         return
       else
         Rails.logger.warn("Using EAD Cache for #{params[:id]}")
-        @input_xml = cached_as_ead params[:id].delete_prefix('ldpd_').to_i
+        @input_xml = cached_as_ead @params_bib_id
         ead_set_properties
       end
     end
@@ -72,14 +72,14 @@ class FindingAidsController < ApplicationController
 
   def ead_set_properties
     begin
-      @ead = ArchiveSpace::Ead::EadParser.new(@input_xml)
+      @ead = ArchiveSpace::Ead::EadParser.new(@input_xml, false, @params_bib_id)
     rescue Nokogiri::XML::SyntaxError => e
       Rails.logger.error("Bib ID #{@params_bib_id}, Nokogiri parsing error:")
       Rails.logger.error("Nokogiri::XML::SyntaxError: #{e}")
       Rails.logger.error("Using Nokogiri recover mode for #{@params_bib_id}")
       # Nokogiri RECOVER parsing mode is recommended for malformed or invalid documents
       # setting second argument to true will use RECOVER mode when parsing xml
-      @ead = ArchiveSpace::Ead::EadParser.new(@input_xml, true)
+      @ead = ArchiveSpace::Ead::EadParser.new(@input_xml, true, @params_bib_id)
     end
     @finding_aid_title =
       [@ead.unit_title, @ead.compound_dates_into_string(@ead.unit_dates)].join(', ')

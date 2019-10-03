@@ -10,6 +10,22 @@ module ArchiveSpace
         'nnc-ut' => 'Burke Library Archives.'
       }
 
+      def self.clio_url_for(bib_id, format = nil)
+        url = "https://clio.columbia.edu/catalog/#{bib_id}"
+        url << ".#{format}" if format
+        url
+      end
+
+      def self.clio_marc_for(bib_id)
+        raise "no or nil bib id given for clio fetch" unless bib_id
+        marc21_url = clio_url_for(bib_id, "marc")
+        marc_record = MARC::Record.new_from_marc(URI(marc21_url).read)
+      end
+
+      def clio_url_for(bib_id, format = nil)
+        MarcHelper.clio_url_for(bib_id, format)
+      end
+
       def field852_for(marc)
         repo_code = repository_code(marc)
         marc['852'] || Marc::DataField.new('852','8',' ', BASE_REPO_SUBFIELDS + ['b', DEFAULT_SUBAREAS[repo_code]])
@@ -133,7 +149,8 @@ module ArchiveSpace
       def otherfindaid_elements(marc)
         elements = []
         marc.fields('856').each do |field|
-          next unless field.indicator1 == '4' and field.indicator2 == '2' and field['3'] =~ /Finding aid/i
+          next unless field.indicator1 == '4' and field.indicator2 == '2'
+          next if field['u'] =~ Regexp.compile("ldpd_#{marc['001']}")
           elements << {
             name: 'otherfindaid',
             attrs: { encodinganalog: '856' },
@@ -183,7 +200,7 @@ module ArchiveSpace
         elements = []
         elements << {
           name: 'unitid',
-          attrs: { type: 'clio', repositorycode: repository_code(marc) },
+          attrs: { type: 'clio', repositorycode: repository_code(marc), encodinganalog: '001' },
           value: marc['001'].value
         }
         marc.fields('852').each do |field|
