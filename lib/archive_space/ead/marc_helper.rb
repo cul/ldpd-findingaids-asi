@@ -234,7 +234,7 @@ module ArchiveSpace
           '111' => 'corpname',
           '130' => 'title'
         }
-        tag, label = candidate_tags.detect { |t,l| marc.fields(t) }
+        tag, label = candidate_tags.detect { |t,l| marc.fields(t).present? }
         return elements unless tag
         reject_codes = ['0','2']
         values = marc.fields(tag).map {|f| f.subfields.select {|s| !reject_codes.include?(s.code.to_s)}.map(&:value) }
