@@ -83,7 +83,13 @@ module ArchiveSpace
           parent[:children] << { name: tag }
           parent[:children][-1]
         end
-        last[:value] = CGI.escapeHTML(REPOS[repository_code(marc)]['name'])
+        repo_code = repository_code(marc)
+        unless REPOS[repo_code]
+          Rails.logger.warn("unknown repository_code #{repo_code}")
+          return elements
+        end
+
+        last[:value] = CGI.escapeHTML(REPOS[repo_code]['name'])
         last = %w(profiledesc creation).inject(elements[0]) do |parent, tag|
           parent[:children] ||= []
           parent[:children] << { name: tag }
@@ -102,6 +108,7 @@ module ArchiveSpace
         return sf if canonical_values.include?(sf)
         # TODO identify variants used in the legacy script
         return 'nnc-a' if sf.eql?('nnc-av')
+        return 'nnc-a' if sf.eql?('zcu')
         if marc['996']
           name = marc['996']['a']
           code, attrs = REPOS.detect {|code, attrs| attrs['name'] == name }

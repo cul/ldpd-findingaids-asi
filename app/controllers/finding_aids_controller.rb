@@ -32,6 +32,7 @@ class FindingAidsController < ApplicationController
       else
         Rails.logger.warn("Using EAD Cache for #{params[:id]}")
         @input_xml = cached_as_ead @params_bib_id
+        return unless @input_xml
         ead_set_properties
       end
     end

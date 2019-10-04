@@ -52,15 +52,17 @@ class ApplicationController < ActionController::Base
       Rails.logger.warn("EAD cached file *_ead_ldpd_#{bib_id}.xml DOES NOT exist, AS API call required")
       initialize_as_api
       @as_resource_id = @as_api.get_resource_id(@as_repo_id, bib_id)
-      if @as_api.get_resource_info(@as_repo_id, @as_resource_id).publish_flag
+      if @as_resource_id && @as_api.get_resource_info(@as_repo_id, @as_resource_id).publish_flag
         as_ead = @as_api.get_ead_resource_description(@as_repo_id, @as_resource_id)
         cached_file = File.join(CONFIG[:ead_cache_dir], "as_ead_ldpd_#{bib_id}.xml")
       else
         as_ead = stub_ead_from_clio(bib_id)
         unless as_ead.present?
-          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, DON'T DISPLAY")
+          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): no CLIO stub, DON'T DISPLAY")
           redirect_to '/'
           return
+        else
+          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): stubbed from CLIO")
         end
         cached_file = File.join(CONFIG[:ead_cache_dir], "clio_ead_ldpd_#{bib_id}.xml")
       end
@@ -78,9 +80,16 @@ class ApplicationController < ActionController::Base
     return unless bib_id.present?
     marc21_url = clio_url_for(bib_id, "marc")
     marc_record = MARC::Record.new_from_marc(URI(marc21_url).read)
+    if marc_record.leader[7] == 'c'
+      Rails.logger.info("BIB ID #{bib_id}: generating clio stub")
+    else
+      Rails.logger.warn("BIB ID #{bib_id}: not a collection: #{marc_record.leader}")
+      return nil
+    end
     stub_ead(marc_record)
   rescue Exception => ex
     Rails.logger.error(ex)
+    Rails.logger.debug(ex.backtrace.join("\n"))
     return nil
   end
 
@@ -91,6 +100,7 @@ class ApplicationController < ActionController::Base
   end
 
   def cache_response_html
+    return unless @input_xml
     if @dsc_all
       cached_file = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}_all.html")
     else
