@@ -160,7 +160,7 @@ module ArchiveSpace
                 children: [
                   {
                     name: 'extref',
-                    value: field['3'],
+                    value: field['3'].present? ? field['3'] : field['z'],
                     attrs: { href: field['u'], :"xlink:type" => 'simple' }
                   }
                 ]
