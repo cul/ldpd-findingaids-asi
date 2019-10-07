@@ -24,5 +24,5 @@ Rails.application.routes.draw do
     get 'redirectshib'
     get 'redirectnonshib'
   end
-  root 'pages#home'
+  root 'repositories#index'
 end
