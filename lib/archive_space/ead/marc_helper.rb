@@ -108,7 +108,10 @@ module ArchiveSpace
         return sf if canonical_values.include?(sf)
         # TODO identify variants used in the legacy script
         return 'nnc-a' if sf.eql?('nnc-av')
-        return 'nnc-a' if sf.eql?('zcu')
+        if sf.eql?('zcu')
+          # OCLC identifer for CUL, look in holdings sublocation
+          return 'nnc-a' if marc['852'] && (marc['852']['b'].to_s.downcase == 'avr')
+        end
         if marc['996']
           name = marc['996']['a']
           code, attrs = REPOS.detect {|code, attrs| attrs['name'] == name }
