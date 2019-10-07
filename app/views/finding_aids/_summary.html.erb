@@ -42,6 +42,15 @@
 	<th>Language(s)</th>
 	<td> <%= @ead.language %></td>
       </tr>
+      <% if @ead.other_finding_aid_values.first -%>
+      <tr class="odd">
+        <th><%= @ead.other_finding_aid_head || "Additional Description" %></th>
+        <td>
+          <% @ead.other_finding_aid_values.each do |other_finding_aid_value| %>
+            <%= apply_ead_to_html_transforms other_finding_aid_value %>
+          <% end %>
+        </td>
+      <% end %>
       <tr class="odd">
 	<th>Access</th>
 	<td class="accessrestrict"> <%==  @ead.access_restrictions_values %></td>

@@ -1,4 +1,7 @@
+require 'archive_space'
+require 'open-uri'
 class ApplicationController < ActionController::Base
+  include  ArchiveSpace::Ead::MarcHelper
 
   before_action :set_preview_flag, :set_print_view_flag
 
@@ -38,22 +41,30 @@ class ApplicationController < ActionController::Base
   end
 
   def cached_as_ead(bib_id)
-    cached_file = File.join(CONFIG[:ead_cache_dir], "as_ead_ldpd_#{bib_id}.xml")
-    if File.exist?(cached_file)
+    ead_cache_paths = Dir[CONFIG[:ead_cache_dir] + "/*_ead_ldpd_#{bib_id}.xml"].sort
+    if ead_cache_paths.first && File.exist?(ead_cache_paths.first)
+      cached_file = ead_cache_paths.first
       Rails.logger.info("EAD cached file #{File.basename cached_file} exists")
       open(cached_file) do |b|
         b.read
       end
     else
-      Rails.logger.warn("EAD cached file #{File.basename cached_file} DOES NOT exist, AS API call required")
+      Rails.logger.warn("EAD cached file *_ead_ldpd_#{bib_id}.xml DOES NOT exist, AS API call required")
       initialize_as_api
       @as_resource_id = @as_api.get_resource_id(@as_repo_id, bib_id)
-      if @as_api.get_resource_info(@as_repo_id, @as_resource_id).publish_flag
+      if @as_resource_id && @as_api.get_resource_info(@as_repo_id, @as_resource_id).publish_flag
         as_ead = @as_api.get_ead_resource_description(@as_repo_id, @as_resource_id)
+        cached_file = File.join(CONFIG[:ead_cache_dir], "as_ead_ldpd_#{bib_id}.xml")
       else
-        Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, DON'T DISPLAY")
-        redirect_to '/'
-        return
+        as_ead = stub_ead_from_clio(bib_id)
+        unless as_ead.present?
+          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): no CLIO stub, DON'T DISPLAY")
+          redirect_to '/'
+          return
+        else
+          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): stubbed from CLIO")
+        end
+        cached_file = File.join(CONFIG[:ead_cache_dir], "clio_ead_ldpd_#{bib_id}.xml")
       end
       File.open(cached_file, "wb") do |file|
         file.write(as_ead)
@@ -62,7 +73,34 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # stub ead from a bib id per the legacy ACFA app
+  # see marc_helper
+  # return nil if bib_id is nil or if it does not resolve to a collection record in CLIO
+  def stub_ead_from_clio(bib_id)
+    return unless bib_id.present?
+    marc21_url = clio_url_for(bib_id, "marc")
+    marc_record = MARC::Record.new_from_marc(URI(marc21_url).read)
+    if marc_record.leader[7] == 'c'
+      Rails.logger.info("BIB ID #{bib_id}: generating clio stub")
+    else
+      Rails.logger.warn("BIB ID #{bib_id}: not a collection: #{marc_record.leader}")
+      return nil
+    end
+    stub_ead(marc_record)
+  rescue Exception => ex
+    Rails.logger.error(ex)
+    Rails.logger.debug(ex.backtrace.join("\n"))
+    return nil
+  end
+
+  def clio_url_for(bib_id, format = nil)
+    url = "https://clio.columbia.edu/catalog/#{bib_id}"
+    url << ".#{format}" if format
+    url
+  end
+
   def cache_response_html
+    return unless @input_xml
     if @dsc_all
       cached_file = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}_all.html")
     else

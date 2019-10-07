@@ -1,9 +1,13 @@
 require 'archive_space/ead/ead_helper'
+require 'archive_space/ead/marc_helper'
 
 module ArchiveSpace
   module Ead
     class EadParser
       include  ArchiveSpace::Ead::EadHelper
+      class MarcParser
+        include  ::ArchiveSpace::Ead::MarcHelper
+      end
 
       XPATH = {
         abstracts: '/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:abstract',
@@ -54,7 +58,7 @@ module ArchiveSpace
 
       attr_reader *XPATH.keys
 
-      def initialize(xml_input, recover_mode = false)
+      def initialize(xml_input, recover_mode = false, bib_id = nil)
         if recover_mode
           # The RECOVER parse option is set by default, where Nokogiri will attempt to recover from errors
           @nokogiri_xml = Nokogiri::XML(xml_input)
@@ -64,6 +68,7 @@ module ArchiveSpace
             config.norecover
           end
         end
+        @bib_id = bib_id
         parse_ead_header(@nokogiri_xml)
         parse_arch_desc_did(@nokogiri_xml)
         parse_arch_desc_dsc(@nokogiri_xml)
@@ -134,6 +139,9 @@ module ArchiveSpace
         @other_finding_aid_head = nokogiri_xml.xpath(XPATH[:other_finding_aid_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:other_finding_aid_head]).first.nil?
         @other_finding_aid_values = nokogiri_xml.xpath(XPATH[:other_finding_aid_values])
+        if @other_finding_aid_values.first.nil? && nokogiri_xml.xpath(XPATH[:dsc_series]).first.nil?
+          @other_finding_aid_values = set_other_finding_aid_values_from_clio(nokogiri_xml)
+        end
         @preferred_citation_head = nokogiri_xml.xpath(XPATH[:preferred_citation_head]).first.text unless
           nokogiri_xml.xpath(XPATH[:preferred_citation_head]).first.nil?
         @preferred_citation_values = nokogiri_xml.xpath(XPATH[:preferred_citation_values])
@@ -172,6 +180,45 @@ module ArchiveSpace
           box_number = file_info_nokogiri_element.xpath('./xmlns:did/xmlns:container').text
           {title: title, box_number: box_number}
         end
+      end
+
+      # @param nokogiri_xml [Nokogiri::XML::Node]
+      # @return [Nokogiri::XML::Nodeset]
+      # set other finding aid values from CLIO: 856 4 $3 $u
+      # where the url does not appear to link to the finding aids application
+      def set_other_finding_aid_values_from_clio(nokogiri_xml)
+        ng_doc = nokogiri_xml.document
+        return Nokogiri::XML::NodeSet.new(ng_doc) unless @bib_id
+        # find bib id: unitid type="clio" repositorycode="nnc-rb">4079539</unitid>
+        clio_unitids = nokogiri_xml.xpath("/xmlns:ead/xmlns:archdesc/xmlns:did/xmlns:unitid[@type='clio']")
+        # this EAD was stubbed from a CLIO MARC record
+        return Nokogiri::XML::NodeSet.new(ng_doc) if clio_unitids.detect { |ele| ele.attribute('encodinganalog') == '001' }
+
+        marc = MarcHelper.clio_marc_for(@bib_id)
+        marc_parser = MarcParser.new
+        clio_links = marc_parser.otherfindaid_elements(marc)
+        if clio_links.empty?
+          # this EAD was stubbed from a CLIO MARC record
+          return Nokogiri::XML::NodeSet.new(ng_doc)
+        end
+        archdesc = nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc').first
+        clio_links.each do |clio_link|
+          otherfindaid = ng_doc.create_element('otherfindaid')
+          clio_link[:attrs].each {|att, value| otherfindaid[att.to_s] = value }
+          clio_link[:children].each do |p_wrapper|
+            next if p_wrapper[:children].blank?
+            p_element = ng_doc.create_element('p')
+            p_wrapper[:children].each do |value856|
+              extref = ng_doc.create_element('extref')
+              extref.add_child(ng_doc.create_text_node(value856[:value]))
+              value856[:attrs].each {|att, value| extref[att.to_s] = value }
+              p_element.add_child(extref)
+            end
+            otherfindaid.add_child(p_element)
+          end
+          archdesc.add_child(otherfindaid)
+        end
+        ng_doc.xpath(XPATH[:other_finding_aid_values])
       end
     end
   end
