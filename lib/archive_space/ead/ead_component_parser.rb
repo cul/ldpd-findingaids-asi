@@ -72,7 +72,9 @@ module ArchiveSpace
 
       def generate_component_info(component, nesting_level = 0)
         component_notes = ComponentInfo.new
-        title = component.xpath(XPATH[:title]).text
+        # title = component.xpath(XPATH[:title]).text
+        # title = (apply_ead_to_html_transforms component.xpath(XPATH[:title]).children.first).to_s
+        title = (apply_ead_to_html_transforms component.xpath(XPATH[:title])).to_s
         physical_description = component.xpath(XPATH[:physical_description]).text
         dates = component.xpath(XPATH[:dates])
         digital_archival_objects_description_href =

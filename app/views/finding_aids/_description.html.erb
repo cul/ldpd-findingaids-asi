@@ -15,7 +15,7 @@
       <p><%= link_to series_title,
                      slug_prefix + repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id]) %></p>
       <% @ead.series_scope_content_values[index].each do |scope_content_value| %>
-        <%== scope_content_value %>
+        <%== apply_ead_to_html_transforms scope_content_value %>
       <% end %>
     </li>
     <% end %>
