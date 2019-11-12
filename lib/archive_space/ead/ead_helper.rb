@@ -59,6 +59,10 @@ module ArchiveSpace
       def hightlight_offsite content
         content.match(/off+[A-Za-z-]*site/)
       end
+
+      def accessrestrict_contains_unprocessed? content
+        content.match(/unprocessed/i)
+      end
     end
   end
 end

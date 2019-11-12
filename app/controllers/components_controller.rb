@@ -127,6 +127,8 @@ class ComponentsController < ApplicationController
     @item_date = @ead.unit_dates.first.text unless  @ead.unit_dates.first.nil?
     @restricted_access_flag =
       @ead.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
+    @unprocessed_flag =
+      @ead.access_restrictions_values.map{ |value| accessrestrict_contains_unprocessed? value.text }.any?
     ead_series_set_properties params[:id]
   end
 

@@ -97,6 +97,8 @@ class FindingAidsController < ApplicationController
     @genres_forms = @ead.control_access_genres_forms.sort
     @restricted_access_flag =
       @ead.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
+    @unprocessed_flag =
+      @ead.access_restrictions_values.map{ |value| accessrestrict_contains_unprocessed? value.text }.any?
   end
 
   def get_as_resource_info

@@ -117,6 +117,24 @@ RSpec.describe ArchiveSpace::Ead::EadParser do
       end
     end
 
+    ########################################## accessrestrict_containes_unprocessed?
+    context 'accessrestrict_containes_unprocessed?' do
+      it 'returns truthy for string "An unprocessed collection"' do
+        tested = @as_ead.accessrestrict_contains_unprocessed? "An unprocessed collection"
+        expect(tested).to be_truthy
+      end
+
+      it 'returns truthy for string "Unprocessed"' do
+        tested = @as_ead.accessrestrict_contains_unprocessed? "Unprocessed"
+        expect(tested).to be_truthy
+      end
+
+      it 'returns falsey for string "A foobar collection"' do
+        tested = @as_ead.accessrestrict_contains_unprocessed? "A foobar collection"
+        expect(tested).to be_falsey
+      end
+    end
+
     ########################################## parse_arch_desc_misc
     context 'parse_ead_header' do
       let (:expected_revision_change_dates) {

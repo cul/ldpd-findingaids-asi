@@ -10,6 +10,7 @@ class AeonRequestsController < ApplicationController
     @author = params[:author]
     @item_date = params[:item_date]
     @location = params[:location]
+    @unprocessed = params[:unprocessed]
   end
 
   def login
@@ -24,6 +25,7 @@ class AeonRequestsController < ApplicationController
     session[:author] = params[:author]
     session[:item_date] = params[:item_date]
     session[:location] = params[:location]
+    session[:unprocessed] = params[:unprocessed]
     session[:notes] = params[:notes]
     session[:scheduled_date] = Date.strptime(params[:scheduled_date],'%Y-%m-%d').strftime('%m/%d/%Y') unless params[:scheduled_date].empty?
   end
@@ -36,6 +38,7 @@ class AeonRequestsController < ApplicationController
     @author = session[:author]
     @item_date = session[:item_date]
     @location = session[:location]
+    @unprocessed = session[:unprocessed]
     @notes = session[:notes]
     @scheduled_date = session[:scheduled_date]
     session.clear
@@ -49,6 +52,7 @@ class AeonRequestsController < ApplicationController
     @author = session[:author]
     @item_date = session[:item_date]
     @location = session[:location]
+    @unprocessed = session[:unprocessed]
     @notes = session[:notes]
     @scheduled_date = session[:scheduled_date]
     session.clear

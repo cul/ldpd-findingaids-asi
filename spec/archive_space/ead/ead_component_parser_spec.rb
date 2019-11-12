@@ -291,7 +291,7 @@ RSpec.describe ArchiveSpace::Ead::EadComponentParser do
       end
 
       it 'generates the correct title' do
-        expect(@title).to eq 'Subseries I: Cataloged Correspondence'
+        expect(@title).to eq '<unittitle>Subseries I: Cataloged Correspondence</unittitle>'
       end
 
       it 'generates the correct physical description' do
