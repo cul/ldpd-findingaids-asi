@@ -1,3 +1,4 @@
+require 'clio/bib_ids'
 CONFIG = HashWithIndifferentAccess.new(YAML.load_file("#{Rails.root}/config/finding_aids.yml")[Rails.env]).freeze
 AS_CONFIG = HashWithIndifferentAccess.new(YAML.load_file("#{Rails.root}/config/archivespace.yml")[Rails.env]).freeze
 # REPOS contains info about the individual repositories, for example if aeon is used or not.

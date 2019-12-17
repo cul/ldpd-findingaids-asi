@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<add xmlns:saxon="http://saxon.sf.net/"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <doc>
+      <field name="id">ldpd_13262803</field>
+      <field name="ead">no</field>
+      <field name="filename">ldpd_13262803_ead.xml</field>
+      <field name="level">collection</field>
+      <field name="repository_code">nnc-a</field>
+      <field name="pageName">https://findingaids.library.columbia.edu/ead/nnc-a/ldpd_13262803</field>
+      <field name="unittitle">Addison Hutton architectural drawings, 1875-1895 bulk 1875 - 1895</field>
+      <field name="sort_title">Addison Hutton architectural drawings, 1875-1895 bulk 1875 - 1895</field>
+      <field name="sort_title_1st">A</field>
+      <field name="origination">Hutton, Addison, 1834-1916</field>
+      <field name="origination_1st">H</field>
+      <field name="unitid"/>
+      <field name="unitdate">1875-1895</field>
+      <field name="beginDate">1875</field>
+      <field name="endDate">1895</field>
+      <!--650-->
+      <field name="subject">Architecture--Designs and plans</field>
+      <field name="physdesc">21 drawings</field>
+      <field name="scopecontent"/>
+      <field name="component_text">Hutton, Addison, 1834-1916 Addison Hutton architectural drawings, 1875-1895 bulk 1875 - 1895 21 drawings This collection is available for use by appointment in the Department of Drawings &amp; Archives, Avery Architectural and Fine Arts Library, Columbia University. For further information and to make an appointment, please email avery-drawings@library.columbia.edu. AVAILABLE Accession number--1000.045. Philadelphia architect. Architecture Designs and plans Columbia University Libraries Avery Architectural and Fine Arts Library 13262803 </field>
+   </doc>
+   <doc>
+      <field name="id">ldpd_13262855</field>
+      <field name="ead">no</field>
+      <field name="filename">ldpd_13262855_ead.xml</field>
+      <field name="level">collection</field>
+      <field name="repository_code">nnc-a</field>
+      <field name="pageName">https://findingaids.library.columbia.edu/ead/nnc-a/ldpd_13262855</field>
+      <field name="unittitle">Irene Kochan papers, 1955-1960</field>
+      <field name="sort_title">Irene Kochan papers, 1955-1960</field>
+      <field name="sort_title_1st">I</field>
+      <field name="origination">Kochan, Irene,</field>
+      <field name="origination_1st">K</field>
+      <field name="unitid"/>
+      <field name="unitdate">1955-1960</field>
+      <field name="beginDate">1955</field>
+      <field name="endDate">1960</field>
+      <!--650-->
+      <field name="subject">Architecture--Designs and plans</field>
+      <field name="physdesc">1 print box (1 print box) 4 rolls (4 rolls)</field>
+      <field name="scopecontent"/>
+      <field name="component_text">Kochan, Irene, Irene Kochan papers, 1955-1960 1 print box (1 print box) 4 rolls (4 rolls) This collection is available for use by appointment in the Department of Drawings &amp; Archives, Avery Architectural and Fine Arts Library, Columbia University. For further information and to make an appointment, please email avery-drawings@library.columbia.edu. AVAILABLE Source of acquisition--Ivan M. Braun. Method of acquisition--Gift;; Date of acquisition--2006. Accession number--2006.016. German-born designer. Architecture Designs and plans Columbia University Libraries Avery Architectural and Fine Arts Library 13262855 </field>
+   </doc>
+   <doc>
+      <field name="id">ldpd_13262906</field>
+      <field name="ead">no</field>
+      <field name="filename">ldpd_13262906_ead.xml</field>
+      <field name="level">collection</field>
+      <field name="repository_code">nnc-a</field>
+      <field name="pageName">https://findingaids.library.columbia.edu/ead/nnc-a/ldpd_13262906</field>
+      <field name="unittitle">Lee Lawrie collection, undated</field>
+      <field name="sort_title">Lee Lawrie collection, undated</field>
+      <field name="sort_title_1st">L</field>
+      <field name="origination">Lawrie, Lee, 1877-1963</field>
+      <field name="origination_1st">L</field>
+      <field name="unitid"/>
+      <field name="unitdate">undated</field>
+      <field name="beginDate">    </field>
+      <field name="endDate"/>
+      <!--650-->
+      <field name="subject">Sculptors--United States</field>
+      <field name="physdesc">15 boxes</field>
+      <field name="scopecontent"/>
+      <field name="component_text">Lawrie, Lee, 1877-1963 Lee Lawrie collection, undated 15 boxes This collection is available for use by appointment in the Department of Drawings &amp; Archives, Avery Architectural and Fine Arts Library, Columbia University. For further information and to make an appointment, please email avery-drawings@library.columbia.edu. AVAILABLE Accession number--2009.007. German-born American Art Deco Sculptor. Sculptors United States Columbia University Libraries Avery Architectural and Fine Arts Library 13262906 </field>
+   </doc>
+</add>

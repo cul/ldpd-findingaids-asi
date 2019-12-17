@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
       @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
       @repository_name = REPOS[params[:repository_id]][:name]
     else
-      Rails.logger.warn("Non-existent repo code in url, redirect to home page")
+      Rails.logger.warn("Non-existent repo code in url (#{ params[:repository_id]}), redirect to home page")
       # for now, redirect to root. Change later
       redirect_to '/'
     end
@@ -50,16 +50,22 @@ class ApplicationController < ActionController::Base
       end
     else
       Rails.logger.warn("EAD cached file *_ead_ldpd_#{bib_id}.xml DOES NOT exist, AS API call required")
-      initialize_as_api
-      @as_resource_id = @as_api.get_resource_id(@as_repo_id, bib_id)
+      if @as_repo_id == 'clio_only'
+        # redundant, but still explicitly set to nil for self-explanatory code
+        @as_resource_id = nil
+        Rails.logger.warn("CLIO-only repo (no data for this repo in the ArchiveSpace server)")
+      else
+        initialize_as_api
+        @as_resource_id = @as_api.get_resource_id(@as_repo_id, bib_id)
+      end
       if @as_resource_id && @as_api.get_resource_info(@as_repo_id, @as_resource_id).publish_flag
         as_ead = @as_api.get_ead_resource_description(@as_repo_id, @as_resource_id)
         cached_file = File.join(CONFIG[:ead_cache_dir], "as_ead_ldpd_#{bib_id}.xml")
       else
-        as_ead = stub_ead_from_clio(bib_id)
+        as_ead = stub_ead_from_clio(bib_id) if Clio::BibIds.generate_stub?(bib_id)
         unless as_ead.present?
-          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): no CLIO stub, DON'T DISPLAY")
-          redirect_to '/'
+          Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): no CLIO stub, redirect to CLIO")
+          redirect_to CONFIG[:clio_redirect_url] + bib_id.to_s
           return
         else
           Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): stubbed from CLIO")
@@ -88,7 +94,7 @@ class ApplicationController < ActionController::Base
     end
     stub_ead(marc_record)
   rescue Exception => ex
-    Rails.logger.error(ex)
+    Rails.logger.error("#stub_ead_from_clio encountered following error for BIB ID #{bib_id}: #{ex}")
     Rails.logger.debug(ex.backtrace.join("\n"))
     return nil
   end
