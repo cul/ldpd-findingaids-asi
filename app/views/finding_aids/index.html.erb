@@ -10,8 +10,8 @@
   <% @finding_aids_titles_bib_ids.each do |finding_aid| %>
     <li>
       <%= link_to finding_aid[:title],
-                  slug_prefix + repository_finding_aid_summary_path(repository_id: @repo_id,
-                                                                    finding_aid_id: "ldpd_#{finding_aid[:bib_id]}")
+                  slug_prefix + repository_finding_aid_path(repository_id: @repo_id,
+                                                            id: "ldpd_#{finding_aid[:bib_id]}")
       %>
     </li>
   <% end %>
