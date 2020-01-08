@@ -3,26 +3,26 @@
 <% else %>
   <% slug_prefix = '' %>
 <% end %>
-<%= content_tag(:h3, @ead.scope_content_head) unless @ead.scope_content_head.nil? %>
-<% @ead.scope_content_values.each do |scope_content_value| %>
-  <%== apply_ead_to_html_transforms scope_content_value %>
+<%= content_tag(:h3, @arch_desc_misc.scope_and_content_head) unless @arch_desc_misc.scope_and_content_head.nil? %>
+<% @arch_desc_misc.scope_and_content_values.each do |scope_content_value| %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms scope_content_value %>
 <% end %>
 <% unless @print_view %>
 <p>
   <ul style="list-style-type:none;">
-    <% @series_titles.each_with_index do |series_title, index| %>
-    <li>
-      <p><%= link_to series_title,
-                     slug_prefix + repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id]) %></p>
-      <% @ead.series_scope_content_values[index].each do |scope_content_value| %>
-        <%== apply_ead_to_html_transforms scope_content_value %>
-      <% end %>
-    </li>
+    <% @arch_desc_dsc.series_compound_title_array.each_with_index do |series_title, index| %>
+      <li>
+        <p><%= link_to series_title,
+                       slug_prefix + repository_finding_aid_component_path(id: index+1, finding_aid_id: finding_aid_id) %></p>
+        <% @arch_desc_dsc.scope_content_values_for_each_series[index].each do |scope_content_value| %>
+          <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms scope_content_value %>
+        <% end %>
+      </li>
     <% end %>
   </ul>
 </p>
 <% end %>
-<%= content_tag(:h3,@ead.odd_head) unless @ead.odd_head.nil? %>
-<% @ead.odd_values.each do |odd_value| %>
-  <%== apply_ead_to_html_transforms odd_value %>
+<%= content_tag(:h3,@arch_desc_misc.other_descriptive_data_head) unless @arch_desc_misc.other_descriptive_data_head.nil? %>
+<% @arch_desc_misc.other_descriptive_data_values.each do |odd_value| %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms odd_value %>
 <% end %>

@@ -1,5 +1,5 @@
-<%= content_tag(:h3,'Abstract') unless @ead.abstracts.empty? %>
-<% @ead.abstracts.each do |abstract| %>
+<%= content_tag(:h3,'Abstract') unless @arch_desc_did.abstracts.empty? %>
+<% @arch_desc_did.abstracts.each do |abstract| %>
   <p>
     <%== apply_ead_to_html_transforms abstract %>
   </p>
@@ -11,14 +11,14 @@
       <% if @call_number %>
         <tr class="odd">
           <th>Call No.:</th>
-          <td> <%= @call_number %></td>
+          <td> <%= @arch_desc_did.unit_id_call_number %></td>
         </tr>
       <% end %>
       <tr class="odd">
 	<th>Bib ID</th>
 	<td>
-	  <%= @bib_id %>
-	  <% bib_href = "https://clio.columbia.edu/catalog/#{@bib_id}" %>
+	  <%= @arch_desc_did.unit_id_bib_id %>
+	  <% bib_href = "https://clio.columbia.edu/catalog/#{@arch_desc_did.unit_id_bib_id}" %>
 	  <a href= <%= bib_href %>
 	     target="_blank"
 	     class="smaller">
@@ -28,7 +28,7 @@
       </tr>
       <tr class="odd">
 	<th>Creator(s)</th>
-	<td> <%= @ead.origination_creators.map(&:text).join('; ') %></td>
+	<td> <%= @arch_desc_did.origination_creators.join('; ') %></td>
       </tr>
       <tr class="odd">
 	<th>Title</th>
@@ -36,24 +36,24 @@
       </tr>
       <tr class="odd">
 	<th>Physical Description</th>
-	<td><%= @physical_description_string %></td>
+	<td><%= @arch_desc_did.physical_description_extents_string %></td>
       </tr>
       <tr class="odd">
 	<th>Language(s)</th>
-	<td> <%= @ead.language %></td>
+	<td> <%= @arch_desc_did.language %></td>
       </tr>
-      <% if @ead.other_finding_aid_values.first -%>
+      <% if @arch_desc_misc.other_finding_aid_values.first -%>
       <tr class="odd">
-        <th><%= @ead.other_finding_aid_head || "Additional Description" %></th>
+        <th><%= @arch_desc_misc.other_finding_aid_head || "Additional Description" %></th>
         <td>
-          <% @ead.other_finding_aid_values.each do |other_finding_aid_value| %>
+          <% @arch_desc_misc.other_finding_aid_values.each do |other_finding_aid_value| %>
             <%= apply_ead_to_html_transforms other_finding_aid_value %>
           <% end %>
         </td>
       <% end %>
       <tr class="odd">
 	<th>Access</th>
-	<td class="accessrestrict"> <%==  @ead.access_restrictions_values %></td>
+	<td class="accessrestrict"> <%== @arch_desc_misc.access_restrictions_values %></td>
       </tr>
     </tbody>
   </table>

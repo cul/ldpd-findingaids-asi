@@ -1,0 +1,62 @@
+<div class="toc" style="clear:both;">
+  <% if @preview_flag %>
+    <% slug = '/preview' + slug %>
+  <% end %>
+  <h2>Table of Contents</h2>
+  <div id="contentMenu1">
+    <div class="item">
+      <a href="<%= "#{slug}#summary" %>">Summary</a>
+    </div>
+    <div class="item">
+      <a href="<%= "#{slug}#arrangement" %>">Arrangement</a>
+    </div>
+    <div class="item">
+      <a href="<%= "#{slug}#description" %>">Description</a>
+    </div>
+    <div class="item">
+      <a href="<%= "#{slug}#using_collection" %>">Using the Collection</a>
+      <% if @restricted_access_flag %>
+        <p style="color:red;">Note: some material may be restricted or offsite</p>
+      <% end %>
+    </div>
+    <div class="item">
+      <a href="<%= "#{slug}#about_findaid" %>">About the Finding Aid / Processing Information</a>
+    </div>
+    <div class="item">
+      <a href="<%= "#{slug}#subjects" %>">Subject Headings</a>
+    </div>
+    <div class="item">
+      <a href="<%= "#{slug}#history" %>">History / Biographical Note</a>
+    </div>
+  </div>
+  <hr style="border-style:solid;border-width:1px">
+  <h2>Container List</h2>
+  <%= link_to 'View All', "#{slug}/dsc" %>
+  <% if @preview_flag %>
+    <% slug_prefix = '/preview' %>
+  <% else %>
+    <% slug_prefix = '' %>
+  <% end %>
+  <div id="contentMenu1">
+    <% series_titles_urls.each.with_index do |title_url, series_index| %>
+    <div class="item">
+      <% unless subseries_titles[series_index].empty? %>
+      <a data-toggle="collapse"
+	 href="#collapse_series_<%= series_index + 1 %>"
+	 aria-expanded="false"
+	 aria-controls="collapse_series_<%= series_index + 1 %>">
+	<span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+      <% end %>
+      <%= link_to title_url.first, slug_prefix + title_url.second %>
+      <div style="padding-left:10px" class="collapse" id="collapse_series_<%= series_index + 1 %>">
+	<% subseries_titles[series_index].each.with_index do |subseries_title, subseries_index| %>
+          <p style="margin: 5px 0 5px 0">
+            <%= link_to subseries_title, slug_prefix + "#{title_url.second}#subseries_#{subseries_index + 1}" %>
+	  </p>
+	<% end %>
+      </div>
+    </div>
+    <% end %>    
+  </div>
+</div>

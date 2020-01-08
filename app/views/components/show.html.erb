@@ -1,38 +1,40 @@
-<%= render partial: 'banner_and_breadcrumbs' %>
+<%= render partial: 'banner_breadcrumbs_title' %>
 <table style="width:100%">
   <tbody>
     <tr>
       <td class="sidebar">
         <%
           series_titles_urls =
-            @series_titles.map.with_index do |series_title, index|
+            @arch_desc_dsc.series_compound_title_array.map.with_index do |series_title, index|
               [series_title, repository_finding_aid_component_path(id: index+1)]
             end
         %>
-	<%= render partial: 'sidebar',
-                   locals: {slug: repository_finding_aid_path(params[:repository_id], params[:finding_aid_id]),
-                            series_titles_urls: series_titles_urls}
+	<%= render partial: 'new_sidebar',
+                   locals: { slug: repository_finding_aid_path(params[:repository_id], params[:finding_aid_id]),
+                             series_titles_urls: series_titles_urls,
+                             subseries_titles: @arch_desc_dsc.subseries_compound_title_array_for_each_series_array }
         %>
       </td>
       <td class="ead_content" style="vertical-align:top">
+        <!-- INFORMATION FOR TOP-LEVEL <c> ELEMENT, CURRENTLY A SERIES -->
+        <%= render partial: 'component_structure_view_top_level_c',
+                   locals: {series: @series}
+        %>
+        <!-- INFORMATION FOR SECOND LEVEL <C> ELEMENTS AND CONTAINED <C> ELEMENTS AT LOWER LEVELS -->
 	<% repo_suffix = params[:repository_id].gsub('-','_') %>
 	<% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
           <!-- component_id needed for the creation of checkboxes for repos using aeon -->
           <%= render partial: "component_structure_view_#{REPOS[params[:repository_id]][:view_style]}",
                      layout: "with_aeon",
-                     locals: {component_title: @component_title,
+                     locals: {series: @series,
                               aeon_enabled: true,
-                              component_id: params[:id],
-                              notes: @notes,
-                              daos_description_href: @daos_description_href}
+                              component_id: params[:id]}
           %>
 	<% else %>
           <%= render partial: "component_structure_view_#{REPOS[params[:repository_id]][:view_style]}",
                      layout: "without_aeon",
-                     locals: {component_title: @component_title,
-                              aeon_enabled: false,
-                              notes: @notes,
-                              daos_description_href: @daos_description_href}
+                     locals: {series: @series,
+                              aeon_enabled: false}
           %>
 	<% end %>
       </td>

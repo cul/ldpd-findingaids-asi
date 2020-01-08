@@ -1,104 +1,67 @@
 <div class="c-view-style-a">
-  <h2 style="color:#2c5277;font-size:16px;font-weight:bold;"><%= component_title %></h2>
-  <% daos_description_href.each do |dao_desc_href| %>
-    <p><%== link_to 'Access digital content: ' + dao_desc_href.first, dao_desc_href.second %></p>
-  <% end %>
-  <% notes.access_restrictions_ps.each do |access_restrictions_p| %>
-    <div style="color:red;">
-      <%== apply_ead_to_html_transforms access_restrictions_p %>
-    </div>
-  <% end %>
-  <% notes.use_restrictions_ps.each do |use_restrictions_p| %>
-    <div style="color:red;">
-      <%== apply_ead_to_html_transforms use_restrictions_p %>
-    </div>
-  <% end %>
-  <% misc_notes = notes.scope_content_ps +
-                  notes.arrangement_ps +
-                  notes.related_material_ps +
-                  notes.separated_material_ps +
-                  notes.alternative_form_available_ps +
-                  notes.biography_history_ps +
-                  notes.custodial_history_ps +
-                  notes.acquisition_information_ps +
-                  notes.odd_ps +
-                  notes.other_finding_aid_ps
-  %>
-  <% misc_notes.each do |misc_note| %>
-    <%== apply_ead_to_html_transforms misc_note %>
-  <% end %>
   <table style="width:100%">
     <% subseries_num = 0 %>
-    <% @flattened_component_structure.each do |component| %>
-      <% ( nesting_level,
-           title,
-           physical_description,
-           dates,
-           digital_archival_objects_description_href,
-           level,
-           container_info,
-           notes
-	 ) = component
-         misc_notes = notes.scope_content_ps +
-                      notes.arrangement_ps +
-                      notes.related_material_ps +
-                      notes.separated_material_ps +
-                      notes.alternative_form_available_ps +
-                      notes.biography_history_ps +
-                      notes.custodial_history_ps +
-                      notes.acquisition_information_ps +
-                      notes.odd_ps +
-                      notes.other_finding_aid_ps
-      %>
+    <% series.flattened_component_tree_structure.each do |component| %>
       <tr style="border-top:1px solid #eee">
-        <td style="width:20%"><%= container_info.join(': ') %></td>
+        <td style="width:20%"><%= component.container_info_strings.join(': ') %></td>
         <td style="width:60%;font-weight:bold">
-          <% if (nesting_level == 1 && level == 'subseries') %>
+          <% if (component.nesting_level == 1 && component.level_attribute == 'subseries') %>
 	  <% subseries_num += 1 %>
 	  <a class="subseries_anchor" name="<%= "subseries_#{subseries_num}" %>"></a>
             <h3 style="color: #999;font-weight: bold;font-size: 14px;border-bottom:none;">
-              <%== [title, physical_description].reject(&:blank?).join(", ") %>
+              <%= [component.unit_title, component.physical_description_extents_string].reject(&:blank?).join(", ") %>
             </h3>
           <% else %>
-            <%== [title, physical_description].reject(&:blank?).join(", ") %>
+            <%= [component.unit_title, component.physical_description_extents_string].reject(&:blank?).join(", ") %>
           <% end %>
 	</td>
-        <td style="width:20%"><%= @ead.compound_dates_into_string(dates) %></td>
+        <td style="width:20%"><%= ArchiveSpace::Parsers::EadHelper.compound_dates_into_string component.unit_dates %></td>
       </tr>
-      <% unless daos_description_href.empty? %>
+      <% unless component.digital_archival_objects.empty? %>
         <tr style="border-top:1px solid #eee">
           <td style="width:20%"></td>
           <td style="width:60%;color:red;">
-            <% daos_description_href.each do |dao_desc_href| %>
-              <%== link_to 'Access digital content: ' + dao_desc_href.first, dao_desc_href.second %>
+            <% component.digital_archival_objects.each do |dao| %>
+              <%== link_to 'Access digital content: ' + dao.description, dao.href %>
               <br>
             <% end %>
 	  </td>
           <td style="width:20%"></td>
         </tr>
       <% end %>
-      <% unless notes.access_restrictions_ps.empty? %>
+      <% unless component.conditions_governing_access_values.empty? %>
         <tr style="border-top:1px solid #eee">
           <td style="width:20%"></td>
           <td style="width:60%;color:red;">
-            <% notes.access_restrictions_ps.each do |access_restrictions_p| %>
-              <%== access_restrictions_p %>
+            <% component.conditions_governing_access_values.each do |access_restrictions_value| %>
+              <%== access_restrictions_value %>
             <% end %>
 	  </td>
           <td style="width:20%"></td>
         </tr>
       <% end %>
-      <% unless notes.use_restrictions_ps.empty? %>
+      <% unless component.conditions_governing_use_values.empty? %>
         <tr style="border-top:1px solid #eee">
           <td style="width:20%"></td>
           <td style="width:60%;color:red;">
-            <% notes.use_restrictions_ps.each do |use_restrictions_p| %>
-              <%== use_restrictions_p %>
+            <% component.conditions_governing_use_values.each do |use_restrictions_value| %>
+              <%== use_restrictions_value %>
             <% end %>
 	  </td>
           <td style="width:20%"></td>
         </tr>
       <% end %>
+      <% misc_notes = component.scope_and_content_values +
+                      component.arrangement_values +
+                      component.related_material_values +
+                      component.separated_material_values +
+                      component.alternative_form_available_values +
+                      component.biography_or_history_values +
+                      component.custodial_history_values +
+                      component.acquisition_information_values +
+                      component.other_descriptive_data_values +
+                      component.other_finding_aid_values
+      %>
       <% unless misc_notes.empty? %>
         <tr>
           <td style="width:20%"></td>
@@ -112,4 +75,4 @@
       <% end %>
     <% end %>
   </table>
-</div>    
+</div>

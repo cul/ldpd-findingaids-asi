@@ -1,13 +1,13 @@
-<%= content_tag(:p,"Columbia University Libraries, #{@ead.publicationstmt_publisher}") %>
-<%= content_tag(:h3, @ead.processing_information_head) unless @ead.processing_information_head.nil? %>
-<% @ead.processing_information_values.each do |processing_information_value| %>
+<%= content_tag(:p,"Columbia University Libraries, #{@ead_header.publication_statement_publisher}") %>
+<%= content_tag(:h3, @arch_desc_misc.processing_information_head) unless @arch_desc_misc.processing_information_head.nil? %>
+<% @arch_desc_misc.processing_information_values.each do |processing_information_value| %>
   <%== apply_ead_to_html_transforms processing_information_value %>
 <% end %>
-<%= content_tag(:h3,@ead.separated_material_head) unless @ead.separated_material_head.nil? %>
-<% @ead.separated_material_values.each do |separated_material_value| %>
+<%= content_tag(:h3,@arch_desc_misc.separated_material_head) unless @arch_desc_misc.separated_material_head.nil? %>
+<% @arch_desc_misc.separated_material_values.each do |separated_material_value| %>
   <%== apply_ead_to_html_transforms separated_material_value %>
 <% end %>
 <h3>Revision Description</h3>
-<% @ead.revision_description_changes.each do |revision_description_change| %>
+<% @ead_header.revision_description_changes.each do |revision_description_change| %>
   <%= content_tag(:p,"#{revision_description_change[:date]} #{revision_description_change[:item]}") %>
 <% end %>

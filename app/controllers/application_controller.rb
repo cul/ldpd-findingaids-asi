@@ -8,6 +8,23 @@ class ApplicationController < ActionController::Base
   attr_accessor :authenticity_token
 
   private
+  def create_nokogiri_xml_document(input_xml, bib_id)
+    begin
+      # turn RECOVER parse option off. Will throw a Nokogiri::XML::SyntaxError if parsing error encountered
+      nokogiri_document = Nokogiri::XML(input_xml) do |config|
+        config.norecover
+      end
+    rescue Nokogiri::XML::SyntaxError => e
+      Rails.logger.error("Bib ID #{bib_id}, Nokogiri parsing error:")
+      Rails.logger.error("Nokogiri::XML::SyntaxError: #{e}")
+      Rails.logger.error("Using Nokogiri recover mode for #{bib_id}")
+      # Nokogiri RECOVER parsing mode is recommended for malformed or invalid documents
+      # The RECOVER parse option is set by default, where Nokogiri will attempt to recover from errors
+      # However, the recovery process will entail some loss of information due to the parsing error
+      nokogiri_xml = Nokogiri::XML(input_xml)
+    end
+  end
+
   def ead_series_set_properties component_num
     component_nokogiri_xml = @ead.dsc_series[component_num.to_i - 1]
     @component = ArchiveSpace::Ead::EadComponentParser.new
@@ -37,6 +54,37 @@ class ApplicationController < ActionController::Base
       Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, DON'T DISPLAY")
       redirect_to '/'
       return
+    end
+  end
+
+  # returns nil if cached html is rendered or no info is found (AS EAD or CLIO Stub info)
+  # Else, it returns an AS EAD XML file from one of the following sources:
+  # 1) First, see if there is an AS EAD XML for this bib ID in the cache. Note that this
+  # cached file will have been generated either from step 2) or step 3)
+  # 2) If no cached file found, query the AS server for the EAD. If one is returned, cache it
+  # 3) if the AS server does not return an EAD, try to generate on from information retrieved from CLIO
+  # if such info is found, generate a barebones AS EAD XML stand-in file and cache it.
+  # fcd1, 01/16/20: However, I'd prefer to decouple the CLIO stub from the AS EAD XML
+  # one way is to return a hash, that either contains an :as_ead key with AS EAD XML has the value,
+  # or a :clio_stub key with clio info in a to-be-determined format, probably a hash.
+  def render_cached_html_else_return_as_ead_xml(bib_id, authenticity_token = nil)
+    if @preview_flag
+      Rails.logger.info("Using Preview for BIB ID #{bib_id}")
+      preview_as_ead bib_id
+    else
+      cached_html_filename = generate_cached_html_filename bib_id
+      if File.exist?(cached_html_filename)
+        Rails.logger.info("Using Cached HTML file for #{bib_id}")
+        cached_html_file = open(cached_html_filename) do |file|
+          file.read
+        end
+        cached_html_file.sub!(CONFIG[:authenticity_token_placeholder], form_authenticity_token) if authenticity_token
+        render html: cached_html_file.html_safe
+        return
+      else
+        Rails.logger.warn("Using EAD Cache for BIB ID #{bib_id}")
+        cached_as_ead bib_id
+      end
     end
   end
 
@@ -106,23 +154,29 @@ class ApplicationController < ActionController::Base
   end
 
   def cache_response_html
-    return unless @input_xml
-    if @dsc_all
-      cached_file = File.join(CONFIG[:html_cache_dir], "ldpd_#{@params_bib_id}_all.html")
+    return unless @cache_html
+    cached_htlm_filename = generate_cached_html_filename @params_bib_id
+    if File.exist?(cached_htlm_filename)
+      Rails.logger.info("HTML cached file #{File.basename cached_htlm_filename} exists")
     else
-      cached_file = File.join(CONFIG[:html_cache_dir],
-                              "ldpd_#{@params_bib_id}#{@params_series_num ? '_' + @params_series_num : ''}.html")
-    end
-    if File.exist?(cached_file)
-      Rails.logger.info("HTML cached file #{File.basename cached_file} exists")
-    else
-      Rails.logger.warn("HTML cached file #{File.basename cached_file} DOES NOT exists, saving html")
+      Rails.logger.warn("HTML cached file #{File.basename cached_htlm_filename} DOES NOT exists, saving html")
       cached_response_body = response.body
       cached_response_body = cached_response_body.sub(@authenticity_token, CONFIG[:authenticity_token_placeholder]) if @authenticity_token
-      File.open(cached_file, "wb") do |file|
+      File.open(cached_htlm_filename, "wb") do |file|
         file.write(cached_response_body)
       end
     end
+  end
+
+  def generate_cached_html_filename(bib_id)
+    if @dsc_all
+      suffix = '_all.html'
+    elsif @print_view
+      suffix = '_print.html'
+    else
+      suffix = "#{@params_series_num ? '_' + @params_series_num : ''}.html"
+    end
+    File.join(CONFIG[:html_cache_dir], "ldpd_#{bib_id}#{suffix}")
   end
 
   def preview_as_ead(bib_id)

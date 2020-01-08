@@ -1,29 +1,31 @@
-<%= render partial: 'banner_and_breadcrumbs' %>
+<%= render partial: 'banner_breadcrumbs_title' %>
 <table style="width:100%">
   <tbody>
     <tr>
       <td class="sidebar">
         <%
           series_titles_urls =
-            @series_titles.map.with_index do |series_title, index|
-              [series_title, repository_finding_aid_component_path(id: index+1)]
+            @arch_desc_dsc.series_compound_title_array.map.with_index do |series_title, index|
+              [series_title, repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:finding_aid_id])]
             end
         %>
-	<%= render partial: 'sidebar',
-                   locals: {slug: repository_finding_aid_path(params[:repository_id], params[:finding_aid_id]),
-                            series_titles_urls: series_titles_urls}
-	    %>
+        <%= render partial: 'new_sidebar',
+                   locals: { slug: repository_finding_aid_path(id: params[:finding_aid_id]),
+                             series_titles_urls: series_titles_urls,
+                             subseries_titles: @arch_desc_dsc.subseries_compound_title_array_for_each_series_array }
+        %>
       </td>
       <td class="ead_content">
+        <!-- MAIN FINDING AID INFORMATION -->
+        <%= render partial: 'fa_main_info' %>
+        <!-- SERIES INFORMATION -->
         <% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
           <%= render partial: 'view_all',
-                     layout: "with_aeon",
-                     locals: {aeon_enabled: true}
+                     layout: "with_aeon"
           %>
-          <% else %>
+        <% else %>
           <%= render partial: 'view_all',
-                     layout: "without_aeon",
-                     locals: {aeon_enabled: false}
+                     layout: "without_aeon"
           %>
         <% end %>
       </td>

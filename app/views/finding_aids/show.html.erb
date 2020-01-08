@@ -1,61 +1,22 @@
-<%= render partial: 'banner_and_breadcrumbs' %>
+<%= render partial: 'banner_breadcrumbs_title' %>
 <table style="width=100%">
   <tbody>
     <tr>
       <td class="sidebar">
         <%
-	  series_titles_urls =
-            @series_titles.map.with_index do |series_title, index|
+          series_titles_urls =
+            @arch_desc_dsc.series_compound_title_array.map.with_index do |series_title, index|
               [series_title, repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])]
             end
         %>
-	<%=
-	  render partial: 'sidebar',
-                 locals: {slug: repository_finding_aid_path, series_titles_urls: series_titles_urls}
-	  %>
+        <%= render partial: 'new_sidebar',
+                   locals: { slug: repository_finding_aid_path,
+                             series_titles_urls: series_titles_urls,
+                             subseries_titles: @arch_desc_dsc.subseries_compound_title_array_for_each_series_array }
+        %>
       </td>
       <td class="ead_content">
-        <h2>Summary Information</h2>
-	<%=
-	  render partial: 'summary'
-	    # locals: {slug_to_series_page: method(:series_path)}
-        %>
-	<a class="fa_anchor" name="arrangement"></a>
-        <h2>Arrangement</h2>
-	<%=
-	  render partial: 'arrangement'
-	    # locals: {slug_to_series_page: method(:series_path)}
-        %>
-	<a class="fa_anchor" name="description"></a>
-        <h2>Description</h2>
-	<%=
-	  render partial: 'description'
-	    # locals: {slug_to_series_page: method(:series_path)}
-        %>
-	<a class="fa_anchor" name="using_collection"></a>
-        <h2>Using the Collection</h2>
-	<%=
-	  render partial: 'using_collection'
-	    # locals: {slug_to_series_page: method(:series_path)}
-        %>
-	<a class="fa_anchor" name="about_findaid"></a>
-        <h2>About the Finding Aid / Processing Information</h2>
-	<%=
-	  render partial: 'about_findaid'
-	    # locals: {slug_to_series_page: method(:series_path)}
-        %>
-	<a class="fa_anchor" name="subjects"></a>
-        <h2>Subject Headings</h2>
-	<%=
-	  render partial: 'subject_headings'
-	    # locals: {slug_to_series_page: method(:series_path)}
-        %>
-	<a class="fa_anchor" name="history"></a>
-        <h2>History / Biographical Note</h2>
-	<%=
-	  render partial: 'history'
-	    # locals: {slug_to_series_page: method(:series_path)}
-        %>
+        <%= render partial: 'top_level_info' %>
       </td>
     </tr>
   </tbody>
