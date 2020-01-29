@@ -119,7 +119,8 @@ module ArchiveSpace
         # if so, can remove the following
         component_info.compound_title_string = ArchiveSpace::Parsers::EadHelper.compound_title component
         # fcd1, 09/15/19: Assume only one <unititle> element is expected. If more are encountered, return first one.
-        component_info.unit_title = ::Ead::Elements::Did.unittitle_node_set(did).first.text unless
+        component_info.unit_title =
+          (apply_ead_to_html_transforms ::Ead::Elements::Did.unittitle_node_set(did).first).to_s unless
           ::Ead::Elements::Did.unittitle_node_set(did).first.nil?
         # component_info.unit_dates = ::Ead::Elements::Did.unitdate_node_set(did).map(&:text)
         component_info.unit_dates = ::Ead::Elements::Did.unitdate_node_set(did)

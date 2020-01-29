@@ -95,10 +95,10 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
       context 'given NOKOGIRI::XML::ELEMENT, representing a <c>, as an argument' do
         it 'the flattened_component_tree_structure is set correctly' do
           result = @component_parser.flattened_component_tree_structure
-          expect(result[0][:unit_title]).to eq 'Subseries 1: Cataloged Correspondence -- Letters'
+          expect(result[0][:unit_title]).to eq '<unittitle>Subseries 1: Cataloged Correspondence -- Letters</unittitle>'
           expect(result[0][:scope_and_content_values][1]).to eq '<p>The Builder. Nov 11, 1921. Excerpt;</p>'
           expect(result[0][:nesting_level]).to eq 1
-          expect(result[1][:unit_title]).to eq 'Herbert Brandon studio (Usonia, NY)'
+          expect(result[1][:unit_title]).to eq '<unittitle>Herbert Brandon studio (Usonia, NY)</unittitle>'
           expect(result[1][:scope_and_content_values][0]).to eq '<p>In twenty boxes</p>'
           expect(result[1][:nesting_level]).to eq 2
         end
@@ -118,7 +118,7 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         @expected_component_info = ArchiveSpace::Parsers::ComponentParser::ComponentInfo.new
         @expected_component_info.compound_title_string = 'Series I: Cataloged Correspondence, 1914-1989, 1894-1967, bulk 1958-1980'
         @expected_component_info.unit_dates = ['1914-1989', '1958-1980', '1894-1967']
-        @expected_component_info.unit_title = 'Series I: Cataloged Correspondence'
+        @expected_component_info.unit_title = '<unittitle>Series I: Cataloged Correspondence</unittitle>'
         @expected_component_info.acquisition_information_values = [
           '<p>Transferred from NYPL(ACQ)</p>',
           '<p>Transferred from CUL(ACQ)</p>',

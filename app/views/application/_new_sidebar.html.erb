@@ -15,7 +15,7 @@
     </div>
     <div class="item">
       <a href="<%= "#{slug}#using_collection" %>">Using the Collection</a>
-      <% if @restricted_access_flag %>
+      <% if restricted_access %>
         <p style="color:red;">Note: some material may be restricted or offsite</p>
       <% end %>
     </div>
@@ -32,7 +32,7 @@
   <hr style="border-style:solid;border-width:1px">
   <% unless series_titles_urls.empty? %>
     <%= render partial: 'container_list',
-               locals: { slug: repository_finding_aid_path,
+               locals: { slug: slug,
                          series_titles_urls: series_titles_urls,
                          subseries_titles: @arch_desc_dsc.subseries_compound_title_array_for_each_series_array }
     %>

@@ -19,7 +19,10 @@
     <% end %>
     <% current_nesting_level = component.nesting_level %>
     <% if aeon_enabled %>
-      <%== checkbox_display(component.unit_title, component_id, component.container_info_strings.first) unless component.container_info_strings.empty? %>
+      <%== checkbox_display(series.compound_title_string,
+                            component_id,
+                            component.container_info_strings.first) unless component.container_info_strings.empty?
+      %>
     <% end %>
     <p style="margin:0">
       <span style="text-align:right;float:right;display:block;margin-left:1em;"><%=component.container_info_strings.join(' ') %></span>

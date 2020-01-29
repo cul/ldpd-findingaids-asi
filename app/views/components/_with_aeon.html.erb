@@ -16,8 +16,8 @@ Columbia-affiliated users may login with their uni and password.
 <%= hidden_field_tag 'bib_id', @arch_desc_did.unit_id_bib_id %>
 <%= hidden_field_tag 'call_number', @arch_desc_did.unit_id_call_number %>
 <%= hidden_field_tag 'item_title', @finding_aid_title %>
-<%= hidden_field_tag 'author', @creator %>
-<%= hidden_field_tag 'item_date', @item_date %>
+<%= hidden_field_tag 'author', @arch_desc_did.origination_creators.join('; ') %>
+<%= hidden_field_tag 'item_date', @arch_desc_did.unit_dates_string %>
 <%= hidden_field_tag 'location', @restricted_access_flag ? 'Offsite' : @arch_desc_did.repository_corporate_name %>
 <%= hidden_field_tag 'unprocessed', @unprocessed_flag ? 'UNPROCESSED' : '' %>
 <% end %>

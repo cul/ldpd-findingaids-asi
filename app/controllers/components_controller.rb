@@ -71,6 +71,10 @@ class ComponentsController < ApplicationController
     @arch_desc_dsc.parse ead_nokogiri_xml_doc
     @arch_desc_misc = ArchiveSpace::Parsers::ArchivalDescriptionMiscParser.new
     @arch_desc_misc.parse ead_nokogiri_xml_doc
+    @restricted_access_flag =
+      @arch_desc_misc.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
+    @unprocessed_flag =
+      @arch_desc_misc.access_restrictions_values.map{ |value| accessrestrict_contains_unprocessed? value.text }.any?
     @ead_header = ArchiveSpace::Parsers::EadHeaderParser.new
     @ead_header.parse ead_nokogiri_xml_doc
     @finding_aid_title =

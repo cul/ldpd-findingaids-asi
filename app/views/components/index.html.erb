@@ -11,6 +11,7 @@
         %>
         <%= render partial: 'new_sidebar',
                    locals: { slug: repository_finding_aid_path(id: params[:finding_aid_id]),
+                             restricted_access: @restricted_access_flag,
                              series_titles_urls: series_titles_urls,
                              subseries_titles: @arch_desc_dsc.subseries_compound_title_array_for_each_series_array }
         %>
@@ -19,6 +20,7 @@
         <!-- MAIN FINDING AID INFORMATION -->
         <%= render partial: 'fa_main_info' %>
         <!-- SERIES INFORMATION -->
+	<a class="fa_anchor" name="view_all"></a>
         <% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
           <%= render partial: 'view_all',
                      layout: "with_aeon"

@@ -11,6 +11,7 @@
         %>
 	<%= render partial: 'new_sidebar',
                    locals: { slug: repository_finding_aid_path(params[:repository_id], params[:finding_aid_id]),
+                             restricted_access: @restricted_access_flag,
                              series_titles_urls: series_titles_urls,
                              subseries_titles: @arch_desc_dsc.subseries_compound_title_array_for_each_series_array }
         %>
