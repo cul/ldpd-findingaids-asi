@@ -10,7 +10,7 @@ class AeonRequestsController < ApplicationController
     @author = params[:author]
     @item_date = params[:item_date]
     @location = params[:location]
-    @unprocessed = params[:unprocessed]
+    @unprocessed = params[:unprocessed].present?
   end
 
   def login
@@ -38,7 +38,7 @@ class AeonRequestsController < ApplicationController
     @author = session[:author]
     @item_date = session[:item_date]
     @location = session[:location]
-    @unprocessed = session[:unprocessed]
+    @unprocessed = session[:unprocessed].present?
     @notes = session[:notes]
     @scheduled_date = session[:scheduled_date]
     session.clear
@@ -52,7 +52,7 @@ class AeonRequestsController < ApplicationController
     @author = session[:author]
     @item_date = session[:item_date]
     @location = session[:location]
-    @unprocessed = session[:unprocessed]
+    @unprocessed = session[:unprocessed].present?
     @notes = session[:notes]
     @scheduled_date = session[:scheduled_date]
     session.clear

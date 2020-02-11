@@ -19,7 +19,7 @@
     <%= hidden_field_tag "ItemInfo1_request_#{index}", 'Archival Materials' %>
   <% end %>
   <input type="hidden" name="Notes" value="<%= @notes %>">
-  <input type="hidden" name="unprocessed" value="<%= @unprocessed %>">
+  <%= hidden_field_tag('ItemInfo3', 'UNPROCESSED') if @unprocessed %>
   <input type="hidden" name="UserReview" value="No">
   <input type="hidden" name="ScheduledDate" value="<%= @scheduled_date %>">
   <input type='submit' name='Button' style="display:none;" value='Confirm Aeon Request' />

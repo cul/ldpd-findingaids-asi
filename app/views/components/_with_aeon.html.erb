@@ -19,7 +19,7 @@ Columbia-affiliated users may login with their uni and password.
 <%= hidden_field_tag 'author', @arch_desc_did.origination_creators.join('; ') %>
 <%= hidden_field_tag 'item_date', @arch_desc_did.unit_dates_string %>
 <%= hidden_field_tag 'location', @restricted_access_flag ? 'Offsite' : @arch_desc_did.repository_corporate_name %>
-<%= hidden_field_tag 'unprocessed', @unprocessed_flag ? 'UNPROCESSED' : '' %>
+<%= hidden_field_tag('unprocessed','unprocessed') if @unprocessed_flag %>
 <% end %>
 <%= javascript_tag do %>
 $("#clear_checkboxes").click(function() {
