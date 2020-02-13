@@ -20,6 +20,10 @@
 	  <ul id="cul_top-right" class="nav pull-right">
 	    <li class="dropdown menu pull-left"><a class="dropdown-toggle menu" data-toggle="dropdown" href="#">Help <b class="caret"></b></a>
 	      <ul class="dropdown-menu menu-dropdown dropdown-menu-right">
+		<li>
+                  <%= mail_to 'asops@library.columbia.edu', 'Suggestions and Feedback',
+                               subject: 'Suggestions and Feedback for findingaids.library.columbia.edu' %>
+		</li>
 		<li><a href="https://library.columbia.edu/services/askalibrarian.html">Ask a Librarian</a></li>
 		<li><a href="http://hours.library.columbia.edu">Library Hours</a></li>
 		<li><a href="http://www.columbia.edu/about_columbia/map/">Maps and Locations</a></li>
