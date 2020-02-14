@@ -25,7 +25,9 @@
       %>
     <% end %>
     <p style="margin:0">
-      <span style="text-align:right;float:right;display:block;margin-left:1em;"><%=component.container_info_strings.join(' ') %></span>
+      <span style="text-align:right;float:right;display:block;margin-left:1em;">
+	<%= component.container_info_strings.join(' ').sub(/\s*\[\S*\]\s*/,' ') %>
+      </span>
       <% if (component.nesting_level == 1 && component.level_attribute == 'subseries') %>
         <% subseries_num += 1 %>
         <a class="subseries_anchor" name="<%= "subseries_#{subseries_num}" %>"></a>

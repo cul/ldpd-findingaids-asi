@@ -10,7 +10,7 @@
   <% component_title, container_value = container_info.split('COMPONENTTITLECONTAINERINFO') %>
   <p>
     <b>Item Volume</b>
-    <%= container_value %>
+    <%= container_value.sub(/\s*\[\S*\]\s*/,' ') %>
     <br>
     <b>Item SubTitle</b>
     <%= component_title %>

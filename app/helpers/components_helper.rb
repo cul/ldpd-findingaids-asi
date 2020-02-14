@@ -16,7 +16,7 @@ module ComponentsHelper
         '<label style="text-align:right;float:right;padding-right:5px;" for="' <<
         "checkbox_#{@checkbox_id}>" <<
         '">' <<
-        "Request #{container_info}" <<
+        "Request #{container_info.sub(/\s*\[\S*\]\s*/,' ')}" <<
         '</label><br style="clear:both;">'
     end
     checkbox_html_out
