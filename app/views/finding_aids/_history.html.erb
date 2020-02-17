@@ -1,3 +1,4 @@
+<h2>History / Biographical Note</h2>
 <%= content_tag(:h3, @arch_desc_misc.biography_history_head) unless @arch_desc_misc.biography_history_head.nil? %>
 <% @arch_desc_misc.biography_history_values.each do |biography_history_value| %>
   <p><%== apply_ead_to_html_transforms biography_history_value %></p>
