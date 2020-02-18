@@ -8,7 +8,7 @@
 <% @arch_desc_misc.separated_material_values.each do |separated_material_value| %>
   <%== apply_ead_to_html_transforms separated_material_value %>
 <% end %>
-<h3>Revision Description</h3>
+<%= content_tag(:h3, 'Revision Description') unless @ead_header.revision_description_changes.empty? %>
 <% @ead_header.revision_description_changes.each do |revision_description_change| %>
   <%= content_tag(:p,"#{revision_description_change[:date]} #{revision_description_change[:item]}") %>
 <% end %>
