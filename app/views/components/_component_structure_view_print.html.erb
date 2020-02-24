@@ -19,14 +19,14 @@
       <% if (component.nesting_level == 1 && component.level_attribute == 'subseries') %>
         <% subseries_num += 1 %>
         <p style="color: black;border-bottom: 1px solid #999;font-weight: bold;font-size: 14px;">
-          <%= [component.unit_title,
+          <%== [component.unit_title,
                ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
                component.physical_description_extents_string].reject(&:blank?).join(", ")
           %>
         </p>
       <% else %>
         <p>
-          <%= [component.unit_title,
+          <%== [component.unit_title,
                ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
                component.physical_description_extents_string].reject(&:blank?).join(", ")
           %>
