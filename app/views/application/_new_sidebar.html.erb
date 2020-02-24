@@ -7,12 +7,19 @@
     <div class="item">
       <a href="<%= "#{slug}#summary" %>">Summary</a>
     </div>
-    <div class="item">
-      <a href="<%= "#{slug}#arrangement" %>">Arrangement</a>
-    </div>
-    <div class="item">
-      <a href="<%= "#{slug}#description" %>">Description</a>
-    </div>
+    <% unless @arch_desc_misc.arrangement_head.nil? && @arch_desc_dsc.series_compound_title_array.empty? %>
+      <div class="item">
+        <a href="<%= "#{slug}#arrangement" %>">Arrangement</a>
+      </div>
+    <% end %>
+    <% unless @arch_desc_misc.scope_and_content_head.nil? &&
+       @arch_desc_dsc.series_compound_title_array.empty? &&
+       @arch_desc_misc.other_descriptive_data_head.nil?
+    %>
+      <div class="item">
+        <a href="<%= "#{slug}#description" %>">Description</a>
+      </div>
+    <% end %>
     <div class="item">
       <a href="<%= "#{slug}#using_collection" %>">Using the Collection</a>
       <% if restricted_access %>
@@ -22,12 +29,16 @@
     <div class="item">
       <a href="<%= "#{slug}#about_findaid" %>">About the Finding Aid / Processing Information</a>
     </div>
-    <div class="item">
-      <a href="<%= "#{slug}#subjects" %>">Subject Headings</a>
-    </div>
-    <div class="item">
-      <a href="<%= "#{slug}#history" %>">History / Biographical Note</a>
-    </div>
+    <% unless @genres_forms.empty? && @subjects.empty? %>
+      <div class="item">
+        <a href="<%= "#{slug}#subjects" %>">Subject Headings</a>
+      </div>
+    <% end %>
+    <% unless @arch_desc_misc.biography_history_head.nil? %>
+      <div class="item">
+        <a href="<%= "#{slug}#history" %>">History / Biographical Note</a>
+      </div>
+    <% end %>
   </div>
   <hr style="border-style:solid;border-width:1px">
   <% unless series_titles_urls.empty? %>

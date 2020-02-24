@@ -35,19 +35,26 @@ class ComponentsController < ApplicationController
       redirect_to '/'
       return
     end
-    # Need top-level finding aids information for the aeon request and finding aids title
+    # Need top-level finding aids information for the aeon request, finding aids title, and sidebar
     @arch_desc_did = ArchiveSpace::Parsers::ArchivalDescriptionDidParser.new
     @arch_desc_did.parse ead_nokogiri_xml_doc
     @finding_aid_title =
       [@arch_desc_did.unit_title, @arch_desc_did.unit_dates_string].join(', ')
     # Need to parse miscellaneous info in the <archdesc> in order to get access restrictions. No need to
     # store it in an instance var, the pertinent info is retrieved to set flags below in current method
-    arch_desc_misc = ArchiveSpace::Parsers::ArchivalDescriptionMiscParser.new
-    arch_desc_misc.parse ead_nokogiri_xml_doc
+    @arch_desc_misc = ArchiveSpace::Parsers::ArchivalDescriptionMiscParser.new
+    @arch_desc_misc.parse ead_nokogiri_xml_doc
     @restricted_access_flag =
-      arch_desc_misc.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
+      @arch_desc_misc.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
     @unprocessed_flag =
-      arch_desc_misc.access_restrictions_values.map{ |value| accessrestrict_contains_unprocessed? value.text }.any?
+      @arch_desc_misc.access_restrictions_values.map{ |value| accessrestrict_contains_unprocessed? value.text }.any?
+    # fcd1, 02/24/20: @subjects and @genres_forms needed for the sidebar view, in order to hide unneeded links.
+    # Need to refactor this, possibly into application controller helper method
+    @subjects = (@arch_desc_misc.control_access_corporate_name_values +
+                 @arch_desc_misc.control_access_occupation_values +
+                 @arch_desc_misc.control_access_personal_name_values +
+                 @arch_desc_misc.control_access_subject_values).sort
+    @genres_forms = @arch_desc_misc.control_access_genre_form_values.sort
     # fcd1, 09/12/19: For now, assume all top-level <c> elements are series. However, when other
     # types of top-level <c> elements are allowed, modify the following code, including changing
     # variable name from @series to, for example, @top_level_component (more generic), or check
