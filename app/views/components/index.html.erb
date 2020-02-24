@@ -18,7 +18,9 @@
       </td>
       <td class="ead_content">
         <!-- MAIN FINDING AID INFORMATION -->
-        <%= render partial: 'fa_main_info' %>
+        <%= render partial: 'fa_top_level_info',
+            locals: {finding_aid_id: params[:finding_aid_id]}
+        %>
         <!-- SERIES INFORMATION -->
 	<a class="fa_anchor" name="view_all"></a>
         <% if REPOS[params[:repository_id]][:requestable_via_aeon] %>

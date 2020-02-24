@@ -2,8 +2,11 @@
 <h1 style="font-size:18px;color:black;text-align:center"><%= @finding_aid_title %></h1>
 <table style="width=100%">
   <tbody>
+    <tr>
       <td class="ead_content">
-	<%= render partial: 'top_level_info' %>
+        <%= render partial: 'fa_top_level_info',
+            locals: {finding_aid_id: params[:id]}
+        %>
       </td>
     </tr>
   </tbody>

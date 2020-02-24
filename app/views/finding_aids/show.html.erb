@@ -17,7 +17,9 @@
         %>
       </td>
       <td class="ead_content">
-        <%= render partial: 'top_level_info' %>
+        <%= render partial: 'fa_top_level_info',
+            locals: {finding_aid_id: params[:id]}
+        %>
       </td>
     </tr>
   </tbody>
