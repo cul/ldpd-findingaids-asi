@@ -141,39 +141,6 @@ module ArchiveSpace
         component_info
       end
 
-      def generate_component_info_legacy_copy(component, nesting_level = 0)
-        component_notes = ComponentInfo.new
-        title = component.xpath(XPATH[:title]).text
-        physical_description = component.xpath(XPATH[:physical_description]).text
-        dates = component.xpath(XPATH[:dates])
-        digital_archival_objects_description_href =
-          component.xpath(XPATH[:digital_archival_objects]).map do |dao|
-          [dao.xpath(XPATH[:digital_archival_object_description_p]).text, dao.attribute('href').text]
-        end
-        level = component.attribute('level').text
-        container_nokogiri_elements = component.xpath(XPATH[:container])
-        container_info = container_nokogiri_elements.map do |container|
-          container_type = container['label'] || container['type']
-          container_value = container.text
-          "#{container_type.titlecase} #{container_value}"
-        end
-        COMPONENT_INFO_MEMBERS.each do |member|
-          component_notes[member] = component.xpath(XPATH[member]).map do |content|
-          (apply_ead_to_html_transforms content).to_s
-          end
-        end
-        @component_info.append [ nesting_level,
-                                 title,
-                                 physical_description,
-                                 dates,
-                                 digital_archival_objects_description_href,
-                                 level,
-                                 container_info,
-                                 component_notes
-                               ]
-
-      end
-
       def parse(nokogiri_xml_document, series_num)
         arch_desc_dsc = nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc')
         series = ::Ead::Elements::Dsc.c_level_attribute_series_array(arch_desc_dsc)[series_num -1]
@@ -248,92 +215,6 @@ module ArchiveSpace
         @physical_description_extents_string =
           ArchiveSpace::Parsers::EadHelper.compound_physical_descriptions_into_string physical_descriptions
         generate_structure_containing_lower_level_components(series, series_num)
-      end
-
-      # legacy component struture methods
-      def generate_info_legacy
-        @component_info = []
-        # generate_component_info(@nokogiri_xml)
-        generate_child_components_info(@nokogiri_xml)
-        @component_info
-      end
-
-      def generate_child_components_info_legacy(component_arg, nesting_level = 0)
-        nesting_level += 1
-        components = component_arg.xpath('./xmlns:c')
-        return if components.empty?
-        components.each do |component|
-          generate_component_info(component, nesting_level)
-          generate_child_components_info(component, nesting_level)
-        end
-      end
-
-      def generate_component_info_legacy(component, nesting_level = 0)
-        component_notes = ComponentInfo.new
-        title = component.xpath(XPATH[:title]).text
-        physical_description = component.xpath(XPATH[:physical_description]).text
-        dates = component.xpath(XPATH[:dates])
-        digital_archival_objects_description_href =
-          component.xpath(XPATH[:digital_archival_objects]).map do |dao|
-          [dao.xpath(XPATH[:digital_archival_object_description_p]).text, dao.attribute('href').text]
-        end
-        level = component.attribute('level').text
-        container_nokogiri_elements = component.xpath(XPATH[:container])
-        container_info = container_nokogiri_elements.map do |container|
-          container_type = container['label'] || container['type']
-          container_value = container.text
-          "#{container_type.titlecase} #{container_value}"
-        end
-        COMPONENT_INFO_MEMBERS.each do |member|
-          component_notes[member] = component.xpath(XPATH[member]).map do |content|
-          (apply_ead_to_html_transforms content).to_s
-          end
-        end
-        @component_info.append [ nesting_level,
-                                 title,
-                                 physical_description,
-                                 dates,
-                                 digital_archival_objects_description_href,
-                                 level,
-                                 container_info,
-                                 component_notes
-                               ]
-
-      end
-
-      def generate_component_info_old(component, nesting_level = 0)
-        title = component.xpath(XPATH[:title]).text
-        physical_description = component.xpath(XPATH[:physical_description]).text
-        date = component.xpath(XPATH[:date]).text
-        level = component.attribute('level').text
-        access_restrictions_ps = component.xpath(XPATH[:access_restrictions_ps]).map do |access_restrictions_p|
-          (apply_ead_to_html_transforms access_restrictions_p).to_s
-        end
-        scope_content_ps = component.xpath(XPATH[:scope_content_ps]).map do |scope_content_p|
-          (apply_ead_to_html_transforms scope_content_p).to_s
-        end
-        separated_material_ps = component.xpath(XPATH[:separated_material_ps]).map do |separated_material_p|
-          (apply_ead_to_html_transforms separated_material_p).to_s
-        end
-        other_finding_aid_ps = component.xpath(XPATH[:other_finding_aid_ps]).map do |other_finding_aid_p|
-          (apply_ead_to_html_transforms other_finding_aid_p).to_s
-        end
-        container_nokogiri_elements = component.xpath(XPATH[:container])
-        container_info = container_nokogiri_elements.map do |container|
-          container_type = container['label'] || container['type']
-          container_value = container.text
-          "#{container_type.titlecase} #{container_value}"
-        end
-        @component_info.append [ nesting_level,
-                                 title,
-                                 physical_description,
-                                 date,
-                                 level,
-                                 access_restrictions_ps,
-                                 scope_content_ps,
-                                 separated_material_ps,
-                                 other_finding_aid_ps,
-                                 container_info ]
       end
 
       # fcd1, 09/02/19: NEED TO RETHNK/REIMPLEMENT THIS

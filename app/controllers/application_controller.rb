@@ -25,16 +25,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def ead_series_set_properties component_num
-    component_nokogiri_xml = @ead.dsc_series[component_num.to_i - 1]
-    @component = ArchiveSpace::Ead::EadComponentParser.new
-    @component.parse component_nokogiri_xml
-    @component_title = @component.title
-    @notes = @component.notes
-    @daos_description_href = @component.digital_archival_objects_description_href
-    @flattened_component_structure = @component.generate_info
-  end
-
   # @as_repo_id => repo ID in ArchiveSpace
   def validate_repository_code_and_set_repo_id
     if REPOS.key? params[:repository_id]
@@ -44,16 +34,6 @@ class ApplicationController < ActionController::Base
       bib_id = params[:id].delete_prefix('ldpd_')
       Rails.logger.warn("Non-existent repo code (#{ params[:repository_id]}) in url (Bib ID: #{bib_id}), redirect to CLIO")
       redirect_to CONFIG[:clio_redirect_url] + bib_id
-    end
-  end
-
-  def redirect_if_publish_flag_false(bib_id)
-    initialize_as_api
-    @as_resource_id = @as_api.get_resource_id(@as_repo_id, bib_id)
-    unless @as_api.get_resource_info(@as_repo_id, @as_resource_id).publish_flag
-      Rails.logger.warn("AS ID #{@as_resource_id} (Bib ID #{bib_id}): publish flag false, DON'T DISPLAY")
-      redirect_to '/'
-      return
     end
   end
 
