@@ -41,9 +41,9 @@ class ApplicationController < ActionController::Base
       @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
       @repository_name = REPOS[params[:repository_id]][:name]
     else
-      Rails.logger.warn("Non-existent repo code in url (#{ params[:repository_id]}), redirect to home page")
-      # for now, redirect to root. Change later
-      redirect_to '/'
+      bib_id = params[:id].delete_prefix('ldpd_')
+      Rails.logger.warn("Non-existent repo code (#{ params[:repository_id]}) in url (Bib ID: #{bib_id}), redirect to CLIO")
+      redirect_to CONFIG[:clio_redirect_url] + bib_id
     end
   end
 
