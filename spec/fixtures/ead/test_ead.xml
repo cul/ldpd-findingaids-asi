@@ -258,6 +258,8 @@
 	  </physdesc>
 	  <!-- fcd1, 09/15/19: normally would not have container information at the series level. -->
 	  <!-- However, have a couple of <container> elements here to test parser -->
+	  <!-- fcd1, 03/04/20: See comment in ACFA-176: barcode info, if present, will always be in the first container -->
+	  <container label="box [RS01729110]" type="box">24</container>
 	  <container label="general manuscripts box" type="box">78</container>
 	  <container type="folder">5</container>
 	</did>

@@ -19,6 +19,7 @@ attributes = [
   :conditions_governing_access_values, # <ead>:<archdesc>:<dsc>:<c>:<accessrestrict>:<p>
   :conditions_governing_use_head, # <ead>:<archdesc>:<dsc>:<c>:<accessrestrict>:<head>
   :conditions_governing_use_values, # <ead>:<archdesc>:<dsc>:<c>:<accessrestrict>:<p>
+  :container_info_barcode, # see ACFA-176
   :container_info_strings, # array of container info strings
   :custodial_history_head, # <ead>:<archdesc>:<dsc>:<c>:<custodhist>:<head>
   :custodial_history_values, # <ead>:<archdesc>:<dsc>:<c>:<custodhist>:<p>
@@ -149,7 +150,9 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
           '<p>One photocopy may be made for research purposes.(UR)</p>',
           '<p>Single photocopies may be made for research purposes.(UR)</p>'
         ]
+        @expected_component_info.container_info_barcode =  'RS01729110'
         @expected_component_info.container_info_strings = [
+          'Box 24',
           'General Manuscripts Box 78',
           'Folder 5'
         ]
@@ -332,6 +335,7 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
 
       let (:expected_container_info_strings) {
         [
+          'Box 24',
           'General Manuscripts Box 78',
           'Folder 5'
         ]

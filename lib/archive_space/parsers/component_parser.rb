@@ -27,6 +27,7 @@ module ArchiveSpace
         :conditions_governing_access_values,
         :conditions_governing_use_head,
         :conditions_governing_use_values,
+        :container_info_barcode,
         :container_info_strings,
         :custodial_history_head,
         :custodial_history_values,
@@ -128,9 +129,16 @@ module ArchiveSpace
           # container_type = container['label'] || container['type']
           # Assumption: at least one of the 'label' or 'type' attribute is present.
           container_type = (::Ead::Elements::Container.label_attribute_node_set(container).first ||
-                            ::Ead::Elements::Container.type_attribute_node_set(container).first).text
+                            ::Ead::Elements::Container.type_attribute_node_set(container).first).text.sub(/\s*\[\S*\]\s*/,' ').chomp(' ')
           container_value = container.text
           "#{container_type.titlecase} #{container_value}"
+        end
+        # Following pertains to ACFA-176: barcode embedded inside label attribute of first <container>
+        unless ::Ead::Elements::Did.container_node_set(did).empty?
+          first_container_label_attribute =
+            ::Ead::Elements::Container.label_attribute_node_set(::Ead::Elements::Did.container_node_set(did).first).first
+          match_data_barcode = first_container_label_attribute.text.match(/\s*\[(\S*)\]\s*/)
+          component_info.container_info_barcode = match_data_barcode[1] if match_data_barcode
         end
         component_info.nesting_level = nesting_level
         physical_descriptions = ::Ead::Elements::Did.physdesc_node_set(did)
@@ -172,7 +180,7 @@ module ArchiveSpace
           # container_type = container['label'] || container['type']
           # Assumption: at least one of the 'label' or 'type' attribute is present.
           container_type = (::Ead::Elements::Container.label_attribute_node_set(container).first ||
-                            ::Ead::Elements::Container.type_attribute_node_set(container).first).text
+                            ::Ead::Elements::Container.type_attribute_node_set(container).first).text.sub(/\s*\[\S*\]\s*/,' ').chomp(' ')
           container_value = container.text
           "#{container_type.titlecase} #{container_value}"
         end

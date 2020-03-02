@@ -7,10 +7,11 @@
     <%= @item_title %>
   </p>
   <% @selected_containers.each do |container_info| %>
-  <% component_title, container_value = container_info.split('COMPONENTTITLECONTAINERINFO') %>
+  <% component_title, container_info_string, container_info_barcode =
+       container_info.split(CONFIG[:container_info_delimiter]) %>
   <p>
     <b>Item Volume</b>
-    <%= container_value.sub(/\s*\[\S*\]\s*/,' ') %>
+    <%= container_info_string %>
     <br>
     <b>Item SubTitle</b>
     <%= component_title %>

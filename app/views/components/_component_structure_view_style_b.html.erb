@@ -21,12 +21,13 @@
     <% if aeon_enabled %>
       <%== checkbox_display(series.compound_title_string,
                             component_id,
-                            component.container_info_strings.first) unless component.container_info_strings.empty?
+                            component.container_info_strings.first,
+                            component.container_info_barcode) unless component.container_info_strings.empty?
       %>
     <% end %>
     <p style="margin:0">
       <span style="text-align:right;float:right;display:block;margin-left:1em;">
-	<%= component.container_info_strings.join(' ').sub(/\s*\[\S*\]\s*/,' ') %>
+	<%= component.container_info_strings.join(' ') %>
       </span>
       <% if (component.nesting_level == 1 && component.level_attribute == 'subseries') %>
         <% subseries_num += 1 %>
