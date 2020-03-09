@@ -2,6 +2,7 @@ require 'rails_helper'
 require 'archive_space/parsers/ead_header_parser.rb'
 
 attributes = [
+  :eadid_url_attribute, # <eadid url= >
   :publication_statement_publisher, # <filedesc><publicationstmt><publisher>
   :revision_description_changes # <revisiondesc><change>
 ].freeze
@@ -37,6 +38,11 @@ RSpec.describe ArchiveSpace::Parsers::EadHeaderParser do
 
     ########################################## parse
     describe 'method #parse' do
+      it 'sets the eadid_url_attribute attribute correctly' do
+        retrieved_value = @ead_header_parser.eadid_url_attribute
+        expect(retrieved_value).to eq 'http://findingaids.cul.columbia.edu/ead/nnc-a/ldpd_11266912/summary'
+      end
+
       it 'sets the publication_statement_publisher attribute correctly' do
         retrieved_value = @ead_header_parser.publication_statement_publisher
         expect(retrieved_value).to eq 'Avery Architectural and Fine Arts Library'

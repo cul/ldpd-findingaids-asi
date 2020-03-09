@@ -89,6 +89,11 @@ class ComponentsController < ApplicationController
                  @arch_desc_misc.control_access_personal_name_values +
                  @arch_desc_misc.control_access_subject_values).sort
     @genres_forms = @arch_desc_misc.control_access_genre_form_values.sort
+    unless (@ead_header.eadid_url_attribute.nil? ||
+            @ead_header.eadid_url_attribute.include?('findingaids.cul.columbia.edu') ||
+            @ead_header.eadid_url_attribute.include?('findingaids.library.columbia.edu'))
+      @eadid_other_finding_aid_url = @ead_header.eadid_url_attribute
+    end
     @notes_array = []
     @flattened_component_structure_array = []
     @daos_description_href_array = []

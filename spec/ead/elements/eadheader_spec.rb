@@ -5,6 +5,7 @@ class_methods = [
   # Info pertinent to filedesc_publicationstmt_publisher method:
   # <filedesc> File Description, <publicationstmt> Publication Statement, <publisher> Publisher
   # <publicationstmt> is not repeatable
+  :eadid_url_attribute_array, # <eadid url= >
   :filedesc_publicationstmt_publisher_node_set, # <filedesc><publicationstmt><publisher>
   :revisiondesc_change_node_set # <revisiondesc><change>
 ].freeze
@@ -32,6 +33,11 @@ RSpec.describe Ead::Elements::Eadheader do
 
     describe ' class methods:' do
       context 'Given a Nokogiri::Node::Set representing an <eadheader> element as an argument, class method' do
+        it '.eadid_url_attribute_array returns an array of Nokogiri::XML::Attr representing the retrieved <ead url= > attribute' do
+          retrieved_value = subject.class.eadid_url_attribute_array(@eadheader_nokogiri_element).first.text
+          expect(retrieved_value).to eq 'http://findingaids.cul.columbia.edu/ead/nnc-a/ldpd_11266912/summary'
+        end
+
         it '.filedesc_publicationstmt_publisher returns an Nokogiri::XML::Element instance representing the retrieved <publisher> element' do
           retrieved_value = subject.class.filedesc_publicationstmt_publisher_node_set(@eadheader_nokogiri_element).first.text
           expect(retrieved_value).to eq 'Avery Architectural and Fine Arts Library'

@@ -7,6 +7,7 @@ module ArchiveSpace
     class EadHeaderParser
 
       ATTRIBUTES = [
+        :eadid_url_attribute,
         :publication_statement_publisher,
         :revision_description_changes
       ]
@@ -17,6 +18,8 @@ module ArchiveSpace
 
       def parse(nokogiri_xml_document)
         ead_header = nokogiri_xml_document.xpath('/xmlns:ead/xmlns:eadheader')
+        @eadid_url_attribute = ::Ead::Elements::Eadheader.eadid_url_attribute_array(ead_header).first.text unless
+          ::Ead::Elements::Eadheader.eadid_url_attribute_array(ead_header).empty?
         @publication_statement_publisher = ::Ead::Elements::Eadheader.filedesc_publicationstmt_publisher_node_set(ead_header).first.text
         @revision_description_changes = []
         ::Ead::Elements::Eadheader.revisiondesc_change_node_set(ead_header).each do |change|

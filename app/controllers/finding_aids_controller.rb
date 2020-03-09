@@ -43,6 +43,11 @@ class FindingAidsController < ApplicationController
       @arch_desc_misc.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
     @unprocessed_flag =
       @arch_desc_misc.access_restrictions_values.map{ |value| accessrestrict_contains_unprocessed? value.text }.any?
+    unless (@ead_header.eadid_url_attribute.nil? ||
+            @ead_header.eadid_url_attribute.include?('findingaids.cul.columbia.edu') ||
+            @ead_header.eadid_url_attribute.include?('findingaids.library.columbia.edu'))
+      @eadid_other_finding_aid_url = @ead_header.eadid_url_attribute
+    end
     @cache_html = true unless @preview_flag
   end
 

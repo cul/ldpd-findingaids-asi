@@ -9,6 +9,7 @@ module Ead
     class Eadheader
 
       XPATH = {
+        eadid_url_attribute: './xmlns:eadid/@url',
         filedesc_publicationstmt_publisher: './xmlns:filedesc/xmlns:publicationstmt/xmlns:publisher',
         revisiondesc_change: './xmlns:revisiondesc/xmlns:change'
       }.freeze
@@ -26,6 +27,13 @@ module Ead
         # returns: Nokogiri::XML::NodeSet of <change>
         def revisiondesc_change_node_set(input_element)
           input_element.xpath(XPATH[:revisiondesc_change])
+        end
+
+        # <eadid> EAD Identifier, https://www.loc.gov/ead/tglib/elements/eadid.html
+        # <eadid> may contain a url attribute
+        # returns: Array of Nokogiri::XML::Attr representing the url attribute
+        def eadid_url_attribute_array(input_element)
+          input_element.xpath(XPATH[:eadid_url_attribute])
         end
       end
     end

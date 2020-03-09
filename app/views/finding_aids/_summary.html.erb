@@ -43,7 +43,7 @@
 	<th>Language(s)</th>
 	<td> <%= @arch_desc_did.language %></td>
       </tr>
-      <% if @arch_desc_misc.other_finding_aid_values.first -%>
+      <% if @arch_desc_misc.other_finding_aid_values.first %>
       <tr class="odd">
         <th><%= @arch_desc_misc.other_finding_aid_head || "Additional Description" %></th>
         <td>
@@ -51,6 +51,13 @@
             <%= apply_ead_to_html_transforms other_finding_aid_value %>
           <% end %>
         </td>
+      </tr>
+      <% end %>
+      <% if @eadid_other_finding_aid_url %>
+        <tr class="odd">
+          <th>Additional Description</th>
+          <td><%= link_to nil, @eadid_other_finding_aid_url %></td>
+        </tr>
       <% end %>
       <tr class="odd">
 	<th>Access</th>
