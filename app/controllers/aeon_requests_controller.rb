@@ -1,5 +1,9 @@
 class AeonRequestsController < ApplicationController
   def create
+    @allow_requests = AEON[:allow_requests]
+    @display_alert = AEON[:display_alert]
+    @alert_header = AEON[:alert_header]
+    @alert_text = AEON[:alert_text]
     @selected_containers = Set.new
     params.select {|key, value| key.starts_with?('checkbox_')}.each do |checkbox_id, checkbox_value|
       @selected_containers.add checkbox_value

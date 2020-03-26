@@ -1,48 +1,8 @@
 <div style="margin-top:60px;"></div>
-<div class="aeon-confirm-request container">
-<h3 class="trajanpro">Confirm Request</h3>
-<div class="span8">
-  <p>
-    <b>Item Title</b>
-    <%= @item_title %>
-  </p>
-  <% @selected_containers.each do |container_info| %>
-  <% component_title, container_info_string, container_info_barcode =
-       container_info.split(CONFIG[:container_info_delimiter]) %>
-  <p>
-    <b>Item Volume</b>
-    <%= container_info_string %>
-    <br>
-    <b>Item SubTitle</b>
-    <%= component_title %>
-  </p>
-  <% end %>
-  <%= form_tag login_aeon_request_path do %>
-    <p>
-      <b>Request Notes</b>
-      <br>
-      Use this field to add research notes for your future reference. You may also offer an alternate date
-      or range of dates for your requested Scheduled Date. For immediate inquiries or concerns, please
-      contact the library directly.
-      <br>
-    </p>
-    <p>
-      <%= label_tag :notes, 'Notes' %>
-      <%= text_area_tag :notes, nil, class: 'span8', cols: 60 %>
-    </p>
-    <p>
-      <%= label_tag :scheduled_date, 'Scheduled Date' %>
-      <%= date_field_tag :scheduled_date, nil, class: 'hasDatepicker', placeholder: 'YYYY-MM-DD' %>
-      <span>(Please use date format shown in input field)</span>
-    </p>
-    <p>
-      Please schedule no more than 10 boxes per date. Scheduled dates for off-site materials are pending approval
-      by staff until a confirmation email is sent. Please schedule off-site items five (5) business days in advance.
-    </p>
-    <%= submit_tag 'Submit Request' , {style: "margin-bottom:5px;"} %>
-    <input type="button" id="close" style="margin-bottom:5px" value="Cancel" onclick="window.close()" />
-    <% params.each do |key, value| %>
-      <%= hidden_field_tag key, value %>
-    <% end %>
-  <% end %>
-</div>
+<% if @display_alert %>
+  <div style="padding: 1em 2em">
+    <%= content_tag(:h3, @alert_header) %>
+    <%= content_tag(:p, @alert_text) %>
+  </div>
+<% end %>
+<%= render partial: 'request_form' if @allow_requests %>
