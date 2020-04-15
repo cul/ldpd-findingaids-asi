@@ -8,7 +8,7 @@
   <% series.flattened_component_tree_structure.each do |component| %>
     <% if component.nesting_level > current_nesting_level %>
       <hr style="margin-top:10px;margin-bottom:10px;">
-      <div class="component_entry" style="margin-left:1em;">
+      <div class="component_entry" style="margin-left:4em;">
     <% elsif component.nesting_level < current_nesting_level %>
        <hr style="margin-top:10px;margin-bottom:10px;">
        <% (component.nesting_level...current_nesting_level).each do %>
@@ -26,7 +26,7 @@
       %>
     <% end %>
     <p style="margin:0">
-      <span style="text-align:right;float:right;display:block;margin-left:1em;">
+      <span style="text-align:right;float:right;display:block;margin-left:4em;">
 	<%= component.container_info_strings.join(' ') %>
       </span>
       <% if (component.nesting_level == 1 && component.level_attribute == 'subseries') %>
@@ -45,7 +45,7 @@
       <% end %>
     </p>
     <% unless component.digital_archival_objects.empty? %>
-      <div style="margin:0;padding-left:1em;color:red;">
+      <div style="margin:0;padding-left:4em;color:red;">
         <% component.digital_archival_objects.each do |dao| %>
           <%= link_to 'Access digital content: ' + dao.description, dao.href %>
           <br>
@@ -53,14 +53,14 @@
       </div>
     <% end %>
     <% unless component.conditions_governing_access_values.empty? %>
-      <div style="margin:0;padding-left:1em;color:red;">
+      <div style="margin:0;padding-left:4em;color:red;">
         <% component.conditions_governing_access_values.each do |access_restrictions_value| %>
           <%== access_restrictions_value %>
         <% end %>
       </div>
     <% end %>
     <% unless component.conditions_governing_use_values.empty? %>
-      <div style="margin:0;padding-left:1em;color:red;">
+      <div style="margin:0;padding-left:4em;color:red;">
         <% component.conditions_governing_use_values.each do |use_restrictions_value| %>
           <%== use_restrictions_value %>
         <% end %>
@@ -78,7 +78,7 @@
                     component.other_finding_aid_values
     %>
     <% unless misc_notes.empty? %>
-      <div style="margin:0;padding-left:1em;">
+      <div style="margin:0;padding-left:4em;">
         <% misc_notes.each do |misc_note| %>
           <%== misc_note %>
         <% end %>
