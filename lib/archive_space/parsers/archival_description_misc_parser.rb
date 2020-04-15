@@ -15,6 +15,8 @@ module ArchiveSpace
         :accruals_values,
         :alternative_form_available_head,
         :alternative_form_available_values,
+        :appraisal_information_head,
+        :appraisal_information_values,
         :arrangement_head,
         :arrangement_values,
         :biography_history_head,
@@ -26,6 +28,8 @@ module ArchiveSpace
         :control_access_subject_values,
         :conditions_governing_use_head,
         :conditions_governing_use_values,
+        :custodial_history_head,
+        :custodial_history_values,
         :other_descriptive_data_head,
         :other_descriptive_data_values,
         :other_finding_aid_head,
@@ -55,6 +59,9 @@ module ArchiveSpace
         @alternative_form_available_head = ::Ead::Elements::Archdesc.altformavail_head_node_set(arch_desc).first.text unless
           ::Ead::Elements::Archdesc.altformavail_head_node_set(arch_desc).empty?
         @alternative_form_available_values = ::Ead::Elements::Archdesc.altformavail_p_node_set(arch_desc)
+        @appraisal_information_head = ::Ead::Elements::Archdesc.appraisal_head_node_set(arch_desc).first.text unless
+          ::Ead::Elements::Archdesc.appraisal_head_node_set(arch_desc).empty?
+        @appraisal_information_values = ::Ead::Elements::Archdesc.appraisal_p_node_set(arch_desc)
         @arrangement_head = ::Ead::Elements::Archdesc.arrangement_head_node_set(arch_desc).first.text unless
           ::Ead::Elements::Archdesc.arrangement_head_node_set(arch_desc).empty?
         @arrangement_values = ::Ead::Elements::Archdesc.arrangement_p_node_set(arch_desc)
@@ -77,6 +84,9 @@ module ArchiveSpace
         @conditions_governing_use_head = ::Ead::Elements::Archdesc.userestrict_head_node_set(arch_desc).first.text unless
           ::Ead::Elements::Archdesc.userestrict_head_node_set(arch_desc).empty?
         @conditions_governing_use_values = ::Ead::Elements::Archdesc.userestrict_p_node_set(arch_desc)
+        @custodial_history_head = ::Ead::Elements::Archdesc.custodhist_head_node_set(arch_desc).first.text unless
+          ::Ead::Elements::Archdesc.custodhist_head_node_set(arch_desc).empty?
+        @custodial_history_values = ::Ead::Elements::Archdesc.custodhist_p_node_set(arch_desc)
         @other_descriptive_data_head = ::Ead::Elements::Archdesc.odd_head_node_set(arch_desc).first.text unless
           ::Ead::Elements::Archdesc.odd_head_node_set(arch_desc).empty?
         @other_descriptive_data_values = ::Ead::Elements::Archdesc.odd_p_node_set(arch_desc)

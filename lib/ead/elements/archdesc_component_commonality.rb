@@ -18,6 +18,8 @@ module Ead
         acqinfo_p: './xmlns:acqinfo/xmlns:p',
         altformavail_head: './xmlns:altformavail/xmlns:head',
         altformavail_p: './xmlns:altformavail/xmlns:p',
+        appraisal_head: './xmlns:appraisal/xmlns:head',
+        appraisal_p: './xmlns:appraisal/xmlns:p',
         arrangement_head: './xmlns:arrangement/xmlns:head',
         arrangement_p: './xmlns:arrangement/xmlns:p',
         bioghist_head: './xmlns:bioghist/xmlns:head',
@@ -85,6 +87,16 @@ module Ead
         # returns: Nokogiri::XML::NodeSet of <altformavail><p>
         def altformavail_p_node_set(input_element)
           input_element.xpath(XPATH[:altformavail_p])
+        end
+
+        # returns: Nokogiri::XML::NodeSet of <appraisal><head>
+        def appraisal_head_node_set(input_element)
+          input_element.xpath(XPATH[:appraisal_head])
+        end
+
+        # returns: Nokogiri::XML::NodeSet of <appraisal><p>
+        def appraisal_p_node_set(input_element)
+          input_element.xpath(XPATH[:appraisal_p])
         end
 
         # returns: Nokogiri::XML::NodeSet of <arrangement><head>

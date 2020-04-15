@@ -14,11 +14,15 @@ common_class_methods = [
   :accruals_p_node_set, # <accruals><p>
   :altformavail_head_node_set,  # <altformavail><head>
   :altformavail_p_node_set, # <altformavail><p>
+  :appraisal_head_node_set,  # <appraisal><head>
+  :appraisal_p_node_set, # <appraisal><p>
   :arrangement_head_node_set, # <arrangement><head>
   :arrangement_p_node_set, # <arrangement><p>
   :bioghist_head_node_set, # <bioghist><head>
   :bioghist_p_node_set, # <bioghist><p>
   :controlaccess_node_set, # <controlaccess>
+  :custodhist_head_node_set, # <custodhist><head>
+  :custodhist_p_node_set, # <custodhist><p>
   :did_node_set, # <did>
   :dsc_node_set, # <dsc>
   :odd_head_node_set, # <odd><head>
@@ -132,6 +136,20 @@ RSpec.describe Ead::Elements::Archdesc do
 	  ]
         }
 
+        # <appraisal> Appraisal Information
+        let (:expected_appraisal_head_node_set) {
+	  [
+            "Appraisal",
+            "Appraisal"
+	  ]
+        }
+        let (:expected_appraisal_p_node_set) {
+	  [
+            "Clippings from widely available English language newspapers.",
+            "Clippings from widely available French language newspapers."
+	  ]
+        }
+
         # <arrangement> Arrangement
         let (:expected_arrangement_head_node_set) {
 	  [
@@ -157,6 +175,20 @@ RSpec.describe Ead::Elements::Archdesc do
 	  [
             "Siegfried Loraine Sassoon, CBE, MC was an English poet, writer, and soldier.",
             "Decorated for bravery on the Western Front."
+	  ]
+        }
+
+        # <custodhist> Custodial History
+        let (:expected_custodhist_head_node_set) {
+	  [
+            "Custodial History",
+            "Custodial History"
+	  ]
+        }
+        let (:expected_custodhist_p_node_set) {
+	  [
+            "Gift of the ABC Company, 1963.(CH)",
+            "Gift of the BCD Company, 1963.(CH)"
 	  ]
         }
 

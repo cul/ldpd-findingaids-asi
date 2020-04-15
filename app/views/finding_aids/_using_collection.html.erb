@@ -35,3 +35,11 @@
 <% @arch_desc_misc.alternative_form_available_values.each do |alternative_form_available_value| %>
   <%== apply_ead_to_html_transforms alternative_form_available_value %>
 <% end %>
+<%= content_tag(:h3,@arch_desc_misc.appraisal_information_head) unless @arch_desc_misc.appraisal_information_head.nil? %>
+<% @arch_desc_misc.appraisal_information_values.each do |appraisal_information_value| %>
+  <%== apply_ead_to_html_transforms appraisal_information_value %>
+<% end %>
+<%= content_tag(:h3,@arch_desc_misc.custodial_history_head) unless @arch_desc_misc.custodial_history_head.nil? %>
+<% @arch_desc_misc.custodial_history_values.each do |custodial_history_value| %>
+  <%== apply_ead_to_html_transforms custodial_history_value %>
+<% end %>

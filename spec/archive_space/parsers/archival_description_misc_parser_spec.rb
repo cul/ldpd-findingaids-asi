@@ -9,6 +9,8 @@ attributes = [
   :accruals_values, # <ead>:<archdesc>:<accruals>:<p>
   :alternative_form_available_head, # <ead>:<archdesc>:<altformavail>:<head>
   :alternative_form_available_values, # <ead>:<archdesc>:<altformavail>:<p>
+  :appraisal_information_head, # <ead>:<archdesc>:<appraisal>:<head>
+  :appraisal_information_values, # <ead>:<archdesc>:<appraisal>:<p>
   :arrangement_head, # <ead>:<archdesc>:<arrangement>:<head>
   :arrangement_values, # <ead>:<archdesc>:<arrangement>:<p>
   :biography_history_head, # <ead>:<archdesc>:<bioghist>:<head>
@@ -20,6 +22,8 @@ attributes = [
   :control_access_subject_values, # <ead>:<archdesc>:<controlaccess>:<subject>
   :conditions_governing_use_head, # <ead>:<archdesc>:<userestrict>:<head>
   :conditions_governing_use_values, # <ead>:<archdesc>:<userestrict>:<p>
+  :custodial_history_head, # <ead>:<archdesc>:<custodhist>:<head>
+  :custodial_history_values, # <ead>:<archdesc>:<custodhist>:<p>
   :other_descriptive_data_head, # <ead>:<archdesc>:<odd>:<head>
   :other_descriptive_data_values, # <ead>:<archdesc>:<odd>:<p>
   :other_finding_aid_head, # <ead>:<archdesc>:<otherfindaid>:<head>
@@ -83,9 +87,11 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionMiscParser do
           access_restrictions_head: 'Restrictions on Access',
           accruals_head: 'Accruals',
           alternative_form_available_head: 'Alternate Form Available',
+          appraisal_information_head: 'Appraisal',
           arrangement_head: 'Arrangement',
           biography_history_head: 'Biographical note',
           conditions_governing_use_head: 'Terms Governing Use and Reproduction',
+          custodial_history_head: 'Custodial History',
           other_descriptive_data_head: 'General Note',
           other_finding_aid_head: 'Other Finding Aids',
           preferred_citation_head: 'Preferred Citation',
@@ -121,6 +127,13 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionMiscParser do
         [
           "Selected manuscripts are on: microfilm.",
           "Selected manuscripts are on: microfiche."
+        ]
+      }
+
+      let (:expected_appraisal_information_values) {
+        [
+          "Clippings from widely available English language newspapers.",
+          "Clippings from widely available French language newspapers."
         ]
       }
 
@@ -177,6 +190,13 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionMiscParser do
         [
           "Readers must use microfilm of materials specified above.",
           "Single photocopies may be made for research purposes."
+        ]
+      }
+
+      let (:expected_custodial_history_values) {
+        [
+          "Gift of the ABC Company, 1963.(CH)",
+          "Gift of the BCD Company, 1963.(CH)"
         ]
       }
 

@@ -125,6 +125,14 @@
       <head>Alternate Form Available</head>
       <p>Selected manuscripts are on: microfiche.</p>
     </altformavail>
+    <appraisal>
+      <head>Appraisal</head>
+      <p>Clippings from widely available English language newspapers.</p>
+    </appraisal>
+    <appraisal>
+      <head>Appraisal</head>
+      <p>Clippings from widely available French language newspapers.</p>
+    </appraisal>
     <arrangement>
       <head>Arrangement</head>
       <p>Selected materials cataloged.</p>
@@ -153,6 +161,14 @@
       <corpname source="lcsh">Barnard College</corpname>
       <corpname source="lcsh">Simon and Schuster, Inc</corpname>
     </controlaccess>
+    <custodhist>
+      <head>Custodial History</head>
+      <p>Gift of the ABC Company, 1963.(CH)</p>
+    </custodhist>
+    <custodhist>
+      <head>Custodial History</head>
+      <p>Gift of the BCD Company, 1963.(CH)</p>
+    </custodhist>
     <odd>
       <head>General Note</head>
       <p>Other collections of Rockwell Kent materials are at: SUNY-Plattsburgh (Rockwell Kent Collection).</p>
