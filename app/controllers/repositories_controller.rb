@@ -1,5 +1,5 @@
 class RepositoriesController < ApplicationController
   def index
-  	@repositories = Repository.all.select { |repo| repo.finding_aids.present? }
+    @repositories = Repository.all.select { |repo| repo.has_fa_list? }
   end
 end

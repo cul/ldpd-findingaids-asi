@@ -1,9 +1,10 @@
 class Repository
-	attr_accessor :id, :finding_aids, :name
+  attr_accessor :id, :name, :has_fa_list
+  alias_method :has_fa_list?, :has_fa_list
 	def initialize(id, properties = {})
  		@id = id
  		@name = properties[:name]
- 		@finding_aids = properties[:list_of_finding_aids] || []
+                @has_fa_list = properties[:has_fa_list]
 	end
 
 	def self.find(id)

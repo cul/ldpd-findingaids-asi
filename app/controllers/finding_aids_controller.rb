@@ -15,7 +15,14 @@ class FindingAidsController < ApplicationController
 
   def index
     @repo_id = params[:repository_id]
-    @finding_aids_titles_bib_ids = REPOS[@repo_id][:list_of_finding_aids]
+    begin
+      @fa_list = render_to_string file: "#{CONFIG[:fa_lists_dir]}/#{@repo_id}_fa_list.html", layout: false
+    rescue ActionView::MissingTemplate
+      # If file "#{CONFIG[:fa_lists_dir]}/#{@repo_id}_fa_list.html" does not exist,
+      # rails throws ActionView::MissingTemplate
+      Rails.logger.warn("no fa_list file for the given repo: #{@repo_id}")
+      redirect_to '/'
+    end
   end
 
   def show
