@@ -2,44 +2,44 @@
 <p><%= @arch_desc_did.repository_corporate_name %></p>
 <%= content_tag(:h3,@arch_desc_misc.other_finding_aid_head || "Additional Online Description") if @arch_desc_misc.other_finding_aid_values.first %>
 <% @arch_desc_misc.other_finding_aid_values.each do |other_finding_aid_value| %>
-  <%== apply_ead_to_html_transforms other_finding_aid_value %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms other_finding_aid_value %>
 <% end %>
 <%= content_tag(:h3, @arch_desc_misc.access_restrictions_head) unless @arch_desc_misc.access_restrictions_head.nil? %>
 <% @arch_desc_misc.access_restrictions_values.each do |access_restrictions_value| %>
-  <% if ArchiveSpace::Parsers::EadHelper.hightlight_offsite access_restrictions_value.text %>
+  <% if ArchiveSpace::Parsers::EadHelper.highlight_offsite access_restrictions_value.text %>
     <div style="color:red;">
       <%= image_tag 'alert.gif', style: 'float:left; padding-right: 5px;' %>
   <% end %>
-  <%== apply_ead_to_html_transforms access_restrictions_value %>
-  <% if ArchiveSpace::Parsers::EadHelper.hightlight_offsite access_restrictions_value.text %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms access_restrictions_value %>
+  <% if ArchiveSpace::Parsers::EadHelper.highlight_offsite access_restrictions_value.text %>
     </div>
   <% end %>
 <% end %>
 <%= content_tag(:h3, @arch_desc_misc.conditions_governing_use_head) unless @arch_desc_misc.conditions_governing_use_head.nil? %>
 <% @arch_desc_misc.conditions_governing_use_values.each do |use_conditions_value| %>
-  <%== apply_ead_to_html_transforms use_conditions_value %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms use_conditions_value %>
 <% end %>
 <%= content_tag(:h3, @arch_desc_misc.preferred_citation_head) unless @arch_desc_misc.preferred_citation_head.nil? %>
 <% @arch_desc_misc.preferred_citation_values.each do |preferred_citation_value| %>
-  <%== apply_ead_to_html_transforms preferred_citation_value %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms preferred_citation_value %>
 <% end %>
 <%= content_tag(:h3,@arch_desc_misc.related_material_head) unless @arch_desc_misc.related_material_head.nil? %>
 <% @arch_desc_misc.related_material_values.each do |related_material_value| %>
-  <%== apply_ead_to_html_transforms related_material_value %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms related_material_value %>
 <% end %>
 <%= content_tag(:h3,@arch_desc_misc.accruals_head) unless @arch_desc_misc.accruals_head.nil? %>
 <% @arch_desc_misc.accruals_values.each do |accruals_value| %>
-  <%== apply_ead_to_html_transforms accruals_value %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms accruals_value %>
 <% end %>
 <%= content_tag(:h3,@arch_desc_misc.alternative_form_available_head) unless @arch_desc_misc.alternative_form_available_head.nil? %>
 <% @arch_desc_misc.alternative_form_available_values.each do |alternative_form_available_value| %>
-  <%== apply_ead_to_html_transforms alternative_form_available_value %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms alternative_form_available_value %>
 <% end %>
 <%= content_tag(:h3,@arch_desc_misc.appraisal_information_head) unless @arch_desc_misc.appraisal_information_head.nil? %>
 <% @arch_desc_misc.appraisal_information_values.each do |appraisal_information_value| %>
-  <%== apply_ead_to_html_transforms appraisal_information_value %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms appraisal_information_value %>
 <% end %>
 <%= content_tag(:h3,@arch_desc_misc.custodial_history_head) unless @arch_desc_misc.custodial_history_head.nil? %>
 <% @arch_desc_misc.custodial_history_values.each do |custodial_history_value| %>
-  <%== apply_ead_to_html_transforms custodial_history_value %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms custodial_history_value %>
 <% end %>

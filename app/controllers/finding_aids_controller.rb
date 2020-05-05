@@ -1,6 +1,4 @@
 require 'archive_space/api/client'
-require 'archive_space/ead/ead_parser'
-require 'archive_space/parsers/ead_parser'
 require 'archive_space/parsers/archival_description_did_parser'
 require 'archive_space/parsers/archival_description_dsc_parser'
 require 'archive_space/parsers/archival_description_misc_parser'
@@ -8,7 +6,6 @@ require 'archive_space/parsers/ead_header_parser'
 require 'archive_space/parsers/component_parser'
 
 class FindingAidsController < ApplicationController
-  include  ArchiveSpace::Ead::EadHelper
 
   before_action :validate_repository_code_and_set_repo_id, only: [:index, :print, :show]
   after_action :cache_response_html, only: [:show, :print]
@@ -47,9 +44,9 @@ class FindingAidsController < ApplicationController
                  @arch_desc_misc.control_access_subject_values).sort
     @genres_forms = @arch_desc_misc.control_access_genre_form_values.sort
     @restricted_access_flag =
-      @arch_desc_misc.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
+      @arch_desc_misc.access_restrictions_values.map{ |value| ArchiveSpace::Parsers::EadHelper.highlight_offsite value.text }.any?
     @unprocessed_flag =
-      @arch_desc_misc.access_restrictions_values.map{ |value| accessrestrict_contains_unprocessed? value.text }.any?
+      @arch_desc_misc.access_restrictions_values.map{ |value| ArchiveSpace::Parsers::EadHelper.accessrestrict_contains_unprocessed? value.text }.any?
     unless (@ead_header.eadid_url_attribute.nil? ||
             @ead_header.eadid_url_attribute.include?('findingaids.cul.columbia.edu') ||
             @ead_header.eadid_url_attribute.include?('findingaids.library.columbia.edu'))

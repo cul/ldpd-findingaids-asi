@@ -2,7 +2,6 @@
 # Descriptive Identification (https://www.loc.gov/ead/tglib/elements/did.html)
 # and supplies class methods to retrieve pertinent child elements
 # of the <did> element
-require 'archive_space/ead/ead_helper'
 
 module Ead
   module Elements

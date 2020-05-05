@@ -7,7 +7,7 @@
   <% unless defined? print_view %>
     <div style="color:red;">
   <% end %>
-    <%== apply_ead_to_html_transforms access_restrictions %>
+    <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms access_restrictions %>
   <% unless defined? print_view %>
     </div>
   <% end %>
@@ -16,7 +16,7 @@
   <% unless defined? print_view %>
     <div style="color:red;">
   <% end %>
-    <%== apply_ead_to_html_transforms use_restrictions %>
+    <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms use_restrictions %>
   <% unless defined? print_view %>
     </div>
   <% end %>
@@ -37,5 +37,5 @@
 %>
 <%= series.physical_description_extents_string %>
 <% misc_notes.each do |misc_note| %>
-  <%== apply_ead_to_html_transforms misc_note %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms misc_note %>
 <% end %>

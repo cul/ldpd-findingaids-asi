@@ -1,5 +1,4 @@
 # this class parses the pertinent child elements of the <c> element
-require 'archive_space/ead/ead_helper'
 require 'ead/elements/component'
 require 'ead/elements/container'
 require 'ead/elements/dao'
@@ -9,7 +8,6 @@ require 'ead/elements/dsc'
 module ArchiveSpace
   module Parsers
     class ComponentParser
-      include  ArchiveSpace::Ead::EadHelper
 
       ATTRIBUTES = [
 #       :accruals_head,
@@ -107,7 +105,7 @@ module ArchiveSpace
         did = ::Ead::Elements::Component.did_node_set(component).first
         EAD_ELEMENT_COMPONENT_METHODS.each do |member, class_method|
           component_info[member] = ::Ead::Elements::Component.send(class_method,component).map do |value|
-            (apply_ead_to_html_transforms value).to_s
+            (ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms value).to_s
           end
         end
         component_info.digital_archival_objects = []
@@ -121,7 +119,7 @@ module ArchiveSpace
         component_info.compound_title_string = ArchiveSpace::Parsers::EadHelper.compound_title component
         # fcd1, 09/15/19: Assume only one <unititle> element is expected. If more are encountered, return first one.
         component_info.unit_title =
-          (apply_ead_to_html_transforms ::Ead::Elements::Did.unittitle_node_set(did).first).to_s unless
+          (ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms ::Ead::Elements::Did.unittitle_node_set(did).first).to_s unless
           ::Ead::Elements::Did.unittitle_node_set(did).first.nil?
         # component_info.unit_dates = ::Ead::Elements::Did.unitdate_node_set(did).map(&:text)
         component_info.unit_dates = ::Ead::Elements::Did.unitdate_node_set(did)
@@ -223,28 +221,6 @@ module ArchiveSpace
         @physical_description_extents_string =
           ArchiveSpace::Parsers::EadHelper.compound_physical_descriptions_into_string physical_descriptions
         generate_structure_containing_lower_level_components(series, series_num)
-      end
-
-      # fcd1, 09/02/19: NEED TO RETHNK/REIMPLEMENT THIS
-      def series_scope_content_values
-        series_nokogiri_elements =
-          @nokogiri_xml.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]')
-        series_scope_content = series_nokogiri_elements.map do |series|
-          series.xpath('./xmlns:scopecontent/xmlns:p')
-        end
-      end
-
-      # fcd1, 09/02/19: NEED TO RETHNK/REIMPLEMENT THIS
-      # fcd1, 03/11/19: Continure refactoring following when time allows
-      # Note: arg start from 1, but array start at index 0
-      def get_files_info_for_series(i)
-        series_file_info_nokogiri_elements =
-          @dsc_series[i.to_i - 1].xpath('./xmlns:c[@level="file"]')
-        series_files_info = series_file_info_nokogiri_elements.map do |file_info_nokogiri_element|
-          title = file_info_nokogiri_element.xpath('./xmlns:did/xmlns:unittitle').text
-          box_number = file_info_nokogiri_element.xpath('./xmlns:did/xmlns:container').text
-          {title: title, box_number: box_number}
-        end
       end
     end
   end

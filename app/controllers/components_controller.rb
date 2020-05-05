@@ -1,14 +1,11 @@
 require 'archive_space/api/client'
-require 'archive_space/ead/ead_parser'
 require 'archive_space/parsers/component_parser'
-require 'archive_space/parsers/ead_parser'
 require 'archive_space/parsers/archival_description_did_parser'
 require 'archive_space/parsers/archival_description_dsc_parser'
 require 'archive_space/parsers/archival_description_misc_parser'
 require 'archive_space/parsers/ead_header_parser'
 
 class ComponentsController < ApplicationController
-  include  ArchiveSpace::Ead::EadHelper
 
   before_action :validate_repository_code_and_set_repo_id,
                 only: [:index, :show]
@@ -43,9 +40,9 @@ class ComponentsController < ApplicationController
     @arch_desc_misc = ArchiveSpace::Parsers::ArchivalDescriptionMiscParser.new
     @arch_desc_misc.parse ead_nokogiri_xml_doc
     @restricted_access_flag =
-      @arch_desc_misc.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
+      @arch_desc_misc.access_restrictions_values.map{ |value| ArchiveSpace::Parsers::EadHelper.highlight_offsite value.text }.any?
     @unprocessed_flag =
-      @arch_desc_misc.access_restrictions_values.map{ |value| accessrestrict_contains_unprocessed? value.text }.any?
+      @arch_desc_misc.access_restrictions_values.map{ |value| ArchiveSpace::Parsers::EadHelper.accessrestrict_contains_unprocessed? value.text }.any?
     # fcd1, 02/24/20: @subjects and @genres_forms needed for the sidebar view, in order to hide unneeded links.
     # Need to refactor this, possibly into application controller helper method
     @subjects = (@arch_desc_misc.control_access_corporate_name_values +
@@ -77,9 +74,9 @@ class ComponentsController < ApplicationController
     @arch_desc_misc = ArchiveSpace::Parsers::ArchivalDescriptionMiscParser.new
     @arch_desc_misc.parse ead_nokogiri_xml_doc
     @restricted_access_flag =
-      @arch_desc_misc.access_restrictions_values.map{ |value| hightlight_offsite value.text }.any?
+      @arch_desc_misc.access_restrictions_values.map{ |value| ArchiveSpace::Parsers::EadHelper.highlight_offsite value.text }.any?
     @unprocessed_flag =
-      @arch_desc_misc.access_restrictions_values.map{ |value| accessrestrict_contains_unprocessed? value.text }.any?
+      @arch_desc_misc.access_restrictions_values.map{ |value| ArchiveSpace::Parsers::EadHelper.accessrestrict_contains_unprocessed? value.text }.any?
     @ead_header = ArchiveSpace::Parsers::EadHeaderParser.new
     @ead_header.parse ead_nokogiri_xml_doc
     @finding_aid_title =

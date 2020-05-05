@@ -2,12 +2,10 @@
 # (see https://www.loc.gov/ead/tglib/elements/did.html)
 # and supplies class methods to retrieve child elements
 # of the <did>
-require 'archive_space/ead/ead_helper'
 
 module Ead
   module Elements
     class Controlaccess
-      include  ArchiveSpace::Ead::EadHelper
 
       XPATH = {
         corpname: './xmlns:corpname',
