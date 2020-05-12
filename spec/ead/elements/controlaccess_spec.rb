@@ -4,6 +4,7 @@ require 'ead/elements/controlaccess.rb'
 class_methods = [
   :corpname_array, # <corpname> Corporate Name
   :genreform_array, # <genreform> Genre/Physical Characteristic
+  :geogname_array, # <geogname> Geographic Name
   :occupation_array, # <occupation> Occupation
   :persname_array, # <persname> Personal Name
   :subject_array # <subject> Subject
@@ -45,6 +46,14 @@ RSpec.describe Ead::Elements::Controlaccess do
           [
             'Illustrations',
             'Initials'
+          ]
+        }
+
+        # # <geogname> Geographic Name
+        let (:expected_geogname_array) {
+          [
+            'Russia -- History -- 1801-1917',
+            'Belgium -- History -- 1914-1918'
           ]
         }
 

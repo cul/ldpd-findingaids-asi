@@ -21,6 +21,7 @@ module ArchiveSpace
         :biography_history_values,
         :control_access_corporate_name_values,
         :control_access_genre_form_values,
+        :control_access_geographic_name_values,
         :control_access_occupation_values,
         :control_access_personal_name_values,
         :control_access_subject_values,
@@ -69,12 +70,14 @@ module ArchiveSpace
         control_access_array = ::Ead::Elements::Archdesc.controlaccess_node_set(arch_desc)
         @control_access_corporate_name_values = []
         @control_access_genre_form_values = []
+        @control_access_geographic_name_values = []
         @control_access_occupation_values = []
         @control_access_personal_name_values = []
         @control_access_subject_values = []
         control_access_array.each do |control_access|
           @control_access_corporate_name_values.concat ::Ead::Elements::Controlaccess.corpname_array(control_access).map(&:text)
           @control_access_genre_form_values.concat ::Ead::Elements::Controlaccess.genreform_array(control_access).map(&:text)
+          @control_access_geographic_name_values.concat ::Ead::Elements::Controlaccess.geogname_array(control_access).map(&:text)
           @control_access_occupation_values.concat ::Ead::Elements::Controlaccess.occupation_array(control_access).map(&:text)
           @control_access_personal_name_values.concat ::Ead::Elements::Controlaccess.persname_array(control_access).map(&:text)
           @control_access_subject_values.concat ::Ead::Elements::Controlaccess.subject_array(control_access).map(&:text)

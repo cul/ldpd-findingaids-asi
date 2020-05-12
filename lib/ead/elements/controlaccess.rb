@@ -10,6 +10,7 @@ module Ead
       XPATH = {
         corpname: './xmlns:corpname',
         genreform: './xmlns:genreform',
+        geogname: './xmlns:geogname',
         occupation: './xmlns:occupation',
         persname: './xmlns:persname',
         subject: './xmlns:subject',
@@ -26,6 +27,12 @@ module Ead
         # <genreform> Genre/Physical Characteristic
         def genreform_array(nokogiri_element)
           nokogiri_element.xpath(XPATH[:genreform])
+        end
+
+        # returns: array of Nokogiri::XML::Element instances for <geogname>
+        # <geogname> Geographic Name
+        def geogname_array(nokogiri_element)
+          nokogiri_element.xpath(XPATH[:geogname])
         end
 
         # returns: array of Nokogiri::XML::Element instances for <occupation>

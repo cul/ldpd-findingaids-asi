@@ -17,6 +17,7 @@ attributes = [
   :biography_history_values, # <ead>:<archdesc>:<bioghist>:<p>
   :control_access_corporate_name_values, # <ead>:<archdesc>:<controlaccess>:<corpname>
   :control_access_genre_form_values, # <ead>:<archdesc>:<controlaccess>:<genreform>
+  :control_access_geographic_name_values, # <ead>:<archdesc>:<controlaccess>:<geogname>
   :control_access_occupation_values, # <ead>:<archdesc>:<controlaccess>:<occupation>
   :control_access_personal_name_values, # <ead>:<archdesc>:<controlaccess>:<persname>
   :control_access_subject_values, # <ead>:<archdesc>:<controlaccess>:<subject>
@@ -46,6 +47,7 @@ attributes = [
 control_access_attributes = [
   :control_access_corporate_name_values,
   :control_access_genre_form_values,
+  :control_access_geographic_name_values,
   :control_access_occupation_values,
   :control_access_personal_name_values,
   :control_access_subject_values
@@ -162,6 +164,13 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionMiscParser do
         [
           "Illustrations",
           "Initials"
+        ]
+      }
+
+      let (:expected_control_access_geographic_name_values) {
+        [
+          "Russia -- History -- 1801-1917",
+          "Belgium -- History -- 1914-1918"
         ]
       }
 
