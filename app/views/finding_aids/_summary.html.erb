@@ -48,7 +48,7 @@
         <th><%= @arch_desc_misc.other_finding_aid_head || "Additional Description" %></th>
         <td>
           <% @arch_desc_misc.other_finding_aid_values.each do |other_finding_aid_value| %>
-            <%= ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms other_finding_aid_value %>
+            <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms other_finding_aid_value %>
           <% end %>
         </td>
       </tr>
