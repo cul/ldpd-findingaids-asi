@@ -1,0 +1,63 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  aeon:
+    text_submit_container_list:
+      "Submit a request for access to the archival material.
+       All users will need to register the first time they make a request.
+       Columbia-affiliated users may login with their uni and password.
+       Unaffiliated users may create a new account."
+    text_note_submit_request:
+      "Use this field to add research notes for your future reference. You may
+       also offer an alternate date or range of dates for your requested
+       Scheduled Date. For immediate inquiries or concerns, please contact the
+       library directly."
+    text_footer_submit_request:
+      "Please schedule no more than 10 boxes per date. Scheduled dates for
+       off-site materials are pending approval by staff until a confirmation
+       email is sent. Please schedule off-site items five (5) business days in
+       advance."
+    header_notice_submit_request:
+      "LIBRARY CLOSED DUE TO COVID-19"
+    text_notice_submit_request:
+      "All Columbia University Libraries are currently closed until further
+       notice due to the COVID-19 public health emergency. Access to Rare Book
+       & Manuscript Library collections is suspended at this time, including
+       request submissions. Further modifications to library access, hours, or
+       services will be posted here and on the Libraries websites"
+    text_notice_login:
+      "Due to COVID-19 restrictions, as of Fall 2020 only CU affiliates may view
+       materials on-site."
+    text_non_cul_patron_login:
+      "Non-Columbia University patrons include everyone not actively affiliated
+       with the University. Special Borrower card holders, alumni, and staff
+       retiresees are non-Columbia affiliates."

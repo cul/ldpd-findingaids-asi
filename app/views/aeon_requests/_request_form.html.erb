@@ -20,24 +20,21 @@
       <p>
         <b>Request Notes</b>
         <br>
-          Use this field to add research notes for your future reference. You may also offer an alternate date
-          or range of dates for your requested Scheduled Date. For immediate inquiries or concerns, please
-          contact the library directly.
+	  <%= t('aeon.text_note_submit_request') %>
         <br>
       </p>
       <p>
         <%= label_tag :notes, 'Notes' %>
         <%= text_area_tag :notes, nil, class: 'span8', cols: 60 %>
       </p>
-      <p>
-        <%= label_tag :scheduled_date, 'Scheduled Date' %>
-        <%= date_field_tag :scheduled_date, nil, class: 'hasDatepicker', placeholder: 'YYYY-MM-DD' %>
-        <span>(Please use date format shown in input field)</span>
-      </p>
-      <p>
-        Please schedule no more than 10 boxes per date. Scheduled dates for off-site materials are pending approval
-        by staff until a confirmation email is sent. Please schedule off-site items five (5) business days in advance.
-      </p>
+      <% if @display_request_scheduled_date %>
+        <p>
+          <%= label_tag :scheduled_date, 'Scheduled Date' %>
+          <%= date_field_tag :scheduled_date, nil, class: 'hasDatepicker', placeholder: 'YYYY-MM-DD' %>
+          <span>(Please use date format shown in input field)</span>
+        </p>
+      <% end %>
+      <%= content_tag(:p,  t('aeon.text_footer_submit_request')) %>
       <%= submit_tag 'Submit Request' , {style: "margin-bottom:5px;"} %>
       <input type="button" id="close" style="margin-bottom:5px" value="Cancel" onclick="window.close()" />
       <% params.each do |key, value| %>

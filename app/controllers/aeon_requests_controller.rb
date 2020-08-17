@@ -1,9 +1,8 @@
 class AeonRequestsController < ApplicationController
   def create
     @allow_requests = AEON[:allow_requests]
-    @display_alert = AEON[:display_alert]
-    @alert_header = AEON[:alert_header]
-    @alert_text = AEON[:alert_text]
+    @display_request_notice = AEON[:display_request_notice]
+    @display_request_scheduled_date = AEON[:display_request_scheduled_date]
     @selected_containers = Set.new
     params.select {|key, value| key.starts_with?('checkbox_')}.each do |checkbox_id, checkbox_value|
       @selected_containers.add checkbox_value
@@ -18,6 +17,10 @@ class AeonRequestsController < ApplicationController
   end
 
   def login
+    @allow_cu_affiliate_login = AEON[:allow_cu_affiliate_login]
+    @allow_non_cu_affiliate_login = AEON[:allow_non_cu_affiliate_login]
+    @allow_non_cu_affiliate_account_creation = AEON[:allow_non_cu_affiliate_account_creation]
+    @display_login_notice = AEON[:display_login_notice]
     @selected_containers = Set.new
     params.select {|key, value| key.starts_with?('checkbox_')}.each do |checkbox_id, checkbox_value|
       @selected_containers.add checkbox_value

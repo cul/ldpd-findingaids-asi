@@ -4,7 +4,8 @@
     <div class="aeon-title-name">
       <h3 class="trajanpro">Special Collections Research Account</h3>
     </div>
-    <p>To access the system please click the 'Login' button below that represents your affiliation.</p>
+    <p>Log in below to request materials.</p>
+    <%= content_tag(:p, t('aeon.text_notice_login'), style: "color: red;") if @display_login_notice %>
   </div>
   <div class="row" style="padding:5px">
     <div class="col-md-6" style="border:1px solid grey;">
@@ -12,11 +13,15 @@
 	<h4>Columbia University Patrons</h4>
 	<p>Columbia University Affiliates include current students, faculty, offices, and staff.</p>
       </article>
-      <% aeon_url = "#{AEON[:aeon_url]}/boom.html" %>
-      <%= form_tag(aeon_url, method: :get) do %>
-        <%= hidden_field_tag 'authenticated', 'true' %>
-        <%= hidden_field_tag 'target', redirectshib_aeon_request_url %>
-        <%= submit_tag 'Login', {style: "margin-bottom:5px;"} %>
+      <% if @allow_cu_affiliate_login %>
+        <% aeon_url = "#{AEON[:aeon_url]}/boom.html" %>
+        <%= form_tag(aeon_url, method: :get) do %>
+          <%= hidden_field_tag 'authenticated', 'true' %>
+          <%= hidden_field_tag 'target', redirectshib_aeon_request_url %>
+          <%= submit_tag 'Login', {style: "margin-bottom:5px;"} %>
+        <% end %>
+      <% else %>
+        <p style="color: red;">Login disabled</p>
       <% end %>
       <p>First-time users will be directed to a registration form to create a research account.</p>
       <p><br></p>
@@ -24,12 +29,18 @@
     <div class="col-md-6">
       <article>
 	<h4>Non-Columbia University Patrons</h4>
-	<p>Non-Columbia University patrons include everyone not actively affiliated with the University. Special Borrower card holders, alumni, and staff retiresees are non-Columbia affiliates.</p>
+	<p><%= t('aeon.text_non_cul_patron_login') %></p>
       </article>
-      <%= form_tag(redirectnonshib_aeon_request_path, method: :get) do %>
-        <%= submit_tag 'Login', {style: "margin-bottom:5px;"} %>
+      <% if @allow_non_cu_affiliate_login %>
+        <%= form_tag(redirectnonshib_aeon_request_path, method: :get) do %>
+          <%= submit_tag 'Login', {style: "margin-bottom:5px;"} %>
+        <% end %>
+      <% else %>
+        <p style="color: red;">Login disabled</p>
       <% end %>
-    <p>First time user? Click to <a href="https://aeon.cul.columbia.edu/nonshib/aeon.dll?Action=10&Form=79">create an account</a>.<p>
+      <% if @allow_non_cu_affiliate_account_creation %>
+        <p>First time user? Click to <a href="https://aeon.cul.columbia.edu/nonshib/aeon.dll?Action=10&Form=79">create an account</a>.<p>
+      <% end %>
     </div>
   </div>
 </div>
