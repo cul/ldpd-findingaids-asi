@@ -34,7 +34,14 @@
           <span>(Please use date format shown in input field)</span>
         </p>
       <% end %>
-      <%= content_tag(:p,  t('aeon.text_footer_submit_request')) %>
+      <p style="color: red;">
+        Due to COVID-19 restrictions, as of Fall 2020 only CU affiliates may view materials in the RBML reading room.
+	Appointments are required and must be made five business days in advance of your planned visit. Please visit the
+	<a href="https://library.columbia.edu/libraries/rbml.html" style="text-decoration-line: underline;">
+	  RBML home page</a>
+	to make an appointment. You may request materials using this form, but no materials will be paged or ordered from
+	off-site until an appointment is confirmed.
+      </p>
       <%= submit_tag 'Submit Request' , {style: "margin-bottom:5px;"} %>
       <input type="button" id="close" style="margin-bottom:5px" value="Cancel" onclick="window.close()" />
       <% params.each do |key, value| %>

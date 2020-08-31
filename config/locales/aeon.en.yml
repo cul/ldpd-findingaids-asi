@@ -35,29 +35,25 @@ en:
       "Submit a request for access to the archival material.
        All users will need to register the first time they make a request.
        Columbia-affiliated users may login with their uni and password.
-       Unaffiliated users may create a new account."
+       Due to COVID-19 restrictions, as of Fall 2020 only CU affiliates
+       may view materials on-site."
     text_note_submit_request:
-      "Use this field to add research notes for your future reference. You may
-       also offer an alternate date or range of dates for your requested
-       Scheduled Date. For immediate inquiries or concerns, please contact the
-       library directly."
+      "Use this field to add research notes for your future reference. For
+       immediate inquiries or concerns, please contact the library directly."
     text_footer_submit_request:
       "Please schedule no more than 10 boxes per date. Scheduled dates for
        off-site materials are pending approval by staff until a confirmation
        email is sent. Please schedule off-site items five (5) business days in
        advance."
     header_notice_submit_request:
-      "LIBRARY CLOSED DUE TO COVID-19"
+      "RESTRICTED ACCESS DUE TO COVID-19"
     text_notice_submit_request:
-      "All Columbia University Libraries are currently closed until further
-       notice due to the COVID-19 public health emergency. Access to Rare Book
-       & Manuscript Library collections is suspended at this time, including
-       request submissions. Further modifications to library access, hours, or
-       services will be posted here and on the Libraries websites"
+      "Due to COVID-19 restrictions, as of Fall 2020 only CU affiliates may view
+       materials on-site."
     text_notice_login:
       "Due to COVID-19 restrictions, as of Fall 2020 only CU affiliates may view
        materials on-site."
     text_non_cul_patron_login:
-      "Non-Columbia University patrons include everyone not actively affiliated
-       with the University. Special Borrower card holders, alumni, and staff
-       retiresees are non-Columbia affiliates."
+      "Non-Columbia University patrons are everyone not actively affiliated with
+       the University. This includes special borrower card holders, alumni, and
+       staff retirees."
