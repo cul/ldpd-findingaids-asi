@@ -1,0 +1,8 @@
+sample_development:
+  aeon_url: 'AEON_HOST_GOES_HERE'
+  shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_SHIB_LOGIN'
+  non_shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_NON_SHIB_LOGIN'
+sample_prod:
+  aeon_url: 'AEON_HOST_GOES_HERE'
+  shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_SHIB_LOGIN'
+  non_shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_NON_SHIB_LOGIN'
