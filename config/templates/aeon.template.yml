@@ -13,6 +13,15 @@ sample_development:
   # specified in header_notice_submit_request and text_notice_submit_request
   # in config/locales/aeon.en.yml which is under source control
   display_request_notice: false
+  # set display_request_scheduled_date to false to hide the date input field
+  # (and associated descriptive text) used to enter the scheduled date
+  display_request_scheduled_date: true
+  # if display_login_notice is set to true, a notice will be displayed on
+  # the page where users input credentials to access aeon.
+  display_login_notice: false
+  allow_cu_affiliate_login: true
+  allow_non_cu_affiliate_login: true
+  allow_non_cu_affiliate_account_creation: true
 sample_prod:
   aeon_url: 'AEON_HOST_GOES_HERE'
   shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_SHIB_LOGIN'
@@ -28,3 +37,12 @@ sample_prod:
   # specified in header_notice_submit_request and text_notice_submit_request
   # in config/locales/aeon.en.yml which is under source control
   display_request_notice: false
+  # set display_request_scheduled_date to false to hide the date input field
+  # (and associated descriptive text) used to enter the scheduled date
+  display_request_scheduled_date: true
+  # if display_login_notice is set to true, a notice will be displayed on
+  # the page where users input credentials to access aeon.
+  display_login_notice: false
+  allow_cu_affiliate_login: true
+  allow_non_cu_affiliate_login: true
+  allow_non_cu_affiliate_account_creation: true
