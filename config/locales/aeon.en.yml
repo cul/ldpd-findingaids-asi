@@ -32,11 +32,12 @@
 en:
   aeon:
     text_submit_container_list:
-      "Submit a request for access to the archival material.
-       All users will need to register the first time they make a request.
-       Columbia-affiliated users may login with their uni and password.
-       Due to COVID-19 restrictions, as of Fall 2020 only CU affiliates
-       may view materials on-site."
+      "Due to COVID-19 restrictions, only CU affiliates may view materials
+       on-site. YOU MUST REQUEST AN APPOINTMENT BEFORE PLACING REQUESTS. Email
+       rbml@library.columbia.edu to request an appointment. You may submit a
+       request for materials once your appointment is confirmed. Affiliates will
+       login with their uni and password, and need to register the first time they
+       make a request."
     text_note_submit_request:
       "Use this field to add research notes for your future reference. For
        immediate inquiries or concerns, please contact the library directly."
