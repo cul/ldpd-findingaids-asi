@@ -286,7 +286,7 @@ module ArchiveSpace
         }
         repository[:children] << {
           name: 'corpname',
-          value: "#{field852['a']}<subarea>#{field852['b']}</subarea>"
+          value: "#{field852['a']}"
         }
         repository[:children] << {
           name: 'address',
