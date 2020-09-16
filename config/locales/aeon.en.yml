@@ -40,7 +40,8 @@ en:
        make a request."
     text_note_submit_request:
       "Use this field to add research notes for your future reference. For
-       immediate inquiries or concerns, please contact the library directly."
+       immediate inquiries or concerns, please contact the library directly.
+       If you have a visit date confirmed by RBML, please include that here."
     text_footer_submit_request:
       "Please schedule no more than 10 boxes per date. Scheduled dates for
        off-site materials are pending approval by staff until a confirmation
