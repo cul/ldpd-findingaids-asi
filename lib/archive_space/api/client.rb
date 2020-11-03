@@ -7,7 +7,7 @@ module ArchiveSpace
       AsResourceInfo = Struct.new(:publish_flag,:modified_time)
 
       def initialize
-        @session_key = authenticate unless CONFIG[:use_fixtures]
+        @session_key = authenticate unless CONFIG[:bypass_as_authentication]
       end
 
       def get_ead_resource_description(repo_id, resource_id, include_unpublished = false)
@@ -28,10 +28,6 @@ module ArchiveSpace
           http.request(get_request)
         end
         result.body
-      end
-
-      def get_resource_id_local_fixture(bib_id)
-        LOCAL_FIXTURES[:map_bib_id_to_as_reource_id][bib_id]
       end
 
       def get_resource_id(repo_id, bib_id)

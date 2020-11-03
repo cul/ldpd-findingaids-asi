@@ -1,5 +1,4 @@
 sample_development:
-  use_fixtures: true
   google_analytics: false
   # NOTE on authenticity_token_placeholder below: No need to change this string, the
   # code will automatically replace the string below with the authentication token
@@ -13,8 +12,12 @@ sample_development:
   # No need to change the given string.
   container_info_delimiter: 'CONTAINERINFODELIMITER'
   fa_lists_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_CONTAINING_LISTS_OF_FINDING_AIDS'
+  # During development/testing, the AS server may not be accessible. In this case, the code
+  # should not attempt to authenticate on the AS server. To bypass authentication, set
+  # the following to true. On the production server, it should be set to false since
+  # authentication is required to access the AS server API.
+  bypass_as_authentication: true
 sample_prod:
-  use_fixtures: false
   google_analytics: true
   # NOTE on authenticity_token_placeholder below: No need to change this string, the
   # code will automatically replace the string below with the authentication token
@@ -28,3 +31,8 @@ sample_prod:
   # No need to change the given string.
   container_info_delimiter: 'CONTAINERINFODELIMITER'
   fa_lists_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_CONTAINING_LISTS_OF_FINDING_AIDS'
+  # During development/testing, the AS server may not be accessible. In this case, the code
+  # should not attempt to authenticate on the AS server. To bypass authentication, set
+  # the following to true. On the production server, it should be set to false since
+  # authentication is required to access the AS server API.
+  bypass_as_authentication: false
