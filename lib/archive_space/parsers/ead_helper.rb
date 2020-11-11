@@ -2,6 +2,7 @@
 # and finding_aids_helper_spec.rb
 
 require 'ead/elements/component'
+require 'ead/elements/physdesc'
 
 module ArchiveSpace
   module Parsers
@@ -36,6 +37,21 @@ module ArchiveSpace
             space_occupied + ( carrier ? carrier : '')
           end
           phys_desc_strings.join('; ')
+        end
+
+        def component_physical_descriptions_string physical_descriptions
+          phys_desc_strings_array = []
+          physical_descriptions.each do |physical_description|
+            ::Ead::Elements::Physdesc.extent_node_set(physical_description).each do |extent|
+              phys_desc_strings_array.append extent.content.strip unless extent.content.blank?
+            end
+            ::Ead::Elements::Physdesc.physfacet_node_set(physical_description).each do |physical_facet|
+              phys_desc_strings_array.append physical_facet.content.strip unless physical_facet.content.blank?
+            end
+            phys_desc_text = physical_description.xpath('./text()').text.strip
+            phys_desc_strings_array.append phys_desc_text unless phys_desc_text.blank?
+          end
+          phys_desc_strings_array.join('; ')
         end
 
         def apply_ead_to_html_transforms content

@@ -173,9 +173,9 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
           '<p>Another finding aid available online.</p>'
         ]
         @expected_component_info.physical_description_extents_string =
-          ["5 linear feet (4 boxes 14 slipcases);",
-           "7.6 Tb Digital (one hard disk);",
-           "444 linear feet (355 record cartons 15 document boxes and 4 flat boxes)"
+          ["5 linear feet; 4 boxes 14 slipcases;",
+           "7.6 Tb Digital; one hard disk;",
+           "444 linear feet; 355 record cartons 15 document boxes and 4 flat boxes"
           ].join ' '
         @expected_component_info.related_material_values = [
           '<p>The related memoirs are cataloged individually(RM)</p>',
@@ -375,9 +375,9 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
       }
 
       let (:expected_physical_description_extents_string) {
-        ["5 linear feet (4 boxes 14 slipcases);",
-         "7.6 Tb Digital (one hard disk);",
-         "444 linear feet (355 record cartons 15 document boxes and 4 flat boxes)"
+        ["5 linear feet; 4 boxes 14 slipcases;",
+         "7.6 Tb Digital; one hard disk;",
+         "444 linear feet; 355 record cartons 15 document boxes and 4 flat boxes"
         ].join ' '
       }
 

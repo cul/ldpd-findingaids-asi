@@ -141,7 +141,7 @@ module ArchiveSpace
         component_info.nesting_level = nesting_level
         physical_descriptions = ::Ead::Elements::Did.physdesc_node_set(did)
         component_info.physical_description_extents_string =
-          ArchiveSpace::Parsers::EadHelper.compound_physical_descriptions_into_string physical_descriptions
+          ArchiveSpace::Parsers::EadHelper.component_physical_descriptions_string physical_descriptions
         component_info.level_attribute = ::Ead::Elements::Component.level_attribute_node_set(component).first.text unless
           ::Ead::Elements::Component.level_attribute_node_set(component).empty?
         component_info
@@ -219,7 +219,7 @@ module ArchiveSpace
         @unit_title = ::Ead::Elements::Did.unittitle_node_set(did).first
         physical_descriptions = ::Ead::Elements::Did.physdesc_node_set(did)
         @physical_description_extents_string =
-          ArchiveSpace::Parsers::EadHelper.compound_physical_descriptions_into_string physical_descriptions
+          ArchiveSpace::Parsers::EadHelper.component_physical_descriptions_string physical_descriptions
         generate_structure_containing_lower_level_components(series, series_num)
       end
     end
