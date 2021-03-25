@@ -57,6 +57,8 @@ class ComponentsController < ApplicationController
     @series = ArchiveSpace::Parsers::ComponentParser.new
     @series.parse(ead_nokogiri_xml_doc, @params_series_num.to_i)
     @cache_html = true unless @preview_flag
+    # fcd1, 03/24/21: new param for aeon requests
+    @aeon_site_code = REPOS[params[:repository_id]][:aeon_site_code]
   end
 
   def index
