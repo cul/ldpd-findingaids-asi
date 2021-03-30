@@ -38,9 +38,10 @@
                 component.physical_description_extents_string].reject(&:blank?).join(", ") %>
         </span>
       <% else %>
-      <span style="text-align:left;"> <%== [component.unit_title,
-                                            ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
-                                            component.physical_description_extents_string].reject(&:blank?).join(", ") %>
+      <span style="text-align:left;<%== @bold_unit_title_line ? 'font-weight:bold;' : '' %>">
+        <%== [component.unit_title,
+              ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
+              component.physical_description_extents_string].reject(&:blank?).join(", ") %>
       </span>
       <% end %>
     </p>

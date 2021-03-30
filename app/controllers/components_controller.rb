@@ -59,6 +59,10 @@ class ComponentsController < ApplicationController
     @cache_html = true unless @preview_flag
     # fcd1, 03/24/21: new param for aeon requests
     @aeon_site_code = REPOS[params[:repository_id]][:aeon_site_code]
+    # fcd1, 03/30/21: bold unittitle line for avery repos. Hopefully, in the future, can get rid of this
+    # if avery and other repos can agree to share the exact same styling.
+    # When get rid of @bold_unit_title_line, update view that uses it
+    @bold_unit_title_line = 'nnc-a'.eql? params[:repository_id]
   end
 
   def index
@@ -107,5 +111,9 @@ class ComponentsController < ApplicationController
       @series_array.append current_series
     end
     @cache_html = true unless @preview_flag
+    # fcd1, 03/30/21: bold unittitle line for avery repos. Hopefully, in the future, can get rid of this
+    # if avery and other repos can agree to share the exact same styling.
+    # When get rid of @bold_unit_title_line, update view that uses it
+    @bold_unit_title_line = 'nnc-a'.eql? params[:repository_id]
   end
 end
