@@ -5,7 +5,7 @@ module ComponentsHelper
         container_info_string != @last_container_info_string_seen)
       @last_container_info_string_seen = container_info_string
       @checkbox_id += 1
-      checkbox_value_part_1 = "#{component_title}#{CONFIG[:container_info_delimiter]}#{container_info_string}"
+      checkbox_value_part_1 = "#{component_title.gsub("\"","&quot;")}#{CONFIG[:container_info_delimiter]}#{container_info_string}"
       checkbox_value_part_2 ="#{CONFIG[:container_info_delimiter]}#{container_info_barcode}" if container_info_barcode
       checkbox_html_out =
         '<input type="checkbox" name="' <<
