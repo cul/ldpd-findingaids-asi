@@ -57,6 +57,7 @@ class ComponentsController < ApplicationController
     @series = ArchiveSpace::Parsers::ComponentParser.new
     @series.parse(ead_nokogiri_xml_doc, @params_series_num.to_i)
     @cache_html = true unless @preview_flag
+    @aeon_site_code = REPOS[params[:repository_id]][:aeon_site_code]
   end
 
   def index
@@ -105,5 +106,6 @@ class ComponentsController < ApplicationController
       @series_array.append current_series
     end
     @cache_html = true unless @preview_flag
+    @aeon_site_code = REPOS[params[:repository_id]][:aeon_site_code]
   end
 end
