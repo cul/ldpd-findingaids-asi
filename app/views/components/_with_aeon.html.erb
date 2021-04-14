@@ -8,6 +8,7 @@
 <div style="clear:both;">
   <%= yield %>
 </div>
+<%= hidden_field_tag 'site', @aeon_site_code %>
 <%= hidden_field_tag 'ComponentTitle_FIXED', @component_title %>
 <%= hidden_field_tag 'bib_id', @arch_desc_did.unit_id_bib_id %>
 <%= hidden_field_tag 'call_number', @arch_desc_did.unit_id_call_number %>
