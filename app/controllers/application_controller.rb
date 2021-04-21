@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
   # @as_repo_id => repo ID in ArchiveSpace
   def validate_repository_code_and_set_repo_id
     if REPOS.key? params[:repository_id]
+      @repository_code = params[:repository_id]
       @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
       @repository_name = REPOS[params[:repository_id]][:name]
     else
