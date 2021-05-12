@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'pages/home'
+  get 'resolve/:id', to: 'finding_aids#resolve'
   scope 'ead' do
     resources :repositories, only: [:index], path: '' do
       resources :finding_aids, only: [:index, :show], path: '' do

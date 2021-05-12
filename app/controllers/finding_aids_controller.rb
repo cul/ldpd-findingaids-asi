@@ -7,7 +7,8 @@ require 'archive_space/parsers/component_parser'
 
 class FindingAidsController < ApplicationController
 
-  before_action :validate_repository_code_and_set_repo_id, only: [:index, :print, :show]
+  before_action :validate_bid_id_and_set_repo_id, only: [:print, :show]
+  before_action :validate_repository_code_and_set_repo_id, only: [:index]
   after_action :cache_response_html, only: [:show, :print]
 
   def index
@@ -97,5 +98,38 @@ class FindingAidsController < ApplicationController
     else
       redirect_to repository_finding_aid_path(id: params[:finding_aid_id])
     end
+  end
+
+  def resolve
+    unless params[:id].blank?
+      bib_id = params[:id].delete_prefix('ldpd_')
+      repo_id = bib_id_repo_id_hash.fetch(bib_id.to_i) do
+        redirect_to CONFIG[:clio_redirect_url] + bib_id
+        return
+      end
+      redirect_to repository_finding_aid_path(repository_id: repo_id, id: bib_id.prepend('ldpd_'))
+    else
+      Rails.logger.warn("no Bib ID in url")
+      redirect_to '/'
+    end
+  end
+
+  def validate_bid_id_and_set_repo_id
+      unless params[:id].blank?
+        bib_id = params[:id].delete_prefix('ldpd_')
+        repo_id = bib_id_repo_id_hash.fetch(bib_id.to_i) do
+          redirect_to CONFIG[:clio_redirect_url] + bib_id
+          return
+        end
+        unless repo_id.eql? params[:repository_id]
+          redirect_to repository_finding_aid_path(repository_id: repo_id)
+          return
+        end
+        @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
+        @repository_name = REPOS[params[:repository_id]][:name]
+      else
+        Rails.logger.warn("no Bib ID in url")
+        redirect_to '/'
+      end
   end
 end
