@@ -116,7 +116,11 @@ class ComponentsController < ApplicationController
           return
         end
         unless repo_id.eql? params[:repository_id]
-          redirect_to repository_finding_aid_component_path(repository_id: repo_id, finding_aid_id: bib_id.prepend('ldpd_'))
+          if params[:id].present?
+            redirect_to repository_finding_aid_component_path(repository_id: repo_id, finding_aid_id: bib_id.prepend('ldpd_'))
+          else
+            redirect_to repository_finding_aid_components_path(repository_id: repo_id, finding_aid_id: bib_id.prepend('ldpd_'))
+          end
           return
         end
         @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
