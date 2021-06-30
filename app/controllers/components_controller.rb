@@ -109,29 +109,27 @@ class ComponentsController < ApplicationController
   # fcd1, 06/22/21: similar to FindingAidsController#validate_bid_id_and_set_repo_id, but using params[:finding_aid_id]
   # instead of params[:id]. Need to refactor some/most/all of this functionality into ApplicationController
   def validate_bid_id_and_set_repo_id
-      unless params[:finding_aid_id].blank?
-        bib_id = params[:finding_aid_id].delete_prefix('ldpd_')
-        repo_id = bib_id_repo_id_hash.fetch(bib_id.to_i) do
-          redirect_to CONFIG[:clio_redirect_url] + bib_id
-          return
-        end
-        unless repo_id.eql? params[:repository_id]
-          if params[:id].present?
-            # redirect to components#show
-            redirect_to repository_finding_aid_component_path(repository_id: repo_id,
-                                                              finding_aid_id: bib_id.prepend('ldpd_'))
-          else
-            # redirect to components#index
-            redirect_to repository_finding_aid_components_path(repository_id: repo_id,
-                                                               finding_aid_id: bib_id.prepend('ldpd_'))
-          end
-          return
-        end
-        @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
-        @repository_name = REPOS[params[:repository_id]][:name]
+    if params[:finding_aid_id].blank?
+      Rails.logger.warn("finding_aid_id parameter is blank")
+      redirect_to '/'
+      return
+    end
+    expected_repo_code = retrieve_expected_repo_code(params[:finding_aid_id])
+    unless expected_repo_code
+      redirect_to CONFIG[:clio_redirect_url] + params[:finding_aid_id].delete_prefix('ldpd_')
+      return
+    end
+    unless expected_repo_code.eql? params[:repository_id]
+      if params[:id].present?
+        # redirect to components#show
+        redirect_to repository_finding_aid_component_path(repository_id: expected_repo_code)
       else
-        Rails.logger.warn("no Bib ID in url")
-        redirect_to '/'
+        # redirect to components#index
+        redirect_to repository_finding_aid_components_path(repository_id: expected_repo_code)
       end
+      return
+    end
+    @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
+    @repository_name = REPOS[params[:repository_id]][:name]
   end
 end

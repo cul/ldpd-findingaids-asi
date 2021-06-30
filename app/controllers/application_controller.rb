@@ -190,4 +190,9 @@ class ApplicationController < ActionController::Base
   def set_print_view_flag
     @print_view = request.path.ends_with?('/print')
   end
+
+  def retrieve_expected_repo_code(finding_aid_id)
+    bib_id = finding_aid_id.delete_prefix('ldpd_')
+    expected_repo_code = bib_id_repo_id_hash.fetch(bib_id.to_i, false)
+  end
 end

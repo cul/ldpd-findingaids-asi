@@ -115,21 +115,26 @@ class FindingAidsController < ApplicationController
   end
 
   def validate_bid_id_and_set_repo_id
-      unless params[:id].blank?
-        bib_id = params[:id].delete_prefix('ldpd_')
-        repo_id = bib_id_repo_id_hash.fetch(bib_id.to_i) do
-          redirect_to CONFIG[:clio_redirect_url] + bib_id
-          return
-        end
-        unless repo_id.eql? params[:repository_id]
-          redirect_to repository_finding_aid_path(repository_id: repo_id)
-          return
-        end
-        @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
-        @repository_name = REPOS[params[:repository_id]][:name]
+    params[:id] = params[:finding_aid_id] if request.path.ends_with?('/print')
+    if params[:id].blank?
+      Rails.logger.warn("id parameter is blank")
+      redirect_to '/'
+      return
+    end
+    expected_repo_code = retrieve_expected_repo_code(params[:id])
+    unless expected_repo_code
+      redirect_to CONFIG[:clio_redirect_url] + params[:id].delete_prefix('ldpd_')
+      return
+    end
+    unless expected_repo_code.eql? params[:repository_id]
+      if request.path.ends_with?('/print')
+        redirect_to repository_finding_aid_print_path(repository_id: expected_repo_code)
       else
-        Rails.logger.warn("no Bib ID in url")
-        redirect_to '/'
+        redirect_to repository_finding_aid_path(repository_id: expected_repo_code)
       end
+      return
+    end
+    @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
+    @repository_name = REPOS[params[:repository_id]][:name]
   end
 end
