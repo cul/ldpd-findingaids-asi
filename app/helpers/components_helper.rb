@@ -1,7 +1,12 @@
 module ComponentsHelper
   def checkbox_display(component_title, component_id, container_info_string, container_info_barcode)
     checkbox_html_out = ''
-    if (!container_info_string.nil? and true)
+    if (!container_info_string.nil? and
+        # fcd1: when port code to master branch, check name of data member containing repo code
+        # code that sets this has changed
+        (REPOS[@repository_code][:checkbox_per_unittitle] or
+         container_info_string != @last_container_info_string_seen)
+       )
 #        container_info_string != @last_container_info_string_seen)
       @last_container_info_string_seen = container_info_string
       @checkbox_id += 1
