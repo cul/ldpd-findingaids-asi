@@ -19,9 +19,12 @@
     <% end %>
     <% current_nesting_level = component.nesting_level %>
     <% if aeon_enabled %>
-      <%== checkbox_display("#{series.compound_title_string}" +
-                              "#{AEON[:unittitle_delimiter]}" +
-                              "#{remove_tags_unittitle(component.unit_title)}",
+      <% if REPOS[@repository_code][:checkbox_per_unittitle] %>
+        <% unittitle_string ="#{AEON[:unittitle_delimiter]}#{remove_tags_unittitle(component.unit_title)}" %>
+      <% else %>
+        <% unittitle_string = '' %>
+      <% end %>
+      <%== checkbox_display("#{series.compound_title_string}#{unittitle_string}",
                             component_id,
                             component.container_info_strings.join(' '),
                             component.container_info_barcode) unless component.container_info_strings.empty?
