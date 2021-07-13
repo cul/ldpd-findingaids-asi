@@ -29,12 +29,14 @@ module ComponentsHelper
     checkbox_html_out
   end
 
-  def remove_tags_unittitle unittitle_string
+  def remove_tags_unittitle(unittitle_string)
     # fcd1: for now, explicit strings. Later, can regex it
-    unittitle_string.gsub!('<unittitle>','')
-    unittitle_string.gsub!('</unittitle>','')
-    unittitle_string.gsub!('<i>','')
-    unittitle_string.gsub!('</i>','')
+    unless unittitle_string.blank?
+      unittitle_string.gsub!('<unittitle>','')
+      unittitle_string.gsub!('</unittitle>','')
+      unittitle_string.gsub!('<i>','')
+      unittitle_string.gsub!('</i>','')
+    end
     unittitle_string
   end
 end
