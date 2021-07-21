@@ -1,5 +1,6 @@
 <%= form_tag(aeon_dll_url, id:'aeon_form') do %>
   <input type='hidden' name='AeonForm' value='EADRequest'>
+  <%= hidden_field_tag :Site, @aeon_site_code %>
   <!-- Comment from original php code: // I think we need a param with this name/value.  Doesn't need to be a button. -->
   <input type='hidden' name='SubmitButton' value='Submit Request'>
   <% @selected_containers.each_with_index do |container_info, index| %>

@@ -60,6 +60,7 @@ class ComponentsController < ApplicationController
     @series = ArchiveSpace::Parsers::ComponentParser.new
     @series.parse(ead_nokogiri_xml_doc, @params_series_num.to_i)
     @cache_html = true unless @preview_flag
+    @aeon_site_code = REPOS[params[:repository_id]][:aeon_site_code]
   end
 
   def index
@@ -108,6 +109,7 @@ class ComponentsController < ApplicationController
       @series_array.append current_series
     end
     @cache_html = true unless @preview_flag
+    @aeon_site_code = REPOS[params[:repository_id]][:aeon_site_code]
   end
 
   # fcd1, 06/22/21: similar to FindingAidsController#validate_bid_id_and_set_repo_id, but using params[:finding_aid_id]
@@ -133,6 +135,10 @@ class ComponentsController < ApplicationController
       end
       return
     end
+    # fcd1, 07/19/21: Need to verify if there is already another data member containing the same info
+    # as @repository_code. Also, the validation code to be added ("re-added") via ACFA-308 may
+    # change/affect this data member. Investigate when code added. I don't think so, but...
+    @repository_code = params[:repository_id]
     @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
     @repository_name = REPOS[params[:repository_id]][:name]
   end

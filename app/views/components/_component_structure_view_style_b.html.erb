@@ -19,9 +19,16 @@
     <% end %>
     <% current_nesting_level = component.nesting_level %>
     <% if aeon_enabled %>
-      <%== checkbox_display(series.compound_title_string,
+      <% if REPOS[@repository_code][:checkbox_per_unittitle] %>
+        <% unittitle_string = "#{AEON[:unittitle_delimiter]}#{component.unit_title}" %>
+        <% container_info_string = component.container_info_strings.join(' ') %>
+      <% else %>
+        <% unittitle_string = '' %>
+        <% container_info_string = component.container_info_strings.first %>
+      <% end %>
+      <%== checkbox_display("#{series.compound_title_string}#{unittitle_string}",
                             component_id,
-                            component.container_info_strings.first,
+                            container_info_string,
                             component.container_info_barcode) unless component.container_info_strings.empty?
       %>
     <% end %>
@@ -38,9 +45,10 @@
                 component.physical_description_extents_string].reject(&:blank?).join(", ") %>
         </span>
       <% else %>
-      <span style="text-align:left;"> <%== [component.unit_title,
-                                            ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
-                                            component.physical_description_extents_string].reject(&:blank?).join(", ") %>
+      <span class="<%== @repository_code %>" style="text-align:left;">
+	<%== [component.unit_title,
+             ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
+             component.physical_description_extents_string].reject(&:blank?).join(", ") %>
       </span>
       <% end %>
     </p>

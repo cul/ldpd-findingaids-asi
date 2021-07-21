@@ -141,6 +141,10 @@ class FindingAidsController < ApplicationController
       end
       return
     end
+    # fcd1, 07/19/21: Need to verify if there is already another data member containing the same info
+    # as @repository_code. Also, the validation code to be added ("re-added") via ACFA-308 may
+    # change/affect this data member. Investigate when code added. I don't think so, but...
+    @repository_code = params[:repository_id]
     @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
     @repository_name = REPOS[params[:repository_id]][:name]
   end
