@@ -10,6 +10,10 @@ sample_prod_based_on_20Aug21_copy:
     # requestable_via_aeon is set to true to make each item selectable
     # individually, which was a feature requested by Avery.
     checkbox_per_unittitle: true
+    # aeon_user_review_set_to_yes is set to true if the UserReview parameter
+    # value sent to aeon should be 'yes'. If aeon_user_review_set_to_yes is set
+    # to false, the value sent to aeon will be 'no'
+    aeon_user_review_set_to_yes: false
     # aeon_site_code is used by the aeon server to identify the repo
     aeon_site_code: AVERYDACUL
     # as_repo_id indicates the ID used to identify the repo on the archivespace

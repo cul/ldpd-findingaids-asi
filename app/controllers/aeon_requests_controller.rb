@@ -15,6 +15,7 @@ class AeonRequestsController < ApplicationController
     @location = params[:location]
     @unprocessed = params[:unprocessed].present?
     @aeon_site_code = params[:site]
+    @user_review_value = params[:user_review_value]
   end
 
   def login
@@ -37,6 +38,7 @@ class AeonRequestsController < ApplicationController
     session[:notes] = params[:notes]
     session[:scheduled_date] = Date.strptime(params[:scheduled_date],'%Y-%m-%d').strftime('%m/%d/%Y') unless params[:scheduled_date].blank?
     session[:site] = params[:site]
+    session[:user_review_value] = params[:user_review_value]
   end
 
   def redirectshib
@@ -51,6 +53,7 @@ class AeonRequestsController < ApplicationController
     @notes = session[:notes]
     @scheduled_date = session[:scheduled_date]
     @aeon_site_code = session[:site]
+    @user_review_value = session[:user_review_value]
     session.clear
   end
 
@@ -66,6 +69,7 @@ class AeonRequestsController < ApplicationController
     @notes = session[:notes]
     @scheduled_date = session[:scheduled_date]
     @aeon_site_code = session[:site]
+    @user_review_value = session[:user_review_value]
     session.clear
   end
 end
