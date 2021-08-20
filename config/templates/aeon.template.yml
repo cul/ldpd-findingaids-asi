@@ -22,6 +22,11 @@ sample_development:
   allow_cu_affiliate_login: true
   allow_non_cu_affiliate_login: true
   allow_non_cu_affiliate_account_creation: true
+  # unittitle_delimiter is used if the checkbox_per_unittitle setting for a
+  # particular repo is set to true in repositories.yml . This string will be
+  # use to delemit the series title from the component title in the request
+  # sent to aeon.
+  unittitle_delimiter: ' ## '
 sample_prod:
   aeon_url: 'AEON_HOST_GOES_HERE'
   shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_SHIB_LOGIN'
@@ -46,3 +51,8 @@ sample_prod:
   allow_cu_affiliate_login: true
   allow_non_cu_affiliate_login: true
   allow_non_cu_affiliate_account_creation: true
+  # unittitle_delimiter is used if the checkbox_per_unittitle setting for a
+  # particular repo is set to true in repositories.yml . This string will be
+  # use to delemit the series title from the component title in the request
+  # sent to aeon.
+  unittitle_delimiter: ' ## '

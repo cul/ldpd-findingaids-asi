@@ -17,6 +17,17 @@ sample_development:
   # the following to true. On the production server, it should be set to false since
   # authentication is required to access the AS server API.
   bypass_as_authentication: true
+  # valid_finding_aid_bib_ids indicates the full path to the file containing
+  # the set of valid bib IDs and matching repo code (nnc-rb, etc.)
+  valid_finding_aid_bib_ids: 'ABSOLUTE_PATH_TO_FILE_CONTAINING_VALID_BIB_IDS'
+  # log_bib_id_repo_id_hash_cache_expiration is set to true to turn on expiration
+  # of the cache contaning the info from file of valid bib IDs and associated
+  # repo codes.
+  log_bib_id_repo_id_hash_cache_expiration: true
+  # bib_id_repo_id_hash_cache_expiration_in_hours indicates when to expire
+  # the cache contaning the info from file of valid bib IDs and associated
+  # repo codes.
+  bib_id_repo_id_hash_cache_expiration_in_hours: 12
 sample_prod:
   google_analytics: true
   # NOTE on authenticity_token_placeholder below: No need to change this string, the
@@ -36,3 +47,14 @@ sample_prod:
   # the following to true. On the production server, it should be set to false since
   # authentication is required to access the AS server API.
   bypass_as_authentication: false
+  # valid_finding_aid_bib_ids indicates the full path to the file containing
+  # the set of valid bib IDs and matching repo code (nnc-rb, etc.)
+  valid_finding_aid_bib_ids: 'ABSOLUTE_PATH_TO_FILE_CONTAINING_VALID_BIB_IDS'
+  # log_bib_id_repo_id_hash_cache_expiration is set to true to turn on expiration
+  # of the cache contaning the info from file of valid bib IDs and associated
+  # repo codes.
+  log_bib_id_repo_id_hash_cache_expiration: true
+  # bib_id_repo_id_hash_cache_expiration_in_hours indicates when to expire
+  # the cache contaning the info from file of valid bib IDs and associated
+  # repo codes.
+  bib_id_repo_id_hash_cache_expiration_in_hours: 12
