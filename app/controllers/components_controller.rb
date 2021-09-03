@@ -7,11 +7,7 @@ require 'archive_space/parsers/ead_header_parser'
 
 class ComponentsController < ApplicationController
 
-  # fcd1, 07/14/21: Commented out line below and added new before_action call
-  # (based on pre-ACFA-290 code) in order to back out of the bib ID validation
-  # before_action :validate_bid_id_and_set_repo_id, only: [:index, :show]
-  before_action :validate_repository_code_and_set_repo_id,
-                only: [:index, :show]
+  before_action :validate_bid_id_and_set_repo_id, only: [:index, :show]
   after_action :cache_response_html, only: [:index, :show]
 
   def show

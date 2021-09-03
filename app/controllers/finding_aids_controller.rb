@@ -7,11 +7,8 @@ require 'archive_space/parsers/component_parser'
 
 class FindingAidsController < ApplicationController
 
-  # fcd1, 07/14/21: Commented out two before_action calls below and added new before_action call
-  # (based on pre-ACFA-290 code) in order to back out of the bib ID validation
-  # before_action :validate_bid_id_and_set_repo_id, only: [:print, :show]
-  # before_action :validate_repository_code_and_set_repo_id, only: [:index]
-  before_action :validate_repository_code_and_set_repo_id, only: [:index, :print, :show]
+  before_action :validate_bid_id_and_set_repo_id, only: [:print, :show]
+  before_action :validate_repository_code_and_set_repo_id, only: [:index]
   after_action :cache_response_html, only: [:show, :print]
 
   def index
@@ -107,12 +104,8 @@ class FindingAidsController < ApplicationController
     unless params[:id].blank?
       bib_id = params[:id].delete_prefix('ldpd_')
       repo_id = bib_id_repo_id_hash.fetch(bib_id.to_i) do
-        # fcd1, 07/15/21:  comment out redirect since want to skip validation. However,
-        # validation file also contains the associated repo for the bib ID. If the bib ID
-        # is not in the file, use nnc-rb
-        # redirect_to CONFIG[:clio_redirect_url] + bib_id
-        # return
-        'nnc-rb'
+        redirect_to CONFIG[:clio_redirect_url] + bib_id
+        return
       end
       redirect_to repository_finding_aid_path(repository_id: repo_id, id: bib_id.prepend('ldpd_'))
     else
