@@ -7,6 +7,7 @@ class_methods = [
   # <publicationstmt> is not repeatable
   :eadid_url_attribute_array, # <eadid url= >
   :filedesc_publicationstmt_publisher_node_set, # <filedesc><publicationstmt><publisher>
+  :filedesc_titlestmt_sponsor_node_set, # <filedesc><titlestmt><sponsor>
   :revisiondesc_change_node_set # <revisiondesc><change>
 ].freeze
 
@@ -41,6 +42,11 @@ RSpec.describe Ead::Elements::Eadheader do
         it '.filedesc_publicationstmt_publisher returns an Nokogiri::XML::Element instance representing the retrieved <publisher> element' do
           retrieved_value = subject.class.filedesc_publicationstmt_publisher_node_set(@eadheader_nokogiri_element).first.text
           expect(retrieved_value).to eq 'Avery Architectural and Fine Arts Library'
+        end
+
+        it '.filedesc_titlestmt_sponsor returns an Nokogiri::XML::Element instance representing the retrieved <sponsor> element' do
+          retrieved_value = subject.class.filedesc_titlestmt_sponsor_node_set(@eadheader_nokogiri_element).first.text
+          expect(retrieved_value).to eq 'Thanks to the generous support of the Generous Donor.'
         end
 
         it '.revisiondesc_change_array returns an array of Nokogiri::XML::Element instances representing the retrieved <change> element(s)' do

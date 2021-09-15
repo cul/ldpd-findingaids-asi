@@ -9,7 +9,8 @@ module ArchiveSpace
       ATTRIBUTES = [
         :eadid_url_attribute,
         :publication_statement_publisher,
-        :revision_description_changes
+        :revision_description_changes,
+        :title_statement_sponsor
       ]
 
       attr_reader *ATTRIBUTES
@@ -26,6 +27,9 @@ module ArchiveSpace
           @revision_description_changes.append Change.new(::Ead::Elements::Change.date_node_set(change).text,
                                                           ::Ead::Elements::Change.item_node_set(change).text)
         end
+        # In CUL EADs, <sponsor> element appears only once, though the standard allows it to be repeatable
+        @title_statement_sponsor = ::Ead::Elements::Eadheader.filedesc_titlestmt_sponsor_node_set(ead_header).first.text unless
+          ::Ead::Elements::Eadheader.filedesc_titlestmt_sponsor_node_set(ead_header).empty?
       end
     end
   end

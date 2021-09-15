@@ -4,7 +4,8 @@ require 'archive_space/parsers/ead_header_parser.rb'
 attributes = [
   :eadid_url_attribute, # <eadid url= >
   :publication_statement_publisher, # <filedesc><publicationstmt><publisher>
-  :revision_description_changes # <revisiondesc><change>
+  :revision_description_changes, # <revisiondesc><change>
+  :title_statement_sponsor # <filedesc><titlestmt><sponsor>
 ].freeze
 
 RSpec.describe ArchiveSpace::Parsers::EadHeaderParser do
@@ -48,12 +49,37 @@ RSpec.describe ArchiveSpace::Parsers::EadHeaderParser do
         expect(retrieved_value).to eq 'Avery Architectural and Fine Arts Library'
       end
 
+      it 'sets the title_statement_sponsor attribute correctly' do
+        retrieved_value = @ead_header_parser.title_statement_sponsor
+        expect(retrieved_value).to eq 'Thanks to the generous support of the Generous Donor.'
+      end
+
       it 'sets the revision_description_changes attribute correctly' do
         retrieved_values = @ead_header_parser.revision_description_changes
         expect(retrieved_values[0].date).to eq '2015-02-28'
         expect(retrieved_values[0].item).to eq 'File created.'
         expect(retrieved_values[1].date).to eq '2019-05-20'
         expect(retrieved_values[1].item).to eq 'EAD was imported spring 2019 as part of the ArchivesSpace Phase II migration.'        
+      end
+    end
+  end
+
+  ########################################## Functionality if missing optional elements
+  describe '-- Validate functionality with missing elements -- ' do
+    before(:context) do
+      xml_input = fixture_file_upload('ead/test_ead_without_certain_elements.xml').read
+      nokogiri_xml_document = Nokogiri::XML(xml_input) do |config|
+            config.norecover
+          end
+      @ead_header_parser = ArchiveSpace::Parsers::EadHeaderParser.new
+      @ead_header_parser.parse nokogiri_xml_document
+    end
+
+    ########################################## parse
+    describe 'method #parse' do
+      it 'handles missing <sponsor> element correctly' do
+        retrieved_value = @ead_header_parser.title_statement_sponsor
+        expect(retrieved_value).to eq nil
       end
     end
   end

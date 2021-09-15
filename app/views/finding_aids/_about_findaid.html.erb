@@ -1,5 +1,9 @@
 <h2>About the Finding Aid / Processing Information</h2>
 <%= content_tag(:p,"Columbia University Libraries, #{@ead_header.publication_statement_publisher}") %>
+<% unless @ead_header.title_statement_sponsor.nil? %>
+  <%= content_tag(:h3, 'Sponsor Information') %>
+  <%= content_tag(:p,@ead_header.title_statement_sponsor) %>
+<% end %>
 <%= content_tag(:h3, @arch_desc_misc.processing_information_head) unless @arch_desc_misc.processing_information_head.nil? %>
 <% @arch_desc_misc.processing_information_values.each do |processing_information_value| %>
   <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms processing_information_value %>
