@@ -11,6 +11,8 @@ module ArchiveSpace
         :access_restrictions_values,
         :accruals_head,
         :accruals_values,
+        :acquisition_information_head, # <ead>:<archdesc>:<acqinfo>:<head>
+        :acquisition_information_values, # <ead>:<archdesc>:<acqinfo>:<p>
         :alternative_form_available_head,
         :alternative_form_available_values,
         :appraisal_information_head,
@@ -55,6 +57,9 @@ module ArchiveSpace
         @accruals_head = ::Ead::Elements::Archdesc.accruals_head_node_set(arch_desc).first.text unless
           ::Ead::Elements::Archdesc.accruals_head_node_set(arch_desc).empty?
         @accruals_values = ::Ead::Elements::Archdesc.accruals_p_node_set(arch_desc)
+        @acquisition_information_head = ::Ead::Elements::Archdesc.acqinfo_head_node_set(arch_desc).first.text unless
+          ::Ead::Elements::Archdesc.acqinfo_head_node_set(arch_desc).empty?
+        @acquisition_information_values = ::Ead::Elements::Archdesc.acqinfo_p_node_set(arch_desc)
         @alternative_form_available_head = ::Ead::Elements::Archdesc.altformavail_head_node_set(arch_desc).first.text unless
           ::Ead::Elements::Archdesc.altformavail_head_node_set(arch_desc).empty?
         @alternative_form_available_values = ::Ead::Elements::Archdesc.altformavail_p_node_set(arch_desc)

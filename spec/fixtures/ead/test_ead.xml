@@ -142,6 +142,14 @@
       <head>Arrangement</head>
       <p>Remainder arranged.</p>
     </arrangement>
+    <acqinfo>
+      <head>Immediate Source of Acquisition</head>
+      <p>The collection was donated to the RBML by a Nice Donor.</p>
+    </acqinfo>
+    <acqinfo>
+      <head>Immediate Source of Acquisition</head>
+      <p>The collection was delivered at the specified time.</p>
+    </acqinfo>
     <bioghist>
       <head>Biographical note</head>
       <p>Siegfried Loraine Sassoon, CBE, MC was an English poet, writer, and soldier.</p>

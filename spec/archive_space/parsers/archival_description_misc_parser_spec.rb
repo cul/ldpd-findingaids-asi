@@ -7,6 +7,8 @@ attributes = [
   :access_restrictions_values, # <ead>:<archdesc>:<accessrestrict>:<p>
   :accruals_head, # <ead>:<archdesc>:<accruals>:<head>
   :accruals_values, # <ead>:<archdesc>:<accruals>:<p>
+  :acquisition_information_head, # <ead>:<archdesc>:<acqinfo>:<head>
+  :acquisition_information_values, # <ead>:<archdesc>:<acqinfo>:<p>
   :alternative_form_available_head, # <ead>:<archdesc>:<altformavail>:<head>
   :alternative_form_available_values, # <ead>:<archdesc>:<altformavail>:<p>
   :appraisal_information_head, # <ead>:<archdesc>:<appraisal>:<head>
@@ -88,6 +90,7 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionMiscParser do
         {
           access_restrictions_head: 'Restrictions on Access',
           accruals_head: 'Accruals',
+          acquisition_information_head: 'Immediate Source of Acquisition',
           alternative_form_available_head: 'Alternate Form Available',
           appraisal_information_head: 'Appraisal',
           arrangement_head: 'Arrangement',
@@ -122,6 +125,13 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionMiscParser do
         [
           "No additional material is expected in the short term.",
           "Additional material is expected in the long term."
+        ]
+      }
+
+      let (:expected_acquisition_information_values) {
+        [
+          "The collection was donated to the RBML by a Nice Donor.",
+          "The collection was delivered at the specified time."
         ]
       }
 

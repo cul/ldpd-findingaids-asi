@@ -43,3 +43,7 @@
 <% @arch_desc_misc.custodial_history_values.each do |custodial_history_value| %>
   <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms custodial_history_value %>
 <% end %>
+<%= content_tag(:h3,@arch_desc_misc.acquisition_information_head) unless @arch_desc_misc.acquisition_information_head.nil? %>
+<% @arch_desc_misc.acquisition_information_values.each do |acquisition_information_value| %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms acquisition_information_value %>
+<% end %>
