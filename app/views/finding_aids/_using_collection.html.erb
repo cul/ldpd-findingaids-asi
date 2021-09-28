@@ -47,3 +47,14 @@
 <% @arch_desc_misc.acquisition_information_values.each do |acquisition_information_value| %>
   <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms acquisition_information_value %>
 <% end %>
+<%= content_tag(:h3,@arch_desc_misc.bibliography_head) unless @arch_desc_misc.bibliography_head.nil? %>
+<% @arch_desc_misc.bibliography_paragraphs.each do |bibliography_paragraph| %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms bibliography_paragraph %>
+<% end %>
+<% unless @arch_desc_misc.bibliography_bibliographic_reference_titles.empty? %>
+  <ul>
+    <% @arch_desc_misc.bibliography_bibliographic_reference_titles.each do |bibref_title| %>
+      <%= content_tag(:li, bibref_title.text) %>
+    <% end %>
+  </ul>
+<% end %>

@@ -14,6 +14,7 @@ common_class_methods = [
   :altformavail_p_node_set, # <altformavail><p>
   :arrangement_head_node_set, # <arrangement><head>
   :arrangement_p_node_set, # <arrangement><p>
+  :bibliography_node_set, # <bibliography>
   :bioghist_head_node_set, # <bioghist><head>
   :bioghist_p_node_set, # <bioghist><p>
   :controlaccess_node_set, # <controlaccess>

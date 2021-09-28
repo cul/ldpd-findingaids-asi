@@ -46,6 +46,28 @@
     </revisiondesc>
   </eadheader>
   <archdesc level="collection">
+    <!-- BEGIN -->
+    <!-- From 4078655 Mario Emilio Cosenza papers -->
+    <!-- Actual content may be truncated from the original -->
+    <bibliography id="aspace_05e65c331c7c629f3d417e82b62ccf61">
+      <head>Publications About Described Materials</head>
+      <p>Cosenza, Mario Emilio. Dictionary of the Italian Humanists.</p>
+      <p>Anonymous. The title is missing.</p>
+    </bibliography>
+    <!--  END From 4078655 Mario Emilio Cosenza papers -->
+    <!-- BEGIN -->
+    <!-- From 4078333 Aleksandr Bakhrakh papers -->
+    <!-- Actual content may be truncated from the original -->
+    <bibliography id="aspace_1c38d1009fd93ac5fb84c4056cd56bca">
+      <head>Publications based on the collection</head>
+      <bibref>
+	<title>"Pis'ma M. I. TSvetaevoi k A. V. Bakhrakhu.": pp. 21U-253, No. 181 (1990).</title>
+      </bibref>
+      <bibref>
+	<title>"Perepiska V.F. KHodasevicha s A.V. Bakhrakhom." No-voe Literaturnoe Obozrezie no. 2 (1993) pp. 107-205.</title>
+      </bibref>
+    </bibliography>
+    <!--  END From 4078333 Aleksandr Bakhrakh papers -->
     <did>
       <repository>
 	<corpname>Rare Book and Manuscript Library</corpname>

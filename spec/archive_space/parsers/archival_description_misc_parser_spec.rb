@@ -15,6 +15,9 @@ attributes = [
   :appraisal_information_values, # <ead>:<archdesc>:<appraisal>:<p>
   :arrangement_head, # <ead>:<archdesc>:<arrangement>:<head>
   :arrangement_values, # <ead>:<archdesc>:<arrangement>:<p>
+  :bibliography_head, # <ead>:<archdesc>:<bibliography>:<head>
+  :bibliography_paragraphs, # <ead>:<archdesc>:<bibliography>:<p>
+  :bibliography_bibliographic_reference_titles, # <ead>:<archdesc>:<bibliography>:<bibref>:<title>
   :biography_history_head, # <ead>:<archdesc>:<bioghist>:<head>
   :biography_history_values, # <ead>:<archdesc>:<bioghist>:<p>
   :control_access_corporate_name_values, # <ead>:<archdesc>:<controlaccess>:<corpname>
@@ -94,6 +97,7 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionMiscParser do
           alternative_form_available_head: 'Alternate Form Available',
           appraisal_information_head: 'Appraisal',
           arrangement_head: 'Arrangement',
+          bibliography_head: 'Publications About Described Materials',
           biography_history_head: 'Biographical note',
           conditions_governing_use_head: 'Terms Governing Use and Reproduction',
           custodial_history_head: 'Custodial History',
@@ -107,13 +111,6 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionMiscParser do
         }
       }
       
-      let (:expected_access_restrictions_head) {
-        [
-          "This collection is located on-site.",
-          "This collection has no restrictions."
-        ]
-      }
-
       let (:expected_access_restrictions_values) {
         [
           "This collection is located on-site.",
@@ -153,6 +150,20 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionMiscParser do
         [
           "Selected materials cataloged.",
           "Remainder arranged."
+        ]
+      }
+
+      let (:expected_bibliography_paragraphs) {
+        [
+          "Cosenza, Mario Emilio. Dictionary of the Italian Humanists.",
+          "Anonymous. The title is missing."
+        ]
+      }
+
+      let (:expected_bibliography_bibliographic_reference_titles) {
+        [
+          %q("Pis'ma M. I. TSvetaevoi k A. V. Bakhrakhu.": pp. 21U-253, No. 181 (1990).),
+          %q("Perepiska V.F. KHodasevicha s A.V. Bakhrakhom." No-voe Literaturnoe Obozrezie no. 2 (1993) pp. 107-205.)
         ]
       }
 
@@ -273,6 +284,16 @@ RSpec.describe ArchiveSpace::Parsers::ArchivalDescriptionMiscParser do
         it "sets the attribute #{head_attribute} correctly" do
           expected_head = expected_heads[head_attribute]
           expect(@arch_desc_misc_parser.instance_variable_get("@#{head_attribute}")).to eq expected_head
+        end
+      end
+
+      non_text_attributes = attributes - control_access_attributes - attributes.find_all { |attribute| "#{attribute}".ends_with? "head"}
+      non_text_attributes.each do |non_text_attribute|
+        it "sets the attribute #{non_text_attribute} correctly" do
+          expected_values = eval "expected_#{non_text_attribute}"
+          expected_values.each_with_index do |expected_value, index|
+            expect(@arch_desc_misc_parser.instance_variable_get("@#{non_text_attribute}")[index].text).to eq expected_value
+          end
         end
       end
 

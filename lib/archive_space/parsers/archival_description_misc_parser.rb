@@ -1,5 +1,6 @@
 # this class parses the pertinent child elements of the <archdesc> that are NOT contained within the child <did> or <dsc>
 require 'ead/elements/archdesc'
+require 'ead/elements/bibliography'
 require 'ead/elements/controlaccess'
 
 module ArchiveSpace
@@ -19,6 +20,9 @@ module ArchiveSpace
         :appraisal_information_values,
         :arrangement_head,
         :arrangement_values,
+        :bibliography_head, # <ead>:<archdesc>:<bibliography>:<head>
+        :bibliography_paragraphs, # <ead>:<archdesc>:<bibliography>:<p>
+        :bibliography_bibliographic_reference_titles, # <ead>:<archdesc>:<bibliography>:<bibref>:<title>
         :biography_history_head,
         :biography_history_values,
         :control_access_corporate_name_values,
@@ -69,6 +73,16 @@ module ArchiveSpace
         @arrangement_head = ::Ead::Elements::Archdesc.arrangement_head_node_set(arch_desc).first.text unless
           ::Ead::Elements::Archdesc.arrangement_head_node_set(arch_desc).empty?
         @arrangement_values = ::Ead::Elements::Archdesc.arrangement_p_node_set(arch_desc)
+        bibliography_node_set = ::Ead::Elements::Archdesc.bibliography_node_set(arch_desc)
+        @bibliography_head = ::Ead::Elements::Bibliography.head_node_set(bibliography_node_set.first).first.text unless
+          bibliography_node_set.empty?
+        @bibliography_paragraphs = []
+        @bibliography_bibliographic_reference_titles = []
+        bibliography_node_set.each do |bibliography|
+          @bibliography_paragraphs.concat ::Ead::Elements::Bibliography.p_node_set(bibliography)
+          @bibliography_bibliographic_reference_titles.concat(
+            ::Ead::Elements::Bibliography.bibref_title_node_set(bibliography))
+        end
         @biography_history_head = ::Ead::Elements::Archdesc.bioghist_head_node_set(arch_desc).first.text unless
           ::Ead::Elements::Archdesc.bioghist_head_node_set(arch_desc).empty?
         @biography_history_values = ::Ead::Elements::Archdesc.bioghist_p_node_set(arch_desc)

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- fcd1, 09/27/19: This file is used to test the bibliography EAD element processing code. Therefore, a lot -->
+<!-- EAD elements that may be required have not been included in this file -->
+<ead xmlns="urn:isbn:1-931666-22-9"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="urn:isbn:1-931666-22-9 http://www.loc.gov/ead/ead.xsd">
+  <eadheader countryencoding="iso3166-1" dateencoding="iso8601" langencoding="iso639-2b" repositoryencoding="iso15511">
+    <eadid countrycode="US" mainagencycode="US-NNC-AV" url="http://findingaids.cul.columbia.edu/ead/nnc-a/ldpd_11266912/summary">
+    </eadid>
+  </eadheader>
+  <archdesc level="collection">
+    <!-- BEGIN -->
+    <!-- From 4078655 Mario Emilio Cosenza papers -->
+    <!-- Actual content may be truncated from the original -->
+    <bibliography id="aspace_05e65c331c7c629f3d417e82b62ccf61">
+      <head>Publications About Described Materials</head>
+      <p>Cosenza, Mario Emilio. Dictionary of the Italian Humanists.</p>
+      <p>Anonymous. The title is missing.</p>
+    </bibliography>
+    <!--  END From 4078655 Mario Emilio Cosenza papers -->
+    <!-- BEGIN -->
+    <!-- From 4078333 Aleksandr Bakhrakh papers -->
+    <!-- Actual content may be truncated from the original -->
+    <bibliography id="aspace_1c38d1009fd93ac5fb84c4056cd56bca">
+      <head>Publications based on the collection</head>
+      <bibref>
+	<title>"Pis'ma M. I. TSvetaevoi k A. V. Bakhrakhu.": pp. 21U-253, No. 181 (1990).</title>
+      </bibref>
+      <bibref>
+	<title>"Perepiska V.F. KHodasevicha s A.V. Bakhrakhom." No-voe Literaturnoe Obozrezie no. 2 (1993) pp. 107-205.</title>
+      </bibref>
+    </bibliography>
+    <!--  END From 4078333 Aleksandr Bakhrakh papers -->
+  </archdesc>
+</ead>

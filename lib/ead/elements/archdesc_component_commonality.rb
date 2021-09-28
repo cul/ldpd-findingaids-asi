@@ -22,6 +22,7 @@ module Ead
         appraisal_p: './xmlns:appraisal/xmlns:p',
         arrangement_head: './xmlns:arrangement/xmlns:head',
         arrangement_p: './xmlns:arrangement/xmlns:p',
+        bibliography: './xmlns:bibliography',
         bioghist_head: './xmlns:bioghist/xmlns:head',
         bioghist_p: './xmlns:bioghist/xmlns:p',
         controlaccess: './xmlns:controlaccess',
@@ -107,6 +108,11 @@ module Ead
         # returns: Nokogiri::XML::NodeSet of <arrangement><p>
         def arrangement_p_node_set(input_element)
           input_element.xpath(XPATH[:arrangement_p])
+        end
+
+        # returns: Nokogiri::XML::NodeSet of <bibliography>
+        def bibliography_node_set(input_element)
+          input_element.xpath(XPATH[:bibliography])
         end
 
         # returns: Nokogiri::XML::NodeSet of <bioghist><head>
