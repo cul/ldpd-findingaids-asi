@@ -239,7 +239,11 @@ module ArchiveSpace
           sort_title.sub!(/\,$/,'')
           elements << {
             name: 'unittitle',
-            attrs: { encodinganalog: "245$a", altrender: sort_title },
+            # fcd1, 09/29/21: removed altrender because it caused a parse error
+            # when the sort_title contained an quotation mark. Also, it is completely
+            # superfluous. Original line is commented out directly below:
+            # attrs: { encodinganalog: "245$a", altrender: sort_title },
+            attrs: { encodinganalog: "245$a" },
             value: title
           }
         end
