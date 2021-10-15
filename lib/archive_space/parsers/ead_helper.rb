@@ -54,6 +54,32 @@ module ArchiveSpace
           phys_desc_strings_array.join('; ')
         end
 
+        def insert_html_list_elements(nokogiri_xml_document)
+          nokogiri_xml_document.css("list//item").each do |item|
+            new_node_li = nokogiri_xml_document.create_element "li"
+            new_node_li.children = item.children
+            item.replace new_node_li
+          end
+          nokogiri_xml_document.css('list[type="ordered"]').each do |list|
+            new_node_p = nokogiri_xml_document.create_element "p"
+            list_head = list.css("head").text
+            new_node_p.content = list_head
+            new_node_ol = nokogiri_xml_document.create_element "ol"
+            new_node_p.add_child new_node_ol
+            new_node_ol.children = list.children.css("li")
+            list.replace new_node_p
+          end
+          nokogiri_xml_document.css('list').each do |list|
+            new_node_p = nokogiri_xml_document.create_element "p"
+            list_head = list.css("head").text
+            new_node_p.content = list_head
+            new_node_ul = nokogiri_xml_document.create_element "ul"
+            new_node_p.add_child new_node_ul
+            new_node_ul.children = list.children.css("li")
+            list.replace new_node_p
+          end
+        end
+
         def apply_ead_to_html_transforms content
           html_content = apply_title_render_italic content
           html_content = apply_extref_type_simple html_content

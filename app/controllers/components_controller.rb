@@ -19,6 +19,7 @@ class ComponentsController < ApplicationController
     input_xml = render_cached_html_else_return_as_ead_xml(@params_bib_id, @authenticity_token)
     return unless input_xml
     ead_nokogiri_xml_doc = create_nokogiri_xml_document(input_xml, @params_bib_id)
+    ArchiveSpace::Parsers::EadHelper.insert_html_list_elements ead_nokogiri_xml_doc
     # need to parse the <archdesc><dsc> to get the list of top-level <c>s and enclosed second-level <c>s
     # in order to build the lhs sidebar navigation menu. Also used to verify given series number is within range
     @arch_desc_dsc = ArchiveSpace::Parsers::ArchivalDescriptionDscParser.new
@@ -72,6 +73,7 @@ class ComponentsController < ApplicationController
     input_xml = render_cached_html_else_return_as_ead_xml(@params_bib_id, @authenticity_token)
     return unless input_xml
     ead_nokogiri_xml_doc = create_nokogiri_xml_document(input_xml, @params_bib_id)
+    ArchiveSpace::Parsers::EadHelper.insert_html_list_elements ead_nokogiri_xml_doc
     @arch_desc_did = ArchiveSpace::Parsers::ArchivalDescriptionDidParser.new
     @arch_desc_did.parse ead_nokogiri_xml_doc
     @arch_desc_dsc = ArchiveSpace::Parsers::ArchivalDescriptionDscParser.new
