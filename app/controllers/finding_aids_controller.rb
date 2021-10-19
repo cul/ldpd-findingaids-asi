@@ -30,6 +30,7 @@ class FindingAidsController < ApplicationController
     return unless input_xml
     ead_nokogiri_xml_doc = create_nokogiri_xml_document(input_xml, @params_bib_id)
     ArchiveSpace::Parsers::EadHelper.insert_html_list_elements ead_nokogiri_xml_doc
+    ArchiveSpace::Parsers::EadHelper.insert_html_italics ead_nokogiri_xml_doc
     @arch_desc_did = ArchiveSpace::Parsers::ArchivalDescriptionDidParser.new
     @arch_desc_did.parse ead_nokogiri_xml_doc
     @arch_desc_dsc = ArchiveSpace::Parsers::ArchivalDescriptionDscParser.new
@@ -66,6 +67,7 @@ class FindingAidsController < ApplicationController
     return unless input_xml
     ead_nokogiri_xml_doc = create_nokogiri_xml_document(input_xml, @params_bib_id)
     ArchiveSpace::Parsers::EadHelper.insert_html_list_elements ead_nokogiri_xml_doc
+    ArchiveSpace::Parsers::EadHelper.insert_html_italics ead_nokogiri_xml_doc
     @arch_desc_did = ArchiveSpace::Parsers::ArchivalDescriptionDidParser.new
     @arch_desc_did.parse ead_nokogiri_xml_doc
     @arch_desc_dsc = ArchiveSpace::Parsers::ArchivalDescriptionDscParser.new

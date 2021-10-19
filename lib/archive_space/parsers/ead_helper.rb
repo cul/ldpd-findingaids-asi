@@ -80,9 +80,16 @@ module ArchiveSpace
           end
         end
 
+        def insert_html_italics(nokogiri_xml_document)
+          nokogiri_xml_document.css('title[render="italic"]').each do |title_italic|
+            new_node_i = nokogiri_xml_document.create_element "i"
+            new_node_i.content = title_italic.text
+            title_italic.replace new_node_i
+          end
+        end
+
         def apply_ead_to_html_transforms content
-          html_content = apply_title_render_italic content
-          html_content = apply_extref_type_simple html_content
+          html_content = apply_extref_type_simple content
         end
 
         def apply_title_render_italic content
