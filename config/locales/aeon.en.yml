@@ -32,13 +32,24 @@
 en:
   aeon:
     text_submit_container_list:
-      "Due to COVID-19 restrictions, only Columbia affiliates may view materials
-       on-site.  After clicking 'Submit Request', affiliates will login with their
-       UNI and password. Appointments are required and will be arranged according
-       to each individual repository's policy."
-    text_note_submit_request:
+      "External users and Columbia affiliates may view materials on-site at RBML.
+       Due to COVID-19 restrictions, only Columbia affiliates may view materials
+       on-site at Avery, Starr, and Burke. After clicking 'Submit Request', users
+       will login with their UNI and password (Columbia affiliates) or their special
+       collections account (external users). Appointments are required and will be
+       arranged according to each individual repository's policy."
+    text_note_field_submit_request:
       "Use this field to add research notes for your future reference. For
        immediate inquiries or concerns, please contact the library directly."
+    text_footer_first_paragraph_submit_request:
+      "External users and Columbia affiliates may view materials on-site at RBML.
+       Due to COVID-19 restrictions, only Columbia affiliates may view materials
+       on-site at Avery, Starr, and Burke. After clicking 'Submit Request',
+       users will login with their UNI and password (Columbia affiliates) or their
+       special collections account (external users)."
+    text_footer_second_paragraph_submit_request:
+      "Note that external users visiting RBML will be required to provide proof of
+      vaccination and adhere to all COVID protocols."
     text_footer_submit_request:
       "Please schedule no more than 10 boxes per date. Scheduled dates for
        off-site materials are pending approval by staff until a confirmation
@@ -47,11 +58,13 @@ en:
     header_notice_submit_request:
       "RESTRICTED ACCESS DUE TO COVID-19"
     text_notice_submit_request:
-      "Due to COVID-19 restrictions, as of Fall 2020 only CU affiliates may view
-       materials on-site."
+      "External users and Columbia affiliates may view materials on-site at RBML.
+       Due to COVID-19 restrictions, only Columbia affiliates may view materials
+       on-site at Avery, Starr, and Burke."
     text_notice_login:
-      "Due to COVID-19 restrictions, as of Fall 2020 only CU affiliates may view
-       materials on-site."
+      "External users and Columbia affiliates may view materials on-site at RBML.
+       Due to COVID-19 restrictions, only Columbia affiliates may view materials
+       on-site at Avery, Starr, and Burke."
     text_non_cul_patron_login:
       "Non-Columbia University patrons are everyone not actively affiliated with
        the University. This includes special borrower card holders, alumni, and
