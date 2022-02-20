@@ -43,6 +43,7 @@ finding_aids.yml
 master.key
 repositories.yml
 local_fixtures.yml
+secrets.yml
 
 # Ignore local fixture files
 /spec/fixtures/asi/local_dev_fixtures/*
