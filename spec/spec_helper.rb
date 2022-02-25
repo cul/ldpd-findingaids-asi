@@ -12,6 +12,23 @@
 # the additional setup, and require it from the spec files that actually need
 # it.
 #
+require 'securerandom'
+require 'yaml'
+# Set up config files if necessary - may move to rake task in the future
+root_dir = File.expand_path('../..', __FILE__)
+Dir.glob(File.join(root_dir, "config/templates/*.template.yml")).each do |template_yml_path|
+  target_yml_path = File.join(root_dir, 'config', File.basename(template_yml_path).sub(".template.yml", ".yml"))
+  FileUtils.touch(target_yml_path) # Create if it doesn't exist
+  target_yml = YAML.load_file(target_yml_path) || YAML.load_file(template_yml_path)
+  File.open(target_yml_path, 'w') {|f| f.write target_yml.to_yaml }
+end
+Dir.glob(File.join(root_dir, "config/templates/*.template.yml.erb")).each do |template_yml_path|
+  target_yml_path = File.join(root_dir, 'config', File.basename(template_yml_path).sub(".template.yml.erb", ".yml"))
+  FileUtils.touch(target_yml_path) # Create if it doesn't exist
+  target_yml = YAML.load_file(target_yml_path) || YAML.load(ERB.new(File.read(template_yml_path)).result(binding))
+  File.open(target_yml_path, 'w') {|f| f.write target_yml.to_yaml }
+end
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

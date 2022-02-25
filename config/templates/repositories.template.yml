@@ -1,4 +1,4 @@
-sample_prod_based_on_20Aug21_copy:
+20Aug21_copy: &BASE
   nnc-a:
     # requestable_via_aeon is set to true to enable aeon requests for a repo
     requestable_via_aeon: true
@@ -97,3 +97,9 @@ sample_prod_based_on_20Aug21_copy:
     url: https://library.columbia.edu/locations/ccoh.html
     view_style: style_b
     has_fa_list: false
+development:
+  <<: *BASE
+test:
+  <<: *BASE
+production:
+  <<: *BASE

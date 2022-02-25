@@ -1,4 +1,4 @@
-sample_development:
+development: &DEV
   aeon_url: 'AEON_HOST_GOES_HERE'
   shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_SHIB_LOGIN'
   non_shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_NON_SHIB_LOGIN'
@@ -27,7 +27,9 @@ sample_development:
   # use to delemit the series title from the component title in the request
   # sent to aeon.
   unittitle_delimiter: ' ## '
-sample_prod:
+test:
+  <<: *DEV
+production:
   aeon_url: 'AEON_HOST_GOES_HERE'
   shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_SHIB_LOGIN'
   non_shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_NON_SHIB_LOGIN'
