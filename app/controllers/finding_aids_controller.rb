@@ -37,6 +37,14 @@ class FindingAidsController < ApplicationController
     @arch_desc_dsc.parse ead_nokogiri_xml_doc
     @arch_desc_misc = ArchiveSpace::Parsers::ArchivalDescriptionMiscParser.new
     @arch_desc_misc.parse ead_nokogiri_xml_doc
+    # ACFA-352: fcd1, 03/04/22. Populate @arch_desc_misc.access_restrictions_head
+    # for repos RMBL/UA/OH because finding aid will display standard info about making
+    # appointment in Restrictions on Access section, even if EAD does not contain any
+    # Restriction on Access info (and thus the section header would normally not be present).
+    if (['nnc-rb', 'nnc-ua', 'nnc-ccoh'].include?(@repository_code) &&
+        @arch_desc_misc.access_restrictions_head.blank?)
+      @arch_desc_misc.access_restrictions_head = 'Restrictions on Access'
+    end
     @ead_header = ArchiveSpace::Parsers::EadHeaderParser.new
     @ead_header.parse ead_nokogiri_xml_doc
     @finding_aid_title =

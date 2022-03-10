@@ -5,6 +5,9 @@
   <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms other_finding_aid_value %>
 <% end %>
 <%= content_tag(:h3, @arch_desc_misc.access_restrictions_head) unless @arch_desc_misc.access_restrictions_head.nil? %>
+<% if ['nnc-rb', 'nnc-ua', 'nnc-ccoh'].include? @repository_code %>
+  <%= content_tag(:p, t('fa.rbml_advance_appointment'), style: "color: red;") %>
+<% end %>
 <% @arch_desc_misc.access_restrictions_values.each do |access_restrictions_value| %>
   <% if ArchiveSpace::Parsers::EadHelper.highlight_offsite access_restrictions_value.text %>
     <div style="color:red;">

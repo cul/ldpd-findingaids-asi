@@ -59,10 +59,21 @@
           <td><%= link_to nil, @eadid_other_finding_aid_url %></td>
         </tr>
       <% end %>
-      <tr class="odd">
-	<th>Access</th>
-	<td class="accessrestrict"> <%== @arch_desc_misc.access_restrictions_values %></td>
-      </tr>
+      <% if ['nnc-rb', 'nnc-ua', 'nnc-ccoh'].include? @repository_code %>
+        <tr class="odd">
+          <th>Access</th>
+          <td class="accessrestrict" style="color:red;"> <%= t('fa.rbml_advance_appointment') %> </td>
+        </tr>
+        <tr class="odd">
+	  <th></th>
+	  <td class="accessrestrict"> <%== @arch_desc_misc.access_restrictions_values %></td>
+	</tr>
+      <% else %>
+        <tr class="odd">
+	  <th>Access</th>
+	  <td class="accessrestrict"> <%== @arch_desc_misc.access_restrictions_values %></td>
+	</tr>
+      <% end %>
     </tbody>
   </table>
 </div>

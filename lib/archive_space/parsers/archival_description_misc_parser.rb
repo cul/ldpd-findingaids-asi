@@ -52,6 +52,9 @@ module ArchiveSpace
       ]
 
       attr_reader *ATTRIBUTES
+      # ACFA-352  fcd1, 03/04/22: default access restriction for certain repos,
+      # so may need to set access_restrictions_head
+      attr_writer :access_restrictions_head
 
       def parse(nokogiri_xml_document)
         arch_desc = nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc')
