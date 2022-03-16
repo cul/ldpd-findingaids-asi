@@ -20,21 +20,6 @@ RSpec.describe ArchiveSpace::Api::Client do
       expect(subject).to respond_to(:authenticate).with(0).arguments
     end
 
-    it 'has #get_resource with 2 parameters: repository ID and resource ID' do
-      # subject.get_resource(2, 4767)
-      expect(subject).to respond_to(:get_resource).with(2).arguments
-    end
-
-    it 'has #get_resource_tree with 2 parameters: repository ID and resource ID' do
-      # subject.get_resource_tree(2, 4767)
-      expect(subject).to respond_to(:get_resource_tree).with(2).arguments
-    end
-
-    it 'has #get_resource_tree_root with 2 parameters: repository ID and resource ID' do
-      # subject.get_resource_tree_root(2, 4767)
-      expect(subject).to respond_to(:get_resource_tree_root).with(2).arguments
-    end
-
     it 'has #get_ead_resource_description with 2 parameters: repository ID and resource ID' do
       # subject.get_ead_resource_description(2, 4767)
       expect(subject).to respond_to(:get_ead_resource_description).with(2).arguments

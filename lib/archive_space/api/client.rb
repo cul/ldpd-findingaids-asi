@@ -120,45 +120,6 @@ module ArchiveSpace
         end
         JSON.parse(result.body)['session']
       end
-
-      # fcd1, 04/15/19: Following work, but are not currently being used
-
-      def get_resource(repo_id, resource_id)
-        repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
-        params = AS_CONFIG[:get_resource_params]
-        resource_url = "#{repo_url}/resources/#{resource_id}?#{params}"
-        get_uri = URI(resource_url)
-        get_request = Net::HTTP::Get.new get_uri.request_uri
-        get_request['X-ArchivesSpace-Session'] = @session_key
-        result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
-          http.request(get_request)
-        end
-        result.body
-      end
-
-      def get_resource_tree(repo_id, resource_id)
-        repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
-        resource_tree_url = "#{repo_url}/resources/#{resource_id}/tree"
-        get_uri = URI(resource_tree_url)
-        get_request = Net::HTTP::Get.new get_uri.request_uri
-        get_request['X-ArchivesSpace-Session'] = @session_key
-        result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
-          http.request(get_request)
-        end
-        result.body
-      end
-
-      def get_resource_tree_root(repo_id, resource_id)
-        repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
-        resource_tree_url = "#{repo_url}/resources/#{resource_id}/tree/root"
-        get_uri = URI(resource_tree_url)
-        get_request = Net::HTTP::Get.new get_uri.request_uri
-        get_request['X-ArchivesSpace-Session'] = @session_key
-        result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
-          http.request(get_request)
-        end
-        result.body
-      end
     end
   end
 end
