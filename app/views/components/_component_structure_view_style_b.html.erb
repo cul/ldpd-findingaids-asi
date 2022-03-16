@@ -7,20 +7,20 @@
   <% subseries_num = 0 %>
   <% series.flattened_component_tree_structure.each do |component| %>
     <% if component.nesting_level > current_nesting_level %>
-      <hr style="margin-top:10px;margin-bottom:10px;">
+      <hr class="component_entry">
       <div class="component_entry" style="margin-left:4em;">
     <% elsif component.nesting_level < current_nesting_level %>
-       <hr style="margin-top:10px;margin-bottom:10px;">
+       <hr class="component_entry">
        <% (component.nesting_level...current_nesting_level).each do %>
         </div>
       <% end %>
     <% else %>
-       <hr style="margin-top:10px;margin-bottom:10px;">
+       <hr class="component_entry">
     <% end %>
     <% current_nesting_level = component.nesting_level %>
     <% if aeon_enabled %>
       <% if REPOS[@repository_code][:checkbox_per_unittitle] %>
-        <% unittitle_string = "#{AEON[:unittitle_delimiter]}#{component.unit_title}" %>
+        <% unittitle_string = "#{AEON[:unittitle_delimiter]}#{remove_unittitle_tags(component.unit_title)}" %>
         <% container_info_string = component.container_info_strings.join(' ') %>
       <% else %>
         <% unittitle_string = '' %>
@@ -33,20 +33,22 @@
       %>
     <% end %>
     <p style="margin:0">
-      <span style="text-align:right;float:right;display:block;margin-left:4em;">
-	<%= component.container_info_strings.join(' ') %>
-      </span>
+      <% unless component.container_info_strings.empty? %>
+        <span class="container_info">
+          <%= component.container_info_strings.join(' ') %>
+        </span>
+      <% end %>
       <% if (component.nesting_level == 1 && component.level_attribute == 'subseries') %>
         <% subseries_num += 1 %>
         <a class="subseries_anchor" name="<%= "subseries_#{subseries_num}" %>"></a>
-        <span style="text-align:left;color: #999;border-bottom: 1px solid #999;font-weight: bold;font-size: 14px;">
-          <%== [component.unit_title,
+        <span class="component_title">
+          <%== [remove_unittitle_tags(component.unit_title),
                 ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
                 component.physical_description_extents_string].reject(&:blank?).join(", ") %>
         </span>
       <% else %>
       <span class="<%== @repository_code %>" style="text-align:left;">
-	<%== [component.unit_title,
+	<%== [remove_unittitle_tags(component.unit_title),
              ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
              component.physical_description_extents_string].reject(&:blank?).join(", ") %>
       </span>

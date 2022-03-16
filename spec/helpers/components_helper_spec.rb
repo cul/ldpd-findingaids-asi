@@ -11,5 +11,19 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe ComponentsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'given unit title string with <i> and <unittitle> tags'do
+    input_unit_title = '<unittitle>The <i>not so Great</i> Gatsby</unittitle>'
+    expected_output_unit_title = 'The not so Great Gatsby'
+    it ' .remove_tags_from_unittitle_string removes said tags' do
+      expect(helper.remove_tags_from_unittitle_string(input_unit_title)).to eq expected_output_unit_title
+    end
+  end
+
+  context 'given string with <unittitle> tags'do
+    input_string = '<unittitle>The <i>not so Great</i> Gatsby</unittitle>'
+    expected_output_string = 'The <i>not so Great</i> Gatsby'
+    it ' .remove_unittitle_tags removes the <unittitle> start and end tags' do
+      expect(helper.remove_unittitle_tags(input_string)).to eq expected_output_string
+    end
+  end
 end

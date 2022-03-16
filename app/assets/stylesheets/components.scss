@@ -26,3 +26,34 @@ div.c-view-print p {
 span.nnc-a {
     font-weight:bold;
 }
+
+hr.component_entry {
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+span.container_info {
+    text-align: right;
+    float: right;
+    display: block;
+    margin-left: 4em;
+}
+
+span.component_title {
+    text-align: left;
+    color: #999;
+    border-bottom: 1px solid #999;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+input.aeon_checkbox {
+    text-align: right;
+    float: right;
+}
+
+label.aeon_checkbox_label {
+    text-align: right;
+    float: right;
+    padding-right:5px;
+}
