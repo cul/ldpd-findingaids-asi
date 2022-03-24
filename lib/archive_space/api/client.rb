@@ -22,7 +22,7 @@ module ArchiveSpace
         end
         ead_resource_description_url = "#{repo_url}/resource_descriptions/#{resource_id}.xml#{url_parameters}"
         get_uri = URI(ead_resource_description_url)
-        get_request = Net::HTTP::Get.new get_uri.request_uri
+        get_request = Net::HTTP::Get.new get_uri.to_s
         get_request['X-ArchivesSpace-Session'] = @session_key
         result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
           http.request(get_request)
@@ -68,7 +68,7 @@ module ArchiveSpace
         search_url = "#{repo_url}/search"
         search_uri = URI(search_url)
         search_uri.query = URI.encode_www_form(params)
-        get_request = Net::HTTP::Get.new search_uri.request_uri
+        get_request = Net::HTTP::Get.new search_uri.to_s
         get_request['X-ArchivesSpace-Session'] = @session_key
         get_request['Content_Type'] = 'application/json'
         result = Net::HTTP.start(search_uri.host, search_uri.port, use_ssl: true) do |http|
@@ -92,7 +92,7 @@ module ArchiveSpace
         repo_url = "#{AS_CONFIG[:repositories_url]}/#{repo_id}"
         resource_url = "#{repo_url}/resources/#{resource_id}"
         get_uri = URI(resource_url)
-        get_request = Net::HTTP::Get.new get_uri.request_uri
+        get_request = Net::HTTP::Get.new get_uri.to_s
         get_request['X-ArchivesSpace-Session'] = @session_key
         get_request['Content_Type'] = 'application/json'
         result = Net::HTTP.start(get_uri.host, get_uri.port, use_ssl: true) do |http|
@@ -113,7 +113,7 @@ module ArchiveSpace
       def authenticate
         Rails.logger.debug("ArchiveSpace::Api::Client#authenticate called")
         post_uri = URI(AS_CONFIG[:auth_url])
-        post_request = Net::HTTP::Post.new post_uri.request_uri
+        post_request = Net::HTTP::Post.new post_uri.to_s
         post_request.set_form_data('password' => AS_CONFIG[:password])
         result = Net::HTTP.start(post_uri.host, post_uri.port, use_ssl: true) do |http|
           http.request(post_request)

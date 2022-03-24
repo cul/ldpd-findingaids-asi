@@ -1,16 +1,15 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.5.3"
+ruby "2.7.5"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.2'
+gem 'rails', '~> 6.0.4'
 # Use sqlite3 as the database for Active Record
-# Issues with version sqlite3-1.4.0 and Rails 5.x
-# gem 'sqlite3'
-gem 'sqlite3', '~> 1.3.13'
+# fcd1, 03/29/22: Rails 6 doesn't like '~> 1.3.13'. As ldpd-amesa does, spec to ~> 1.4
+gem 'sqlite3', '~> 1.4'
 # Use mysql2 as the database for CUL
-gem 'mysql2', '~> 0.5'
+gem 'mysql2'
 # Use Puma as the app server
 gem 'puma', '~> 5.2'
 # Use SCSS for stylesheets
@@ -48,6 +47,10 @@ gem 'jquery-rails'
 gem 'marc'
 gem 'iso-639'
 
+# fcd1, 03/29/22: Getting bundle install errors on all-nginx-dev1 for 1.13.3
+# As seen in ldpd-amesa Gemfile, spec at 1.10.10
+gem 'nokogiri', '~> 1.10.10'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -66,18 +69,10 @@ group :development do
   gem 'capistrano-passenger', '~> 0.2', require: false
 end
 
-group :test do
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
-  # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
-end
-
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Run against the latest stable release
 group :development, :test do
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', '~> 4.0'
 end
