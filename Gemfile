@@ -11,7 +11,7 @@ gem 'sqlite3', '~> 1.4'
 # Use mysql2 as the database for CUL
 gem 'mysql2'
 # Use Puma as the app server
-gem 'puma', '~> 5.2'
+gem 'puma', '~> 5.6'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
