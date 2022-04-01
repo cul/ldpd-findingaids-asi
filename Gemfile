@@ -49,7 +49,7 @@ gem 'iso-639'
 
 # fcd1, 03/29/22: Getting bundle install errors on all-nginx-dev1 for 1.13.3
 # As seen in ldpd-amesa Gemfile, spec at 1.10.10
-gem 'nokogiri', '~> 1.10.10'
+gem 'nokogiri', '~> 1.13.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
