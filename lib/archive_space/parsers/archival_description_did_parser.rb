@@ -28,7 +28,7 @@ module ArchiveSpace
           ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms abstract
         end
         @language = ::Ead::Elements::Did.langmaterial_node_set(arch_desc_did).map(&:text).max_by(&:length)
-        @origination_creators = ::Ead::Elements::Did.origination_label_attribute_creator_node_set(arch_desc_did).map(&:text)
+        @origination_creators = ::Ead::Elements::Did.origination_label_attribute_creator_node_set(arch_desc_did).map(&:text).map(&:strip)
         physical_descriptions = ::Ead::Elements::Did.physdesc_node_set(arch_desc_did)
         @physical_description_extents_string =
           ArchiveSpace::Parsers::EadHelper.compound_physical_descriptions_into_string physical_descriptions
