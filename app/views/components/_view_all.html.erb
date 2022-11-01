@@ -1,4 +1,4 @@
-<% @series_array.each do |series| %>
+<% @series_array.each_with_index do |series, index| %>
   <!-- INFORMATION FOR TOP-LEVEL <c> ELEMENT, CURRENTLY A SERIES -->
   <%= render partial: 'components/component_structure_view_top_level_c',
              locals: {series: series, print_view: @print_view}
@@ -9,7 +9,7 @@
     <%= render partial: "component_structure_view_#{REPOS[params[:repository_id]][:view_style]}",
                locals: {series: series,
                         aeon_enabled: true,
-                        component_id: params[:id]}
+                        component_id: index + 1}
     %>
   <% else %>
     <%= render partial: "component_structure_view_#{REPOS[params[:repository_id]][:view_style]}",
