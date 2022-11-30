@@ -23,11 +23,6 @@
     # url is the desired url to be used for the library link at the top of a
     # finding aids page
     url: http://archivesportal.library.columbia.edu/repository.php?r=nnc-a
-    # view_style indicates which series view to use. This is a legacy setting;
-    # Avery had a different styling (style_a) then the other repos (style_b).
-    # However, when aeon requests were added to Avery finding aids, Avery was
-    # also moved to style_b
-    view_style: style_b
     # has_fa_list indicates whether or not a repo has an entry in the 
     # home/main/landingpage for the findingaids app
     has_fa_list: true
@@ -39,7 +34,6 @@
     as_repo_id: 2
     name: 'Oral History Archives at Columbia'
     url: https://library.columbia.edu/locations/ccoh.html
-    view_style: style_b
     has_fa_list: true
 
   nnc-ea:
@@ -49,7 +43,6 @@
     as_repo_id: 4
     name: C.V. Starr East Asian Library
     url: http://archivesportal.library.columbia.edu/repository.php?r=nnc-ea
-    view_style: style_b
     has_fa_list: true
 
   nnc-rb:
@@ -59,7 +52,6 @@
     as_repo_id: 2
     name: Rare Book & Manuscript Library
     url: http://archivesportal.library.columbia.edu/repository.php?r=nnc-rb
-    view_style: style_b
     has_fa_list: true
 
   nnc-ua:
@@ -69,7 +61,6 @@
     as_repo_id: 2
     name: Columbia University Archives
     url: http://archivesportal.library.columbia.edu/repository.php?r=nnc-ua
-    view_style: style_b
     has_fa_list: true
 
   nnc-ut:
@@ -79,7 +70,6 @@
     as_repo_id: 5
     name: 'Burke Library at Union Theological Seminary'
     url: http://archivesportal.library.columbia.edu/repository.php?r=nnc-ut
-    view_style: style_b
     has_fa_list: true
 
   nnc-m:
@@ -87,7 +77,6 @@
     as_repo_id: 'clio_only'
     name: 'Health Sciences Library'
     url: http://archivesportal.library.columbia.edu/repository.php?r=nnc-m
-    view_style: style_b
     has_fa_list: false
 
   nynycoh:
@@ -95,7 +84,6 @@
     as_repo_id: 'clio_only'
     name: 'Oral History Archives at Columbia'
     url: https://library.columbia.edu/locations/ccoh.html
-    view_style: style_b
     has_fa_list: false
 development:
   <<: *BASE

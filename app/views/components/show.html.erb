@@ -25,14 +25,14 @@
 	<% repo_suffix = params[:repository_id].gsub('-','_') %>
 	<% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
           <!-- component_id needed for the creation of checkboxes for repos using aeon -->
-          <%= render partial: "component_structure_view_#{REPOS[params[:repository_id]][:view_style]}",
+          <%= render partial: "component_structure_view",
                      layout: "with_aeon",
                      locals: {series: @series,
                               aeon_enabled: true,
                               component_id: params[:id]}
           %>
 	<% else %>
-          <%= render partial: "component_structure_view_#{REPOS[params[:repository_id]][:view_style]}",
+          <%= render partial: "component_structure_view",
                      layout: "without_aeon",
                      locals: {series: @series,
                               aeon_enabled: false}

@@ -6,13 +6,13 @@
   <!-- INFORMATION FOR SECOND LEVEL <C> ELEMENTS AND CONTAINED <C> ELEMENTS AT LOWER LEVELS -->
   <% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
     <!-- component_id needed for the creation of checkboxes for repos using aeon -->
-    <%= render partial: "component_structure_view_#{REPOS[params[:repository_id]][:view_style]}",
+    <%= render partial: "component_structure_view",
                locals: {series: series,
                         aeon_enabled: true,
                         component_id: index + 1}
     %>
   <% else %>
-    <%= render partial: "component_structure_view_#{REPOS[params[:repository_id]][:view_style]}",
+    <%= render partial: "component_structure_view",
                locals: {series: series,
                         aeon_enabled: false}
     %>
