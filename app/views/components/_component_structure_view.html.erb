@@ -1,4 +1,4 @@
-<div class="c-view-style-b">
+<div class="component-view">
   <% if aeon_enabled %>
     <% @last_container_seen = '' %>
     <% @checkbox_id = 0 %>
@@ -8,7 +8,7 @@
   <% series.flattened_component_tree_structure.each do |component| %>
     <% if component.nesting_level > current_nesting_level %>
       <hr class="component_entry">
-      <div class="component_entry" style="margin-left:4em;">
+      <div class="component_entry">
     <% elsif component.nesting_level < current_nesting_level %>
        <hr class="component_entry">
        <% (component.nesting_level...current_nesting_level).each do %>
@@ -32,7 +32,7 @@
                             component.container_info_barcode) unless component.container_info_strings.empty?
       %>
     <% end %>
-    <p style="margin:0">
+    <p class="component_info">
       <% unless component.container_info_strings.empty? %>
         <span class="container_info">
           <%= component.container_info_strings.join(' ') %>
@@ -41,13 +41,13 @@
       <% if (component.nesting_level == 1 && component.level_attribute == 'subseries') %>
         <% subseries_num += 1 %>
         <a class="subseries_anchor" name="<%= "subseries_#{subseries_num}" %>"></a>
-        <span class="component_title">
+        <span class="subseries_title">
           <%== [remove_unittitle_tags(component.unit_title),
                 ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
                 component.physical_description_extents_string].reject(&:blank?).join(", ") %>
         </span>
       <% else %>
-      <span class="<%== @repository_code %>" style="text-align:left;">
+      <span class="<%== @repository_code %> component_title">
 	<%== [remove_unittitle_tags(component.unit_title),
              ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
              component.physical_description_extents_string].reject(&:blank?).join(", ") %>
@@ -55,7 +55,7 @@
       <% end %>
     </p>
     <% unless component.digital_archival_objects.empty? %>
-      <div style="margin:0;padding-left:4em;color:red;">
+      <div class="component_notes_red">
         <% component.digital_archival_objects.each do |dao| %>
           <%= link_to 'Access digital content: ' + dao.description, dao.href %>
           <br>
@@ -63,14 +63,14 @@
       </div>
     <% end %>
     <% unless component.conditions_governing_access_values.empty? %>
-      <div style="margin:0;padding-left:4em;color:red;">
+      <div class="component_notes_red">
         <% component.conditions_governing_access_values.each do |access_restrictions_value| %>
           <%== access_restrictions_value %>
         <% end %>
       </div>
     <% end %>
     <% unless component.conditions_governing_use_values.empty? %>
-      <div style="margin:0;padding-left:4em;color:red;">
+      <div class="component_notes_red">
         <% component.conditions_governing_use_values.each do |use_restrictions_value| %>
           <%== use_restrictions_value %>
         <% end %>
@@ -88,7 +88,7 @@
                     component.other_finding_aid_values
     %>
     <% unless misc_notes.empty? %>
-      <div style="margin:0;padding-left:4em;">
+      <div class="component_notes">
         <% misc_notes.each do |misc_note| %>
           <%== misc_note %>
         <% end %>
