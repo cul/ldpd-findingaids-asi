@@ -26,7 +26,7 @@
         <% unittitle_string = '' %>
         <% container_info_string = component.container_info_strings.first %>
       <% end %>
-      <%== checkbox_display("#{series.compound_title_string}#{unittitle_string}",
+      <%== checkbox_display(unittitle_string,
                             component_id,
                             container_info_string,
                             component.container_info_barcode) unless component.container_info_strings.empty?
