@@ -28,6 +28,7 @@
           <%= render partial: "component_structure_view",
                      layout: "with_aeon",
                      locals: {series: @series,
+                              series_titles: @arch_desc_dsc.series_compound_title_array,
                               aeon_enabled: true,
                               component_id: params[:id]}
           %>

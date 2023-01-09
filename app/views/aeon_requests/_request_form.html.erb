@@ -6,14 +6,14 @@
       <%= @item_title %>
     </p>
     <% @selected_containers.each do |container_info| %>
-      <% component_title, container_info_string, container_info_barcode =
+      <% series_num, component_title, container_info_string, container_info_barcode =
          container_info.split(CONFIG[:container_info_delimiter]) %>
       <p>
         <b>Item Volume</b>
         <%= container_info_string %>
         <br>
         <b>Item SubTitle</b>
-        <%= component_title %>
+        <%= [@series_titles[series_num], component_title].join(' ') %>
       </p>
     <% end %>
     <%= form_tag login_aeon_request_path do %>
@@ -47,8 +47,11 @@
       </p>
       <%= submit_tag 'Submit Request' , {style: "margin-bottom:5px;"} %>
       <input type="button" id="close" style="margin-bottom:5px" value="Cancel" onclick="window.close()" />
-      <% params.each do |key, value| %>
+      <% params.except(:series_titles).each do |key, value| %>
         <%= hidden_field_tag key, value %>
+      <% end %>
+      <% @series_titles.each do |key, value| %>
+        <input type="hidden" name="series_titles[<%= key %>]" value="<%= value %>">
       <% end %>
     <% end %>
   </div>

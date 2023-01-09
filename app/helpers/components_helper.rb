@@ -11,7 +11,7 @@ module ComponentsHelper
       @last_container_info_string_seen = container_info_string
       @checkbox_id += 1
       checkbox_name = "checkbox_#{component_id}_#{@checkbox_id}"
-      checkbox_value_part_1 = "#{remove_tags_from_unittitle_string(component_title.gsub("\"","&quot;"))}#{CONFIG[:container_info_delimiter]}#{container_info_string}"
+      checkbox_value_part_1 = "#{component_id}#{CONFIG[:container_info_delimiter]}#{remove_tags_from_unittitle_string(component_title.gsub("\"","&quot;"))}#{CONFIG[:container_info_delimiter]}#{container_info_string}"
       checkbox_value_part_2 ="#{CONFIG[:container_info_delimiter]}#{container_info_barcode}" if container_info_barcode
       checkbox_value = "#{checkbox_value_part_1}#{checkbox_value_part_2}"
       checkbox_html_out =
