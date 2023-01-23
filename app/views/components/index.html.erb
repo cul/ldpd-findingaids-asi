@@ -25,6 +25,7 @@
 	<a class="fa_anchor" name="view_all"></a>
         <% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
           <%= render partial: 'view_all',
+                     locals: {series_titles: @arch_desc_dsc.series_compound_title_array},
                      layout: "with_aeon"
           %>
         <% else %>
