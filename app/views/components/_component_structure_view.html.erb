@@ -7,15 +7,11 @@
   <% subseries_num = 0 %>
   <% series.flattened_component_tree_structure.each do |component| %>
     <% if component.nesting_level > current_nesting_level %>
-      <hr class="component_entry">
       <div class="component_entry">
     <% elsif component.nesting_level < current_nesting_level %>
-       <hr class="component_entry">
        <% (component.nesting_level...current_nesting_level).each do %>
         </div>
       <% end %>
-    <% else %>
-       <hr class="component_entry">
     <% end %>
     <% current_nesting_level = component.nesting_level %>
     <% if aeon_enabled %>

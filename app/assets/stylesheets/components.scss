@@ -42,13 +42,10 @@ div.component_notes_red {
     color: red;
 }
 
-hr.component_entry {
-    margin-top:10px;
-    margin-bottom:10px;
-}
-
 div.component-view p.component_info {
-    margin: 0;
+    margin: 1em 0 1em 0;
+    border-bottom: lightgray solid 1px;
+    padding-bottom:0.25em;
 }
 
 span.nnc-a {
