@@ -33,7 +33,9 @@
   <input type='submit' name='Button' style="display:none;" value='Confirm Aeon Request' />
 <% end %>
 <%= javascript_tag do %>
-  $(document).ready(function () {
-    $("#aeon_form").submit();
-  });
+  document.onreadystatechange = () => {
+    if (document.readyState === "complete") {
+      document.getElementById("aeon_form").submit();
+    }
+  };
 <% end %>
