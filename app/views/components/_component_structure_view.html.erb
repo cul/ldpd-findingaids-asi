@@ -22,7 +22,7 @@
         <% unittitle_string = '' %>
         <% container_info_string = component.container_info_strings.first %>
       <% end %>
-      <%== checkbox_display(unittitle_string,
+      <%= checkbox_display(unittitle_string,
                             component_id,
                             container_info_string,
                             component.container_info_barcode) unless component.container_info_strings.empty?
@@ -38,13 +38,13 @@
         <% subseries_num += 1 %>
         <a class="subseries_anchor" name="<%= "subseries_#{subseries_num}" %>"></a>
         <span class="subseries_title">
-          <%== [remove_unittitle_tags(component.unit_title),
+          <%= [remove_unittitle_tags(component.unit_title),
                 ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
                 component.physical_description_extents_string].reject(&:blank?).join(", ") %>
         </span>
       <% else %>
-      <span class="<%== @repository_code %> component_title">
-	<%== [remove_unittitle_tags(component.unit_title),
+      <span class="<%= @repository_code %> component_title">
+	<%= [remove_unittitle_tags(component.unit_title),
              ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component.unit_dates),
              component.physical_description_extents_string].reject(&:blank?).join(", ") %>
       </span>
@@ -61,14 +61,14 @@
     <% unless component.conditions_governing_access_values.empty? %>
       <div class="component_notes_red">
         <% component.conditions_governing_access_values.each do |access_restrictions_value| %>
-          <%== access_restrictions_value %>
+          <%= access_restrictions_value %>
         <% end %>
       </div>
     <% end %>
     <% unless component.conditions_governing_use_values.empty? %>
       <div class="component_notes_red">
         <% component.conditions_governing_use_values.each do |use_restrictions_value| %>
-          <%== use_restrictions_value %>
+          <%= use_restrictions_value %>
         <% end %>
       </div>
     <% end %>
@@ -86,7 +86,7 @@
     <% unless misc_notes.empty? %>
       <div class="component_notes">
         <% misc_notes.each do |misc_note| %>
-          <%== misc_note %>
+          <%= misc_note %>
         <% end %>
       </div>
     <% end %>
