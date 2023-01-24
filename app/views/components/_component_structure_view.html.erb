@@ -51,7 +51,7 @@
       <% end %>
     </p>
     <% unless component.digital_archival_objects.empty? %>
-      <div class="component_notes_red">
+      <div class="component_notes red">
         <% component.digital_archival_objects.each do |dao| %>
           <%= link_to 'Access digital content: ' + dao.description, dao.href %>
           <br>
@@ -59,14 +59,14 @@
       </div>
     <% end %>
     <% unless component.conditions_governing_access_values.empty? %>
-      <div class="component_notes_red">
+      <div class="component_notes red">
         <% component.conditions_governing_access_values.each do |access_restrictions_value| %>
           <%= access_restrictions_value %>
         <% end %>
       </div>
     <% end %>
     <% unless component.conditions_governing_use_values.empty? %>
-      <div class="component_notes_red">
+      <div class="component_notes red">
         <% component.conditions_governing_use_values.each do |use_restrictions_value| %>
           <%= use_restrictions_value %>
         <% end %>
