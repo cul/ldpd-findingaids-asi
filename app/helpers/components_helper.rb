@@ -17,8 +17,7 @@ module ComponentsHelper
       checkbox_value = "#{checkbox_value_part_1}#{checkbox_value_part_2}"
       checkbox_html_out =
         %Q(<input type="checkbox" name="#{checkbox_name}" value="#{checkbox_value}" class="aeon_checkbox">) <<
-        %Q(<label class="aeon_checkbox_label" for="checkbox_#{@checkbox_id}">Request #{container_info_string}</label>) <<
-        '<br style="clear:both;">'
+        %Q(<label class="aeon_checkbox_label" for="checkbox_#{@checkbox_id}">Request #{container_info_string}</label>)
     end
     checkbox_html_out
   end
