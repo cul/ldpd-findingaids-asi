@@ -108,19 +108,11 @@ class ComponentsController < ApplicationController
             @ead_header.eadid_url_attribute.include?('findingaids.library.columbia.edu'))
       @eadid_other_finding_aid_url = @ead_header.eadid_url_attribute
     end
-    @notes_array = []
-    @flattened_component_structure_array = []
-    @daos_description_href_array = []
-    @series_array = []
-    @arch_desc_dsc.series_compound_title_array.each_with_index do |title, index|
       # fcd1, 09/12/19: For now, assume all top-level <c> elements are series. However, when other
       # types of top-level <c> elements are allowed, modify the following code, including changing
       # variable name from a_series to, for example, a_top_level_component (more generic), or check
       # for the type of component here and create appropriate variable
-      current_series = ArchiveSpace::Parsers::ComponentParser.new
-      current_series.parse(ead_nokogiri_xml_doc, index + 1)
-      @series_array.append current_series
-    end
+    @series_array = @arch_desc_dsc.dsc.series_components
     @cache_html = true unless @preview_flag
     @aeon_site_code = REPOS[params[:repository_id]][:aeon_site_code]
     if REPOS[params[:repository_id]][:aeon_user_review_set_to_yes]

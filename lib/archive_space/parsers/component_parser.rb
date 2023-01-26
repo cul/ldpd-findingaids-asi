@@ -133,10 +133,13 @@ module ArchiveSpace
       end
 
       def parse(nokogiri_xml_document, series_num)
-        arch_desc_dsc = nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc')
-        series_element = ::Ead::Elements::Dsc.c_level_attribute_series_array(arch_desc_dsc)[series_num -1]
+        arch_desc_dsc = nokogiri_xml_document.xpath("/xmlns:ead/xmlns:archdesc/xmlns:dsc")
+        @series = ::Ead::Elements::Dsc.new(arch_desc_dsc).series_component(series_num)
+      end
 
-        @series = ::Ead::Elements::Component.new(series_element)
+      def parse_all(nokogiri_xml_document)
+        arch_desc_dsc = nokogiri_xml_document.xpath("/xmlns:ead/xmlns:archdesc/xmlns:dsc")
+        ::Ead::Elements::Dsc.new(arch_desc_dsc).series_components
       end
 
       def flattened_component_tree_structure

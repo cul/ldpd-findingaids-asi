@@ -37,10 +37,15 @@ module Ead
       def reset!(nokogiri_element = nil)
         super
         @did = nil
+        @subseries_components = nil
       end
 
       def did
         @did ||= ::Ead::Elements::Did.new(::Ead::Elements::Component.did_node_set(nokogiri_element).first)
+      end
+
+      def level
+        nokogiri_element.attribute('level')
       end
 
       def unit_dates
@@ -54,6 +59,15 @@ module Ead
 
       def child_components
         self.class.c_node_set(nokogiri_element).map { |child_element| Component.new(child_element)}
+      end
+
+      def subseries_components
+        @subseries_components ||=
+          self.class.c_level_attribute_subseries_node_set(nokogiri_element).map { |child_element| Component.new(child_element)}
+      end
+
+      def scope_content_array
+        ::Ead::Elements::Component.scopecontent_p_node_set(nokogiri_element)
       end
     end
   end

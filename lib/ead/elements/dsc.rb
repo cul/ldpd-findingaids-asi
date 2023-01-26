@@ -17,6 +17,33 @@ module Ead
           nokogiri_element.xpath(XPATH[:c_level_attribute_series])
         end
       end
+
+      attr_reader :nokogiri_element
+
+      def initialize(nokogiri_element)
+        reset! nokogiri_element
+      end
+
+      def reset!(nokogiri_element = nil)
+        @nokogiri_element = nokogiri_element
+        @series_components = nil
+      end
+
+      def c_level_attribute_series_array
+        Dsc.c_level_attribute_series_array(nokogiri_element)
+      end
+
+      def c_level_attribute_series(index)
+          nokogiri_element.xpath("#{XPATH[:c_level_attribute_series]}[#{index}]").first
+      end
+
+      def series_components
+        @series_components ||= c_level_attribute_series_array.map { |ele| ::Ead::Elements::Component.new(ele) }
+      end
+
+      def series_component(index)
+        ::Ead::Elements::Component.new(c_level_attribute_series(index))
+      end
     end
   end
 end
