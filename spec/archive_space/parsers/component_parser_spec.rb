@@ -89,149 +89,180 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
 
       context 'given NOKOGIRI::XML::ELEMENT, representing a <c>, as an argument' do
         it 'the flattened_component_tree_structure is set correctly' do
-          expect(result[0][:unit_title]).to eq '<unittitle>Subseries 1: Cataloged Correspondence -- Letters</unittitle>'
-          expect(result[0][:scope_and_content_values][1]).to eq '<p>The Builder. Nov 11, 1921. Excerpt;</p>'
-          expect(result[0][:nesting_level]).to eq 1
-          expect(result[1][:unit_title]).to eq '<unittitle>Herbert Brandon studio (Usonia, NY)</unittitle>'
-          expect(result[1][:scope_and_content_values][0]).to eq '<p>In twenty boxes</p>'
-          expect(result[1][:nesting_level]).to eq 2
+          expect(result[0].unit_title).to eq '<unittitle>Subseries 1: Cataloged Correspondence -- Letters</unittitle>'
+          expect(result[0].scope_and_content_values[1]).to eq '<p>The Builder. Nov 11, 1921. Excerpt;</p>'
+          expect(result[0].nesting_level).to eq 1
+          expect(result[1].unit_title).to eq '<unittitle>Herbert Brandon studio (Usonia, NY)</unittitle>'
+          expect(result[1].scope_and_content_values[0]).to eq '<p>In twenty boxes</p>'
+          expect(result[1].nesting_level).to eq 2
         end
       end
     end
 
     ########################################## generate_child_component_info
     describe 'generate_child_component_info' do
-      before(:context) do
-        xml_input = fixture_file_upload('ead/test_ead.xml').read
-        nokogiri_xml_document = Nokogiri::XML(xml_input) do |config|
-          config.norecover
-        end
-        component_xml_nokogiri_element =  nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]').first
-        component_parser = ArchiveSpace::Parsers::ComponentParser.new
-        component = ::Ead::Elements::Component.new(component_xml_nokogiri_element)
-        @component_info = component_parser.generate_child_component_info(component, 1)
-        @expected_component_info = ArchiveSpace::Parsers::ComponentParser::ComponentInfo.new
-        @expected_component_info.compound_title_string = 'Series I: Cataloged Correspondence, 1914-1989, 1894-1967, bulk 1958-1980'
-        @expected_component_info.unit_dates = ['1914-1989', '1958-1980', '1894-1967']
-        @expected_component_info.unit_title = '<unittitle>Series I: Cataloged Correspondence</unittitle>'
-        @expected_component_info.acquisition_information_values = [
+      let(:component_parser) { described_class.new }
+      let(:xml_input) { fixture_file_upload('ead/test_ead.xml').read }
+      let(:nokogiri_xml_document) { Nokogiri::XML(xml_input) { |config| config.norecover } }
+      let(:component_element) { nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]').first }
+      let(:component) { ::Ead::Elements::Component.new(component_element) }
+      subject(:component_info) { component_parser.generate_child_component_info(component, 1) }
+
+      let (:expected_digital_archival_objects) {
+        [
+          {
+            href: 'https://dlc.library.columbia.edu/ifp/search',
+            description: 'Browse or Search Digital Materials'
+          },
+          {
+            href: 'https://dlc.library.columbia.edu/ifp/partner/secretariat',
+            description: 'Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013'
+          }
+        ]
+      }
+
+      it "sets the compound_title_string member of ComponentInfo correctly" do
+        expect(component_info.compound_title_string).to eql 'Series I: Cataloged Correspondence, 1914-1989, 1894-1967, bulk 1958-1980'
+      end
+
+      it "sets the unit_dates member of ComponentInfo correctly" do
+        expect(component_info.unit_dates).to eql ['1914-1989', '1958-1980', '1894-1967']
+      end
+
+      it "sets the unit_title member of ComponentInfo correctly" do
+        expect(component_info.unit_title).to eql '<unittitle>Series I: Cataloged Correspondence</unittitle>'
+      end
+
+      it "sets the acquisition_information_values member of ComponentInfo correctly" do
+        expect(component_info.acquisition_information_values).to eql [
           '<p>Transferred from NYPL(ACQ)</p>',
           '<p>Transferred from CUL(ACQ)</p>',
           "<p>Transferred from Metro(ACQ)</p>"
         ]
-        @expected_component_info.alternative_form_available_values = [
+      end
+
+      it "sets the alternative_form_available_values member of ComponentInfo correctly" do
+        expect(component_info.alternative_form_available_values).to eql [
           '<p>Microforms available.(AF)</p>',
           '<p>Photocopies available.(AF)</p>',
           '<p>Microfiche available.(AF)</p>'
         ]
-        @expected_component_info.arrangement_values = [
+      end
+
+      it "sets the arrangement_values member of ComponentInfo correctly" do
+        expect(component_info.arrangement_values).to eql [
           '<p>Arranged alphabetically by subject.</p>',
           '<p>Arranged alphabetically by author.</p>',
           '<p>Arranged alphabetically by location.</p>'
         ]
-        @expected_component_info.biography_or_history_values = [
+      end
+
+      it "sets the biography_or_history_values member of ComponentInfo correctly" do
+        expect(component_info.biography_or_history_values).to eql [
           '<p>John ate pizza for lunch.(BH)</p>',
           '<p>John ate a burger for lunch.(BH)</p>',
           '<p>John ate fish for lunch.(BH)</p>'
         ]
-        @expected_component_info.conditions_governing_access_values = [
+      end
+
+      it "sets the conditions_governing_access_values member of ComponentInfo correctly" do
+        expect(component_info.conditions_governing_access_values).to eql [
           '<p>[Restricted Until 2039](top-level container)</p>',
           '<p>[Restricted Until 2059](top-level container)</p>',
           '<p>[Restricted Until 2020](top-level container)</p>'
         ]
-        @expected_component_info.conditions_governing_use_values = [
+      end
+
+      it "sets the conditions_governing_use_values member of ComponentInfo correctly" do
+        expect(component_info.conditions_governing_use_values).to eql [
           '<p>Five photocopies may be made for research purposes.(UR)</p>',
           '<p>One photocopy may be made for research purposes.(UR)</p>',
           '<p>Single photocopies may be made for research purposes.(UR)</p>'
         ]
-        @expected_component_info.container_info_barcode =  'RS01729110'
-        @expected_component_info.container_info_strings = [
+      end
+
+      it "sets the container_info_barcode member of ComponentInfo correctly" do
+        expect(component_info.container_info_barcode).to eql 'RS01729110'
+      end
+
+      it "sets the container_info_strings member of ComponentInfo correctly" do
+        expect(component_info.container_info_strings).to eql [
           'Box 24',
           'General Manuscripts Box 78',
           'Folder 5'
         ]
-        @expected_component_info.custodial_history_values = [
+      end
+
+      it "sets the custodial_history_values member of ComponentInfo correctly" do
+        expect(component_info.custodial_history_values).to eql [
           '<p>Gift of the ABC Company, 1963.(CH)</p>',
           '<p>Gift of the BCD Company, 1963.(CH)</p>',
           '<p>Gift of the DDD Company, 1963.(CH)</p>'
         ]
-        @expected_component_info.level_attribute = 'series'
-        @expected_component_info.other_descriptive_data_values = [
+      end
+
+      it "sets the level_attribute member of ComponentInfo correctly" do
+        expect(component_info.level_attribute).to eql 'series'
+      end
+
+      it "sets the other_descriptive_data_values member of ComponentInfo correctly" do
+        expect(component_info.other_descriptive_data_values).to eql [
           '<p>This collection is nice(ODD)</p>',
           '<p>This repo is nice(ODD)</p>',
           '<p>This series is nice(ODD)</p>'
         ]
-        @expected_component_info.other_finding_aid_values = [
+      end
+
+      it "sets the other_finding_aid_values member of ComponentInfo correctly" do
+        expect(component_info.other_finding_aid_values).to eql [
           '<p>*In addition, a sortable inventory in this downloadable Excel spreadsheet.</p>',
           '<p>A pdf version is available for download.</p>',
           '<p>Another finding aid available online.</p>'
         ]
-        @expected_component_info.physical_description_extents_string =
-          ["5 linear feet; 4 boxes 14 slipcases;",
+      end
+
+      it "sets the physical_description_extents_string member of ComponentInfo correctly" do
+        expect(component_info.physical_description_extents_string).to eql [
+          "5 linear feet; 4 boxes 14 slipcases;",
            "7.6 Tb Digital; one hard disk;",
            "444 linear feet; 355 record cartons 15 document boxes and 4 flat boxes"
-          ].join ' '
-        @expected_component_info.related_material_values = [
+        ].join(' ')
+      end
+
+      it "sets the related_material_values member of ComponentInfo correctly" do
+        expect(component_info.related_material_values).to eql [
           '<p>The related memoirs are cataloged individually(RM)</p>',
           '<p>The related photographs are cataloged individually(RM)</p>',
           '<p>The related recordings are cataloged individually(RM)</p>'
         ]
-        @expected_component_info.scope_and_content_values = [
+      end
+
+      it "sets the scope_and_content_values member of ComponentInfo correctly" do
+        expect(component_info.scope_and_content_values).to eql [
           '<p>The correspondence in the collection consist of letters and postcards.</p>',
           '<p>Correspondents include: James Joyce.</p>',
           '<p>Contains  document allowing Bunshaft to practice architecture in Belgium.</p>'
         ]
-        @expected_component_info.separated_material_values = [
+      end
+
+      it "sets the separated_material_values member of ComponentInfo correctly" do
+        expect(component_info.separated_material_values).to eql [
           "<p>Some interviewees' personal papers were separated and described as their own collection.</p>",
           '<p>Oral history transcripts in this series are drafts and editing copies.</p>',
           '<p>The personal papers and finalized individual memoirs are cataloged in CLIO.</p>'
         ]
       end
 
-      context 'given NOKOGIRI::XML::ELEMENT, representing a <c>, as an argument' do
-        let (:expected_digital_archival_objects) {
-          [
-            {
-              href: 'https://dlc.library.columbia.edu/ifp/search',
-              description: 'Browse or Search Digital Materials'
-            },
-            {
-              href: 'https://dlc.library.columbia.edu/ifp/partner/secretariat',
-              description: 'Sub-subseries I.13.A: Secretariat Unrestricted Digital Files, 2001-2013'
-            }
-          ]
-        }
+      it 'set the nesting_level member of ComponentInfo correctly' do
+        expect(component_info.nesting_level).to eq 1
+      end
 
-        it 'set the nesting_level member of ComponentInfo correctly' do
-          expect(@component_info.nesting_level).to eq 1
-        end
-
-        it 'set the unit_dates members of ComponentInfo correctly' do
-          unit_dates = @component_info.unit_dates
-          expect(@expected_component_info.unit_dates.size).to eq unit_dates.size
-          @expected_component_info.unit_dates.each_with_index do |expected_unit_date, index|
-            expect(unit_dates[index].text).to eq expected_unit_date
-          end
-        end
-
-        it 'sets the digital_archival_objects correctly' do
-          digital_archival_objects = @component_info.digital_archival_objects
-          expect(expected_digital_archival_objects.size).to eq digital_archival_objects.size
-          expected_digital_archival_objects.each_with_index do |expected_digital_archival_object, index|
-            expect(digital_archival_objects[index].href).to eq expected_digital_archival_object[:href]
-            expect(digital_archival_objects[index].description).to eq expected_digital_archival_object[:description]
-          end
-        end
-        test_members =
-          ArchiveSpace::Parsers::ComponentParser::ComponentInfo.new.members  - [:digital_archival_objects, :nesting_level, :unit_dates]
-        test_members.each do |member|
-          it "sets the #{member} member of ComponentInfo correctly" do
-            if "#{member}".ends_with? 'string'
-              expect(@component_info[member]).to eq @expected_component_info[member]
-            else
-              expect(@component_info[member]).to eq @expected_component_info[member]
-            end
-          end
+      it 'sets the digital_archival_objects correctly' do
+        digital_archival_objects = component_info.digital_archival_objects
+        expect(expected_digital_archival_objects.size).to eq digital_archival_objects.size
+        expected_digital_archival_objects.each_with_index do |expected_digital_archival_object, index|
+          expect(digital_archival_objects[index].href).to eq expected_digital_archival_object[:href]
+          expect(digital_archival_objects[index].description).to eq expected_digital_archival_object[:description]
         end
       end
     end

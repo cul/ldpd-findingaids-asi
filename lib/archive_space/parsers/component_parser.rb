@@ -77,8 +77,39 @@ module ArchiveSpace
       # fcd1, 09/15/19: may not need/use compound_title_string for second and lower-level <c> elements
       # for second-level <c> elements and lower levels <c> elements, the <head> chidlren are not
       # displayed currently, so won't include them in the ComponentInfo Struct.
-      ComponentInfo = Struct.new(*ATTRIBUTES.reject { |attribute| "#{attribute}".ends_with? "head" } + [:nesting_level])
+      class ComponentInfo
+        extend Forwardable
+        attr_accessor *ATTRIBUTES.reject { |attribute| "#{attribute}".ends_with? "head" } + [:component, :nesting_level]
+        EAD_ELEMENT_COMPONENT_METHODS.each do |member, class_method|
+          define_method member do
+            component.send(member).map do |value|
+              (ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms value).to_s
+            end
+          end
+        end
+        def_delegators :@component, :compound_title_string, :container_info_strings, :container_info_barcode,
+                       :digital_archival_objects, :physical_description_extents_string, :level_attribute
 
+        def initialize(component, nesting_level = 0)
+          @component = component
+          @nesting_level = nesting_level
+        end
+
+        # fcd1, 09/15/19: may not need/use compound_title_string for second and lower-level <c> elements
+        # if so, can remove the following
+        # fcd1, 09/15/19: Assume only one <unititle> element is expected. If more are encountered, return first one.
+        def unit_title
+          component.unit_title(true)
+        end
+
+        def unit_dates
+          component.unit_dates.map(&:text)
+        end
+
+        def children
+          component.child_components.map { |c| ComponentInfo.new(c, nesting_level + 1) }
+        end
+      end
       # returns a recursively-created array of nested array represent the tree structure of the
       # descendant <c> components -- a <c> can contain another <c> element which itself may contain
       # a nested <c> element and so on. The most efficient to process this nested information at
@@ -98,26 +129,7 @@ module ArchiveSpace
       end
 
       def generate_child_component_info(component, nesting_level = 0)
-        component_info = ComponentInfo.new
-        EAD_ELEMENT_COMPONENT_METHODS.each do |member, class_method|
-          component_info[member] = component.send(member).map do |value|
-            (ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms value).to_s
-          end
-        end
-        component_info.digital_archival_objects = component.digital_archival_objects
-
-        # fcd1, 09/15/19: may not need/use compound_title_string for second and lower-level <c> elements
-        # if so, can remove the following
-        component_info.compound_title_string = component.compound_title_string
-        # fcd1, 09/15/19: Assume only one <unititle> element is expected. If more are encountered, return first one.
-        component_info.unit_title = component.unit_title(true)
-        component_info.unit_dates = component.unit_dates
-        component_info.container_info_strings = component.container_info_strings
-        component_info.container_info_barcode = component.container_info_barcode
-        component_info.nesting_level = nesting_level
-        component_info.physical_description_extents_string = component.physical_description_extents_string
-        component_info.level_attribute = component.level_attribute
-        component_info
+        ComponentInfo.new(component, nesting_level)
       end
 
       def parse(nokogiri_xml_document, series_num)
@@ -125,7 +137,10 @@ module ArchiveSpace
         series_element = ::Ead::Elements::Dsc.c_level_attribute_series_array(arch_desc_dsc)[series_num -1]
 
         @series = ::Ead::Elements::Component.new(series_element)
-        @flattened_component_tree_structure = generate_structure_containing_lower_level_components(@series, series_num)
+      end
+
+      def flattened_component_tree_structure
+        @flattened_component_tree_structure ||= generate_structure_containing_lower_level_components(@series, series_num)
       end
     end
   end
