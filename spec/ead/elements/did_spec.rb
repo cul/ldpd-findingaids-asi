@@ -29,7 +29,7 @@ RSpec.describe Ead::Elements::Did do
     context 'has class method' do
       class_methods.each do |class_method|
         it "#{class_method}" do
-          expect(subject.class).to respond_to("#{class_method}")
+          expect(described_class).to respond_to("#{class_method}")
         end
       end
     end

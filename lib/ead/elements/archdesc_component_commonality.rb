@@ -235,6 +235,90 @@ module Ead
           input_element.xpath(XPATH[:userestrict_p])
         end
       end
+
+      attr_reader :nokogiri_element
+
+      def initialize(nokogiri_element)
+        reset! nokogiri_element
+      end
+
+      def reset!(nokogiri_element = nil)
+        @nokogiri_element = nokogiri_element
+      end
+
+      XPATH.keys.each do |node_type|
+        define_method "#{node_type}_node_set" do
+          self.class.send :"#{node_type}_node_set", nokogiri_element
+        end
+      end
+      alias_method :acquisition_information_values, :acqinfo_p_node_set
+      alias_method :alternative_form_available_values, :altformavail_p_node_set
+      alias_method :arrangement_values, :arrangement_p_node_set
+      alias_method :biography_or_history_values, :bioghist_p_node_set
+      alias_method :conditions_governing_access_values, :accessrestrict_p_node_set
+      alias_method :conditions_governing_use_values, :userestrict_p_node_set
+      alias_method :custodial_history_values, :custodhist_p_node_set
+      alias_method :other_descriptive_data_values, :odd_p_node_set
+      alias_method :other_finding_aid_values, :otherfindaid_p_node_set
+      alias_method :related_material_values, :relatedmaterial_p_node_set
+      alias_method :scope_and_content_values, :scopecontent_p_node_set
+      alias_method :separated_material_values, :separatedmaterial_p_node_set
+
+      def acquisition_information_head
+        acqinfo_head_node_set.first&.text
+      end
+
+      def alternative_form_available_head
+        altformavail_head_node_set.first&.text
+      end
+
+      def arrangement_head
+        arrangement_head_node_set.first&.text
+      end
+
+      def biography_or_history_head
+        bioghist_head_node_set.first&.text
+      end
+
+      def compound_title_string
+        ArchiveSpace::Parsers::EadHelper.compound_title nokogiri_element
+      end
+
+      def conditions_governing_access_head
+        accessrestrict_head_node_set.first&.text
+      end
+
+      def conditions_governing_use_head
+        userestrict_head_node_set.first&.text
+      end
+
+      def custodial_history_head
+        custodhist_head_node_set.first&.text
+      end
+
+      def level_attribute
+        level_attribute_node_set.first&.text
+      end
+
+      def other_descriptive_data_head
+        odd_head_node_set.first&.text
+      end
+
+      def other_finding_aid_head
+        otherfindaid_head_node_set.first&.text
+      end
+
+      def related_material_head
+        relatedmaterial_head_node_set.first&.text
+      end
+
+      def scope_and_content_head
+        scopecontent_head_node_set.first&.text
+      end
+
+      def separated_material_head
+        separatedmaterial_head_node_set.first&.text
+      end
     end
   end
 end

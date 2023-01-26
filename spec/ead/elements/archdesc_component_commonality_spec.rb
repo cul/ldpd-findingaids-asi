@@ -48,7 +48,7 @@ RSpec.describe Ead::Elements::ArchdescComponentCommonality do
     context 'has class method' do
       common_class_methods.each do |common_class_method|
         it "#{common_class_method}" do
-          expect(subject.class).to respond_to("#{common_class_method}")
+          expect(described_class).to respond_to("#{common_class_method}")
         end
       end
     end

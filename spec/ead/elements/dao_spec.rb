@@ -25,7 +25,7 @@ RSpec.describe Ead::Elements::Dao do
     context 'has class method' do
       class_methods.each do |class_method|
         it "#{class_method}" do
-          expect(subject.class).to respond_to("#{class_method}")
+          expect(described_class).to respond_to("#{class_method}")
         end
       end
     end
@@ -41,13 +41,13 @@ RSpec.describe Ead::Elements::Dao do
     describe 'class methods:' do
       context 'given argument Nokogiri::XML::Element representing <dao>' do
         it '.daodesc_p_node_set returns correct Nokogiri::XML::NodeSet' do
-          value = subject.class.daodesc_p_node_set(@nokogiri_xml_element)
+          value = described_class.daodesc_p_node_set(@nokogiri_xml_element)
           expect(value).to be_instance_of Nokogiri::XML::NodeSet
           expect(value.text).to eq 'Browse or Search Digital Materials'
         end
 
         it '.href_attribute_node_set returns correct Nokogiri::XML::NodeSet' do
-          value = subject.class.href_attribute_node_set(@nokogiri_xml_element)
+          value = described_class.href_attribute_node_set(@nokogiri_xml_element)
           expect(value).to be_instance_of Nokogiri::XML::NodeSet
           expect(value.text).to eq 'https://dlc.library.columbia.edu/ifp/search'
         end

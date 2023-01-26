@@ -71,6 +71,51 @@ module Ead
           ead_element.xpath(XPATH[:unittitle])
         end
       end
+
+      attr_reader :nokogiri_element
+
+      def initialize(nokogiri_element)
+        reset! nokogiri_element
+      end
+
+      def reset!(nokogiri_element = nil)
+        @nokogiri_element = nokogiri_element
+      end
+
+      XPATH.keys.each do |node_type|
+        define_method "#{node_type}_node_set" do
+          Did.send :"#{node_type}_node_set", nokogiri_element
+        end
+      end
+
+      def container_info_strings
+        container_node_set.map do |container|
+          # container_type = container['label'] || container['type']
+          # Assumption: at least one of the 'label' or 'type' attribute is present.
+          container_type = (::Ead::Elements::Container.label_attribute_node_set(container).first ||
+                            ::Ead::Elements::Container.type_attribute_node_set(container).first).text.sub(/\s*\[\S*\]\s*/,' ').chomp(' ')
+          "#{container_type.titlecase} #{container.text}"
+        end
+      end
+
+      def physical_description_extents_string
+        ArchiveSpace::Parsers::EadHelper.component_physical_descriptions_string physdesc_node_set
+      end
+
+      def digital_archival_objects
+        Did.dao_node_set(nokogiri_element).map do |dao|
+          Dao.new(dao)
+        end
+      end
+
+      # Following pertains to ACFA-176: barcode embedded inside label attribute of first <container>
+      def container_info_barcode
+        return if container_node_set.empty?
+        first_container_label_attribute =
+            ::Ead::Elements::Container.label_attribute_node_set(container_node_set.first).first
+        match_data_barcode = first_container_label_attribute.text&.match(/\s*\[(\S*)\]\s*/)
+        match_data_barcode[1] if match_data_barcode
+      end
     end
   end
 end

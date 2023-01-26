@@ -244,13 +244,11 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
 
     ########################################## parse
     describe 'parse' do
-      before(:context) do
-        xml_input = fixture_file_upload('ead/test_ead.xml').read
-        nokogiri_xml_document = Nokogiri::XML(xml_input) do |config|
-          config.norecover
-        end
-        @component_parser = ArchiveSpace::Parsers::ComponentParser.new
-        @component_parser.parse(nokogiri_xml_document, 1)
+      let(:component_parser) { described_class.new }
+      let(:xml_input) { fixture_file_upload('ead/test_ead.xml').read }
+      let(:nokogiri_xml_document) { Nokogiri::XML(xml_input) { |config| config.norecover } }
+      before do
+        component_parser.parse(nokogiri_xml_document, 1)
       end
 
       let (:expected_heads) {
@@ -415,19 +413,19 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
 
       context 'given NOKOGIRI::XML::DOCUMENT as an argument' do
         it 'sets the compound_title_string attribute correctly' do
-          expect(@component_parser.compound_title_string).to eq expected_compound_title_string
+          expect(component_parser.compound_title_string).to eq expected_compound_title_string
         end
 
         it 'sets the container_info_strings attribute correctly' do
-          container_info_strings = @component_parser.container_info_strings
+          container_info_strings = component_parser.container_info_strings
           expect(expected_container_info_strings.size).to eq container_info_strings.size
           expected_container_info_strings.each_with_index do |expected_info_string, index|
-            expect(@component_parser.container_info_strings[index]).to eq expected_info_string
+            expect(component_parser.container_info_strings[index]).to eq expected_info_string
           end
         end
 
         it 'sets digital_archival_objects correctly' do
-          digital_archival_objects = @component_parser.digital_archival_objects
+          digital_archival_objects = component_parser.digital_archival_objects
           expect(expected_digital_archival_objects.size).to eq digital_archival_objects.size
           expected_digital_archival_objects.each_with_index do |expected_digital_archival_object, index|
             expect(digital_archival_objects[index].href).to eq expected_digital_archival_object[:href]
@@ -436,28 +434,28 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         end
 
         it 'sets the level_attribute attribute correctly' do
-          expect(@component_parser.level_attribute).to eq expected_level_attribute
+          expect(component_parser.level_attribute).to eq expected_level_attribute
         end
 
         it 'sets the physical_description_extents_string attribute correctly' do
-          expect(@component_parser.physical_description_extents_string).to eq expected_physical_description_extents_string
+          expect(component_parser.physical_description_extents_string).to eq expected_physical_description_extents_string
         end
 
         it 'sets the unit_dates attribute correctly' do
           expected_unit_dates.each_with_index do |expected_unit_date, index|
-            expect(@component_parser.unit_dates[index].text).to eq expected_unit_date
+            expect(component_parser.unit_dates[index].text).to eq expected_unit_date
           end
         end
 
         it 'sets the unit_title attribute correctly' do
-          expect(@component_parser.unit_title.text).to eq 'Series I: Cataloged Correspondence'
+          expect(component_parser.unit_title.text).to eq 'Series I: Cataloged Correspondence'
         end
 
         head_attributes = attributes.find_all { |attribute| "#{attribute}".ends_with? "head"}
         head_attributes.each do |head_attribute|
           it "sets the attribute #{head_attribute} correctly" do
             expected_head = expected_heads[head_attribute]
-            expect(@component_parser.instance_variable_get("@#{head_attribute}")).to eq expected_head
+            expect(component_parser.send ("#{head_attribute}")).to eq expected_head
           end
         end
 
@@ -466,7 +464,7 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
           it "sets the attribute #{value_attribute} correctly" do
             expected_values = eval "expected_#{value_attribute}"
             expected_values.each_with_index do |expected_value, index|
-              expect(@component_parser.instance_variable_get("@#{value_attribute}")[index].text).to eq expected_value
+              expect(component_parser.send("#{value_attribute}")[index].text).to eq expected_value
             end
           end
         end

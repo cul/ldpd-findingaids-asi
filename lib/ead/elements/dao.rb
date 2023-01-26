@@ -28,6 +28,24 @@ module Ead
           nokogiri_xml_element.xpath(XPATH[:href_attribute])
         end
       end
+
+      attr_reader :nokogiri_element
+
+      def initialize(nokogiri_element)
+        reset! nokogiri_element
+      end
+
+      def reset!(nokogiri_element = nil)
+        @nokogiri_element = nokogiri_element
+      end
+
+      def href
+        Dao.href_attribute_node_set(nokogiri_element).text
+      end
+
+      def description
+        Dao.daodesc_p_node_set(nokogiri_element).text
+      end
     end
   end
 end
