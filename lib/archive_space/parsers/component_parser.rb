@@ -83,26 +83,24 @@ module ArchiveSpace
       # descendant <c> components -- a <c> can contain another <c> element which itself may contain
       # a nested <c> element and so on. The most efficient to process this nested information at
       # display time is to flatten out the tree structure.
-      def generate_structure_containing_lower_level_components(root_component, series_num)
-        @flattened_component_tree_structure = []
-        generate_children_components_info(root_component)
+      def generate_structure_containing_lower_level_components(root_component, _series_num)
+        accumulator = []
+        generate_children_components_info(root_component, accumulator)
+        accumulator
       end
 
-      def generate_children_components_info(component, previous_nesting_level = 0)
+      def generate_children_components_info(component, accumulator, previous_nesting_level = 0)
         current_nesting_level = previous_nesting_level + 1
-        child_components = ::Ead::Elements::Component.c_node_set(component)
-        return if child_components.empty?
-        child_components.each do |child_component|
-          @flattened_component_tree_structure.append generate_child_component_info(child_component, current_nesting_level)
-          generate_children_components_info(child_component, current_nesting_level)
+        component.child_components.each do |child_component|
+          accumulator.append generate_child_component_info(child_component, current_nesting_level)
+          generate_children_components_info(child_component, accumulator, current_nesting_level)
         end
       end
 
-      def generate_child_component_info(component_element, nesting_level = 0)
+      def generate_child_component_info(component, nesting_level = 0)
         component_info = ComponentInfo.new
-        component = ::Ead::Elements::Component.new(component_element)
         EAD_ELEMENT_COMPONENT_METHODS.each do |member, class_method|
-          component_info[member] = ::Ead::Elements::Component.send(class_method,component_element).map do |value|
+          component_info[member] = component.send(member).map do |value|
             (ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms value).to_s
           end
         end
@@ -127,7 +125,7 @@ module ArchiveSpace
         series_element = ::Ead::Elements::Dsc.c_level_attribute_series_array(arch_desc_dsc)[series_num -1]
 
         @series = ::Ead::Elements::Component.new(series_element)
-        generate_structure_containing_lower_level_components(series_element, series_num)
+        @flattened_component_tree_structure = generate_structure_containing_lower_level_components(@series, series_num)
       end
     end
   end

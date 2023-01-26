@@ -80,22 +80,15 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
   describe 'Testing functionality: ' do
     ########################################## generate_children_components_info
     describe 'generate_children_components_info' do
-      before(:context) do
-        xml_input = fixture_file_upload('ead/test_ead.xml').read
-        nokogiri_xml_document = Nokogiri::XML(xml_input) do |config|
-          config.norecover
-        end
-        component_xml_nokogiri_element =  nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]').first
-        @component_parser = ArchiveSpace::Parsers::ComponentParser.new
-        # need to initialize @flattened_component_tree_structure by hand, normally initialized by
-        # the generate_structure_containing_lower_level_components method, which is the method that
-        # calls #generate_child_components_info
-        @component_parser.instance_variable_set(:@flattened_component_tree_structure, [])
-        @component_parser.generate_children_components_info(component_xml_nokogiri_element)
-      end
+      let(:xml_input) { fixture_file_upload('ead/test_ead.xml').read }
+      let(:nokogiri_xml_document) { Nokogiri::XML(xml_input) { |config| config.norecover } }
+      let(:component_element) { nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]').first }
+      let(:component) { ::Ead::Elements::Component.new(component_element) }
+      let(:result) { [] }
+      before { ArchiveSpace::Parsers::ComponentParser.new.generate_children_components_info(component, result) }
+
       context 'given NOKOGIRI::XML::ELEMENT, representing a <c>, as an argument' do
         it 'the flattened_component_tree_structure is set correctly' do
-          result = @component_parser.flattened_component_tree_structure
           expect(result[0][:unit_title]).to eq '<unittitle>Subseries 1: Cataloged Correspondence -- Letters</unittitle>'
           expect(result[0][:scope_and_content_values][1]).to eq '<p>The Builder. Nov 11, 1921. Excerpt;</p>'
           expect(result[0][:nesting_level]).to eq 1
@@ -115,7 +108,8 @@ RSpec.describe ArchiveSpace::Parsers::ComponentParser do
         end
         component_xml_nokogiri_element =  nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc/xmlns:c[@level="series"]').first
         component_parser = ArchiveSpace::Parsers::ComponentParser.new
-        @component_info = component_parser.generate_child_component_info(component_xml_nokogiri_element, 1)
+        component = ::Ead::Elements::Component.new(component_xml_nokogiri_element)
+        @component_info = component_parser.generate_child_component_info(component, 1)
         @expected_component_info = ArchiveSpace::Parsers::ComponentParser::ComponentInfo.new
         @expected_component_info.compound_title_string = 'Series I: Cataloged Correspondence, 1914-1989, 1894-1967, bulk 1958-1980'
         @expected_component_info.unit_dates = ['1914-1989', '1958-1980', '1894-1967']

@@ -51,6 +51,10 @@ module Ead
         first_title = did.unittitle_node_set.first
         html_transforms ? ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms(first_title)&.to_s : first_title
       end
+
+      def child_components
+        self.class.c_node_set(nokogiri_element).map { |child_element| Component.new(child_element)}
+      end
     end
   end
 end
