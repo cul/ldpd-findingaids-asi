@@ -22,7 +22,7 @@
     name: Avery Drawings & Archives Collections
     # url is the desired url to be used for the library link at the top of a
     # finding aids page
-    url: http://archivesportal.library.columbia.edu/repository.php?r=nnc-a
+    url: https://findingaids.library.columbia.edu/ead/nnc-a
     # has_fa_list indicates whether or not a repo has an entry in the 
     # home/main/landingpage for the findingaids app
     has_fa_list: true
@@ -42,7 +42,7 @@
     aeon_site_code: STARRCUL
     as_repo_id: 4
     name: C.V. Starr East Asian Library
-    url: http://archivesportal.library.columbia.edu/repository.php?r=nnc-ea
+    url: https://findingaids.library.columbia.edu/ead/nnc-ea
     has_fa_list: true
 
   nnc-rb:
@@ -51,7 +51,7 @@
     aeon_site_code: RBMLCUL
     as_repo_id: 2
     name: Rare Book & Manuscript Library
-    url: http://archivesportal.library.columbia.edu/repository.php?r=nnc-rb
+    url: https://findingaids.library.columbia.edu/ead/nnc-rb
     has_fa_list: true
 
   nnc-ua:
@@ -60,7 +60,7 @@
     aeon_site_code: RBMLCUL
     as_repo_id: 2
     name: Columbia University Archives
-    url: http://archivesportal.library.columbia.edu/repository.php?r=nnc-ua
+    url: https://findingaids.library.columbia.edu/ead/nnc-ua
     has_fa_list: true
 
   nnc-ut:
@@ -69,7 +69,7 @@
     aeon_site_code: BURKECUL
     as_repo_id: 5
     name: 'Burke Library at Union Theological Seminary'
-    url: http://archivesportal.library.columbia.edu/repository.php?r=nnc-ut
+    url: https://findingaids.library.columbia.edu/ead/nnc-ut
     has_fa_list: true
 
   nnc-m:
