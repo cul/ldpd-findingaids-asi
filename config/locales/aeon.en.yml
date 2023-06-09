@@ -32,9 +32,7 @@
 en:
   aeon:
     text_submit_container_list:
-      "All external visitors, including alumni, must meet the University's
-       primary COVID-19 vaccination series mandate and are required to adhere
-       to the University's COVID-19 policies . After clicking 'Submit Request',
+      "After clicking 'Submit Request',
        users will login with their UNI and password (Columbia affiliates) or
        their special collections account (external users). Appointments are
        required and will be arranged according to each individual repository's policy."
@@ -42,14 +40,14 @@ en:
       "Use this field to add research notes for your future reference. For
        immediate inquiries or concerns, please contact the library directly."
     text_footer_first_paragraph_submit_request:
-      "All external visitors, including alumni, must meet the University's
-       primary COVID-19 vaccination series mandate and are required to adhere
-       to the University's COVID-19 policies."
-    text_footer_second_paragraph_submit_request:
       "After clicking 'Submit Request', users will login with their UNI and
        password (Columbia affiliates) or their special collections account
        (external users). Appointments are required and will be arranged
        according to each individual repository's policy."
+    text_footer_second_paragraph_submit_request:
+      "Carefully review your request Item Status on the following page. You
+      may need to take additional action so library staff can confirm your
+      appointment."
     text_footer_submit_request:
       "Please schedule no more than 10 boxes per date. Scheduled dates for
        off-site materials are pending approval by staff until a confirmation
