@@ -1,6 +1,6 @@
 require 'date'
 
-lock '3.17.0'
+lock '3.17.3'
 
 set :department, 'ldpd'
 set :instance, fetch(:department)
