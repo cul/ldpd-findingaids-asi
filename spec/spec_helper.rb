@@ -14,6 +14,7 @@
 #
 require 'securerandom'
 require 'yaml'
+require 'fileutils'
 # Set up config files if necessary - may move to rake task in the future
 root_dir = File.expand_path('../..', __FILE__)
 Dir.glob(File.join(root_dir, "config/templates/*.template.yml")).each do |template_yml_path|
