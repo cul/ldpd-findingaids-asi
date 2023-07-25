@@ -1,4 +1,4 @@
-20Aug21_copy: &BASE
+base: &BASE
   nnc-a:
     # requestable_via_aeon is set to true to enable aeon requests for a repo
     requestable_via_aeon: true
@@ -19,7 +19,7 @@
     # as_repo_id indicates the ID used to identify the repo on the archivespace
     # server. Note that some repos share the same ID
     as_repo_id: 3
-    name: Avery Drawings & Archives Collections
+    name: 'Avery Drawings & Archives Collections'
     # url is the desired url to be used for the library link at the top of a
     # finding aids page
     url: https://findingaids.library.columbia.edu/ead/nnc-a
@@ -76,7 +76,7 @@
     requestable_via_aeon: false
     as_repo_id: 'clio_only'
     name: 'Health Sciences Library'
-    url: http://archivesportal.library.columbia.edu/repository.php?r=nnc-m
+    url: https://www.library-archives.cumc.columbia.edu/finding-aids
     has_fa_list: false
 
   nynycoh:
