@@ -4,14 +4,14 @@ development: &DEV
   # code will automatically replace the string below with the authentication token
   # for the specific session
   authenticity_token_placeholder: '!!CUL_REPLACE_THIS_STRING_WITH_AUTHENTICITY_TOKEN!!'
-  ead_cache_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_WHERE_CACHED_EADS_WILL_BE_STORED'
-  html_cache_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_WHERE_CACHED_HTML_PAGES_WILL_BE_STORED'
-  clio_bib_id_data_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_CONTAINING_CLIO_BIB_ID_DATA'
+  ead_cache_dir: test/fixtures/files/ead
+  html_cache_dir: tmp/html_cache
+  clio_bib_id_data_dir: spec/fixtures/asi/as_solr_data
   clio_redirect_url: 'https://clio.columbia.edu/catalog/'
   # Following string is used as a separator when "encoding" the list of requested containers
   # No need to change the given string.
   container_info_delimiter: 'CONTAINERINFODELIMITER'
-  fa_lists_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_CONTAINING_LISTS_OF_FINDING_AIDS'
+  fa_lists_dir: test/fixtures/files/fa_lists
   # During development/testing, the AS server may not be accessible. In this case, the code
   # should not attempt to authenticate on the AS server. To bypass authentication, set
   # the following to true. On the production server, it should be set to false since
@@ -19,7 +19,7 @@ development: &DEV
   bypass_as_authentication: true
   # valid_finding_aid_bib_ids indicates the full path to the file containing
   # the set of valid bib IDs and matching repo code (nnc-rb, etc.)
-  valid_finding_aid_bib_ids: 'ABSOLUTE_PATH_TO_FILE_CONTAINING_VALID_BIB_IDS'
+  valid_finding_aid_bib_ids: test/fixtures/files/valid_fa_bib_ids.yml
   # log_bib_id_repo_id_hash_cache_expiration is set to true to turn on expiration
   # of the cache contaning the info from file of valid bib IDs and associated
   # repo codes.
@@ -30,10 +30,10 @@ development: &DEV
   bib_id_repo_id_hash_cache_expiration_in_hours: 12
 test:
   <<: *DEV
-  ead_cache_dir: tmp/ead_cache
+  ead_cache_dir: test/fixtures/files/ead
   html_cache_dir: tmp/html_cache
   clio_bib_id_data_dir: spec/fixtures/asi/as_solr_data
-  fa_lists_dir: tmp/fa_lists
+  fa_lists_dir: test/fixtures/files/fa_lists
 production:
   google_analytics: true
   # NOTE on authenticity_token_placeholder below: No need to change this string, the
