@@ -27,6 +27,7 @@ development: &DEV
   # use to delemit the series title from the component title in the request
   # sent to aeon.
   unittitle_delimiter: ' ## '
+  characters_in_creator_list_for_aeon_request: 10
 test:
   <<: *DEV
 production:
@@ -58,3 +59,4 @@ production:
   # use to delemit the series title from the component title in the request
   # sent to aeon.
   unittitle_delimiter: ' ## '
+  characters_in_creator_list_for_aeon_request: 10
