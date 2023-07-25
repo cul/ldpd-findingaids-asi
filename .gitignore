@@ -37,6 +37,7 @@
 # Ignore config files with sensitive data
 aeon.yml
 archivespace.yml
+blacklight.yml
 credentials.yml.enc
 database.yml
 finding_aids.yml
