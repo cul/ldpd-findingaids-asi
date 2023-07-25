@@ -4,6 +4,6 @@
 <h3>View finding aids for:</h3>
 <ul>
   <% @repositories.each do |repo| %>
-  <li><%= link_to repo.name, repository_finding_aids_path(repository_id: repo.id) %> </li>
+  <li><%= link_to(repo.name, repository_finding_aids_path(repository_id: repo.id)) if repo.has_fa_list? %> </li>
   <% end %>
 </ul>

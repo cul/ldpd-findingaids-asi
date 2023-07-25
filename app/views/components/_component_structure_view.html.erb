@@ -19,7 +19,7 @@
     <% end %>
     <% current_nesting_level = component.nesting_level %>
     <% if aeon_enabled %>
-      <% if REPOS[@repository_code][:checkbox_per_unittitle] %>
+      <% if @repository.checkbox_per_unittitle %>
         <% unittitle_string = "#{AEON[:unittitle_delimiter]}#{remove_unittitle_tags(component.unit_title)}" %>
         <% container_info_string = component.container_info_strings.join(' ') %>
       <% else %>

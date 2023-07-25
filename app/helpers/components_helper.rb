@@ -4,7 +4,7 @@ module ComponentsHelper
     if (!container_info_string.nil? and
         # fcd1: when port code to master branch, check name of data member containing repo code
         # code that sets this has changed
-        (REPOS[@repository_code][:checkbox_per_unittitle] or
+        (@repository&.checkbox_per_unittitle or
          container_info_string != @last_container_info_string_seen)
        )
 #        container_info_string != @last_container_info_string_seen)

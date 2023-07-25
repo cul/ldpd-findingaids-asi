@@ -4,7 +4,7 @@
              locals: {series: series, print_view: @print_view}
   %>
   <!-- INFORMATION FOR SECOND LEVEL <C> ELEMENTS AND CONTAINED <C> ELEMENTS AT LOWER LEVELS -->
-  <% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
+  <% if @repository.aeon_enabled? %>
     <!-- component_id needed for the creation of checkboxes for repos using aeon -->
     <%= render partial: "component_structure_view",
                locals: {series: series,
