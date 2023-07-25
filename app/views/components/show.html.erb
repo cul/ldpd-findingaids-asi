@@ -23,7 +23,7 @@
         %>
         <!-- INFORMATION FOR SECOND LEVEL <C> ELEMENTS AND CONTAINED <C> ELEMENTS AT LOWER LEVELS -->
 	<% repo_suffix = params[:repository_id].gsub('-','_') %>
-	<% if REPOS[params[:repository_id]][:requestable_via_aeon] %>
+	<% if @repository.aeon_enabled? %>
           <!-- component_id needed for the creation of checkboxes for repos using aeon -->
           <%= render partial: "component_structure_view",
                      layout: "with_aeon",

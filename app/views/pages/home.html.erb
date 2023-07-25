@@ -3,7 +3,7 @@
 <h2>Columbia University Finding Aids</h2>
 <h3>View finding aids for:</h3>
 <ul>
-  <% REPOS.each do |repo_id, repo| %>
-  <li><%= link_to repo[:name], repository_finding_aids_path(repository_id: repo_id) %> </li>
+  <% Repository.all do |repo| %>
+  <li><%= link_to repo.name, repository_finding_aids_path(repository_id: repo.id) %> </li>
   <% end %>
 </ul>

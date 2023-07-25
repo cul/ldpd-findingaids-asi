@@ -83,29 +83,28 @@ module ArchiveSpace
           parent[:children] << { name: tag }
           parent[:children][-1]
         end
-        repo_code = repository_code(marc)
-        unless REPOS[repo_code]
-          Rails.logger.warn("unknown repository_code #{repo_code}")
-          return elements
+        begin
+          repository = Repository.find(repository_code(marc))
+          last[:value] = CGI.escapeHTML(repository.name)
+          last = %w(profiledesc creation).inject(elements[0]) do |parent, tag|
+            parent[:children] ||= []
+            parent[:children] << { name: tag }
+            parent[:children][-1]
+          end
+          last[:value] = "This stub finding aid was produced from CLIO data on <date>#{Time.now.utc}</date>."
+        rescue ActiveRecord::RecordNotFound => e
+          Rails.logger.warn(e.message)
         end
 
-        last[:value] = CGI.escapeHTML(REPOS[repo_code]['name'])
-        last = %w(profiledesc creation).inject(elements[0]) do |parent, tag|
-          parent[:children] ||= []
-          parent[:children] << { name: tag }
-          parent[:children][-1]
-        end
-        last[:value] = "This stub finding aid was produced from CLIO data on <date>#{Time.now.utc}</date>."
         elements
       end
 
       # nnc-rb, nnc-a, nnc-m, nnc-ua, nnc-ut, nnc-ea, nynycoh
       def repository_code(marc)
-        canonical_values = REPOS.keys
         sf = marc['040'].subfields.detect {|s| s.code == 'a' }
         return nil unless sf
         sf = sf.value.downcase
-        return sf if canonical_values.include?(sf)
+        return sf if Repository.exists?(sf)
         # TODO identify variants used in the legacy script
         return 'nnc-a' if sf.eql?('nnc-av')
         if sf.eql?('zcu')
@@ -114,8 +113,8 @@ module ArchiveSpace
         end
         if marc['996']
           name = marc['996']['a']
-          code, attrs = REPOS.detect {|code, attrs| attrs['name'] == name }
-          return code
+          repository = Repository.all.detect {|repo| repo.name == name }
+          return repository&.id
         end
       end
 

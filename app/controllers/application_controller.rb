@@ -27,23 +27,19 @@ class ApplicationController < ActionController::Base
 
   # @as_repo_id => repo ID in ArchiveSpace
   def validate_repository_code_and_set_repo_id
-    if REPOS.key? params[:repository_id]
-      # fcd1, 07/19/21: Need to verify if there is already another data member containing the same info
-      # as @repository_code. Also, the validation code to be added ("re-added") via ACFA-308 may
-      # change/affect this data member. Investigate when code added. I don't think so, but...
-      @repository_code = params[:repository_id]
-      @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
-      @repository_name = REPOS[params[:repository_id]][:name]
+    @repository = Repository.find(params[:repository_id])
+    @repository_code = @repository.id
+    @as_repo_id = @repository.as_repo_id
+    @repository_name = @repository.name
+  rescue ActiveRecord::RecordNotFound => e
+    Rails.logger.warn(e.message)
+    unless params[:id].blank?
+      bib_id = params[:id].delete_prefix('ldpd_')
+      Rails.logger.warn("redirect to CLIO with Bib ID #{bib_id}")
+      redirect_to CONFIG[:clio_redirect_url] + bib_id
     else
-      Rails.logger.warn("Non-existent repo code (#{params[:repository_id]}) in url")
-      unless params[:id].blank?
-        bib_id = params[:id].delete_prefix('ldpd_')
-        Rails.logger.warn("redirect to CLIO with Bib ID #{bib_id}")
-        redirect_to CONFIG[:clio_redirect_url] + bib_id
-      else
-        Rails.logger.warn("no Bib ID in url")
-        redirect_to '/'
-      end
+      Rails.logger.warn("no Bib ID in url")
+      redirect_to '/'
     end
   end
 

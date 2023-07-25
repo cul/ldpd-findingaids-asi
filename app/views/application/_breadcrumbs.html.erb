@@ -1,6 +1,6 @@
 <p class="breadcrumbs">
   &nbsp;&nbsp;&nbsp;
   <a href="https://findingaids.library.columbia.edu/">Columbia University Finding Aids</a> &gt
-  <a href="<%= REPOS[params[:repository_id]][:url] %>"><%= REPOS[params[:repository_id]][:name] %></a> &gt;
+  <a href="<%= @repository.url %>"><%= @repository.name %></a> &gt;
   <%= @finding_aid_title %>
 </p>

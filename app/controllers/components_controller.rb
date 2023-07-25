@@ -58,8 +58,8 @@ class ComponentsController < ApplicationController
     @series = ArchiveSpace::Parsers::ComponentParser.new
     @series.parse(ead_nokogiri_xml_doc, @params_series_num.to_i)
     @cache_html = true unless @preview_flag
-    @aeon_site_code = REPOS[params[:repository_id]][:aeon_site_code]
-    if REPOS[params[:repository_id]][:aeon_user_review_set_to_yes]
+    @aeon_site_code = @repository.aeon_site_code
+    if @repository.aeon_user_review_set_to_yes?
       @user_review_value = 'yes'
     else
       @user_review_value = 'no'
@@ -153,11 +153,6 @@ class ComponentsController < ApplicationController
       end
       return
     end
-    # fcd1, 07/19/21: Need to verify if there is already another data member containing the same info
-    # as @repository_code. Also, the validation code to be added ("re-added") via ACFA-308 may
-    # change/affect this data member. Investigate when code added. I don't think so, but...
-    @repository_code = params[:repository_id]
-    @as_repo_id = REPOS[params[:repository_id]][:as_repo_id]
-    @repository_name = REPOS[params[:repository_id]][:name]
+    validate_repository_code_and_set_repo_id
   end
 end
