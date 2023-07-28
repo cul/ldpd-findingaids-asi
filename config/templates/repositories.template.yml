@@ -26,16 +26,32 @@ base: &BASE
     # has_fa_list indicates whether or not a repo has an entry in the 
     # home/main/landingpage for the findingaids app
     has_fa_list: true
-
+    contact_html: |
+      <div class="al-repository-contact-info"><a href="mailto:avery@library.columbia.edu">avery@library.columbia.edu</a></div>
+    location_html: |
+      <div class="al-repository-url"><a href="http://library.columbia.edu/locations/avery.html">Avery Home Page</a></div>
+      <div class="al-repository-street-address-building">300 Avery Hall</div>
+      <div class="al-repository-street-address-address1">1172 Amsterdam Ave.</div>
+      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    description: "Avery is a wonderful repository"
+    thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_avery.png"
   nnc-ccoh:
     requestable_via_aeon: true
     checkbox_per_unittitle: false
     aeon_site_code: RBMLCUL
     as_repo_id: 2
-    name: 'Oral History Archives at Columbia'
+    name: Oral History Archives at Columbia
     url: https://findingaids.library.columbia.edu/ead/nnc-ccoh
     has_fa_list: true
-
+    contact_html: |
+      <div class="al-repository-contact-info"><a href="mailto:oralhist@library.columbia.edu">oralhist@library.columbia.edu</a></div>
+    location_html: |
+      <div class="al-repository-url"><a href="https://library.columbia.edu/libraries/ccoh/FAQ.html">OHAC Home Page</a></div>
+      <div class="al-repository-street-address-building">6th Floor East Butler Library</div>
+      <div class="al-repository-street-address-address1">535 West 114th Street</div>
+      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    description: "OHAC is a wonderful repository"
+    thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_ccoh.png"
   nnc-ea:
     requestable_via_aeon: true
     checkbox_per_unittitle: false
@@ -44,7 +60,15 @@ base: &BASE
     name: C.V. Starr East Asian Library
     url: https://findingaids.library.columbia.edu/ead/nnc-ea
     has_fa_list: true
-
+    contact_html: |
+      <div class="al-repository-contact-info"><a href="mailto:starr@library.columbia.edu">starr@library.columbia.edu</a></div>
+    location_html: |
+      <div class="al-repository-url"><a href="http://library.columbia.edu/locations/eastasian.html">CV Starr Home Page</a></div>
+      <div class="al-repository-street-address-building">300 Kent Hall</div>
+      <div class="al-repository-street-address-address1">1140 Amsterdam Ave.</div>
+      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    description: "CV Starr is a wonderful repository"
+    thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_eastasian.png"
   nnc-rb:
     requestable_via_aeon: true
     checkbox_per_unittitle: false
@@ -53,7 +77,15 @@ base: &BASE
     name: Rare Book & Manuscript Library
     url: https://findingaids.library.columbia.edu/ead/nnc-rb
     has_fa_list: true
-
+    contact_html: |
+      <div class="al-repository-contact-info"><a href="mailto:rbml@library.columbia.edu">rbml@library.columbia.edu</a></div>
+    location_html: |
+      <div class="al-repository-url"><a href="http://library.columbia.edu/locations/rbml.html">RBML Home Page</a></div>
+      <div class="al-repository-street-address-building">6th Floor East Butler Library</div>
+      <div class="al-repository-street-address-address1">535 West 114th Street</div>
+      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    description: "RBML is a wonderful repository"
+    thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_rbml.png"
   nnc-ua:
     requestable_via_aeon: true
     checkbox_per_unittitle: false
@@ -62,29 +94,63 @@ base: &BASE
     name: Columbia University Archives
     url: https://findingaids.library.columbia.edu/ead/nnc-ua
     has_fa_list: true
-
+    contact_html: |
+      <div class="al-repository-contact-info"><a href="mailto:uarchives@columbia.edu">uarchives@columbia.edu</a></div>
+    location_html: |
+      <div class="al-repository-url"><a href="http://library.columbia.edu/locations/cuarchives.html">University Archives Home Page</a></div>
+      <div class="al-repository-street-address-building">6th Floor East Butler Library</div>
+      <div class="al-repository-street-address-address1">535 West 114th Street</div>
+      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    description: "University Archives is a wonderful repository"
+    thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_cuarchives.png"
   nnc-ut:
     requestable_via_aeon: true
     checkbox_per_unittitle: false
     aeon_site_code: BURKECUL
     as_repo_id: 5
-    name: 'Burke Library at Union Theological Seminary'
+    name: Burke Library at Union Theological Seminary
     url: https://findingaids.library.columbia.edu/ead/nnc-ut
     has_fa_list: true
-
+    contact_html: |
+      <div class="al-repository-contact-info"><a href="mailto:burke@library.columbia.edu">burke@library.columbia.edu</a></div>
+    location_html: |
+      <div class="al-repository-url"><a href="http://library.columbia.edu/locations/burke.html">Burke Home Page</a></div>
+      <div class="al-repository-street-address-building">Union Theological Seminary</div>
+      <div class="al-repository-street-address-address1">3041 Broadway</div>
+      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    description: "Burke is a wonderful repository"
+    thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_burke.png"
   nnc-m:
     requestable_via_aeon: false
-    as_repo_id: 'clio_only'
-    name: 'Health Sciences Library'
+    as_repo_id: clio_only
+    name: Health Sciences Library
     url: https://www.library-archives.cumc.columbia.edu/finding-aids
     has_fa_list: false
-
+    contact_html: |
+      <div class="al-repository-contact-info"><a href="mailto:hsl@example.org">hsl@example.org</a></div>
+    location_html: |
+      <div class="al-repository-url"><a href="https://www.library-archives.cumc.columbia.edu/">HSL Home Page</a></div>
+      <div class="al-repository-street-address-building">Hammer Health Sciences Building, Room LL1-111</div>
+      <div class="al-repository-street-address-address1">Columbia University Medical Center</div>
+      <div class="al-repository-street-address-address1">701 West 168th Street</div>
+      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10032, USA</div>
+    description: "HSL is a wonderful repository"
+    thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_burke.png"
   nynycoh:
     requestable_via_aeon: false
-    as_repo_id: 'clio_only'
-    name: 'Oral History Archives at Columbia'
+    as_repo_id: clio_only
+    name: Oral History Archives at Columbia
     url: https://library.columbia.edu/locations/ccoh.html
     has_fa_list: false
+    contact_html: |
+      <div class="al-repository-contact-info"><a href="mailto:oralhist@library.columbia.edu">oralhist@library.columbia.edu</a></div>
+    location_html: |
+      <div class="al-repository-url"><a href="https://library.columbia.edu/libraries/ccoh/FAQ.html">OHAC Home Page</a></div>
+      <div class="al-repository-street-address-building">6th Floor East Butler Library</div>
+      <div class="al-repository-street-address-address1">535 West 114th Street</div>
+      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    description: "OHAC is a wonderful repository"
+    thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_ccoh.png"
 development:
   <<: *BASE
 test:
