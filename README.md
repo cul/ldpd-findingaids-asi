@@ -17,4 +17,4 @@ will create a core called "acfa".
 1. Install dependencies with `bundle install`. The application Gemfile indicates the required Ruby version.
 2. Run the database migrations against sqlite in development with `bundle exec rake db:migrate`
 3. Run the rspec suite with `bundle exec rspec` - this will set up the default template configurations
-4. Start a rails development server with `bundle exec rails s`
+4. Run `bundle exec rake acfa:server` - this will bring up solr, seed it with example data, and start rails
