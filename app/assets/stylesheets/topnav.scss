@@ -123,8 +123,8 @@ $navbar-primary-brand-hover-color:           $navbar-primary-active-color !defau
 }
 
 .dropdown-menu {
-  background-color: $primary;
-  color: $primary-text;
+  background-color: $primary !important;
+  color: $primary-text !important;
   &>li {
     padding:0;
   }

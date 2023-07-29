@@ -1,18 +1,4 @@
-<div style="margin-top:60px;"></div>
-<table style="width:100%">
-  <tbody>
-    <tr>
-      <td class="breadcrumbs">
-	<a href="https://findingaids.library.columbia.edu/"
-	   title="Columbia University Libraries Archival Collections"
-	   alt="Columbia University Libraries Archival Collections">
-	  <%= image_tag 'cul-archival.jpg' %>
-	</a>
-      </td>
-      <td valign="middle" align="right"
-	  style="color:#336699;font-family:Georgia, Times, Serif; font-size:18px;padding-right:10px;margin-right:10px;">
-        <%= link_to(@repository.name, @repository.url) if @repository %>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<%- al_repository = Arclight::Repository.find_by(slug: @repository.id) if @repository -%>
+<%- breadcrumb(:ead_repository, @repository) if @repository %>
+<%= render 'shared/breadcrumbs' %>
+<%= render al_repository if al_repository %>
