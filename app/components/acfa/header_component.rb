@@ -2,6 +2,10 @@
 
 module Acfa
   class HeaderComponent < Arclight::HeaderComponent
+    def masthead
+      render Acfa::MastheadComponent.new
+    end
+
     def top_bar
       render Acfa::TopNavbarComponent.new(blacklight_config: blacklight_config)
     end
