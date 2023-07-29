@@ -10,7 +10,7 @@
   </head>
 
   <body>
-    <%= render partial: 'topnavbar' unless @print_view %>
+    <%= render Acfa::TopNavbarComponent.new(blacklight_config: controller.blacklight_config) unless @print_view %>
     <%= yield %>
   </body>
 </html>
