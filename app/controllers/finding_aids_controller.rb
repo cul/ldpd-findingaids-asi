@@ -64,7 +64,7 @@ class FindingAidsController < ApplicationController
             @ead_header.eadid_url_attribute.include?('findingaids.library.columbia.edu'))
       @eadid_other_finding_aid_url = @ead_header.eadid_url_attribute
     end
-    @cache_html = true unless @preview_flag
+    @cache_html = CONFIG.fetch(:cache_html, !@preview_flag)
   end
 
   def print
