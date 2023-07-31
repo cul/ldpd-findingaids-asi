@@ -4,21 +4,14 @@
     <tr>
       <th class="firstCell" style="vertical-align:middle;">Heading</th>
       <% unless @print_view %>
-      <th class="firstCell" style="vertical-align:middle;">"CUL Archives:"<br>"Portal"</th>
       <th class="firstCell" style="vertical-align:middle;">"CUL Collections:"<br>"CLIO"</th>
       <th class="firstCell" style="vertical-align:middle;">"Nat'l / Int'l Archives:"<br>"ArchivedGRID"</th>
       <% end %>
     </tr>
     <% @subjects.each do |subject| %>
     <tr>
-      <td class="firstCell"><%= subject %></td>
+      <td class="firstCell"><%= link_to subject, search_catalog_path(f:{subject: [subject]}), target: '_blank' %></td>
       <% unless @print_view %>
-      <td>
-	<a target="_blank"
-	  href="<%= "https://archivesportal.library.columbia.edu/results.php?component_text=\"#{subject}\"&operator=AND" %>">
-	  Portal
-	</a>
-      </td>
       <td>
 	<a target="_blank"
 	  href="<%= "https://clio.columbia.edu/catalog?q=\"#{subject}\"&search_field=subject" %>">

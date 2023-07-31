@@ -1,10 +1,10 @@
-<h2>Description</h2>
+<h2 class="al-show-sub-heading">Description</h2>
 <% if @preview_flag %>
   <% slug_prefix = '/preview' %>
 <% else %>
   <% slug_prefix = '' %>
 <% end %>
-<%= content_tag(:h3, @arch_desc_misc.scope_and_content_head) unless @arch_desc_misc.scope_and_content_head.nil? %>
+<%= content_tag(:h3, @arch_desc_misc.scope_and_content_head, class: 'al-show-sub-heading') unless @arch_desc_misc.scope_and_content_head.nil? %>
 <% @arch_desc_misc.scope_and_content_values.each do |scope_content_value| %>
   <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms scope_content_value %>
 <% end %>
@@ -23,7 +23,7 @@
   </ul>
 </p>
 <% end %>
-<%= content_tag(:h3,@arch_desc_misc.other_descriptive_data_head) unless @arch_desc_misc.other_descriptive_data_head.nil? %>
+<%= content_tag(:h3,@arch_desc_misc.other_descriptive_data_head, class: 'al-show-sub-heading') unless @arch_desc_misc.other_descriptive_data_head.nil? %>
 <% @arch_desc_misc.other_descriptive_data_values.each do |odd_value| %>
   <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms odd_value %>
 <% end %>

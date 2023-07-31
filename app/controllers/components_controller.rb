@@ -57,7 +57,7 @@ class ComponentsController < ApplicationController
     # for the type of component here and create appropriate variable
     @series = ArchiveSpace::Parsers::ComponentParser.new
     @series.parse(ead_nokogiri_xml_doc, @params_series_num.to_i)
-    @cache_html = true unless @preview_flag
+    @cache_html = CONFIG.fetch(:cache_html, !@preview_flag)
     @aeon_site_code = @repository.aeon_site_code
     if @repository.aeon_user_review_set_to_yes?
       @user_review_value = 'yes'
@@ -121,7 +121,7 @@ class ComponentsController < ApplicationController
       current_series.parse(ead_nokogiri_xml_doc, index + 1)
       @series_array.append current_series
     end
-    @cache_html = true unless @preview_flag
+    @cache_html = CONFIG.fetch(:cache_html, !@preview_flag)
     @aeon_site_code = REPOS[params[:repository_id]][:aeon_site_code]
     if REPOS[params[:repository_id]][:aeon_user_review_set_to_yes]
       @user_review_value = 'yes'

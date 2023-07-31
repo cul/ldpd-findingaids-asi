@@ -1,22 +1,21 @@
-<%= render partial: 'banner_breadcrumbs_title' %>
-<table style="width:100%">
-  <tbody>
-    <tr>
-      <td class="sidebar">
+<%- breadcrumb(:ead_component, @repository, params[:finding_aid_id], @finding_aid_title, params[:id], @series.unit_title.text) %>
+<%= render 'shared/breadcrumbs' %>
+<div class="row">
+  <div class="sidebar col-6 col-sm-4 col-md-3 col-lg-2">
         <%
           series_titles_urls =
             @arch_desc_dsc.series_compound_title_array.map.with_index do |series_title, index|
               [series_title, repository_finding_aid_component_path(id: index+1)]
             end
         %>
-	<%= render partial: 'new_sidebar',
+	<%= render partial: 'sidebar',
                    locals: { slug: repository_finding_aid_path(params[:repository_id], params[:finding_aid_id]),
                              restricted_access: @restricted_access_flag,
                              series_titles_urls: series_titles_urls,
                              subseries_titles: @arch_desc_dsc.subseries_compound_title_array_for_each_series_array }
         %>
-      </td>
-      <td class="ead_content" style="vertical-align:top">
+  </div>
+  <div class="col ead_content">
         <!-- INFORMATION FOR TOP-LEVEL <c> ELEMENT, CURRENTLY A SERIES -->
         <%= render partial: 'component_structure_view_top_level_c',
                    locals: {series: @series}
@@ -39,7 +38,5 @@
                               aeon_enabled: false}
           %>
 	<% end %>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  </div>
+</div>

@@ -101,7 +101,7 @@ class FindingAidsController < ApplicationController
       current_series.parse(ead_nokogiri_xml_doc, index + 1)
       @series_array.append current_series
     end
-    @cache_html = true unless @preview_flag
+    @cache_html = CONFIG.fetch(:cache_html, !@preview_flag)
   end
 
   def summary
