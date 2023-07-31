@@ -1,27 +1,23 @@
 <%- breadcrumb(:ead_title, @repository, params[:id], @finding_aid_title) %>
 <%= render 'shared/breadcrumbs' %>
-<table style="width=100%">
-  <tbody>
-    <tr>
-      <td class="sidebar">
-        <%
-          series_titles_urls =
-            @arch_desc_dsc.series_compound_title_array.map.with_index do |series_title, index|
-              [series_title, repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])]
-            end
-        %>
-        <%= render partial: 'new_sidebar',
-                   locals: { slug: repository_finding_aid_path,
-                             restricted_access: @restricted_access_flag,
-                             series_titles_urls: series_titles_urls,
-                             subseries_titles: @arch_desc_dsc.subseries_compound_title_array_for_each_series_array }
-        %>
-      </td>
-      <td class="ead_content">
-        <%= render partial: 'fa_top_level_info',
-            locals: {finding_aid_id: params[:id]}
-        %>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="row">
+  <div class="sidebar col-6 col-sm-4 col-md-3 col-lg-2">
+    <%
+      series_titles_urls =
+        @arch_desc_dsc.series_compound_title_array.map.with_index do |series_title, index|
+          [series_title, repository_finding_aid_component_path(id: index+1, finding_aid_id: params[:id])]
+        end
+    %>
+    <%= render partial: 'sidebar',
+               locals: { slug: repository_finding_aid_path,
+                         restricted_access: @restricted_access_flag,
+                         series_titles_urls: series_titles_urls,
+                         subseries_titles: @arch_desc_dsc.subseries_compound_title_array_for_each_series_array }
+    %>
+  </div>
+  <div class="col ead_content">
+    <%= render partial: 'finding_aids/top_level_info',
+        locals: {finding_aid_id: params[:id]}
+    %>
+  </div>
+</div>

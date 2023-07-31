@@ -1,8 +1,5 @@
 <%= render partial: 'banner' %>
-<% if @preview_flag %>
-  <% slug_prefix = '/preview' %>
-<% else %>
-  <% slug_prefix = '' %>
-<% end %>
+<div class="al-repositories">
 <h3>Finding Aids from the <%= @repository.name %></h3>
 <%= @fa_list %>
+</div>

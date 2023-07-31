@@ -1,10 +1,9 @@
-<h2>Arrangement</h2>
+<%= content_tag(:h2, @arch_desc_misc.arrangement_head || 'Arrangement', class: 'al-show-sub-heading') %>
 <% if @preview_flag %>
   <% slug_prefix = '/preview' %>
 <% else %>
   <% slug_prefix = '' %>
 <% end %>
-<%= content_tag(:h3, @arch_desc_misc.arrangement_head) unless @arch_desc_misc.arrangement_head.nil? %>
 <% @arch_desc_misc.arrangement_values.each do |arrangement_value| %>
   <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms arrangement_value %>
 <% end %>

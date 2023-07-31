@@ -1,16 +1,10 @@
-<div class="printView">
+<div class="printView container">
 <h1 style="font-size:18px;color:black;text-align:center"><%= @finding_aid_title %></h1>
-<table style="width=100%">
-  <tbody>
-    <tr>
-      <td class="ead_content">
-        <%= render partial: 'fa_top_level_info',
-            locals: {finding_aid_id: params[:id]}
-        %>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="row ead_content">
+  <%= render partial: 'finding_aids/top_level_info',
+      locals: {finding_aid_id: params[:id]}
+    %>
+</div>
 <hr style="width:1px;">
 <% @series_array.each do |series| %>
   <!-- INFORMATION FOR TOP-LEVEL <c> ELEMENT, CURRENTLY A SERIES -->

@@ -10,8 +10,18 @@ crumb :ead_repository do |repository|
 end
 
 crumb :ead_title do |repository, ead_id, ead_title|
-  link ead_title, repository_finding_aid_path(repository_id: repository.id, finding_aid_id: ead_id)
+  link ead_title, repository_finding_aid_path(repository_id: repository.id, id: ead_id)
   parent :ead_repository, repository
+end
+
+crumb :ead_components do |repository, ead_id, ead_title|
+  link "All Components", repository_finding_aid_components_path(repository_id: repository.id, finding_aid_id: ead_id)
+  parent :ead_title, repository, ead_id, ead_title
+end
+
+crumb :ead_component do |repository, ead_id, ead_title, component_id, component_title|
+  link component_title, repository_finding_aid_component_path(repository_id: repository.id, finding_aid_id: ead_id, id: component_id)
+  parent :ead_components, repository, ead_id, ead_title
 end
 
 crumb :repositories do

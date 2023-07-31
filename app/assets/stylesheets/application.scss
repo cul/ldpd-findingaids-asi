@@ -57,19 +57,6 @@ $url_6: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.
 $url_7: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.svg#TrajanProRegular);
 
 // application-wide styles
-.sidebar {
-	vertical-align: top;
-	background: #eee;
-	width: 200px;
-	border: 1px solid #ccc;
-	padding: 5px;
-	margin: 5px;
-}
-
-.ead_content {
-	padding: 5px;
-}
-
 h2 {
 	color: #2c5277;
 	font-size: 16px;
@@ -85,7 +72,6 @@ h3, h3 em {
 }
 
 div.toc {
-	width: 188px;
 	background: #eee;
 	padding: 10px;
 	font-size: 12px;
@@ -114,4 +100,8 @@ a.subseries_anchor, a.fa_anchor {
 .al-masthead H1 {
 	font-family: TrajanProRegular, trajan, serif;
 	color: $brand;
+}
+
+ol.breadcrumb {
+	margin-left: 1em;
 }

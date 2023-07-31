@@ -1,8 +1,8 @@
-<%= render partial: 'summary' %>
+<%= render partial: 'finding_aids/summary' %>
 <a class="fa_anchor" name="arrangement"></a>
 <% unless @arch_desc_misc.arrangement_head.nil? && @arch_desc_dsc.series_compound_title_array.empty? %>
-  <%= render partial: 'arrangement',
-             locals: {finding_aid_id: params[:id]}
+  <%= render partial: 'finding_aids/arrangement',
+             locals: {finding_aid_id: finding_aid_id}
   %>
 <% end %>
 <a class="fa_anchor" name="description"></a>
@@ -10,15 +10,15 @@
           @arch_desc_dsc.series_compound_title_array.empty? &&
           @arch_desc_misc.other_descriptive_data_head.nil?
 %>
-  <%= render partial: 'description',
-             locals: {finding_aid_id: params[:id]}
+  <%= render partial: 'finding_aids/description',
+             locals: {finding_aid_id: finding_aid_id}
   %>
 <% end %>
 <a class="fa_anchor" name="using_collection"></a>
-<%= render partial: 'using_collection' %>
+<%= render partial: 'finding_aids/using_collection' %>
 <a class="fa_anchor" name="about_findaid"></a>
-<%= render partial: 'about_findaid' %>
+<%= render partial: 'finding_aids/about_findaid' %>
 <a class="fa_anchor" name="subjects"></a>
-<%= render partial: 'subject_headings' unless @genres_forms.empty? && @subjects.empty? %>
+<%= render partial: 'finding_aids/subject_headings' unless @genres_forms.empty? && @subjects.empty? %>
 <a class="fa_anchor" name="history"></a>
-<%= render partial: 'history' unless @arch_desc_misc.biography_history_head.nil? %>
+<%= render partial: 'finding_aids/history' unless @arch_desc_misc.biography_history_head.nil? %>
