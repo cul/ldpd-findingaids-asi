@@ -29,14 +29,16 @@ extend TrajectPlus::Macros
 
 def eadid_from_url_or_text(field_name)
   lambda do |record, accumulator, context|
-    ead_id = record.xpath('/ead/eadheader/eadid/text()').first&.to_s
+    ead_id = record.xpath('/ead/archdesc/did/unitid[1]').text&.strip
+    ead_id = record.xpath('/ead/eadheader/eadid/text()').first&.to_s if ead_id.blank?
     if ead_id.blank?
       ead_url = record.xpath('/ead/eadheader/eadid/@url').first
-      ead_id = /ldpd_(\d+)\/?/.match(ead_url.to_s)[1]
+      ead_id = /ldpd_(\d+)\/?/.match(ead_url.to_s)&.[](1)
     end
     if ead_id
       accumulator.concat ["ldpd_#{ead_id}"]
     else
+      raise "no id found; skipping"
       context.skip!
     end
   end
