@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Acfa
-  class HeaderComponent < Arclight::HeaderComponent
+  class HeaderComponent < ::Arclight::HeaderComponent
     def masthead
       render Acfa::MastheadComponent.new
     end
