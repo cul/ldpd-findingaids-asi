@@ -2,5 +2,5 @@
 
 module Acfa
   # Render the masthead
-  class MastheadComponent < Arclight::MastheadComponent; end
+  class MastheadComponent < ::Arclight::MastheadComponent; end
 end
