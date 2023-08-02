@@ -51,10 +51,12 @@ gem 'iso-639'
 
 # fcd1, 03/29/22: Getting bundle install errors on all-nginx-dev1 for 1.13.3
 # As seen in ldpd-amesa Gemfile, spec at 1.10.10
-gem 'nokogiri', '~> 1.10.10'
+gem 'nokogiri', '~> 1.15.2'
 gem 'loofah', '~> 2.19.1'
 
 gem 'arclight', '~> 1.0.0'
+
+gem "font-awesome-sass", "~> 6.4.0"
 
 gem "rsolr", ">= 1.0", "< 3"
 gem "bootstrap", "\~\>\ 5.1"
