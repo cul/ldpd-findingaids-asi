@@ -18,6 +18,14 @@ require 'arclight/year_range'
 require 'arclight/repository'
 load_config_file "config/initializers/arclight_patch.rb"
 
+settings do
+  provide 'component_traject_config', File.join(__dir__, 'ead2_component_config.rb')
+end
+
+each_record do |_record, context|
+  context.clipboard[:repository_id] = ENV.fetch('REPOSITORY_ID', nil)
+end
+
 load_config_file "#{Arclight::Engine.root}/lib/arclight/traject/ead2_config.rb"
 
 extend TrajectPlus::Macros
@@ -38,16 +46,17 @@ def eadid_from_url_or_text(field_name)
     if ead_id
       accumulator.concat ["ldpd_#{ead_id}"]
     else
-      raise "no id found; skipping"
+      logger.warn "no id found; skipping #{settings['command_line.filename']}"
       context.skip!
     end
   end
 end
 
-def create_field_step
-  ToFieldStep.new(field_name, procs, block, Traject::Util.extract_caller_location(caller.first))
-end
+# def create_field_step
+#   ToFieldStep.new(field_name, procs, block, Traject::Util.extract_caller_location(caller.first))
+# end
 
+# Remove the default arclight eadid and id field definitions and put ours in front of the list
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['id', 'ead_ssi'].include?(index_step.field_name) }
 to_field 'ead_ssi', eadid_from_url_or_text('ead_ssi')
 # put the new step at the front
@@ -55,3 +64,7 @@ to_field 'ead_ssi', eadid_from_url_or_text('ead_ssi')
 to_field 'id', eadid_from_url_or_text('id'), strip, gsub('.', '-')
 # put the new step at the front
 @index_steps.unshift @index_steps.pop
+
+to_field 'repository_id_ssi' do |record, accumulator, context|
+  accumulator.concat([settings['repository']]) if settings['repository']
+end
