@@ -5,6 +5,14 @@ class Arclight::Repository
     self.slug
   end
 
+  def contact
+    attributes[:contact]
+  end
+
+  def location
+    attributes[:location]
+  end
+
   # Override to pull repository configs from an environment keyed top-level hash
   def self.from_yaml(file)
     repos = {}

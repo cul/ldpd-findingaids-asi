@@ -369,16 +369,23 @@ class CatalogController < ApplicationController
     config.add_component_terms_field 'parent_terms', field: 'parent_access_terms_tesm', helper_method: :render_html_tags
 
     # Collection and Component Show Page Access Tab - In Person Section
-    config.add_in_person_field 'repository_location', values: ->(_, document, _) { document.repository_config }, component: Arclight::RepositoryLocationComponent
+    config.add_in_person_field 'repository_location', values: ->(_, document, _) { document.repository_config }, component: Acfa::Arclight::RepositoryLocationFieldComponent
     config.add_in_person_field 'before_you_visit', values: ->(_, document, _) { document.repository_config&.visit_note }
 
     # Collection and Component Show Page Access Tab - How to Cite Section
     config.add_cite_field 'prefercite', field: 'prefercite_html_tesm', helper_method: :render_html_tags
 
     # Collection and Component Show Page Access Tab - Contact Section
-    config.add_contact_field 'repository_contact', values: ->(_, document, _) { document.repository_config&.contact }
+    config.add_contact_field 'repository_contact', values: ->(_, document, _) { document.repository_config }, component: Acfa::Arclight::RepositoryContactFieldComponent
 
     # Group header values
     config.add_group_header_field 'abstract_or_scope', accessor: true, truncate: true, helper_method: :render_html_tags
+  end
+
+  def render
+    if @document && !@repository
+      @document.fetch('repository_id_ssi', nil)&.tap { |repository_id| @repository = Arclight::Repository.find_by(slug: repository_id) }
+    end
+    super
   end
 end

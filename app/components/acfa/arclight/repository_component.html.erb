@@ -13,11 +13,11 @@
           <div class='col-12 col-sm-4 col-md-3 fw-light al-repository-contact'>
             <address class="text-break">
               <div class="mb-3 al-repository-street-address">
-                <%= repository.location %>
+                <%= render Acfa::Arclight::Repository::LocationComponent.new(repository: repository) %>
               </div>
 
               <div class="al-repository-contact-info">
-                <%= repository.contact %>
+                <%= render Acfa::Arclight::Repository::ContactComponent.new(repository: repository) %>
               </div>
             </address>
           </div>

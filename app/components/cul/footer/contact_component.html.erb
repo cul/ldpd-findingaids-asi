@@ -1,0 +1,15 @@
+<div class="row">
+	<div class="col">
+		<%= render Cul::Footer::Contact::LocationComponent.new(repository: @repository) %>
+	</div>
+	<div class="col">
+		<%= render Cul::Footer::Contact::InformationComponent.new(repository: @repository) %>
+	</div>
+	<div class="col">
+		<ul class="list-unstyled">
+			<%- contact_links.each do |link| -%>
+				<li><%= link_to(link[:label], link[:url]) %></li>
+			<%- end -%>
+		</ul>
+	</div>
+</div>
