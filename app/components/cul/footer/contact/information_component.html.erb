@@ -1,0 +1,24 @@
+<% if has_contact_phone? -%>
+  <div class="row">
+    <div class="col col-1"><i class="fa fa-mobile-screen text-end"></i></div>
+    <div class="col">
+      <address>
+        <strong>Phone</strong>
+        <br />
+        <%= contact_phone_link(class: "text-light") -%>
+      </address>
+    </div>
+  </div>
+<% end -%>
+<% if has_contact_email? -%>
+  <div class="row">
+    <div class="col col-1"><i class="fa fa-envelope text-end"></i></div>
+    <div class="col">
+      <address>
+        <strong>Contact us</strong>
+        <br />
+        <%= contact_email_link(class: "text-light") -%>
+      </address>
+    </div>
+  </div>
+<% end -%>

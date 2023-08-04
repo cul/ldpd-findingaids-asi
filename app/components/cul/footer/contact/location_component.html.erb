@@ -1,0 +1,7 @@
+<address>
+  <strong class="address-data"><%= repository_name %></strong>
+  <%= location_link(classes: ['text-light', 'address-data']) if has_location_link? -%>
+  <% in_person_location_data.each do |klass, data| -%>
+    <%= content_tag :span, data, class: Array(klass).concat(['text-light', 'address-data']) -%>
+  <% end -%> 
+</address>

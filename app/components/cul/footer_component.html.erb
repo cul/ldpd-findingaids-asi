@@ -1,0 +1,30 @@
+<section id="contact-footer" class="py-5 mt-5 mb-2">
+  <footer class="container small">
+    <%= render Cul::Footer::ContactComponent.new(repository: @repository) %>
+  </footer>
+</section>
+
+<footer id="site-footer" class="text-muted small py-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <a href="http://www.columbia.edu">
+                    <span class="brand visually-hidden">Columbia University</span>
+                    <img src="https://toolkit.library.columbia.edu/v3/img/cu-blue-logo.svg" alt="Columbia University Logo" class="img-responsive hidden-xs w-100">
+                </a>
+            </div>
+            <div class="col text-end">
+                <span class="copyright mr-1">&copy;2021 Columbia University Libraries</span>
+                <span><a href="https://eoaa.columbia.edu/content/non-discrimination-statement-and-policy" class="external" target="_blank" rel="noopener">Nondiscrimination</a></span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Ask a Librarian floating button -->
+<div id="aal-floater" class="aal-floater fixed-bottom">
+    <a class="btn btn-info btn-md rounded-start border-white border-end-0" href="https://library.columbia.edu/services/askalibrarian.html" role="button">
+        <i class="fal fa-regular fa-comments fa-2xl text-lg"></i>
+        <div class="mt-1 small">Ask A Librarian</div>
+    </a>
+</div>

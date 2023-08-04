@@ -1,0 +1,13 @@
+<%= render(@layout.new(field: @field)) do |component| %>
+  <% component.with_label do %>
+    <%= label %>
+  <% end %>
+  <% component.with_value do %>
+    <% if repository.contact&.fetch('phone', nil) %>
+      <div class='al-repository-contact-phone'><%= repository.contact['phone'] %></div>
+    <% end %>
+    <% if repository.contact&.fetch('email', nil) %>
+      <div class='al-repository-contact-info'><%= repository.contact['email'] %></div>
+    <% end %>
+  <% end %>
+<% end %>

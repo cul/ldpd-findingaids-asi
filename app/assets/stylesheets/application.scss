@@ -13,11 +13,13 @@
  */
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
 @import "bootstrap";
+@import "font-awesome";
 @import "components";
 @import "finding_aids";
 @import "aeon_requests";
 
 @import "topnav";
+@import "cul_footer";
 
 @import "arclight";
 //colors

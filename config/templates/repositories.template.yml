@@ -1,7 +1,7 @@
 base: &BASE
-  nnc-a:
+  nnc:
     # requestable_via_aeon is set to true to enable aeon requests for a repo
-    requestable_via_aeon: true
+    requestable_via_aeon: false
     # in the original implementation for RBML, a checkbox was created only at
     # the container level. So if a few consecutive items were in the same
     # container (for example, Box 1), there was only one checkbox for the
@@ -9,30 +9,78 @@ base: &BASE
     # requestable_via_aeon is set to false
     # requestable_via_aeon is set to true to make each item selectable
     # individually, which was a feature requested by Avery.
-    checkbox_per_unittitle: true
+    checkbox_per_unittitle: false
     # aeon_user_review_set_to_yes is set to true if the UserReview parameter
     # value sent to aeon should be 'yes'. If aeon_user_review_set_to_yes is set
     # to false, the value sent to aeon will be 'no'
     aeon_user_review_set_to_yes: false
     # aeon_site_code is used by the aeon server to identify the repo
-    aeon_site_code: AVERYDACUL
+    aeon_site_code: DONOTUSE
     # as_repo_id indicates the ID used to identify the repo on the archivespace
     # server. Note that some repos share the same ID
-    as_repo_id: 3
-    name: 'Avery Drawings & Archives Collections'
+    as_repo_id: '-1'
+    name: 'Columbia University Libraries'
     # url is the desired url to be used for the library link at the top of a
     # finding aids page
-    url: https://findingaids.library.columbia.edu/ead/nnc-a
+    url: https://library.columbia.edu
     # has_fa_list indicates whether or not a repo has an entry in the 
     # home/main/landingpage for the findingaids app
+    has_fa_list: false
+    contact:
+      phone: '212-854-7309'
+      email: lio@columbia.edu
+      links:
+        - label: 'Donate Books or Items'
+          url: https://library.columbia.edu/about/policies/gifts-policy.html
+        - label: 'Suggestions & Feedback'
+          url: "https://feedback.cul.columbia.edu/feedback_submission/lweb?submitted_from_page=https%3A%2F%2Ffindingaids.library.columbia.edu%2F"
+        - label: 'Report an E-Resource Problem'
+          url: https://library.columbia.edu/resolve/lweb0006
+        - label: 'The Bancroft Prizes'
+          url: https://library.columbia.edu/about/awards/bancroft.html
+        - label: 'Student Library Advisory Committee'
+          url: https://library.columbia.edu/about/student_advisory_committee.html
+        - label: 'Jobs & Internships'
+          url: https://library.columbia.edu/about/jobs-internships.html
+        - label: "Behind the Scenes at Columbia's Libraries"
+          url: https://library.columbia.edu/bts.html
+        - label: Policies
+          url: https://library.columbia.edu/about/policies.html
+        - label: Copyright
+          url: https://www.columbia.edu/content/copyright
+    location:
+      link:
+        url: "https://library.columbia.edu"
+        label: Columbia University Libraries Home Page
+      street_address:
+        address: ['535 West 114th St.']
+        city_state_zip_country: New York, NY 10027, USA
+    description: "Columbia University Libraries is a top-tier academic research library, serving one of the world's most important centers of research and learning."
+    thumbnail_url: "https://library.columbia.edu/content/dam/locations/butler.jpg"
+  nnc-a:
+    requestable_via_aeon: true
+    checkbox_per_unittitle: true
+    aeon_user_review_set_to_yes: false
+    aeon_site_code: AVERYDACUL
+    as_repo_id: 3
+    name: 'Avery Drawings & Archives Collections'
+    url: https://findingaids.library.columbia.edu/ead/nnc-a
     has_fa_list: true
-    contact_html: |
-      <div class="al-repository-contact-info"><a href="mailto:avery@library.columbia.edu">avery@library.columbia.edu</a></div>
-    location_html: |
-      <div class="al-repository-url"><a href="http://library.columbia.edu/locations/avery.html">Avery Home Page</a></div>
-      <div class="al-repository-street-address-building">300 Avery Hall</div>
-      <div class="al-repository-street-address-address1">1172 Amsterdam Ave.</div>
-      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    contact:
+      email: avery@library.columbia.edu
+      links:
+        - label: 'Avery Art & Architecture Library'
+          url: https://library.columbia.edu/locations/avery.html
+        - label: 'Columbia University Libraries'
+          url: https://library.columbia.edu
+    location:
+      link:
+        url: "http://library.columbia.edu/locations/avery.html"
+        label: Avery Home Page
+      street_address:
+        building: 300 Avery Hall
+        address: ["1172 Amsterdam Ave."]
+        city_state_zip_country: "New York, NY 10027, USA"
     description: "Avery is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_avery.png"
   nnc-ccoh:
@@ -43,13 +91,23 @@ base: &BASE
     name: Oral History Archives at Columbia
     url: https://findingaids.library.columbia.edu/ead/nnc-ccoh
     has_fa_list: true
-    contact_html: |
-      <div class="al-repository-contact-info"><a href="mailto:oralhist@library.columbia.edu">oralhist@library.columbia.edu</a></div>
-    location_html: |
-      <div class="al-repository-url"><a href="https://library.columbia.edu/libraries/ccoh/FAQ.html">OHAC Home Page</a></div>
-      <div class="al-repository-street-address-building">6th Floor East Butler Library</div>
-      <div class="al-repository-street-address-address1">535 West 114th Street</div>
-      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    contact:
+      email: oralhist@library.columbia.edu
+      links:
+        - label: 'Oral History Archives at Columbia'
+          url: https://library.columbia.edu/locations/ccoh.html
+        - label: 'Rare Book & Manuscript Library'
+          url: https://library.columbia.edu/libraries/rbml.html
+        - label: 'Columbia University Libraries'
+          url: https://library.columbia.edu
+    location:
+      link:
+        url: "https://library.columbia.edu/libraries/ccoh/FAQ.html"
+        label: OHAC Home Page
+      street_address:
+        building: 6th Floor East Butler Library
+        address: ['535 West 114th Street']
+        city_state_zip_country: New York, NY 10027, USA
     description: "OHAC is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_ccoh.png"
   nnc-ea:
@@ -60,13 +118,21 @@ base: &BASE
     name: C.V. Starr East Asian Library
     url: https://findingaids.library.columbia.edu/ead/nnc-ea
     has_fa_list: true
-    contact_html: |
-      <div class="al-repository-contact-info"><a href="mailto:starr@library.columbia.edu">starr@library.columbia.edu</a></div>
-    location_html: |
-      <div class="al-repository-url"><a href="http://library.columbia.edu/locations/eastasian.html">CV Starr Home Page</a></div>
-      <div class="al-repository-street-address-building">300 Kent Hall</div>
-      <div class="al-repository-street-address-address1">1140 Amsterdam Ave.</div>
-      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    contact:
+      email: starr@library.columbia.edu
+      links:
+        - label: 'C.V. Starr East Asian Library'
+          url: https://library.columbia.edu/locations/starr.html
+        - label: 'Columbia University Libraries'
+          url: https://library.columbia.edu
+    location:
+      link:
+        url: "http://library.columbia.edu/locations/eastasian.html"
+        label: C.V. Starr Home Page
+      street_address:
+        building: 300 Kent Hall
+        address: ['1140 Amsterdam Ave.']
+        city_state_zip_country: New York, NY 10027, USA
     description: "CV Starr is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_eastasian.png"
   nnc-rb:
@@ -77,13 +143,21 @@ base: &BASE
     name: Rare Book & Manuscript Library
     url: https://findingaids.library.columbia.edu/ead/nnc-rb
     has_fa_list: true
-    contact_html: |
-      <div class="al-repository-contact-info"><a href="mailto:rbml@library.columbia.edu">rbml@library.columbia.edu</a></div>
-    location_html: |
-      <div class="al-repository-url"><a href="http://library.columbia.edu/locations/rbml.html">RBML Home Page</a></div>
-      <div class="al-repository-street-address-building">6th Floor East Butler Library</div>
-      <div class="al-repository-street-address-address1">535 West 114th Street</div>
-      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    contact:
+      email: rbml@library.columbia.edu
+      links:
+        - label: 'Rare Book & Manuscript Library'
+          url: https://findingaids.library.columbia.edu/ead/nnc-rb
+        - label: 'Columbia University Libraries'
+          url: https://library.columbia.edu
+    location:
+      link:
+        url: "http://library.columbia.edu/locations/rbml.html"
+        label: RBML Home Page
+      street_address:
+        building: 6th Floor East Butler Library
+        address: ['535 West 114th Street']
+        city_state_zip_country: New York, NY 10027, USA
     description: "RBML is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_rbml.png"
   nnc-ua:
@@ -94,13 +168,23 @@ base: &BASE
     name: Columbia University Archives
     url: https://findingaids.library.columbia.edu/ead/nnc-ua
     has_fa_list: true
-    contact_html: |
-      <div class="al-repository-contact-info"><a href="mailto:uarchives@columbia.edu">uarchives@columbia.edu</a></div>
-    location_html: |
-      <div class="al-repository-url"><a href="http://library.columbia.edu/locations/cuarchives.html">University Archives Home Page</a></div>
-      <div class="al-repository-street-address-building">6th Floor East Butler Library</div>
-      <div class="al-repository-street-address-address1">535 West 114th Street</div>
-      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    contact:
+      email: uarchives@columbia.edu
+      links:
+        - label: 'Columbia University Archives'
+          url: https://library.columbia.edu/libraries/cuarchives.html
+        - label: 'Rare Book & Manuscript Library'
+          url: https://library.columbia.edu/libraries/rbml.html
+        - label: 'Columbia University Libraries'
+          url: https://library.columbia.edu
+    location:
+      link:
+        url: "http://library.columbia.edu/locations/cuarchives.html"
+        label: University Archives Home Page
+      street_address:
+        building: 6th Floor East Butler Library
+        address: ['535 West 114th Street']
+        city_state_zip_country: New York, NY 10027, USA
     description: "University Archives is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_cuarchives.png"
   nnc-ut:
@@ -111,13 +195,21 @@ base: &BASE
     name: Burke Library at Union Theological Seminary
     url: https://findingaids.library.columbia.edu/ead/nnc-ut
     has_fa_list: true
-    contact_html: |
-      <div class="al-repository-contact-info"><a href="mailto:burke@library.columbia.edu">burke@library.columbia.edu</a></div>
-    location_html: |
-      <div class="al-repository-url"><a href="http://library.columbia.edu/locations/burke.html">Burke Home Page</a></div>
-      <div class="al-repository-street-address-building">Union Theological Seminary</div>
-      <div class="al-repository-street-address-address1">3041 Broadway</div>
-      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    contact:
+      email: burke@library.columbia.edu
+      links:
+        - label: 'Burke Library at Union Theological Seminary'
+          url: https://library.columbia.edu/locations/burke.html
+        - label: 'Columbia University Libraries'
+          url: https://library.columbia.edu
+    location:
+      link:
+        url: "http://library.columbia.edu/locations/burke.html"
+        label: Burke Home Page
+        street_address:
+          building: Union Theological Seminary
+          address: ['3041 Broadway']
+        city_state_zip_country: New York, NY 10027, USA
     description: "Burke is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_burke.png"
   nnc-m:
@@ -126,14 +218,23 @@ base: &BASE
     name: Health Sciences Library
     url: https://www.library-archives.cumc.columbia.edu/finding-aids
     has_fa_list: false
-    contact_html: |
-      <div class="al-repository-contact-info"><a href="mailto:hsl@example.org">hsl@example.org</a></div>
-    location_html: |
-      <div class="al-repository-url"><a href="https://www.library-archives.cumc.columbia.edu/">HSL Home Page</a></div>
-      <div class="al-repository-street-address-building">Hammer Health Sciences Building, Room LL1-111</div>
-      <div class="al-repository-street-address-address1">Columbia University Medical Center</div>
-      <div class="al-repository-street-address-address1">701 West 168th Street</div>
-      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10032, USA</div>
+    contact:
+      email: hsl@example.org
+      links:
+        - label: 'Health Sciences Library'
+          url: https://www.library-archives.cumc.columbia.edu
+        - label: 'Columbia University Libraries'
+          url: https://library.columbia.edu
+    location:
+      link:
+        url: "https://www.library-archives.cumc.columbia.edu/"
+        label: HSL Home Page
+      street_address:
+        building: Hammer Health Sciences Building, Room LL1-111
+        address:
+          - Columbia University Medical Center
+          - 701 West 168th Street
+        city_state_zip_country: New York, NY 10032, USA
     description: "HSL is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_burke.png"
   nynycoh:
@@ -142,13 +243,24 @@ base: &BASE
     name: Oral History Archives at Columbia
     url: https://library.columbia.edu/locations/ccoh.html
     has_fa_list: false
-    contact_html: |
-      <div class="al-repository-contact-info"><a href="mailto:oralhist@library.columbia.edu">oralhist@library.columbia.edu</a></div>
-    location_html: |
-      <div class="al-repository-url"><a href="https://library.columbia.edu/libraries/ccoh/FAQ.html">OHAC Home Page</a></div>
-      <div class="al-repository-street-address-building">6th Floor East Butler Library</div>
-      <div class="al-repository-street-address-address1">535 West 114th Street</div>
-      <div class="al-repository-street-address-city_state_zip_country">New York, NY 10027, USA</div>
+    contact:
+      email: oralhist@library.columbia.edu
+      links:
+        - label: 'Oral History Archives at Columbia'
+          url: https://library.columbia.edu/locations/ccoh.html
+        - label: 'Rare Book & Manuscript Library'
+          url: https://library.columbia.edu/libraries/rbml.html
+        - label: 'Columbia University Libraries'
+          url: https://library.columbia.edu
+    location:
+      link:
+        url: "https://library.columbia.edu/libraries/ccoh/FAQ.html"
+        label: OHAC Home Page
+      street_address:
+        building: 6th Floor East Butler Library
+        address: ['535 West 114th Street']
+        city_state_zip_country: New York, NY 10027, USA
+        city_state_zip_country: New York, NY 10027, USA
     description: "OHAC is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_ccoh.png"
 development:
