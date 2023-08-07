@@ -1,6 +1,11 @@
 # README
 
 ## Developer Documentation
+
+## Requirements
+
+* MySQL
+
 ### Template Configurations
 Template configuration files for local development or testing are available
 in `config/templates`. These files are copied into the `config` directory by
@@ -15,6 +20,6 @@ will create a core called "acfa".
 
 ### Setting Up A Development Finding Aids Server
 1. Install dependencies with `bundle install`. The application Gemfile indicates the required Ruby version.
-2. Run the database migrations against sqlite in development with `bundle exec rake db:migrate`
-3. Run the rspec suite with `bundle exec rspec` - this will set up the default template configurations
-4. Run `bundle exec rake acfa:server` - this will bring up solr, seed it with example data, and start rails
+2. Run the rspec suite with `bundle exec rspec` - this will set up the default template configurations
+3. Run the database migrations against sqlite in development with `bundle exec rake db:migrate`
+4. To run with a local Solr instance: Run `bundle exec rake acfa:server` - this will bring up solr, seed it with example data, and start rails. To run with the Solr container: run `bundle exec rake acfa:seed` then run `bundle exec rails s`.
