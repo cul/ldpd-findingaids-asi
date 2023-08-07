@@ -1,1 +1,2 @@
-<%= render Acfa::Arclight::RepositoryComponent.new(repository: @repository) %>
+<% repository ||= @repository # index view passes a local -%>
+<%= render Acfa::Arclight::RepositoryComponent.new(repository: repository) %>
