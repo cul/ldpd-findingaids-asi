@@ -22,3 +22,12 @@ to_field 'repository_id_ssi' do |record, accumulator, context|
     accumulator.concat([repository_id]) if repository_id
   end
 end
+
+to_field 'date_range_isim', extract_xpath('./did/unitdate/@normal', to_text: false) do |_record, accumulator|
+  range = Arclight::YearRange.new
+  next range.years if accumulator.blank?
+
+  ranges = accumulator.map(&:to_s)
+  range << range.parse_ranges(ranges)
+  accumulator.replace range.years
+end
