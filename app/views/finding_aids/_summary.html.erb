@@ -16,8 +16,8 @@
     <dd class="col-md-9"><%= @arch_desc_did.unit_id_bib_id %> <%= link_to "View CLIO record", "https://clio.columbia.edu/catalog/#{@arch_desc_did.unit_id_bib_id}", target: '_blank', class: ['smaller'] %></dd>
     <dt class="col-md-2 offset-md-1"> Creator(s): </dt>
     <dd class="col-md-9"><%= @arch_desc_did.origination_creators.join('; ') %></dd>
-    <dt class="col-md-2 offset-md-1"> Title: </dt>
-    <dd class="col-md-9"><%= @finding_aid_title %></dd>
+    <dt class="col-md-2 offset-md-1"> Repository: </dt>
+    <dd class="col-md-9"><%= @arch_desc_did.repository_corporate_name %></dd>
     <dt class="col-md-2 offset-md-1"> Physical Description: </dt>
     <dd class="col-md-9"><%= @arch_desc_did.physical_description_extents_string %></dd>
     <dt class="col-md-2 offset-md-1"> Language(s): </dt>

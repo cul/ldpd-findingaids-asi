@@ -1,4 +1,4 @@
-<h2>Subject Headings</h2>
+<h2 class="al-show-sub-heading">Subject Headings</h2>
 <p class="caption11px">
   The subject headings listed below are found in this collection. Links below allow searches for other collections at Columbia University, through
   <a href="https://clio.columbia.edu" target="_blank">CLIO</a>, the catalog for Columbia University Libraries,
@@ -6,9 +6,10 @@
   a catalog that allows users to search the holdings of multiple research libraries and archives.
 </p>
 <p class="caption11px"><strong>All links open new windows.</strong></p>
-<% unless @genres_forms.empty? %>
-  <%= render partial: 'finding_aids/subject_headings_genre_form' %>
-<% end %>
 <% unless @subjects.empty? %>
   <%= render partial: 'finding_aids/subject_headings_subject' %>
 <% end %>
+<% unless @genres_forms.empty? %>
+  <%= render partial: 'finding_aids/subject_headings_genre_form' %>
+<% end %>
+
