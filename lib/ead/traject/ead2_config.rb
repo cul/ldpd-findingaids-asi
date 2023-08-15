@@ -68,3 +68,14 @@ to_field 'id', eadid_from_url_or_text('id'), strip, gsub('.', '-')
 to_field 'repository_id_ssi' do |record, accumulator, context|
   accumulator.concat([settings['repository']]) if settings['repository']
 end
+
+to_field 'date_range_isim', extract_xpath('/ead/archdesc/did/unitdate/@normal', to_text: false) do |_record, accumulator|
+  range = Arclight::YearRange.new
+  next range.years if accumulator.blank?
+
+  ranges = accumulator.map(&:to_s)
+  range << range.parse_ranges(ranges)
+  accumulator.replace range.years
+end
+
+
