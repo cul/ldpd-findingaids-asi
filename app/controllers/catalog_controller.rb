@@ -5,6 +5,8 @@ class CatalogController < ApplicationController
   layout :determine_layout if respond_to? :layout
 
   include Blacklight::Catalog
+  include BlacklightRangeLimit::ControllerOverride
+
   include Arclight::Catalog
 
   configure_blacklight do |config|
@@ -143,7 +145,7 @@ class CatalogController < ApplicationController
 
     config.add_facet_field 'collection', field: 'collection_ssim', limit: 10
     config.add_facet_field 'creator', field: 'creator_ssim', limit: 10
-    config.add_facet_field 'date_range', field: 'date_range_ssim', range: true
+    config.add_facet_field 'date_range', field: 'date_range_isim', range: true
     config.add_facet_field 'level', field: 'level_ssim', limit: 10
     config.add_facet_field 'names', field: 'names_ssim', limit: 10
     config.add_facet_field 'repository', field: 'repository_ssim', limit: 10
@@ -239,6 +241,7 @@ class CatalogController < ApplicationController
     config.search_state_fields += %i[id group hierarchy_context original_document]
     config.search_state_fields << { original_parents: [] }
     config.search_state_fields += %i[repository_id finding_aid_id]
+    config.search_state_fields << :utf8
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
