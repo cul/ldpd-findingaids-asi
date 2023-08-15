@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'acfa/search_state'
+
 # Blacklight controller that handles searches and document requests
 class CatalogController < ApplicationController
   layout :determine_layout if respond_to? :layout
@@ -8,6 +10,8 @@ class CatalogController < ApplicationController
   include BlacklightRangeLimit::ControllerOverride
 
   include Arclight::Catalog
+
+  self.search_state_class = Acfa::SearchState
 
   configure_blacklight do |config|
     config.bootstrap_version = 5
@@ -54,15 +58,15 @@ class CatalogController < ApplicationController
 
     config.header_component = Acfa::HeaderComponent
     config.add_results_document_tool(:online, component: Arclight::OnlineStatusIndicatorComponent)
-    config.add_results_document_tool(:arclight_bookmark_control, component: Arclight::BookmarkComponent)
+    # config.add_results_document_tool(:arclight_bookmark_control, component: Arclight::BookmarkComponent)
 
     config.add_results_collection_tool(:group_toggle)
     config.add_results_collection_tool(:sort_widget)
     config.add_results_collection_tool(:per_page_widget)
     config.add_results_collection_tool(:view_type_group)
 
-    config.add_nav_action(:bookmark, partial: 'blacklight/nav/bookmark', if: :render_bookmarks_control?)
-    config.add_nav_action(:search_history, partial: 'blacklight/nav/search_history')
+    # config.add_nav_action(:bookmark, partial: 'blacklight/nav/bookmark', if: :render_bookmarks_control?)
+    # config.add_nav_action(:search_history, partial: 'blacklight/nav/search_history')
 
     # solr field configuration for search results/index views
     config.index.partials = %i[arclight_index_default]
@@ -145,7 +149,7 @@ class CatalogController < ApplicationController
 
     config.add_facet_field 'collection', field: 'collection_ssim', limit: 10
     config.add_facet_field 'creator', field: 'creator_ssim', limit: 10
-    config.add_facet_field 'date_range', field: 'date_range_isim', range: true
+    config.add_facet_field 'date_range', field: 'date_range_isim', range: true, range_config: { segments: false }
     config.add_facet_field 'level', field: 'level_ssim', limit: 10
     config.add_facet_field 'names', field: 'names_ssim', limit: 10
     config.add_facet_field 'repository', field: 'repository_ssim', limit: 10
@@ -166,7 +170,7 @@ class CatalogController < ApplicationController
     }, compact: true, component: Arclight::IndexMetadataFieldComponent
     config.add_index_field 'creator', accessor: true, component: Arclight::IndexMetadataFieldComponent
     config.add_index_field 'abstract_or_scope', accessor: true, truncate: true, repository_context: true, helper_method: :render_html_tags, component: Arclight::IndexMetadataFieldComponent
-    config.add_index_field 'breadcrumbs', accessor: :itself, component: Arclight::SearchResultBreadcrumbsComponent, compact: { count: 2 }
+    config.add_index_field 'breadcrumbs', accessor: :itself, component: Acfa::Arclight::SearchResultBreadcrumbsComponent, compact: { count: 2 }
 
     config.add_facet_field 'access', query: {
       online: { label: 'Online access', fq: 'has_online_content_ssim:true' }
