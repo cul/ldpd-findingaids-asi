@@ -122,7 +122,7 @@
       -->
     <!-- KD-tree versions of date fields -->
     <fieldType name="pdate" class="solr.DatePointField" docValues="true"/>
-
+    <fieldType name="drange" class="solr.DateRangeField" />
     <!-- The "RandomSortField" is not used to store or search any
          data.  You can declare fields of this type it in your schema
          to generate pseudo-random orderings of your docs for sorting
@@ -308,18 +308,22 @@
    <!--dynamicField name="*" type="ignored" multiValued="true" /-->
 
    <!-- To play nice with atomic updates, only use non-stored fields for copyFields -->
-   <dynamicField name="*_tesim" type="text_en"   stored="true"  indexed="true"  multiValued="true"  />
-   <dynamicField name="*_tesm" type="text_en"    stored="true"  indexed="false" multiValued="true"  />
-   <dynamicField name="*_teim"  type="text_en"   stored="false" indexed="true"  multiValued="true"  />
-   <dynamicField name="*_si"    type="string"    stored="false" indexed="true"  multiValued="false" />
-   <dynamicField name="*_sim"   type="string"    stored="false" indexed="true"  multiValued="true"  />
-   <dynamicField name="*_ssm"   type="string"    stored="true"  indexed="false" multiValued="true"  />
-   <dynamicField name="*_ssi"   type="string"    stored="true"  indexed="true"  multiValued="false" />
-   <dynamicField name="*_ssim"  type="string"    stored="true"  indexed="true"  multiValued="true"  />
-   <dynamicField name="*_isim"  type="pint"      stored="true"  indexed="true"  multiValued="true"  />
-   <dynamicField name="*_is"    type="pint"      stored="true"  indexed="false" multiValued="false" />
-   <dynamicField name="*_ii"    type="pint"      stored="false" indexed="true"  multiValued="false" />
-   <dynamicField name="*_isi"   type="pint"      stored="true"  indexed="true"  multiValued="false" />
+   <dynamicField name="*_tesim" type="text_en"    stored="true"  indexed="true"  multiValued="true"  />
+   <dynamicField name="*_tesm" type="text_en"     stored="true"  indexed="false" multiValued="true"  />
+   <dynamicField name="*_teim"  type="text_en"    stored="false" indexed="true"  multiValued="true"  />
+   <dynamicField name="*_si"    type="string"     stored="false" indexed="true"  multiValued="false" />
+   <dynamicField name="*_sim"   type="string"     stored="false" indexed="true"  multiValued="true"  />
+   <dynamicField name="*_ssm"   type="string"     stored="true"  indexed="false" multiValued="true"  />
+   <dynamicField name="*_ssi"   type="string"     stored="true"  indexed="true"  multiValued="false" />
+   <dynamicField name="*_ssim"  type="string"     stored="true"  indexed="true"  multiValued="true"  />
+   <dynamicField name="*_isim"  type="pint"       stored="true"  indexed="true"  multiValued="true"  />
+   <dynamicField name="*_is"    type="pint"       stored="true"  indexed="false" multiValued="false" />
+   <dynamicField name="*_ii"    type="pint"       stored="false" indexed="true"  multiValued="false" />
+   <dynamicField name="*_isi"   type="pint"       stored="true"  indexed="true"  multiValued="false" />
+   <dynamicField name="*_drsi"  type="drange"     stored="true"  indexed="true"  multiValued="false"  />
+   <dynamicField name="*_drsim" type="drange"     stored="true"  indexed="true"  multiValued="true"  />
+   <dynamicField name="*_lsi"   type="location"   stored="true"  indexed="true"  multiValued="false"  />
+   <dynamicField name="*_lsim"  type="location"   stored="true"  indexed="true"  multiValued="true"  />
  </fields>
 
  <!-- Field to use to determine and enforce document uniqueness.
