@@ -1,5 +1,4 @@
 <h2 class="al-show-sub-heading">Using the Collection</h2>
-<p><%= @arch_desc_did.repository_corporate_name %></p>
 <%= content_tag(:h3,@arch_desc_misc.other_finding_aid_head || "Additional Online Description", class: 'al-show-sub-heading') if @arch_desc_misc.other_finding_aid_values.first %>
 <% @arch_desc_misc.other_finding_aid_values.each do |other_finding_aid_value| %>
   <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms other_finding_aid_value %>
