@@ -8,7 +8,9 @@ module Acfa::Arclight
 
       yield build_repository_link
 
-      finding_aid_id = @document['parent_ssim'].detect { |pid| pid =~ /ldpd_\d+$/ }
+      finding_aid_id = @document['parent_ssim']&.detect { |pid| pid =~ /ldpd_\d+$/ }
+      return unless finding_aid_id
+
       repo_id = @document['repository_id_ssi']
       components_link = helpers.repository_finding_aid_components_path(repository_id: repo_id, finding_aid_id: finding_aid_id, anchor: 'view_all')
       @document.parents.each do |parent|
