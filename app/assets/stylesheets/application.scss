@@ -61,19 +61,25 @@ $url_7: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.
 // application-wide styles
 h2 {
 	color: #2c5277;
+	
 	font-size: 16px;
 	font-weight: bold;
 	&.al-show-sub-heading {
-		font-size: 1.1rem;
+		border-bottom: 1px solid #2c5277;
+		font-size: 1.5rem;
+		text-transform: none;
 	}
 }
 
 h3, h3 em {
 	color: #999;
-	border-bottom: 1px solid #999;
 	font-weight: bold;
 	font-size: 14px;
 	padding-top: 10px;
+	&.al-show-sub-heading {
+		font-size: 1.1rem;
+		text-transform: none;
+	}
 }
 
 div.toc {
