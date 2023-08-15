@@ -64,6 +64,7 @@ gem "sassc-rails", "~> 2.1"
 gem "devise"
 gem "devise-guests", "~> 0.8"
 gem "blacklight-locale_picker"
+gem "blacklight_range_limit"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -90,4 +91,3 @@ group :development, :test do
   gem 'rspec-rails'
   gem "solr_wrapper", ">= 0.3"
 end
-gem "blacklight-locale_picker"
