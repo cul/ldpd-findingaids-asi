@@ -63,6 +63,9 @@ h2 {
 	color: #2c5277;
 	font-size: 16px;
 	font-weight: bold;
+	&.al-show-sub-heading {
+		font-size: 1.1rem;
+	}
 }
 
 h3, h3 em {
