@@ -141,6 +141,13 @@ $navbar-primary-brand-hover-color:           $navbar-primary-active-color !defau
       }
   }
 }
+#autocomplete-popup li {
+  color: $primary-text;	
+  &:hover {
+    background-color:color-contrast($primary);
+    color: $primary;
+  }
+}
 
 @media(min-width: 768px) {
 	#topnavbar .topbarlogo {
