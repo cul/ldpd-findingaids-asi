@@ -389,7 +389,7 @@ class CatalogController < ApplicationController
     config.add_group_header_field 'abstract_or_scope', accessor: true, truncate: true, helper_method: :render_html_tags
   end
 
-  def render
+  def render(*args)
     if @document && !@repository
       @document.fetch('repository_id_ssi', nil)&.tap { |repository_id| @repository = Arclight::Repository.find_by(slug: repository_id) }
     end
