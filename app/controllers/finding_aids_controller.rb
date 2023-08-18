@@ -49,11 +49,7 @@ class FindingAidsController < ApplicationController
     @ead_header.parse ead_nokogiri_xml_doc
     @finding_aid_title =
       [@arch_desc_did.unit_title, @arch_desc_did.unit_dates_string].join(', ')
-    @subjects = (@arch_desc_misc.control_access_corporate_name_values +
-                 @arch_desc_misc.control_access_geographic_name_values +
-                 @arch_desc_misc.control_access_occupation_values +
-                 @arch_desc_misc.control_access_personal_name_values +
-                 @arch_desc_misc.control_access_subject_values).sort
+    @subjects = subjects_for_archdesc(@arch_desc_misc)
     @genres_forms = @arch_desc_misc.control_access_genre_form_values.sort
     @restricted_access_flag =
       @arch_desc_misc.access_restrictions_values.map{ |value| ArchiveSpace::Parsers::EadHelper.highlight_offsite value.text }.any?
@@ -86,11 +82,7 @@ class FindingAidsController < ApplicationController
     @ead_header.parse ead_nokogiri_xml_doc
     @finding_aid_title =
       [@arch_desc_did.unit_title, @arch_desc_did.unit_dates_string].join(', ')
-    @subjects = (@arch_desc_misc.control_access_corporate_name_values +
-                 @arch_desc_misc.control_access_geographic_name_values +
-                 @arch_desc_misc.control_access_occupation_values +
-                 @arch_desc_misc.control_access_personal_name_values +
-                 @arch_desc_misc.control_access_subject_values).sort
+    @subjects = subjects_for_archdesc(@arch_desc_misc)
     @genres_forms = @arch_desc_misc.control_access_genre_form_values.sort
     @series_array = []
     @arch_desc_dsc.series_compound_title_array.each_with_index do |title, index|
@@ -103,6 +95,14 @@ class FindingAidsController < ApplicationController
       @series_array.append current_series
     end
     @cache_html = CONFIG.fetch(:cache_html, !@preview_flag)
+  end
+
+  def subjects_for_archdesc(arch_desc_misc)
+    (arch_desc_misc.control_access_corporate_name_values +
+     arch_desc_misc.control_access_geographic_name_values +
+     arch_desc_misc.control_access_occupation_values +
+     arch_desc_misc.control_access_personal_name_values +
+     arch_desc_misc.control_access_subject_values).sort
   end
 
   def summary
