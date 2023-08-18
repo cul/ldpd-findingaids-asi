@@ -65,3 +65,4 @@ production:
   # the cache contaning the info from file of valid bib IDs and associated
   # repo codes.
   bib_id_repo_id_hash_cache_expiration_in_hours: 12
+  cache_html: false
