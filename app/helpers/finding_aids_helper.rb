@@ -8,7 +8,7 @@ module FindingAidsHelper
     'active' if on_finding_aids_root?
   end
 
-  def has_controlaccess_terms?
-    @subjects.present? || @genres_forms.present?
+  def has_control_access_terms?
+    @subjects.present? || @genres_forms.present? || @name_terms.present? || @place_terms.present?
   end
 end

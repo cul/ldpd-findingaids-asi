@@ -22,5 +22,5 @@
 <a class="fa_anchor" name="history"></a>
 <%= render partial: 'finding_aids/history' unless @arch_desc_misc.biography_history_head.nil? %>
 <a class="fa_anchor" name="subjects"></a>
-<%= render partial: 'finding_aids/subject_headings' unless @genres_forms.empty? && @subjects.empty? %>
+<%= render partial: 'finding_aids/subject_headings' if has_control_access_terms? %>
 
