@@ -46,7 +46,7 @@ RSpec.describe FindingAidsController, type: :controller do
         "Real estate business -- New York (State) -- New York"
       ].sort
     }
-    let(:expected_subjects) { (names + places + subjects).sort }
+    let(:expected_subjects) { subjects.sort }
     before do
       allow(controller).to receive(:render_cached_html_else_return_as_ead_xml).with(well_known_bib_id.to_i).and_return(fixture_data)
       controller.params[:id] = "ldpd_#{well_known_bib_id}"

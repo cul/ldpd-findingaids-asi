@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe ComponentsController, type: :controller do
   # fcd1, 04/12/19: Can't figure out a way to make the following
   # work with nested resource within finding aids within repositories  
-  xdescribe "GET #index" do
+  describe "GET #index" do
+    let(:well_known_bib_id) { '8972723' }
     it "returns http success" do
       get :index, params: { finding_aid_id: "ldpd_#{well_known_bib_id}", repository_id: "nnc-a" }
       expect(response).to have_http_status(:success)
@@ -46,7 +47,7 @@ RSpec.describe ComponentsController, type: :controller do
         "Real estate business -- New York (State) -- New York"
       ].sort
     }
-    let(:expected_subjects) { (names + places + subjects).sort }
+    let(:expected_subjects) { subjects.sort }
     before do
       allow(controller).to receive(:render_cached_html_else_return_as_ead_xml).with(well_known_bib_id.to_i, anything).and_return(fixture_data)
       controller.params[:id] = well_known_id

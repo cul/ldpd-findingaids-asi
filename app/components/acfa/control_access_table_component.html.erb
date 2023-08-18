@@ -1,0 +1,6 @@
+<table class="subjectTable">
+  <%= render Acfa::ControlAccess::FieldRowsComponent.new(field_name: 'subject', label: 'Genre/Form', terms: @genres_forms, print_view: @print_view) %>
+  <%= render Acfa::ControlAccess::FieldRowsComponent.new(field_name: 'names', label: 'Name', terms: @name_terms, print_view: @print_view) %>
+  <%= render Acfa::ControlAccess::FieldRowsComponent.new(field_name: 'place', label: 'Place', terms: @place_terms, print_view: @print_view) %>
+  <%= render Acfa::ControlAccess::FieldRowsComponent.new(field_name: 'subject', label: 'Subject', terms: @subjects, print_view: @print_view) %>
+</table>
