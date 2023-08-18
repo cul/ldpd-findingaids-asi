@@ -6,6 +6,6 @@
   a catalog that allows users to search the holdings of multiple research libraries and archives.
 </p>
 <p class="caption11px"><strong>All links open new windows.</strong></p>
-<%- if has_controlaccess_terms? -%>
+<%- if has_control_access_terms? -%>
   <%= render Acfa::ControlAccessTableComponent.new(genres: @genres_forms, names: @name_terms, places: @place_terms, subjects: @subjects, print_view: @print_view) %>
 <% end %>
