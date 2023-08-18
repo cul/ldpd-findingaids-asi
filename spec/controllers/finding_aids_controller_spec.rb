@@ -11,7 +11,7 @@ RSpec.describe FindingAidsController, type: :controller do
     end
   end
 
-  describe "GET #show" do
+  describe "setting subject attributes" do
     let(:fixture_path) { File.join(file_fixture_path, '../../test/fixtures/files/ead/as_ead_ldpd_8972723.xml') }
     let(:fixture_data) { File.read(fixture_path) }
     let(:well_known_bib_id) { '8972723' }
@@ -51,11 +51,21 @@ RSpec.describe FindingAidsController, type: :controller do
       allow(controller).to receive(:render_cached_html_else_return_as_ead_xml).with(well_known_bib_id.to_i).and_return(fixture_data)
       controller.params[:id] = "ldpd_#{well_known_bib_id}"
     end
-    it "sets @subjects attribute" do
-      get :show, params: { id: "ldpd_#{well_known_bib_id}", repository_id: "nnc-a" }
-      expect(response).to have_http_status(:success)
-      subjects_att = controller.instance_variable_get(:@subjects)
-      expect(subjects_att).to eql expected_subjects
+    context "print action" do
+      it "sets @subjects attribute" do
+        get :print, params: { finding_aid_id: "ldpd_#{well_known_bib_id}", repository_id: "nnc-a" }
+        expect(response).to have_http_status(:success)
+        subjects_att = controller.instance_variable_get(:@subjects)
+        expect(subjects_att).to eql expected_subjects
+      end
+    end
+    context "show action" do
+      it "sets @subjects attribute" do
+        get :show, params: { id: "ldpd_#{well_known_bib_id}", repository_id: "nnc-a" }
+        expect(response).to have_http_status(:success)
+        subjects_att = controller.instance_variable_get(:@subjects)
+        expect(subjects_att).to eql expected_subjects
+      end
     end
   end
 end
