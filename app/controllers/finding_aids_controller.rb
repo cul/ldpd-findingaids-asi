@@ -87,6 +87,7 @@ class FindingAidsController < ApplicationController
     @finding_aid_title =
       [@arch_desc_did.unit_title, @arch_desc_did.unit_dates_string].join(', ')
     @subjects = (@arch_desc_misc.control_access_corporate_name_values +
+                 @arch_desc_misc.control_access_geographic_name_values +
                  @arch_desc_misc.control_access_occupation_values +
                  @arch_desc_misc.control_access_personal_name_values +
                  @arch_desc_misc.control_access_subject_values).sort
