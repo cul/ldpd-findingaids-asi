@@ -97,14 +97,6 @@ class FindingAidsController < ApplicationController
     @cache_html = CONFIG.fetch(:cache_html, !@preview_flag)
   end
 
-  def subjects_for_archdesc(arch_desc_misc)
-    (arch_desc_misc.control_access_corporate_name_values +
-     arch_desc_misc.control_access_geographic_name_values +
-     arch_desc_misc.control_access_occupation_values +
-     arch_desc_misc.control_access_personal_name_values +
-     arch_desc_misc.control_access_subject_values).sort
-  end
-
   def summary
     if @preview_flag
       redirect_to '/preview' + repository_finding_aid_path(id: params[:finding_aid_id])
