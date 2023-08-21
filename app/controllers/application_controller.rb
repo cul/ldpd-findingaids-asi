@@ -2,6 +2,7 @@ require 'archive_space'
 require 'open-uri'
 class ApplicationController < ActionController::Base
   include  ArchiveSpace::Ead::MarcHelper
+  include Acfa::EadParsingController
   include Blacklight::Controller
 
   before_action :set_preview_flag, :set_print_view_flag
@@ -195,5 +196,12 @@ class ApplicationController < ActionController::Base
   def retrieve_expected_repo_code(finding_aid_id)
     bib_id = finding_aid_id.delete_prefix('ldpd_')
     expected_repo_code = bib_id_repo_id_hash.fetch(bib_id.to_i, false)
+  end
+
+  def assign_control_access_terms!(arch_desc_misc)
+    @name_terms = names_for_archdesc(arch_desc_misc)
+    @place_terms = places_for_archdesc(arch_desc_misc)
+    @subjects = subjects_for_archdesc(arch_desc_misc)
+    @genres_forms = arch_desc_misc.control_access_genre_form_values.sort
   end
 end

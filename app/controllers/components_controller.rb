@@ -44,13 +44,7 @@ class ComponentsController < ApplicationController
       @arch_desc_misc.access_restrictions_values.map{ |value| ArchiveSpace::Parsers::EadHelper.highlight_offsite value.text }.any?
     @unprocessed_flag =
       @arch_desc_misc.access_restrictions_values.map{ |value| ArchiveSpace::Parsers::EadHelper.accessrestrict_contains_unprocessed? value.text }.any?
-    # fcd1, 02/24/20: @subjects and @genres_forms needed for the sidebar view, in order to hide unneeded links.
-    # Need to refactor this, possibly into application controller helper method
-    @subjects = (@arch_desc_misc.control_access_corporate_name_values +
-                 @arch_desc_misc.control_access_occupation_values +
-                 @arch_desc_misc.control_access_personal_name_values +
-                 @arch_desc_misc.control_access_subject_values).sort
-    @genres_forms = @arch_desc_misc.control_access_genre_form_values.sort
+    assign_control_access_terms!(@arch_desc_misc)
     # fcd1, 09/12/19: For now, assume all top-level <c> elements are series. However, when other
     # types of top-level <c> elements are allowed, modify the following code, including changing
     # variable name from @series to, for example, @top_level_component (more generic), or check
@@ -98,10 +92,9 @@ class ComponentsController < ApplicationController
     @ead_header.parse ead_nokogiri_xml_doc
     @finding_aid_title =
       [@arch_desc_did.unit_title, @arch_desc_did.unit_dates_string].join(', ')
-    @subjects = (@arch_desc_misc.control_access_corporate_name_values +
-                 @arch_desc_misc.control_access_occupation_values +
-                 @arch_desc_misc.control_access_personal_name_values +
-                 @arch_desc_misc.control_access_subject_values).sort
+    @name_terms = names_for_archdesc(@arch_desc_misc)
+    @place_terms = places_for_archdesc(@arch_desc_misc)
+    @subjects = subjects_for_archdesc(@arch_desc_misc)
     @genres_forms = @arch_desc_misc.control_access_genre_form_values.sort
     unless (@ead_header.eadid_url_attribute.nil? ||
             @ead_header.eadid_url_attribute.include?('findingaids.cul.columbia.edu') ||
