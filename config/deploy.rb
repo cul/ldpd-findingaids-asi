@@ -13,6 +13,7 @@ set :deploy_name, "#{fetch(:application)}_#{fetch(:stage)}"
 # Default value for :rails_env is fetch(:stage)
 set :rails_env, fetch(:deploy_name)
 # use the rvm wrapper
+set :rvm_custom_path, '~/.rvm-alma8'
 set :rvm_ruby_version, fetch(:deploy_name)
 
 set :repo_url, "git@github.com:cul/#{fetch(:repo_name)}.git"
@@ -20,7 +21,7 @@ set :repo_url, "git@github.com:cul/#{fetch(:repo_name)}.git"
 set :remote_user, "#{fetch(:instance)}serv"
 # Default deploy_to directory is /var/www/:application
 # set :deploy_to, '/var/www/my_app_name'
-set :deploy_to, "/opt/passenger/#{fetch(:instance)}/#{fetch(:deploy_name)}"
+set :deploy_to, "/opt/passenger/#{fetch(:deploy_name)}"
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -33,7 +34,7 @@ set :deploy_to, "/opt/passenger/#{fetch(:instance)}/#{fetch(:deploy_name)}"
 set :log_level, :info
 
 # Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'node_modules', 'public/packs')
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
@@ -43,6 +44,7 @@ set :passenger_restart_with_touch, true
 set :linked_files, fetch(:linked_files, []).push(
   'config/aeon.yml',
   'config/archivespace.yml',
+  'config/blacklight.yml',
   'config/database.yml',
   'config/finding_aids.yml',
   'config/master.key',
