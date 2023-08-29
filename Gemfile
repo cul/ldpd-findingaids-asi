@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "~> 3.0.3"
+ruby "~> 3.1.3"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.0.6'
@@ -14,6 +14,10 @@ gem "sprockets-rails"
 gem 'sqlite3', '~> 1.4'
 # Use mysql2 as the database for CUL
 gem 'mysql2'
+
+# Use terser as compressor for JavaScript assets
+gem 'terser'
+
 # Use Puma as the app server
 gem 'puma', '~> 5.2'
 
