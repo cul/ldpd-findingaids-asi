@@ -23,11 +23,32 @@ to_field 'repository_id_ssi' do |record, accumulator, context|
   end
 end
 
+@index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['date_range_ssim'].include?(index_step.field_name) }
+
+to_field 'date_range_ssim', extract_xpath('./did/unitdate/@normal', to_text: false) do |_record, accumulator|
+  range = Arclight::YearRange.new
+  next range.years if accumulator.blank?
+
+  ranges = accumulator.map(&:to_s)
+  ranges.delete_if { |range| range =~ /\/9999/ && range != '9999/9999' }
+  if ranges.blank?
+    accumulator.replace ranges
+    next range.years
+  end
+  range << range.parse_ranges(ranges)
+  accumulator.replace range.years
+end
+
 to_field 'date_range_isim', extract_xpath('./did/unitdate/@normal', to_text: false) do |_record, accumulator|
   range = Arclight::YearRange.new
   next range.years if accumulator.blank?
 
   ranges = accumulator.map(&:to_s)
+  ranges.delete_if { |range| range =~ /\/9999/ && range != '9999/9999' }
+  if ranges.blank?
+    accumulator.replace [ranges]
+    next range.years
+  end
   range << range.parse_ranges(ranges)
   accumulator.replace range.years
 end

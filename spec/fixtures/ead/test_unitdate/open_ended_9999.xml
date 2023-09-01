@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<ead audience="external">
+  <eadheader>
+    <filedesc>
+      <publicationstmt>
+        <publisher>Rare Book &amp; Manuscript Library</publisher>
+      </publicationstmt>
+    </filedesc>
+    <profiledesc>
+      <creation>This stub finding aid was produced from CLIO data on <date>2021-09-12 10:46:48 UTC</date>.</creation>
+    </profiledesc>
+  </eadheader>
+  <archdesc level="collection" relatedencoding="MARC21">
+    <accessrestrict/>
+    <did>
+      <unitid type="clio" repositorycode="nnc-rb" encodinganalog="001">5802208</unitid>
+      <unitid type="call_num" repositorycode="nnc-rb">SALECAT Z287 B56</unitid>
+      <unittitle encodinganalog="245$a" altrender="[Book dealer's catalogs issued by B.  L. Rootenberg Rare Books].">[Book dealer's catalogs issued by B.  L. Rootenberg Rare Books].</unittitle>
+      <origination label="Creator">
+        <corpname encodinganalog="110">B.  L. Rootenberg Rare Books.</corpname>
+      </origination>
+      <unitdate encodinganalog="245$f" normal="1990/9999" type="inclusive"/>
+      <repository>
+        <corpname>Rare Book <Offsite> - Request at Rare Book Lib (Non-Circ)</Offsite><address><addressline/></address></corpname>
+        <physdesc>
+          <extent altrender="materialtype spaceoccupied">v. : ill. ; 22-24 cm.</extent>
+        </physdesc>
+        <langmaterial>
+          <language langcode="und">undetermined</language>
+        </langmaterial>
+      </repository>
+      <bioghist encodinganalog="545"/>
+      <scopecontent encodinganalog="520"/>
+      <controlaccess>
+        <corpname encodinganalog="610">B.  L. Rootenberg Rare Books--Catalogs.</corpname>
+        <genreform encodinganalog="655">Booksellers' catalogs.</genreform>
+      </controlaccess>
+    </did>
+  </archdesc>
+</ead>
