@@ -20,12 +20,14 @@ namespace :acfa do
     rails_env = (ENV['RAILS_ENV'] || 'development')
     solr_url = ENV.fetch('SOLR_URL', Blacklight.default_index.connection.base_uri)
     puts "Seeding index for #{rails_env}"
-    ead_hash = HashWithIndifferentAccess.new(YAML.load_file(CONFIG[:valid_finding_aid_bib_ids]))
+    eads_to_index_yml = ENV.fetch('EAD_YML', CONFIG[:valid_finding_aid_bib_ids])
+    ead_hash = HashWithIndifferentAccess.new(YAML.load_file(eads_to_index_yml))
     ead_dir = CONFIG[:ead_cache_dir]
     bib_pattern = /ldpd_(\d+).xml$/
     traject_config = Rails.root.join('lib/ead/traject/ead2_config.rb')
     puts "Seeding index with as_ead data from #{ead_dir}..."
-    Dir.glob(File.join(ead_dir + "/as_ead_ldpd_*.xml")).each do |path|
+    filename_pattern = (ENV['CLIO_STUBS'].to_s =~ /true/i) ? "/clio_ead_ldpd_*.xml" : "/as_ead_ldpd_*.xml"
+    Dir.glob(File.join(ead_dir + filename_pattern)).each do |path|
       bib_id = bib_pattern.match(path)&.[](1)
       repo_id = ead_hash[bib_id.to_i]
       if repo_id && Arclight::Repository.find_by(slug: repo_id)
