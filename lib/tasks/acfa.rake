@@ -42,19 +42,21 @@ namespace :acfa do
       bib_id = bib_pattern.match(path)&.[](1)
       repo_id = ead_hash[bib_id.to_i]
       if repo_id && Arclight::Repository.find_by(slug: repo_id)
-        ENV['REPOSITORY_ID'] = repo_id
         # arclight indexes each EAD via a system call to Traject with each ead file path $FILE:
         # `bundle exec traject -u #{solr_url} -i xml -c #{Arclight::Engine.root}/lib/arclight/traject/ead2_config.rb #{ENV.fetch('FILE', nil)}`
         # the traject config (ead2_config.rb) expects an ENV variable set for REPOSITORY_ID
         open(path) do |io|
           traject_indexer.settings['command_line.filename'] = path
           Arclight::Traject::NokogiriNamespacelessReader.new(io, {}).to_a.each do |record|
-            traject_indexer.process_record(record)
+            context = Traject::Indexer::Context.new(source_record: record, settings: traject_indexer.settings, source_record_id_proc: traject_indexer.source_record_id_proc, logger: traject_indexer.logger)
+            context.clipboard[:repository_id] = repo_id
+            traject_indexer.map_to_context!(context)
+            traject_indexer.writer.put( context ) unless context.skip?
             traject_indexer.writer.commit(softCommit: true)
             indexed += 1
           end
-        rescue
-          puts "#{bib_id} failed to index"
+        rescue Exception => ex
+          puts "#{bib_id} failed to index: #{ex.message}"
         end
       else
         if repo_id.present?

@@ -22,8 +22,8 @@ settings do
   provide 'component_traject_config', File.join(__dir__, 'ead2_component_config.rb')
 end
 
-each_record do |_record, context|
-  context.clipboard[:repository_id] = ENV.fetch('REPOSITORY_ID', nil)
+each_record do |record, context|
+  context.clipboard[:repository_id] ||= 'nnc'
 end
 
 load_config_file "#{Arclight::Engine.root}/lib/arclight/traject/ead2_config.rb"
@@ -66,7 +66,7 @@ to_field 'id', eadid_from_url_or_text('id'), strip, gsub('.', '-')
 @index_steps.unshift @index_steps.pop
 
 to_field 'repository_id_ssi' do |record, accumulator, context|
-  accumulator.concat([settings['repository']]) if settings['repository']
+  accumulator.concat([context.clipboard[:repository_id]])
 end
 
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['date_range_ssim'].include?(index_step.field_name) }
