@@ -124,7 +124,15 @@ $navbar-primary-brand-hover-color:           $navbar-primary-active-color !defau
 
 .dropdown-menu {
   background-color: $primary !important;
-  color: $primary-text !important;
+  color: color-contrast($primary) !important;
+  .dropdown-item {
+    color: color-contrast($primary);
+    text-decoration:none;
+    &:hover {
+      background-color:color-contrast($primary);
+      color: $primary;
+    }
+  }
   &>li {
     padding:0;
   }
@@ -132,12 +140,11 @@ $navbar-primary-brand-hover-color:           $navbar-primary-active-color !defau
       padding: 0.1em 0.5em;
       display: block;
       clear: both;
-      /* TODO for DLC-938 */
-      color: $primary-text;
+      color: color-contrast($primary);
       text-decoration:none;
       &:hover {
-        background-color:color-contrast($primary-text);
-        color: $primary-text;
+        background-color:color-contrast($primary);
+        color: $primary;
       }
   }
 }
