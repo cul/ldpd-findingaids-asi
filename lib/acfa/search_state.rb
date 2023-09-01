@@ -5,7 +5,10 @@ module Acfa
   # to link search results to legacy views of finding aids
   class SearchState < Blacklight::SearchState
     def url_for_document(doc, options = {})
-      if doc['component_level_isim'] == [0] # collection record
+
+      if controller.is_a?(CatalogController) && controller.action_name == 'show'
+        super
+      elsif doc['component_level_isim'] == [0] # collection record
         { controller: 'finding_aids', action: 'show', repository_id: doc['repository_id_ssi'], id: doc['ead_ssi'] }
       else # component record, link to dsc
         # /ead/nnc-a/ldpd_11077996/dsc#view_all

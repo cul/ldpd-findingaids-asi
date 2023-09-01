@@ -153,8 +153,8 @@ class CatalogController < ApplicationController
     config.add_facet_field 'level', field: 'level_ssim', limit: 10
     config.add_facet_field 'names', field: 'names_ssim', limit: 10
     config.add_facet_field 'repository', field: 'repository_ssim', limit: 10
-    config.add_facet_field 'place', field: 'geogname_ssim', limit: 10
-    config.add_facet_field 'subject', field: 'access_subjects_ssim', limit: 10
+    config.add_facet_field 'places', field: 'geogname_ssim', limit: 10
+    config.add_facet_field 'subjects', field: 'access_subjects_ssim', limit: 10
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -300,13 +300,13 @@ class CatalogController < ApplicationController
     config.add_related_field 'originalsloc', field: 'originalsloc_html_tesm', helper_method: :render_html_tags
 
     # Collection Show Page - Indexed Terms Section
-    config.add_indexed_terms_field 'access_subjects', field: 'access_subjects_ssim', link_to_facet: true, separator_options: {
+    config.add_indexed_terms_field 'subjects', field: 'access_subjects_ssim', link_to_facet: true, separator_options: {
       words_connector: '<br/>',
       two_words_connector: '<br/>',
       last_word_connector: '<br/>'
     }
 
-    config.add_indexed_terms_field 'names_coll', field: 'names_coll_ssim', separator_options: {
+    config.add_indexed_terms_field 'names', field: 'names_coll_ssim', separator_options: {
       words_connector: '<br/>',
       two_words_connector: '<br/>',
       last_word_connector: '<br/>'
@@ -355,7 +355,7 @@ class CatalogController < ApplicationController
       last_word_connector: '<br/>'
     }, helper_method: :link_to_name_facet
 
-    config.add_component_indexed_terms_field 'places', field: 'places_ssim', link_to_facet: true, separator_options: {
+    config.add_component_indexed_terms_field 'place', field: 'geogname_ssim', link_to_facet: true, separator_options: {
       words_connector: '<br/>',
       two_words_connector: '<br/>',
       last_word_connector: '<br/>'
