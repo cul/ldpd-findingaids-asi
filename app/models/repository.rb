@@ -24,7 +24,7 @@ class Repository
 
   def initialize(id, properties = {})
     @id = id
-    @attributes = DEFAULTS.merge(properties).with_indifferent_access
+    @attributes = DEFAULTS.merge(properties.symbolize_keys).with_indifferent_access
     if @attributes[:requestable_via_aeon]
       @attributes[:request_types] = {
         aeon_local_request: {
