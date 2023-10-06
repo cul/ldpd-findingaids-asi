@@ -22,8 +22,25 @@ settings do
   provide 'component_traject_config', File.join(__dir__, 'ead2_component_config.rb')
 end
 
+def normalize_repository_id(mainagencycode)
+  code = mainagencycode.sub(/^US-/, '').downcase
+  case code
+  when 'nnc-av'
+    return 'nnc-a'
+  when ''
+    return 'nnc'
+  else
+    return code
+  end
+end
+
 each_record do |record, context|
-  context.clipboard[:repository_id] ||= 'nnc'
+  context.clipboard[:repository_id] ||= normalize_repository_id(record.xpath('/ead/eadheader/eadid/@mainagencycode').text)
+  if context.clipboard[:repository_id].present? && REPOS[context.clipboard[:repository_id]]
+    context.clipboard[:repository] ||= Repository.find(context.clipboard[:repository_id]).name
+  else
+    context.skip!
+  end
 end
 
 load_config_file "#{Arclight::Engine.root}/lib/arclight/traject/ead2_config.rb"
