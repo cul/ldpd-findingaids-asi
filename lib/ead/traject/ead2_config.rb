@@ -22,11 +22,17 @@ settings do
   provide 'component_traject_config', File.join(__dir__, 'ead2_component_config.rb')
 end
 
-def normalize_repository_id(mainagencycode)
+def normalize_repository_id(mainagencycode, record)
   code = mainagencycode.sub(/^US-/, '').downcase
   case code
   when 'nnc-av'
     return 'nnc-a'
+  when 'nnc-rb'
+    if record.xpath('/ead/archdesc[@level=\'collection\']/did/unitid').detect {|x| x.text =~ /^UA/}
+      return 'nnc-ua'
+    else
+      return 'nnc-rb'
+    end
   when ''
     return 'nnc'
   else
@@ -35,7 +41,7 @@ def normalize_repository_id(mainagencycode)
 end
 
 each_record do |record, context|
-  context.clipboard[:repository_id] ||= normalize_repository_id(record.xpath('/ead/eadheader/eadid/@mainagencycode').text)
+  context.clipboard[:repository_id] ||= normalize_repository_id(record.xpath('/ead/eadheader/eadid/@mainagencycode').text, record)
   if context.clipboard[:repository_id].present? && REPOS[context.clipboard[:repository_id]]
     context.clipboard[:repository] ||= Repository.find(context.clipboard[:repository_id]).name
   else
