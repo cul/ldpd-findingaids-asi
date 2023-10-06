@@ -53,4 +53,12 @@ describe Traject::Indexer do
       it { expect(index_document[:date_range_ssim]).to be_blank }
     end
   end
+  describe 'repository indexing' do
+    let(:repository_id) { 'nnc-a' }
+    let(:repository_name) { REPOS[repository_id][:name] }
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+    # the accumulator will wrap in an array
+    it { expect(index_document[:repository_id_ssi]).to eql [repository_id] }
+    it { expect(index_document[:repository_ssim]).to eql [repository_name] }
+  end
 end
