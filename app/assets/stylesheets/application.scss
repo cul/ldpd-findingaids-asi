@@ -121,8 +121,16 @@ a.subseries_anchor, a.fa_anchor {
 	background-color: #f8f9fa !important;
 }
 
-ol.breadcrumb {
-	margin-left: 1em;
+.acfa-repositories {
+	ul {
+	  list-style: none;
+	}
+	li {
+	  font-size: 1.25rem;
+	  margin-bottom: 0.5rem;
+	  font-weight: 500;
+	  line-height: 1.2;
+	}
 }
 
 @import "lweb_shared";

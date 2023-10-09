@@ -57,6 +57,7 @@ base: &BASE
         city_state_zip_country: New York, NY 10027, USA
     description: "Columbia University Libraries is a top-tier academic research library, serving one of the world's most important centers of research and learning."
     thumbnail_url: "https://library.columbia.edu/content/dam/locations/butler.jpg"
+    icon: "landmark-flag"
   nnc-a:
     requestable_via_aeon: true
     checkbox_per_unittitle: true
@@ -83,6 +84,7 @@ base: &BASE
         city_state_zip_country: "New York, NY 10027, USA"
     description: "Avery is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_avery.png"
+    icon: "archway"
   nnc-ccoh:
     requestable_via_aeon: true
     checkbox_per_unittitle: false
@@ -110,6 +112,7 @@ base: &BASE
         city_state_zip_country: New York, NY 10027, USA
     description: "OHAC is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_ccoh.png"
+    icon: 'microphone-lines'
   nnc-ea:
     requestable_via_aeon: true
     checkbox_per_unittitle: false
@@ -135,6 +138,7 @@ base: &BASE
         city_state_zip_country: New York, NY 10027, USA
     description: "CV Starr is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_eastasian.png"
+    icon: 'earth-asia'
   nnc-rb:
     requestable_via_aeon: true
     checkbox_per_unittitle: false
@@ -160,6 +164,7 @@ base: &BASE
         city_state_zip_country: New York, NY 10027, USA
     description: "RBML is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_rbml.png"
+    icon: 'scroll'
   nnc-ua:
     requestable_via_aeon: true
     checkbox_per_unittitle: false
@@ -212,6 +217,7 @@ base: &BASE
         city_state_zip_country: New York, NY 10027, USA
     description: "Burke is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_burke.png"
+    icon: 'place-of-worship'
   nnc-m:
     requestable_via_aeon: false
     as_repo_id: clio_only
@@ -237,6 +243,7 @@ base: &BASE
         city_state_zip_country: New York, NY 10032, USA
     description: "HSL is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_burke.png"
+    icon: 'stethoscope'
   nynycoh:
     requestable_via_aeon: false
     as_repo_id: clio_only
@@ -263,6 +270,7 @@ base: &BASE
         city_state_zip_country: New York, NY 10027, USA
     description: "OHAC is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_ccoh.png"
+    icon: 'microphone-lines'
 development:
   <<: *BASE
 test:

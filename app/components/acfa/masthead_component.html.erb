@@ -1,17 +1,19 @@
-<header id="header">
-  <nav class="navbar d-block navbar-expand-sm navbar-light bg-white">
-    <div class="container d-flex">
-      <div class="collapse navbar-collapse" id="navbarCUL">
-        <div class="d-flex flex-column">
-        <nav class="d-flex justify-content-sm-end" id="global-menu">
-          <ul class="navbar-nav">
-            <%= render 'shared/main_menu_links' %>
-          </ul>
-        </nav>
-        <section id="branding" class="d-none d-sm-flex">
-          <h1 id="site-name"><%= heading %></h1>
-        </section>
-      </div>
-    </div>
+<div class="d-flex flex-column w-100">
+  <nav id="global-menu" class="d-flex justify-content-sm-end">
+      <ul class="navbar-nav">
+          <li class="nav-item">
+              <a class="nav-link" href="https://library.columbia.edu/resolve/lweb0087">My Library Account</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="https://hours.library.columbia.edu/">Hours</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="https://library.columbia.edu/services/askalibrarian.html">Ask a Librarian</a>
+          </li>
+      </ul>
   </nav>
-</header>
+  <section id="branding" class="d-none d-sm-flex flex-fill justify-content-center">
+    <h1 id="site-name"><%= heading %></h1>
+  </section>
+  <%= main_menu %>
+</div>
