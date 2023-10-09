@@ -1,5 +1,5 @@
-<div class="mb-3 mx-auto al-repository">
-  <div class="container">
+<div id="<%= repository.id %>-panel" class="tab-pane" role="tabpanel" aria-labelledby="<%= repository.id %>-tab">
+  <div class="container mb-3 mx-auto">
     <div class='row'>
       <div class='col-2 align-self-center d-none d-lg-block al-repository-thumbnail'>
         <%= image_tag repository.thumbnail_url, alt: repository.name, class: 'img-fluid d-block mx-auto' %>
@@ -32,7 +32,7 @@
               <%= t(:'arclight.views.repositories.number_of_collections', count: repository.collection_count) %>
             </div>
             <% if repository.collection_count&.positive? %>
-            <%= link_to(t(:'arclight.views.repositories.view_more'), arclight_engine.repository_path(repository.slug), class: 'btn btn-secondary btn-sm') %>
+              <%= link_to("List finding aids", repository_finding_aids_path(repository_id: repository.slug), class: 'btn btn-secondary btn-sm') %>
             <% end %>
           </div>
           <% end %>

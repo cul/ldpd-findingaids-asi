@@ -6,8 +6,12 @@ module Acfa
       render Acfa::MastheadComponent.new
     end
 
+    def search_bar
+      render Acfa::SearchNavbarComponent.new(blacklight_config: blacklight_config)
+    end
+
     def top_bar
-      render Acfa::TopNavbarComponent.new(blacklight_config: blacklight_config)
+      # render Acfa::TopNavbarComponent.new(blacklight_config: blacklight_config)
     end
   end
 end

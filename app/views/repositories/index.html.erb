@@ -1,7 +1,28 @@
 <%= render partial: 'banner' %>
-<h2>View finding aids for:</h2>
-<ul>
-  <% @repositories.each do |repo| %>
-  <li><%= link_to(repo.name, repository_finding_aids_path(repository_id: repo.id)) if repo.has_fa_list? %> </li>
-  <% end %>
-</ul>
+
+<nav class="cul-icon_links bg-light pt-5 mb-3">
+  <h2 class="h4 text-uppercase mb-3 text-center">ABOUT THE COLLECTIONS IN</h2>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <% @repositories.each do |repository| %>
+      <div class="nav-item col-6 col-md-3 col-lg">
+        <%= link_to '#', id: "#{repository.id}-tab", class: "nav-link btn btn-link", data: { "bs-toggle" => "tab", "bs-target" => "##{repository.id}-panel" }, type:"button", role:"tab", aria: { controls:"#{repository.id}-panel", selected: "false" } do -%>
+          <i class="fa fa-<%= repository.icon || 'box-archive' -%> fa-w-16"></i>
+          <div class="mt-1"><%= repository.name -%></div>
+        <%- end -%>
+      </div>
+    <% end %>
+  </div>
+  <div class="tab-content" id="nav-tabContent">
+    <% @repositories.each do |repo| %>
+        <%= render Acfa::Nav::RepositoryPanelComponent.new(repository: repo) %>
+    <% end %>
+  </div>
+</nav>
+<section class="bg-white p-5 mb-3">
+  <h2 class="h4 text-uppercase mb-3 text-center">DISTINCTIVE COLLECTIONS AND ARCHIVES AT COLUMBIA</h2>
+  <p>As a foundation for supporting research and teaching, Columbia's collections are central to the University's intellectual distinction and highest ambitions. We build, shape, sustain, and make discoverable collections that transcend traditional boundaries of format and domain, offer enduring research value, and support the intellectual curiosity of Columbia faculty and students.</p>
+  <p>Our unique and rare holdings contain some of the world’s most remarkable and prominent collections of recorded knowledge, from cuneiform tablets to early printed books and born-digital archives. While critically and strategically important to Columbia’s teaching and research strengths, the constituency for our special collections extends beyond campus to a global community of scholars.</p>
+  <p>
+    <a href="https://library.columbia.edu/collections.html">Learn more about the collections</a>
+  </p>
+</section>
