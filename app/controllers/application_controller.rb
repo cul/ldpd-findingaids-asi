@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 
   # @as_repo_id => repo ID in ArchiveSpace
   def validate_repository_code_and_set_repo_id
-    @repository = Repository.find(params[:repository_id])
+    @repository = Arclight::Repository.find_by(slug: params[:repository_id])
     @repository_code = @repository.id
     @as_repo_id = @repository.as_repo_id
     @repository_name = @repository.name

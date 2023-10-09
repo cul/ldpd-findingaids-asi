@@ -122,6 +122,20 @@ $navbar-primary-brand-hover-color:           $navbar-primary-active-color !defau
   }
 }
 
+.search-query-form {
+  .input-group {
+    width: unset;
+    display:flex;
+    flex: auto;
+    &.within-collection-dropdown {
+      flex: none;
+    }
+	}
+	#search_field {
+	  height: unset;
+	}
+}
+
 .dropdown-menu {
   background-color: $primary !important;
   color: color-contrast($primary) !important;

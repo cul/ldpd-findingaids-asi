@@ -1,4 +1,4 @@
 <%- al_repository = Arclight::Repository.find_by(slug: @repository.id) if @repository -%>
 <%- breadcrumb(:ead_repository, @repository) if @repository %>
-<%= render 'shared/breadcrumbs' %>
+<%= render 'shared/breadcrumbs' if has_breadcrumbs? %>
 <%= render al_repository if al_repository %>
