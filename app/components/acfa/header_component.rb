@@ -11,7 +11,7 @@ module Acfa
     end
 
     def top_bar
-      render Acfa::TopNavbarComponent.new(blacklight_config: blacklight_config)
+      # render Acfa::TopNavbarComponent.new(blacklight_config: blacklight_config)
     end
   end
 end

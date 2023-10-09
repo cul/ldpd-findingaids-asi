@@ -1,5 +1,14 @@
 <%= render partial: 'banner' %>
-<div class="al-repositories">
-<h3>Finding Aids from the <%= @repository.name %></h3>
+<div class="row al-repository-show-header">
+  <div class="col col-md-8 col-lg-9">
+    <h2 class="h4">Finding Aids from the <%= @repository.name %></h2>
+  </div>
+  <div class="col text-right">
+    <span class="al-repository-collections">
+      <%= link_to(t(:'arclight.views.repositories.view_all_collections'), repository_collections_path(@repository)) %>
+    </span>
+  </div>
+</div>
+<div class="al-repositories acfa-repositories">
 <%= @fa_list %>
 </div>
