@@ -58,30 +58,34 @@ $url_5: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.
 $url_6: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.ttf);
 $url_7: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.svg#TrajanProRegular);
 
+:root {
+  --bs-breadcrumb-divider: "/";
+}
+
 // application-wide styles
-h2 {
-	color: #2c5277;
-	
-	font-size: 16px;
-	font-weight: bold;
-	&.al-show-sub-heading {
-		border-bottom: 1px solid #2c5277;
-		font-size: 1.5rem;
-		text-transform: none;
+.ead_content {
+	h2 {
+		color: #2c5277;
+		font-size: 16px;
+		font-weight: bold;
+		&.al-show-sub-heading {
+			border-bottom: 1px solid #2c5277;
+			font-size: 1.5rem;
+			text-transform: none;
+		}
+	}
+
+	h3, h3 em {
+		color: #999;
+		font-weight: bold;
+		font-size: 14px;
+		padding-top: 10px;
+		&.al-show-sub-heading {
+			font-size: 1.1rem;
+			text-transform: none;
+		}
 	}
 }
-
-h3, h3 em {
-	color: #999;
-	font-weight: bold;
-	font-size: 14px;
-	padding-top: 10px;
-	&.al-show-sub-heading {
-		font-size: 1.1rem;
-		text-transform: none;
-	}
-}
-
 div.toc {
 	background: #eee;
 	padding: 10px;
@@ -108,11 +112,23 @@ a.subseries_anchor, a.fa_anchor {
 	visibility: hidden;
 }
 
-.al-masthead H1 {
+.al-masthead H1, #site-name {
 	font-family: TrajanProRegular, trajan, serif;
 	color: $brand;
 }
 
+.al-search-breadcrumb {
+	background-color: #f8f9fa !important;
+}
+
 ol.breadcrumb {
 	margin-left: 1em;
+}
+
+@import "lweb_shared";
+
+.tab-content {
+	.active {
+		background-color: $white;
+	}
 }

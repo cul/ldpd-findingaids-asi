@@ -1,0 +1,31 @@
+.cul-icon_links a {
+    margin-top: 0;
+}
+.cul-icon_links a:hover {
+    text-decoration: none;
+    color:var(--primary);
+}
+.cul-icon_links i, .cul-icon_links svg {
+    font-size: 4.75rem;
+    color:var(--icon-grey-color);
+    -moz-transition: -moz-transform .2s;
+    -o-transition: -o-transform .2s;
+    -webkit-transition: -webkit-transform .2s;
+    transition: transform .2s;
+}
+.cul-icon_links a:hover i, .cul-icon_links a:hover svg {
+    color:var(--a-link-color);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.2);
+}
+
+#hero .jumbotron {
+    height: 80px;
+    background-image: url('https://toolkit.library.columbia.edu/v3/img/butler-library.jpg');
+    background-size: cover;
+    background-position: center 25%;
+}
+
