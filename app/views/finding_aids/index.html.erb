@@ -1,14 +1,33 @@
-<%= render partial: 'banner' %>
-<div class="row al-repository-show-header">
-  <div class="col col-md-8 col-lg-9">
-    <h2 class="h4">Finding Aids from the <%= @repository.name %></h2>
+<%= render Acfa::BannerComponent.new(repository: @repository, render_repository: false) %>
+<div class="container">
+  <div class="row al-repository-show-header">
   </div>
-  <div class="col text-right">
-    <span class="al-repository-collections">
-      <%= link_to(t(:'arclight.views.repositories.view_all_collections'), repository_collections_path(@repository)) %>
-    </span>
+  <div class="al-repositories acfa-repositories row">
+    <article id="main-article" class="col-sm-8">
+      <h2 class="h4 text-uppercase"><%= @repository.name %> FINDING AIDS</h2>
+      <div class="accordion_content section">
+        <div class="cul-theme-component-repository-action mb-3">
+          <%= link_to(search_action_url(f: { repository: [@repository.name] }), class: "btn btn-link d-block py-3 p-md-0 w-100 text-left") do %>
+            <div class="card rounded-0 text-center text-md-left">
+              <div class="row no-gutters">
+                <div class="col-md-2 d-flex align-items-center justify-content-center">
+                  <i class="fa fa-magnifying-glass fa-w-20 fa-3x"></i>
+                </div>
+                <div class="col-md-10">
+                  <div class="card-body">
+                    <div class="card-title h4 my-0">Search Our Finding Aids</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="section">
+        <%= @fa_list %>
+      </div>
+
+    </article>
+    <%= render Acfa::Arclight::Repository::SidebarComponent.new(repository: @repository) %>
   </div>
-</div>
-<div class="al-repositories acfa-repositories">
-<%= @fa_list %>
 </div>
