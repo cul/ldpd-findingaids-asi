@@ -1,0 +1,30 @@
+<aside id="main-sidebar" class="<%= @class_attr %>">
+  <div class="layout_inherited_sidebar inherited_sidebar parbase">
+    <div class="location">
+      <div class="cul-location">
+        <div class="card border-0">
+          <div class="cul-location-image-container">
+             <%= image_tag repository.thumbnail_url, alt: repository.name, class: 'card-img-top img-fluid' %>
+          </div>
+        <div class="card-body px-0 pb-0 mb-3">
+          <h2 class="h5 card-title"><%= @repository.name %></h2>
+          <%= render Acfa::Arclight::Repository::LocationComponent.new(repository: @repository) %>
+          <%= render Acfa::Arclight::Repository::ContactComponent.new(repository: @repository) %>
+          <div class="horizontal_rule">
+            <div class="cul-horizontal_rule">
+                <hr>
+            </div>
+          </div>
+          <div class="section_heading section">
+            <div class="cul-section_heading">
+              <h3 class="h6 text-uppercase text-secondary">ABOUT THE COLLECTIONS</h3>
+            </div>
+          </div>
+          <div class="text section">
+            <div class="cul-text mb-3"><%= @repository.description %></div>
+          </div>
+      	</div>
+      </div>
+    </div>
+  </div>
+</aside>
