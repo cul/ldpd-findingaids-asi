@@ -1,20 +1,15 @@
 <%= render partial: 'banner' %>
 
 <nav class="cul-icon_links bg-light pt-5 mb-3">
-  <h2 class="h4 text-uppercase mb-3 text-center">ABOUT THE COLLECTIONS IN</h2>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+  <h2 class="h4 text-uppercase mb-3 text-center">LIST COLLECTIONS IN</h2>
+  <div class="nav" id="nav-tab" role="tablist">
     <% @repositories.each do |repository| %>
       <div class="nav-item col-6 col-md-3 col-lg">
-        <%= link_to '#', id: "#{repository.id}-tab", class: "nav-link btn btn-link", data: { "bs-toggle" => "tab", "bs-target" => "##{repository.id}-panel" }, type:"button", role:"tab", aria: { controls:"#{repository.id}-panel", selected: "false" } do -%>
+        <%= link_to repository_finding_aids_path(repository_id: repository.slug), id: "#{repository.id}-tab", class: "nav-link btn btn-link" do -%>
           <i class="fa fa-<%= repository.icon || 'box-archive' -%> fa-w-16"></i>
           <div class="mt-1"><%= repository.name -%></div>
         <%- end -%>
       </div>
-    <% end %>
-  </div>
-  <div class="tab-content" id="nav-tabContent">
-    <% @repositories.each do |repo| %>
-        <%= render Acfa::Nav::RepositoryPanelComponent.new(repository: repo) %>
     <% end %>
   </div>
 </nav>
