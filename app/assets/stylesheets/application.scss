@@ -12,6 +12,10 @@
  *
  */
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+@import "cuds_palette";
+$brand: $primary;
+$brand_text: $white;
+
 @import "bootstrap";
 @import "font-awesome";
 @import "components";
@@ -22,32 +26,6 @@
 @import "cul_footer";
 
 @import "arclight";
-//colors
-$color_0: #fff;
-$color_1: #828F88;
-$color_2: #ccc;
-$color_3: #f8f8f8;
-$color_4: #aaa;
-$color_5: #000;
-$color_6: #779bc3;
-$color_7: #002b7f;
-$color_8: #222;
-$color_9: #eef;
-$color_10: #0081c2;
-$color_11: #08c;
-$color_12: #0077b3;
-$color_13: #2a2aa5;
-$color_14: #08c;
-$color_22: #777;
-$color_27: #336699;
-$color_29: #bbb;
-
-//fonts
-$font_0: TrajanProRegular;
-$font_1: trajan;
-$font_2: serif;
-$font_3: trajan pro;
-$font_4: georgia;
 
 //urls
 $url_0: url(//cdn.cul.columbia.edu/ldpd-toolkit/img/crown-bts-24x24.png);
@@ -119,6 +97,14 @@ a.subseries_anchor, a.fa_anchor {
 
 .al-search-breadcrumb {
 	background-color: #f8f9fa !important;
+	ol {
+	  background-color: unset;
+	}
+	.breadcrumb-item {
+	  &.active {
+	    color: $dark;
+	  }
+	}
 }
 
 .acfa-repositories {
