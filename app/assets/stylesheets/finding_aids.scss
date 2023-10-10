@@ -79,3 +79,27 @@ div.printView h3, div.printView h2 {
 div.printView div.summaryDiv {
     background-color: white;
 }
+
+.cul-theme-component-repository-action {
+    overflow-anchor: none;
+    .btn-link {
+        text-decoration: none !important;
+        color: var(--nav-a-link-color);
+        background-color: transparent;
+        &:hover {
+            color: var(--a-link-color);
+            background-color: var(--nav-tabs-link-active-color);
+        }
+    }
+    .card {
+        background-color: transparent;
+        &:not(:last-of-type) {
+          border-bottom: 0;
+        }
+    }
+    .card-header {
+        border-radius: 0;
+        margin-bottom: -1px;
+        background-color: transparent;
+    }  
+}

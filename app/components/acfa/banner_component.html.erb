@@ -1,0 +1,3 @@
+<%- helpers.breadcrumb(:ead_repository, @repository) if @repository %>
+<%= render 'shared/breadcrumbs' if helpers.has_breadcrumbs? %>
+<%= render @repository if render_repository? %>
