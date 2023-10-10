@@ -1,0 +1,24 @@
+// documentary color assigns and overrides for Bootstrap 5
+$blue:    #1D4F91; // CUDS Primary: PMS 7686c Blue
+$indigo:  #093552; // not in design system but used in CU footers/brand
+$purple:  #AE2573; // CUDS Highlight: PMS 675C
+$pink:    #d63384;
+$red:     #A60A3D; // CUDS Highlight: PMS 1945C
+$orange:  #B94700; // CUDS Highlight: PMS 1525C
+$yellow:  #FF9800; // CUDS Highlight: PMS 2013C
+$green:   scale-color(#76881D, $lightness: -10%); // default #198754; CUDS Highlight: PMS 7496C darkened for contrast
+$teal:    #0077C8; // CUDS Secondary: PMS 3005C
+$cyan:    #6CACE4; // CUDS Secondary: PMS 284C
+$white:   #FFFFFF;
+$black:   #000000;
+
+// documentary semantic assigns and overrides for Bootstrap 5
+$primary:       $blue;
+$secondary:     #75787B; // CUDS Secondary: PMS Cool Gray 9C
+$success:       $green;
+$info:          $cyan;
+$warning:       $yellow;
+$danger:        $red;
+$light:         #D0D0CE; // CUDS Secondary: PMS Cool Gray 2C
+$dark:          #53565A; // CUDS Secondary: PMS Cool Gray 11C
+

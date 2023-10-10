@@ -1,14 +1,12 @@
+@import "cuds_palette";
 @import './brand_font';
 
-$brand: #093552;
-$brand_text: #fff;
-
 #contact-footer {
-  background-color: $brand;
-  color: $brand_text;
+  background-color: $indigo;
+  color: $white;
   font-size: 0.75em;
   a {
-    color: $brand_text !important;
+    color: $white !important;
     text-decoration: none;
     &:hover {
       text-decoration: underline;
@@ -27,8 +25,8 @@ Begin Source: /etc/clientlibs/cul_core_2019/shared/css/ask-a-librarian-floating-
   bottom: 5%;
   left: auto;
   .btn {
-    color: white;
-    background-color: #539fe6;
+    color: $white;
+    background-color: $cyan; // #539fe6 in original
   }
 }
 #aal-floater .svg-inline--fa {
@@ -37,7 +35,7 @@ Begin Source: /etc/clientlibs/cul_core_2019/shared/css/ask-a-librarian-floating-
 #aal-floater .btn {
   opacity: .95;
   border-radius: 0;
-  background-color: #539fe6;
+  background-color: $cyan;
 }
 #aal-floater .btn:hover {
   opacity: 1;
