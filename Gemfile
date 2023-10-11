@@ -1,5 +1,11 @@
+require 'yaml'
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+def font_awesome_token
+  YAML.load(File.read("./config/secrets.yml")).fetch('font_awesome_token', nil) if File.exist?("./config/secrets.yml")
+end
 
 ruby "~> 3.1.3"
 
@@ -61,7 +67,12 @@ gem 'loofah', '~> 2.19.1'
 gem 'arclight', '~> 1.0.0'
 
 gem "font-awesome-sass", "~> 6.4.0"
-
+fa_token = font_awesome_token
+if fa_token
+  source "https://token:#{fa_token}@dl.fontawesome.com/basic/fontawesome-pro/ruby/" do
+    gem "font-awesome-pro-sass", "~> 6.4.0"
+  end
+end
 gem "rsolr", ">= 1.0", "< 3"
 gem "bootstrap", "\~\>\ 5.1"
 gem "sassc-rails", "~> 2.1"
