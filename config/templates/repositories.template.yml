@@ -263,6 +263,29 @@ base: &BASE
         city_state_zip_country: New York, NY 10027, USA
     description: "OHAC is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_ccoh.png"
+  nynybaw:
+    requestable_via_aeon: false
+    as_repo_id: clio_only
+    name: Barnard Archives and Special Collection
+    url: https://archives.barnard.edu/
+    has_fa_list: false
+    contact:
+      email: archives@barnard.edu
+      links:
+        - label: 'Barnard Archives & Special Collections'
+          url: https://archives.barnard.edu/
+        - label: 'Columbia University Libraries'
+          url: https://library.columbia.edu
+    location:
+      link:
+        url: "https://archives.barnard.edu/"
+        label: Barnard Archives & Special Collections
+      street_address:
+        building: Milstein Center for Teaching and Learning 423, Barnard College
+        address: ['3009 Broadway']
+        city_state_zip_country: New York, NY 10027, USA
+    description: "Barnard is a wonderful repository"
+    thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_ccoh.png"
 development:
   <<: *BASE
 test:
