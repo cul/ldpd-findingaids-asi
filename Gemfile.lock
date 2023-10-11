@@ -144,7 +144,7 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
-    font-awesome-sass (6.4.0)
+    font-awesome-sass (6.4.2)
       sassc (~> 2.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
@@ -377,6 +377,12 @@ GEM
     yell (2.2.2)
     zeitwerk (2.6.9)
 
+GEM
+  remote: https://token:CED764BD-489C-4D2D-8063-0D52DEFDEB5E@dl.fontawesome.com/basic/fontawesome-pro/ruby/
+  specs:
+    font-awesome-pro-sass (6.4.2)
+      sassc (~> 2.0)
+
 PLATFORMS
   ruby
 
@@ -393,6 +399,7 @@ DEPENDENCIES
   capistrano-rvm (~> 0.1)
   devise
   devise-guests (~> 0.8)
+  font-awesome-pro-sass (~> 6.4.0)!
   font-awesome-sass (~> 6.4.0)
   importmap-rails
   iso-639
