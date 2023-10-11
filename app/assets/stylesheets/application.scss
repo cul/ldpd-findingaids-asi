@@ -100,6 +100,9 @@ a.subseries_anchor, a.fa_anchor {
 .al-masthead H1, #site-name {
 	font-family: TrajanProRegular, trajan, serif;
 	color: $brand;
+	a {
+	  text-decoration: none;
+	}
 }
 
 .al-search-breadcrumb {
