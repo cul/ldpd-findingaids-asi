@@ -13,7 +13,7 @@
       </ul>
   </nav>
   <section id="branding" class="d-none d-sm-flex flex-fill justify-content-center">
-    <h1 id="site-name"><%= heading %></h1>
+    <h1 id="site-name"><%= link_to(root_url) do -%><%= heading %><% end %></h1>
   </section>
   <%= main_menu %>
 </div>
