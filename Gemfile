@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 def font_awesome_token
+  return ENV['FONT_AWESOME_TOKEN'] if ENV['FONT_AWESOME_TOKEN'] && ENV['FONT_AWESOME_TOKEN'] != ''
   YAML.load(File.read("./config/secrets.yml")).fetch('font_awesome_token', nil) if File.exist?("./config/secrets.yml")
 end
 
