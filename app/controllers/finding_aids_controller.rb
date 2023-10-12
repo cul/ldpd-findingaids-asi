@@ -11,10 +11,13 @@ class FindingAidsController < ApplicationController
   before_action :validate_repository_code_and_set_repo_id, only: [:index]
   after_action :cache_response_html, only: [:show, :print]
 
+  EMPTY_LIST = "<ul></ul>"
+
   def index
     @repo_id = params[:repository_id]
     begin
-      @fa_list = ActionController::Base.render(inline: File.read("#{CONFIG[:fa_lists_dir]}/#{@repo_id}_fa_list.html"), layout: false)
+      fa_list_path = "#{CONFIG[:fa_lists_dir]}/#{@repo_id}_fa_list.html"
+      @fa_list = ActionController::Base.render(inline: File.exist?(fa_list_path) ? File.read(fa_list_path) : EMPTY_LIST, layout: false)
     rescue ActionView::MissingTemplate
       # If file "#{CONFIG[:fa_lists_dir]}/#{@repo_id}_fa_list.html" does not exist,
       # rails throws ActionView::MissingTemplate
