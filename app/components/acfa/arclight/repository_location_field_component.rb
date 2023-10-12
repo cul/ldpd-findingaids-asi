@@ -31,9 +31,11 @@ module Acfa::Arclight
       end
     end
     def location_address_elements
-      elements = repository.location.dig('street_address', 'address')&.each_with_index do |content, ix|
-        content_tag :div, content.html_safe, class: "al-repository-street-address-address#{ix + 1}"
-      end || []
+      ix = -1
+      elements = (repository.location.dig('street_address', 'address') || []).map do |content|
+        ix += 1
+        content_tag :div, content.html_safe, class: "al-repository-street-address-address#{ix}"
+      end
       city_state_zip_country = repository.location.dig('street_address', 'city_state_zip_country')
       elements << content_tag(:div, city_state_zip_country, class: "al-repository-street-address-city_state_zip_country") if city_state_zip_country
       elements
