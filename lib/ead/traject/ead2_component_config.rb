@@ -35,8 +35,19 @@ to_field 'date_range_ssim', extract_xpath('./did/unitdate/@normal', to_text: fal
     accumulator.replace ranges
     next range.years
   end
-  range << range.parse_ranges(ranges)
-  accumulator.replace range.years
+  begin
+    range << ranges.map do |date|
+      range.parse_range(date)
+    rescue ArgumentError
+      nil
+    end.compact.flatten.sort.uniq
+  end
+  years = range.years
+  if years.blank? || (years.max - years.min) > 1000
+    accumulator.replace []
+    next []
+  end
+  accumulator.replace years
 end
 
 to_field 'date_range_isim', extract_xpath('./did/unitdate/@normal', to_text: false) do |_record, accumulator|
@@ -49,6 +60,17 @@ to_field 'date_range_isim', extract_xpath('./did/unitdate/@normal', to_text: fal
     accumulator.replace [ranges]
     next range.years
   end
-  range << range.parse_ranges(ranges)
-  accumulator.replace range.years
+  begin
+    range << ranges.map do |date|
+      range.parse_range(date)
+    rescue ArgumentError
+      nil
+    end.compact.flatten.sort.uniq
+  end
+  years = range.years
+  if years.blank? || (years.max - years.min) > 1000
+    accumulator.replace []
+    next []
+  end
+  accumulator.replace years
 end

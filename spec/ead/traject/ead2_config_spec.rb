@@ -46,8 +46,21 @@ describe Traject::Indexer do
     end
   end
   describe 'date_range_* indexing' do
+    context 'has bulk range' do
+      let(:expected) { (1958..1980).to_a }
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_unitdate/has_bulk_range.xml') }
+      it { expect(index_document).not_to be_nil }
+      it { expect(index_document[:date_range_isim]).to eql(expected) }
+      it { expect(index_document[:date_range_ssim]).to eql(expected) }
+    end
     context 'has open-end encoded as 9999' do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_unitdate/open_ended_9999.xml') }
+      it { expect(index_document).not_to be_nil }
+      it { expect(index_document[:date_range_isim]).to be_blank }
+      it { expect(index_document[:date_range_ssim]).to be_blank }
+    end
+    context 'has very large range' do
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_unitdate/too_large_date_range.xml') }
       it { expect(index_document).not_to be_nil }
       it { expect(index_document[:date_range_isim]).to be_blank }
       it { expect(index_document[:date_range_ssim]).to be_blank }
