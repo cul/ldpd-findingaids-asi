@@ -152,7 +152,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'date_range', field: 'date_range_isim', range: true, range_config: { segments: false }
     config.add_facet_field 'level', field: 'level_ssim', limit: 10
     config.add_facet_field 'names', field: 'names_ssim', limit: 10
-    config.add_facet_field 'repository', field: 'repository_ssim', limit: 10
+    config.add_facet_field 'repository', field: 'repository_id_ssi', limit: 10, helper_method: :repository_label
     config.add_facet_field 'places', field: 'geogname_ssim', limit: 10
     config.add_facet_field 'subjects', field: 'access_subjects_ssim', limit: 10
 

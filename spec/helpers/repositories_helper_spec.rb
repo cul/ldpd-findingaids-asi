@@ -11,5 +11,40 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe RepositoriesHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#repository_label' do
+    let(:actual) { helper.repository_label(repo_code) }
+
+    context "given an existing repo code" do
+      let(:repo_code) { 'nnc' }
+      let(:expected) { 'Columbia University Libraries' }
+      it 'maps to the repo name' do
+        expect(actual).to eql(expected)
+      end
+    end
+
+    context "given a non-existing repo code" do
+      let(:repo_code) { 'xyz' }
+      let(:expected) { repo_code }
+      it 'maps to the repo name' do
+        expect(actual).to eql(expected)
+      end
+    end
+  end
+  describe '#repository_collections_path' do
+    let(:repo_code) { 'nnc' }
+    let(:repo) { Arclight::Repository.new(slug: repo_code) }
+    let(:actual) { helper.repository_collections_path(repo) }
+    let(:expected) { "/repository=#{repo_code}"}
+    before do
+      # search_action_url is a delegated controller method, so just defining a singleton
+      helper.define_singleton_method(:search_action_url) {|options| }
+
+      allow(helper).to receive(:search_action_url)
+      .with({ f: {repository: [repo_code], level: ['Collection']}})
+      .and_return(expected)
+    end
+    it 'links to a repository search based on slug' do
+      expect(actual).to eql(expected)
+    end
+  end
 end
