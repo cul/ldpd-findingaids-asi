@@ -35,7 +35,8 @@ namespace :acfa do
     traject_indexer.load_config_file(traject_config)
     puts "Seeding index with as_ead data from #{ead_dir}..."
     bib = ENV['BIB'] || '*'
-    filename_pattern = (ENV['CLIO_STUBS'].to_s =~ /true/i) ? "/clio_ead_ldpd_#{bib}.xml" : "/as_ead_ldpd_#{bib}.xml"
+    bib = ENV['BIB'] ? "ldpd_#{ENV['BIB']}" : '*'
+    filename_pattern = (ENV['CLIO_STUBS'].to_s =~ /true/i) ? "/clio_ead_ldpd_#{bib}.xml" : "/as_ead_#{bib}.xml"
     indexed = 0
     Dir.glob(File.join(ead_dir + filename_pattern)).each do |path|
       bib_id = bib_pattern.match(path)&.[](1)
