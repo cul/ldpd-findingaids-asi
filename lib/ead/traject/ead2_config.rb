@@ -16,7 +16,7 @@ require 'arclight/year_range'
 # Arclight::Repository expects repositories.yml not to have environment keys
 # so we must monkey patch
 require 'arclight/repository'
-load_config_file "config/initializers/arclight_patch.rb"
+load_config_file "app/overrides/arclight/repository_override.rb"
 
 settings do
   provide 'component_traject_config', File.join(__dir__, 'ead2_component_config.rb')

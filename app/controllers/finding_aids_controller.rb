@@ -15,15 +15,6 @@ class FindingAidsController < ApplicationController
 
   def index
     @repo_id = params[:repository_id]
-    begin
-      fa_list_path = "#{CONFIG[:fa_lists_dir]}/#{@repo_id}_fa_list.html"
-      @fa_list = ActionController::Base.render(inline: File.exist?(fa_list_path) ? File.read(fa_list_path) : EMPTY_LIST, layout: false)
-    rescue ActionView::MissingTemplate
-      # If file "#{CONFIG[:fa_lists_dir]}/#{@repo_id}_fa_list.html" does not exist,
-      # rails throws ActionView::MissingTemplate
-      Rails.logger.warn("no fa_list file for the given repo: #{@repo_id}")
-      redirect_to '/'
-    end
   end
 
   def show
