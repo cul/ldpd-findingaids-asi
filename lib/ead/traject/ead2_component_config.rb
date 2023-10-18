@@ -74,3 +74,8 @@ to_field 'date_range_isim', extract_xpath('./did/unitdate/@normal', to_text: fal
   end
   accumulator.replace years
 end
+
+to_field 'aspace_path_ssi', extract_xpath('./did/unitid[@type = \'aspace_uri\']') do |_record, accumulator|
+  accumulator.slice!(1..-1)
+  accumulator
+end
