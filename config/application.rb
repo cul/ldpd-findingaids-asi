@@ -18,5 +18,15 @@ module LdpdFindingaidsAsi
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # https://edgeguides.rubyonrails.org/engines.html#overriding-models-and-controllers
+    overrides = "#{Rails.root}/app/overrides"
+    Rails.autoloaders.main.ignore(overrides)
+
+    config.to_prepare do
+      Dir.glob("#{overrides}/**/*_override.rb").sort.each do |override|
+        load override
+      end
+    end
   end
 end

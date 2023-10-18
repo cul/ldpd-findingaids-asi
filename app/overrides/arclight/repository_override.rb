@@ -1,26 +1,24 @@
-require 'arclight'
-
-class Arclight::Repository
+Arclight::Repository.class_eval do
   def id
-    self.slug
+    attributes[:id] || self.slug
   end
 
+  # override for more structured contact info than an html blob
   def contact
     attributes[:contact]
   end
 
+  # override for more structured contact info than an html blob
   def location
     attributes[:location]
   end
 
-  def request_config_for_type(type)
-    request_types.fetch(type, {})
-  end
-
+  # local method
   def has_fa_list?
     @attributes[:has_fa_list]
   end
 
+  # local method
   def aeon_enabled?
     if @attributes[:requestable_via_aeon] && @attributes[:request_types].nil?
       @attributes[:request_types] = {
@@ -33,10 +31,12 @@ class Arclight::Repository
     @attributes.dig(:request_types, :aeon_local_request).present?
   end
 
+  # local method
   def aeon_site_code
     @attributes.dig(:request_types, :aeon_local_request, :site_code)
   end
 
+  # local method
   def aeon_user_review_set_to_yes?
     @attributes.dig(:request_types, :aeon_local_request, :user_review)
   end

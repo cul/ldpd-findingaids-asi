@@ -1,7 +1,5 @@
 <%= render Acfa::BannerComponent.new(repository: @repository, render_repository: false) %>
 <div class="container">
-  <div class="row al-repository-show-header">
-  </div>
   <div class="al-repositories acfa-repositories row">
     <article id="main-article" class="col-sm-8">
       <h2 class="h4 text-uppercase"><%= @repository.name %></h2>
@@ -24,7 +22,7 @@
         </div>
       </div>
       <div class="section">
-        <%= render Acfa::Arclight::Repository::CollectionsComponent.new(repository: @repository) %>
+        <%= render Acfa::Arclight::Repository::CollectionsComponent.new(repository: @repository, collections: @collections) %>
       </div>
 
     </article>

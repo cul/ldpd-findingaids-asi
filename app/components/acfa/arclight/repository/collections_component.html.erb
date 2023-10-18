@@ -1,0 +1,20 @@
+<div class="row">
+  <% @collections.each do |document| %>
+    <% doc_presenter = ::Arclight::IndexPresenter.new(document, self, CatalogController.blacklight_config) %>
+    <div class="col-md-12">
+      <div class='al-document-title-bar'>
+        <div class='row'>
+          <div class='col-md-10 col-lg-9'>
+            <h3 class="h5"><%= link_to doc_presenter.label, collection_link(document) %></h3>
+            <%= render ::Arclight::IndexMetadataFieldComponent.with_collection(doc_presenter.field_presenters.select { |p| p.field_config.repository_context }) %>
+          </div>
+          <% if document.unitid %>
+            <div class='col text-right al-collection-id'>
+              <%= t(:'arclight.views.show.collection_id', id: document.unitid) %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
