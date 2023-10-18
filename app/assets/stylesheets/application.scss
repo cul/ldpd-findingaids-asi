@@ -138,3 +138,11 @@ a.subseries_anchor, a.fa_anchor {
 		background-color: $white;
 	}
 }
+
+a.external-link {
+	&:after {
+	  font-family: 'Font Awesome 6 Pro';
+	  content: '\f35d';
+	  padding-left: 0.5em;
+	}
+}
