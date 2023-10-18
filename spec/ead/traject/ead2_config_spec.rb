@@ -82,4 +82,10 @@ describe Traject::Indexer do
       it { expect(index_document[:repository_ssim]).to eql [repository_name] }
     end
   end
+  describe 'aspace path indexing' do
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_eadid/from_unitid.xml') }
+      let(:expected_value) { '/7654321' }
+      it { expect(index_document).not_to be_nil }
+      it { expect(index_document[:aspace_path_ssi]).to eql [expected_value] }
+  end
 end
