@@ -6,6 +6,7 @@ require 'archive_space/parsers/ead_header_parser'
 require 'archive_space/parsers/component_parser'
 
 class FindingAidsController < ApplicationController
+  include Acfa::CollectionCounts
 
   before_action :validate_bid_id_and_set_repo_id, only: [:print, :show]
   before_action :validate_repository_code_and_set_repo_id, only: [:index]
@@ -15,6 +16,9 @@ class FindingAidsController < ApplicationController
 
   def index
     @repo_id = params[:repository_id]
+    collection_response = search_repository_collections(@repository)
+    @repository.collection_count = collection_response.total
+    @collections = collection_response.documents
   end
 
   def show
@@ -132,5 +136,14 @@ class FindingAidsController < ApplicationController
       return
     end
     validate_repository_code_and_set_repo_id
+  end
+
+  def search_repository_collections(repository)
+    search_service = Blacklight.repository_class.new(blacklight_config)
+    search_service.search(
+      q: "level_ssim:Collection repository_id_ssi:\"#{repository.slug}\"",
+      fl: "id,repository_id_ssi,ead_ssi,aspace_path_ssi,normalized_title_ssm",
+      rows: 100
+    )
   end
 end
