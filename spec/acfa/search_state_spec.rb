@@ -14,41 +14,8 @@ RSpec.describe Acfa::SearchState do
   let(:actual) { search_state.url_for_document(document) }
   context "repo has no aspace_base_uri configured" do
     let(:expected) { { repository_id: repository_id, finding_aid_id: finding_aid_id, controller: 'components', action: 'index', anchor: 'view_all' } }
-    it 'returns expected routing params' do
-      expect(actual).to eql(expected)
-    end
-    context 'document is an aspace resource' do
-      let(:aspace_id) { 'aspace1234567' }
-      let(:id) { "#{finding_aid_id}#{aspace_id}" }
-      let(:parent_titles) { ['Test Collection', 'Series IX: Test Series', "Box 24"] }
-      let(:titles) { ['Digital Object'] }
-      let(:aspace_attrs) { { id: id, parent_unittitles_ssm: parent_titles, title_ssm: titles } }
-      let(:document) { SolrDocument.new(doc_attrs.merge(aspace_attrs)) }
-      let(:expected) { { repository_id: repository_id, finding_aid_id: finding_aid_id, controller: 'components', action: 'show', anchor: aspace_id, id: 9 } }
-
-      it 'returns expected routing params' do
-        expect(actual).to eql(expected)
-      end
-
-      context 'aspace resource is a series' do
-        let(:parent_titles) { ['Test Collection'] }
-        let(:titles) { ['Series IX: Test Series'] }
-        let(:expected) { { repository_id: repository_id, finding_aid_id: finding_aid_id, controller: 'components', action: 'show', id: 9 } }
-
-        it 'returns expected routing params' do
-          expect(actual).to eql(expected)
-        end
-      end
-
-      context 'series is unclear' do
-        let(:parent_titles) { ['Test Collection', 'Series Alpha: Test Series', "Box 24"] }
-        let(:titles) { ['Digital Object'] }
-        let(:expected) { { repository_id: repository_id, finding_aid_id: finding_aid_id, controller: 'components', action: 'index', anchor: aspace_id } }
-
-        it 'returns expected routing params' do
-          expect(actual).to eql(expected)
-        end
-      end
+    it 'fails' do
+      expect(actual).to be(document)
     end
   end
   context "repo has aspace_base_uri configured" do

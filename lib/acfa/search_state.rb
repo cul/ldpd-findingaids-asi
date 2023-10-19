@@ -10,32 +10,12 @@ module Acfa
 
     def url_for_document(doc, options = {})
 
-      if controller.is_a?(CatalogController) && controller.action_name == 'show'
-        super
-      elsif doc['aspace_path_ssi'] && (doc_repo = ::Arclight::Repository.find_by(slug: doc['repository_id_ssi']))&.attributes.fetch('aspace_base_uri', nil)
+      if doc['aspace_path_ssi'] && (doc_repo = ::Arclight::Repository.find_by(slug: doc['repository_id_ssi']))&.attributes.fetch('aspace_base_uri', nil)
         return doc['aspace_path_ssi'] if doc['aspace_path_ssi'].starts_with?('http')
 
         File.join(doc_repo.aspace_base_uri, doc['aspace_path_ssi'])
-      elsif doc['component_level_isim'] == [0] # collection record
-        { controller: 'finding_aids', action: 'show', repository_id: doc['repository_id_ssi'], id: doc['ead_ssi'] }
-      else # component record, link to dsc
-        finding_aid_id = doc['_root_']
-
-        aspace_id = doc['id'].sub(finding_aid_id, '')
-        aspace_id = nil unless aspace_id =~ /^aspace/
-
-        parent_dsc = Acfa::SearchState.series_to_dsc(doc.fetch('parent_unittitles_ssm', []))
-        resource_dsc = Acfa::SearchState.series_to_dsc(doc.fetch('title_ssm', [])) unless parent_dsc
-        routing_params = { controller: 'components', repository_id: doc['repository_id_ssi'], finding_aid_id: finding_aid_id }
-        if (parent_dsc || resource_dsc)
-          routing_params[:action] = 'show'
-          routing_params[:id] = (parent_dsc || resource_dsc)
-          routing_params[:anchor] = aspace_id if parent_dsc
-        else
-          routing_params[:action] = 'index'
-          routing_params[:anchor] = aspace_id || 'view_all'
-        end
-        routing_params
+      else
+        super
       end
     end
 
