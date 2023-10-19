@@ -33,12 +33,13 @@ namespace :acfa do
     traject_indexer = Traject::Indexer::NokogiriIndexer.new indexer_args
     traject_indexer.logger.level = 2 # warn
     traject_indexer.load_config_file(traject_config)
-    puts "Seeding index with as_ead data from #{ead_dir}..."
-    bib = ENV['BIB'] || '*'
     bib = ENV['BIB'] ? "ldpd_#{ENV['BIB']}" : '*'
-    filename_pattern = (ENV['CLIO_STUBS'].to_s =~ /true/i) ? "/clio_ead_ldpd_#{bib}.xml" : "/as_ead_#{bib}.xml"
+    filename_pattern = ENV['PATTERN']
+    filename_pattern ||= (ENV['CLIO_STUBS'].to_s =~ /true/i) ? "clio_ead_ldpd_#{bib}.xml" : "as_ead_#{bib}.xml"
     indexed = 0
-    Dir.glob(File.join(ead_dir + filename_pattern)).each do |path|
+    glob_pattern = File.join(ead_dir, filename_pattern)
+    puts "Seeding index with as_ead data from #{glob_pattern}..."
+    Dir.glob(glob_pattern).each do |path|
       bib_id = bib_pattern.match(path)&.[](1)
       # arclight indexes each EAD via a system call to Traject with each ead file path $FILE:
       # `bundle exec traject -u #{solr_url} -i xml -c #{Arclight::Engine.root}/lib/arclight/traject/ead2_config.rb #{ENV.fetch('FILE', nil)}`
@@ -62,6 +63,8 @@ namespace :acfa do
     if indexed > 0
       puts "curl #{solr_url}suggest?suggest.build=true"
       `curl #{solr_url}suggest?suggest.build=true`
+    else
+      puts "no files indexed at #{glob_pattern}"
     end
   end
 end
