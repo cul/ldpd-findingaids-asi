@@ -27,6 +27,8 @@ def normalize_repository_id(mainagencycode, record)
   case code
   when 'nnc-av'
     return 'nnc-a'
+  when 'nnc-oh'
+    return 'nynycoh'
   when 'nnc-rb'
     if record.xpath('/ead/archdesc[@level=\'collection\']/did/unitid').detect {|x| x.text =~ /^UA/}
       return 'nnc-ua'
@@ -45,6 +47,7 @@ each_record do |record, context|
   if context.clipboard[:repository_id].present? && REPOS[context.clipboard[:repository_id]]
     context.clipboard[:repository] ||= Repository.find(context.clipboard[:repository_id]).name
   else
+    logger.warn "no repository config found for code '#{context.clipboard[:repository_id]}'; skipping #{settings['command_line.filename']}"
     context.skip!
   end
 end
