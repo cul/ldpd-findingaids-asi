@@ -395,4 +395,13 @@ class CatalogController < ApplicationController
     end
     super
   end
+
+  # Override because ArcLight wans to use name rather than slug everywhere
+  def repository_faceted_on
+    repos = search_state.filter('repository').values
+    return unless repos.one?
+
+    Arclight::Repository.find_by(slug: repos.first)
+  end
+  helper_method :repository_faceted_on
 end
