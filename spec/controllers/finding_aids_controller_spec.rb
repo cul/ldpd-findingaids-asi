@@ -5,6 +5,11 @@ RSpec.describe FindingAidsController, type: :controller do
   # work with nested resource within repositories
   describe "GET #index" do
     let(:repository_id) { "nnc-a" }
+    let(:solr_response) { instance_double(Blacklight::Solr::Response, {documents: [], total: 0}) }
+    before do
+      allow(controller).to receive(:search_repository_collections).and_return(solr_response)
+    end
+
     it "returns http success" do
       get :index, params: { repository_id: repository_id }
       expect(response).to have_http_status(:success)
