@@ -34,8 +34,10 @@
       <dt class="col-md-1 offset-md-1"> Additional Description: </dt>
       <dd class="col-md-9"><%= link_to nil, @eadid_other_finding_aid_url %></dd>
     <% end %>
-      <dt class="col-md-1 offset-md-1"> Access: </dt>
-      
-        <dd class="col-md-9"> <% if ['nnc-rb', 'nnc-ua', 'nnc-ccoh'].include? @repository_code %><%= t('fa.rbml_advance_appointment')  %> <% end %><%== @arch_desc_misc.access_restrictions_values %> </dd>
-    </dl>
+      <dt class="col-md-2 offset-md-1"> Access: </dt>
+      <% if ['nnc-rb', 'nnc-ua', 'nnc-ccoh'].include? @repository_code %>
+        <dd class="col-md-9" style="color:red;"> <%= t('fa.rbml_advance_appointment') %> </dd>
+      <% end %>
+	    <dd class="col-md-9 offset-md-3"> <%== @arch_desc_misc.access_restrictions_values %></dd>
+	</dl>
 </div>
