@@ -45,13 +45,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def bib_id_repo_id_hash
-    Rails.cache.fetch("bib_id_repo_id_hash", expires_in: CONFIG[:bib_id_repo_id_hash_cache_expiration_in_hours].hours) do
-      Rails.logger.warn("Refreshing bib ID repo ID hash via reading file at #{CONFIG[:valid_finding_aid_bib_ids]}") if CONFIG[:log_bib_id_repo_id_hash_cache_expiration]
-      HashWithIndifferentAccess.new(YAML.load_file(CONFIG[:valid_finding_aid_bib_ids]))
-    end
-  end
-
   # returns nil if cached html is rendered or no info is found (AS EAD or CLIO Stub info)
   # Else, it returns an AS EAD XML file from one of the following sources:
   # 1) First, see if there is an AS EAD XML for this bib ID in the cache. Note that this

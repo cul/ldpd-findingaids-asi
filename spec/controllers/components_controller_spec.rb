@@ -5,6 +5,9 @@ RSpec.describe ComponentsController, type: :controller do
   # work with nested resource within finding aids within repositories  
   describe "GET #index" do
     let(:well_known_bib_id) { '8972723' }
+    before do
+      allow(controller).to receive(:validate_bid_id_and_set_repo_id)
+    end
     it "returns http success" do
       get :index, params: { finding_aid_id: "ldpd_#{well_known_bib_id}", repository_id: "nnc-a" }
       expect(response).to have_http_status(:success)
@@ -48,7 +51,10 @@ RSpec.describe ComponentsController, type: :controller do
       ].sort
     }
     let(:expected_subjects) { subjects.sort }
+    let(:repo_code) { "nnc-a" }
     before do
+      allow(controller).to receive(:validate_bid_id_and_set_repo_id)
+      controller.instance_variable_set(:@repository, Arclight::Repository.find_by(slug: repo_code))
       allow(controller).to receive(:render_cached_html_else_return_as_ead_xml).with(well_known_bib_id.to_i, anything).and_return(fixture_data)
       controller.params[:id] = well_known_id
     end
@@ -62,7 +68,7 @@ RSpec.describe ComponentsController, type: :controller do
     end
     context "show action" do
       it "sets @subjects attribute" do
-        get :show, params: { finding_aid_id: "ldpd_#{well_known_bib_id}", repository_id: "nnc-a", id: well_known_id }
+        get :show, params: { finding_aid_id: "ldpd_#{well_known_bib_id}", repository_id: repo_code, id: well_known_id }
         expect(response).to have_http_status(:success)
         subjects_att = controller.instance_variable_get(:@subjects)
         expect(subjects_att).to eql expected_subjects
