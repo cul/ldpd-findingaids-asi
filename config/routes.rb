@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     end
   end
   get 'pages/home'
-  get 'resolve/:id', to: 'finding_aids#resolve'
+  get 'resolve/:id', to: 'catalog#resolve'
   scope 'ead' do
     resources :repositories, only: [:index], path: '' do
       resources :finding_aids, only: [:index, :show], path: '' do

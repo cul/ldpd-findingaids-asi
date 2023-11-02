@@ -57,6 +57,9 @@ RSpec.describe FindingAidsController, type: :controller do
       controller.params[:id] = "ldpd_#{well_known_bib_id}"
     end
     context "print action" do
+      before do
+        allow(controller).to receive(:validate_bid_id_and_set_repo_id)
+      end
       it "sets @subjects attribute" do
         get :print, params: { finding_aid_id: "ldpd_#{well_known_bib_id}", repository_id: "nnc-a" }
         expect(response).to have_http_status(:success)
@@ -65,6 +68,9 @@ RSpec.describe FindingAidsController, type: :controller do
       end
     end
     context "show action" do
+      before do
+        allow(controller).to receive(:validate_bid_id_and_set_repo_id)
+      end
       it "sets @subjects attribute" do
         get :show, params: { id: "ldpd_#{well_known_bib_id}", repository_id: "nnc-a" }
         expect(response).to have_http_status(:success)

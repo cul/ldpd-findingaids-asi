@@ -7,6 +7,7 @@ require 'archive_space/parsers/component_parser'
 
 class FindingAidsController < ApplicationController
   include Acfa::CollectionCounts
+  include Blacklight::Searchable
 
   before_action :validate_bid_id_and_set_repo_id, only: [:print, :show]
   before_action :validate_repository_code_and_set_repo_id, only: [:index]
@@ -101,18 +102,9 @@ class FindingAidsController < ApplicationController
     end
   end
 
-  def resolve
-    unless params[:id].blank?
-      bib_id = params[:id].delete_prefix('ldpd_')
-      repo_id = bib_id_repo_id_hash.fetch(bib_id.to_i) do
-        redirect_to CONFIG[:clio_redirect_url] + bib_id
-        return
-      end
-      redirect_to repository_finding_aid_path(repository_id: repo_id, id: bib_id.prepend('ldpd_'))
-    else
-      Rails.logger.warn("no Bib ID in url")
-      redirect_to '/'
-    end
+  # @return [Blacklight::SearchService]
+  def search_service
+    search_service_class.new(config: CatalogController.blacklight_config, search_state: search_state, user_params: search_state.to_h, **search_service_context)
   end
 
   def validate_bid_id_and_set_repo_id
@@ -122,7 +114,8 @@ class FindingAidsController < ApplicationController
       redirect_to '/'
       return
     end
-    expected_repo_code = retrieve_expected_repo_code(params[:id])
+    @document = search_service.fetch(params[:id])
+    expected_repo_code = @document&.fetch(:repository_id_ssi, nil)
     unless expected_repo_code
       redirect_to CONFIG[:clio_redirect_url] + params[:id].delete_prefix('ldpd_')
       return
