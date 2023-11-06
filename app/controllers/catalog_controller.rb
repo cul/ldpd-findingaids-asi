@@ -13,6 +13,8 @@ class CatalogController < ApplicationController
 
   self.search_state_class = Acfa::SearchState
 
+  before_action :default_grouped!, on: :index
+
   configure_blacklight do |config|
     config.bootstrap_version = 5
     ## Class for sending and receiving requests from a search index
@@ -68,6 +70,7 @@ class CatalogController < ApplicationController
     # config.add_nav_action(:bookmark, partial: 'blacklight/nav/bookmark', if: :render_bookmarks_control?)
     # config.add_nav_action(:search_history, partial: 'blacklight/nav/search_history')
 
+    config.track_search_session.storage = false
     # solr field configuration for search results/index views
     config.index.partials = %i[arclight_index_default]
     config.index.title_field = 'normalized_title_ssm'
@@ -389,6 +392,26 @@ class CatalogController < ApplicationController
     config.add_group_header_field 'abstract_or_scope', accessor: true, truncate: true, helper_method: :render_html_tags
   end
 
+  def default_grouped!
+    @search_state = search_state.reset_search('group' => 'true') if params[:group].nil?
+  end
+
+  def resolve
+    if params[:id].present?
+      @document = search_service.fetch(params[:id])
+      bib_id = params[:id].delete_prefix('ldpd_')
+      repo_id = @document&.fetch(:repository_id_ssi, nil)
+      if repo_id
+        redirect_to repository_finding_aid_path(repository_id: repo_id, id: bib_id.prepend('ldpd_'))
+      else
+        redirect_to CONFIG[:clio_redirect_url] + bib_id
+      end
+    else
+      Rails.logger.warn("no Bib ID in url")
+      redirect_to '/'
+    end
+  end
+
   def render(*args)
     if @document && !@repository
       @document.fetch('repository_id_ssi', nil)&.tap { |repository_id| @repository = Arclight::Repository.find_by(slug: repository_id) }
@@ -396,7 +419,7 @@ class CatalogController < ApplicationController
     super
   end
 
-  # Override because ArcLight wans to use name rather than slug everywhere
+  # Override because ArcLight wants to use name rather than slug everywhere
   def repository_faceted_on
     repos = search_state.filter('repository').values
     return unless repos.one?

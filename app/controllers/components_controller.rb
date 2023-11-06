@@ -6,6 +6,7 @@ require 'archive_space/parsers/archival_description_misc_parser'
 require 'archive_space/parsers/ead_header_parser'
 
 class ComponentsController < ApplicationController
+  include Blacklight::Searchable
 
   before_action :validate_bid_id_and_set_repo_id, only: [:index, :show]
   after_action :cache_response_html, only: [:index, :show]
@@ -123,6 +124,11 @@ class ComponentsController < ApplicationController
     end
   end
 
+  # @return [Blacklight::SearchService]
+  def search_service
+    search_service_class.new(config: CatalogController.blacklight_config, search_state: search_state, user_params: search_state.to_h, **search_service_context)
+  end
+
   # fcd1, 06/22/21: similar to FindingAidsController#validate_bid_id_and_set_repo_id, but using params[:finding_aid_id]
   # instead of params[:id]. Need to refactor some/most/all of this functionality into ApplicationController
   def validate_bid_id_and_set_repo_id
@@ -131,7 +137,8 @@ class ComponentsController < ApplicationController
       redirect_to '/'
       return
     end
-    expected_repo_code = retrieve_expected_repo_code(params[:finding_aid_id])
+    @document = search_service.fetch(params[:finding_aid_id])
+    expected_repo_code = @document&.fetch(:repository_id_ssi, nil)
     unless expected_repo_code
       redirect_to CONFIG[:clio_redirect_url] + params[:finding_aid_id].delete_prefix('ldpd_')
       return
