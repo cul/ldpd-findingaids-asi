@@ -67,4 +67,15 @@ namespace :acfa do
       puts "no files indexed at #{glob_pattern}"
     end
   end
+  
+  desc 'Delete finding aid from index by collection id'
+  task delete_collection: :environment do
+    rails_env = (ENV['RAILS_ENV'] || 'development')
+    solr_con = Blacklight.default_index.connection
+    solr_response = solr_con.delete_by_query "_root_:#{ENV['COLLECTION']}"
+    solr_con.commit(softCommit: true)
+    solr_url = solr_con.base_uri
+    `curl #{solr_url}suggest?suggest.build=true`
+    puts solr_response.inspect
+  end
 end
