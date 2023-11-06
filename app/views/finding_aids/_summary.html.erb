@@ -10,21 +10,21 @@
   <dl class="row dl-invert">
     <% if @arch_desc_did.unit_id_call_number %>
       <dt class="col-md-1 offset-md-1"> Call No.: </dt>
-      <dd class="col-md-9"><%= @arch_desc_did.unit_id_call_number %></dd>
+      <dd class="col-md-10"><%= @arch_desc_did.unit_id_call_number %></dd>
     <% end %>
     <dt class="col-md-1 offset-md-1"> Bib ID: </dt>
-    <dd class="col-md-9"><%= @arch_desc_did.unit_id_bib_id %> <%= link_to "View CLIO record", "https://clio.columbia.edu/catalog/#{@arch_desc_did.unit_id_bib_id}", target: '_blank', class: ['smaller'] %></dd>
+    <dd class="col-md-10"><%= @arch_desc_did.unit_id_bib_id %> <%= link_to "View CLIO record", "https://clio.columbia.edu/catalog/#{@arch_desc_did.unit_id_bib_id}", target: '_blank', class: ['smaller'] %></dd>
     <dt class="col-md-1 offset-md-1"> Creator(s): </dt>
-    <dd class="col-md-9"><%= @arch_desc_did.origination_creators.join('; ') %></dd>
+    <dd class="col-md-10"><%= @arch_desc_did.origination_creators.join('; ') %></dd>
     <dt class="col-md-1 offset-md-1"> Repository: </dt>
-    <dd class="col-md-9"><%= @arch_desc_did.repository_corporate_name %></dd>
+    <dd class="col-md-10"><%= @arch_desc_did.repository_corporate_name %></dd>
     <dt class="col-md-1 offset-md-1"> Physical Description: </dt>
-    <dd class="col-md-9"><%= @arch_desc_did.physical_description_extents_string %></dd>
+    <dd class="col-md-10"><%= @arch_desc_did.physical_description_extents_string %></dd>
     <dt class="col-md-1 offset-md-1"> Language(s): </dt>
-    <dd class="col-md-9"><%= @arch_desc_did.language %></dd>
+    <dd class="col-md-10"><%= @arch_desc_did.language %></dd>
     <% if @arch_desc_misc.other_finding_aid_values.first %>
       <dt class="col-md-1 offset-md-1"><%= @arch_desc_misc.other_finding_aid_head || "Additional Description" %></dt>
-      <dd class="col-md-9">
+      <dd class="col-md-10">
         <% @arch_desc_misc.other_finding_aid_values.each do |other_finding_aid_value| %>
           <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms other_finding_aid_value %>
         <% end %>
@@ -32,12 +32,12 @@
     <% end %>
     <% if @eadid_other_finding_aid_url %>
       <dt class="col-md-1 offset-md-1"> Additional Description: </dt>
-      <dd class="col-md-9"><%= link_to nil, @eadid_other_finding_aid_url %></dd>
+      <dd class="col-md-10"><%= link_to nil, @eadid_other_finding_aid_url %></dd>
     <% end %>
-      <dt class="col-md-2 offset-md-1"> Access: </dt>
+      <dt class="col-md-1 offset-md-1"> Access: </dt>
       <% if ['nnc-rb', 'nnc-ua', 'nnc-ccoh'].include? @repository_code %>
-        <dd class="col-md-9" style="color:red;"> <%= t('fa.rbml_advance_appointment') %> </dd>
+        <dd class="col-md-10" style="color:red;"> <%= t('fa.rbml_advance_appointment') %> </dd>
       <% end %>
-	    <dd class="col-md-9 offset-md-3"> <%== @arch_desc_misc.access_restrictions_values %></dd>
+	    <dd class="col-md-10 offset-md-3"> <%== @arch_desc_misc.access_restrictions_values %></dd>
 	</dl>
 </div>
