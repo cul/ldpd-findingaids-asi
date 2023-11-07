@@ -87,7 +87,7 @@ class CatalogController < ApplicationController
     config.show.document_component = Arclight::DocumentComponent
     config.show.sidebar_component = Arclight::SidebarComponent
     config.show.breadcrumb_component = Arclight::BreadcrumbsHierarchyComponent
-    config.show.embed_component = Arclight::EmbedComponent
+    config.show.embed_component = Acfa::Viewers::MiradorComponent
     config.show.access_component = Arclight::AccessComponent
     config.show.online_status_component = Arclight::OnlineStatusIndicatorComponent
     config.show.display_type_field = 'level_ssm'
@@ -245,7 +245,7 @@ class CatalogController < ApplicationController
     end
 
     # These are the parameters passed through in search_state.params_for_search
-    config.search_state_fields += %i[id group hierarchy_context original_document paginate]
+    config.search_state_fields += %i[id group hierarchy_context original_document paginate key]
     config.search_state_fields << { original_parents: [] }
     config.search_state_fields += %i[repository_id finding_aid_id]
     config.search_state_fields << :utf8
