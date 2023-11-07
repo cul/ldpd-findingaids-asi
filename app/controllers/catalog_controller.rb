@@ -13,7 +13,7 @@ class CatalogController < ApplicationController
 
   self.search_state_class = Acfa::SearchState
 
-  before_action :default_grouped!, on: :index
+  before_action :default_grouped!, only: :index
 
   configure_blacklight do |config|
     config.bootstrap_version = 5
