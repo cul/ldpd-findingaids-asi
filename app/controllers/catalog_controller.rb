@@ -178,7 +178,7 @@ class CatalogController < ApplicationController
     }, compact: true, component: Arclight::IndexMetadataFieldComponent
     config.add_index_field 'creator', accessor: true, component: Arclight::IndexMetadataFieldComponent
     config.add_index_field 'abstract_or_scope', accessor: true, truncate: true, repository_context: true, helper_method: :render_html_tags, component: Arclight::IndexMetadataFieldComponent
-    config.add_index_field 'breadcrumbs', accessor: :itself, component: Acfa::Arclight::SearchResultBreadcrumbsComponent, compact: { count: 2 }
+    config.add_index_field 'breadcrumbs', accessor: :itself, component: Arclight::SearchResultBreadcrumbsComponent, compact: { count: 2 }
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
