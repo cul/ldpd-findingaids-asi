@@ -5,30 +5,24 @@ module Acfa::Viewers
   class MiradorComponent < Arclight::EmbedComponent
     attr_accessor :document
 
-    def embeddable?(object)
-      include_patterns.any? do |pattern|
-        object.href =~ pattern
+    include Acfa::SolrDocument::EmbeddableResources
+
+    def embed_iiif_manifest
+      return helpers.solr_document_iiif_collection_url(solr_document_id: @document.id, format: 'json') if embeddable_resources_iiif_manifests[1]
+      embeddable_resources_iiif_manifests.first
+    end
+
+    def mirador_container(**attrs)
+      html_attrs = attrs.dup
+      data_attrs = (html_attrs.delete(:data) || {}).merge({ manifest: embed_iiif_manifest, :"use-folders" => use_iiif_folders? })
+      if embed_iiif_manifest
+        return content_tag(:div, {}, id: 'mirador', data: data_attrs, **html_attrs)
       end
     end
 
-    def include_patterns
-      [/\/(10\.7916\/[A-Za-z0-9\-\.]+)/, /\/\/archive\.org\/details\//]
-    end
-
-    def manifest_for(object)
-      return doi_manifest(object.href) if object.href =~ /\/10\.7916\//
-      return ia_manifest(object.href) if object.href =~ /\/\/archive\.org\//
-    end
-
-    def doi_manifest(href)
-      doi = /\/(10\.7916\/[A-Za-z0-9\-\.]+)/.match(href)[1]
-      "#{CONFIG[:mirador_base_url]}/iiif/3/presentation/#{doi}/manifest"
-    end
-
-    def ia_manifest(href)
-      ia_id = href.split("archive.org/details/").last&.split('/')
-      ia_id = ia_id&.first
-      "https://iiif.archive.org/iiif/2/#{ia_id}/manifest.json" if ia_id
+    def use_iiif_folders?
+      # TODO: how do we determine when to use the folder UI from the solr data?
+      false
     end
   end
 end

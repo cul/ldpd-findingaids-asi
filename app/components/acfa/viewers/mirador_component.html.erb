@@ -1,16 +1,10 @@
 <div id="embed" class="mb-2">
   <h2 class="al-show-sub-heading"><%= t('arclight.views.show.embedded_content') %></h2>
-  <% embeddable_resources.each do |resource| -%>
-    <div class="al-digital-object media breadcrumb-item breadcrumb-item-<%= depth + 6 %>">
-      <%= link_to(resource.label, resource.href) %>
-    </div>
-    <div class="position-relative">
-      <div id="mirador" class="container-fluid px-0" data-manifest="<%= manifest_for(resource) %>">
-      </div>
-    </div>
-  <% end -%>
+  <% if embed_iiif_manifest %>
+    <div class="position-relative"><%= mirador_container(class: %w(container-fluid px-0)) %></div>
+  <% end %>
   <% linked_resources.each do |resource| %>
-    <div class="al-digital-object media breadcrumb-item breadcrumb-item-<%= depth + 6 %>">
+    <div class="al-digital-object">
       <%= link_to(resource.label, resource.href) %>
     </div>
   <% end %>

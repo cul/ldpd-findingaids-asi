@@ -5,5 +5,7 @@ import 'blacklight-frontend';
 
 import '../autocomplete-setup';
 import '../request-cart-setup';
-import '../mirador-setup';
 import '../blacklight-range-limit';
+import loadMirador from '../src/mirador';
+
+document.addEventListener('turbo:load', loadMirador);

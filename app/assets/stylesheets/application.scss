@@ -19,6 +19,7 @@ $brand: $primary;
 $brand_text: $white;
 
 @import "arclight"; // includes bootstrap, blacklight, and arclight base styles
+@import "mirador";
 @import "font-awesome";
 @import "font-awesome-pro";
 @import "font-awesome-pro/light";
