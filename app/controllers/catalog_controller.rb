@@ -245,7 +245,7 @@ class CatalogController < ApplicationController
     end
 
     # These are the parameters passed through in search_state.params_for_search
-    config.search_state_fields += %i[id group hierarchy_context original_document]
+    config.search_state_fields += %i[id group hierarchy_context original_document paginate]
     config.search_state_fields << { original_parents: [] }
     config.search_state_fields += %i[repository_id finding_aid_id]
     config.search_state_fields << :utf8
