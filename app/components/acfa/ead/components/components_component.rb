@@ -2,7 +2,7 @@
 
 module Acfa::Ead::Components
   class ComponentsComponent < Blacklight::Component
-    attr_reader :component_info, :component_id, :parser, :element, :nesting_level, :repository
+    attr_reader :aspace_id, :component_info, :component_id, :parser, :element, :nesting_level, :repository
 
     delegate :checkbox_display, :remove_unittitle_tags, to: :helpers
 
@@ -14,6 +14,7 @@ module Acfa::Ead::Components
       @element = element
       @parser = parser
       @nesting_level = nesting_level
+      @aspace_id = element.attributes['id']
     end
 
     def aeon_enabled?
