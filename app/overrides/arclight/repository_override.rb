@@ -20,7 +20,7 @@ Arclight::Repository.class_eval do
 
   # local method
   def aeon_enabled?
-    if @attributes[:requestable_via_aeon] && @attributes[:request_types].nil?
+    if @attributes[:requestable_via_aeon] && @attributes[:request_types].blank?
       @attributes[:request_types] = {
         aeon_local_request: {
           site_code: @attributes[:aeon_site_code],
