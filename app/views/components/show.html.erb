@@ -15,27 +15,7 @@
         %>
   </div>
   <div class="col ead_content">
-        <!-- INFORMATION FOR TOP-LEVEL <c> ELEMENT, CURRENTLY A SERIES -->
-        <%= render partial: 'component_structure_view_top_level_c',
-                   locals: {series: @series}
-        %>
-        <!-- INFORMATION FOR SECOND LEVEL <C> ELEMENTS AND CONTAINED <C> ELEMENTS AT LOWER LEVELS -->
-	<% repo_suffix = params[:repository_id].gsub('-','_') %>
-	<% if @repository.aeon_enabled? %>
-          <!-- component_id needed for the creation of checkboxes for repos using aeon -->
-          <%= render partial: "component_structure_view",
-                     layout: "with_aeon",
-                     locals: {series: @series,
-                              series_titles: @arch_desc_dsc.series_compound_title_array,
-                              aeon_enabled: true,
-                              component_id: params[:id]}
-          %>
-	<% else %>
-          <%= render partial: "component_structure_view",
-                     layout: "without_aeon",
-                     locals: {series: @series,
-                              aeon_enabled: false}
-          %>
-	<% end %>
+    <!-- INFORMATION FOR TOP-LEVEL <c> ELEMENT, CURRENTLY A SERIES -->
+    <%= render Acfa::Ead::Components::SeriesComponent.new(parser: @series, series: @series.series, repository: @repository, aeon_enabled: @repository.aeon_enabled?, component_id: params[:id]), layout: (@repository.aeon_enabled? ? "with_aeon" : "without_aeon") %>
   </div>
 </div>

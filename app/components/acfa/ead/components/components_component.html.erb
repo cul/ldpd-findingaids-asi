@@ -1,0 +1,73 @@
+<hr class="component_entry">
+<% if aeon_enabled? %>
+  <% if repository.checkbox_per_unittitle %>
+    <% unittitle_string = "#{AEON[:unittitle_delimiter]}#{remove_unittitle_tags(component_info.unit_title)}" %>
+    <% container_info_string = component_info.container_info_strings.join(' ') %>
+  <% else %>
+    <% unittitle_string = '' %>
+    <% container_info_string = component_info.container_info_strings.first %>
+  <% end %>
+  <%== checkbox_display(unittitle_string,
+                        component_id,
+                        parser.checkbox_counter,
+                        container_info_string,
+                        component_info.container_info_barcode) unless component_info.container_info_strings.empty?
+  %>
+<% end %>
+<p class="component_info">
+  <% unless component_info.container_info_strings.empty? %>
+    <span class="container_info">
+      <%= component_info.container_info_strings.join(' ') %>
+    </span>
+  <% end %>
+  <% if (component_info.nesting_level == 1 && component_info.level_attribute == 'subseries') %>
+    <a class="subseries_anchor" name="<%= "subseries_#{parser.subseries_counter}" %>"></a>
+    <span class="subseries_title">
+      <%== [remove_unittitle_tags(component_info.unit_title),
+            ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component_info.unit_dates),
+            component_info.physical_description_extents_string].reject(&:blank?).join(", ") %>
+    </span>
+  <% else %>
+    <span class="<%== repository.slug %> component_title">
+      <%== [remove_unittitle_tags(component_info.unit_title),
+           ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component_info.unit_dates),
+           component_info.physical_description_extents_string].reject(&:blank?).join(", ") %>
+    </span>
+  <% end %>
+</p>
+<% unless digital_archival_objects.empty? %>
+  <div class="component_notes_red">
+    <% digital_archival_objects.each do |dao| %>
+      <%= link_to 'Access digital content: ' + dao.description, dao.href %>
+      <br>
+    <% end %>
+  </div>
+<% end %>
+<% unless conditions_governing_access_values.empty? %>
+  <div class="component_notes_red">
+    <% conditions_governing_access_values.each do |access_restrictions_value| %>
+      <%== access_restrictions_value %>
+    <% end %>
+  </div>
+<% end %>
+<% unless conditions_governing_use_values.empty? %>
+  <div class="component_notes_red">
+    <% conditions_governing_use_values.each do |use_restrictions_value| %>
+      <%== use_restrictions_value %>
+    <% end %>
+  </div>
+<% end %>
+<% unless misc_notes.empty? %>
+  <div class="component_notes">
+    <% misc_notes.each do |misc_note| %>
+      <%== misc_note %>
+    <% end %>
+  </div>
+<% end %>
+<% if child_component_elements.present? %>
+  <div class="component_entry">
+    <% each_child_component do |child_element, child_component_info, child_nesting_level| -%>
+      <%= render Acfa::Ead::Components::ComponentsComponent.new(component_info: child_component_info, parser: parser, element: child_element, aeon_enabled: aeon_enabled?, nesting_level: child_nesting_level, repository: repository, component_id: component_id) %>
+    <% end %>
+  </div>
+<% end %>

@@ -21,15 +21,9 @@
         %>
         <!-- SERIES INFORMATION -->
 	<a class="fa_anchor" name="view_all"></a>
-        <% if @repository.aeon_enabled? %>
-          <%= render partial: 'view_all',
-                     locals: {series_titles: @arch_desc_dsc.series_compound_title_array},
-                     layout: "with_aeon"
-          %>
-        <% else %>
-          <%= render partial: 'view_all',
-                     layout: "without_aeon"
-          %>
-        <% end %>
+    <%= render partial: 'view_all',
+               locals: {series_titles: @arch_desc_dsc.series_compound_title_array},
+               layout: (@repository.aeon_enabled? ? "with_aeon" : "without_aeon")
+    %>
   </div>
 </div>
