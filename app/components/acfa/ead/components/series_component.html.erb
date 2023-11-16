@@ -1,0 +1,46 @@
+<h2 style="color:#2c5277;font-size:16px;font-weight:bold;"><%= parser.compound_title_string %></h2>
+<% parser.digital_archival_objects.each do |digital_archival_object| %>
+  <%= link_to 'Access digital content: ' + digital_archival_object.description, digital_archival_object.href %>
+  <br>
+<% end %>
+<% parser.conditions_governing_access_values.each do |access_restrictions| %>
+  <% unless defined? print_view %>
+    <div style="color:red;">
+  <% end %>
+    <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms access_restrictions %>
+  <% unless defined? print_view %>
+    </div>
+  <% end %>
+<% end %>
+<% parser.conditions_governing_use_values.each do |use_restrictions| %>
+  <% unless defined? print_view %>
+    <div style="color:red;">
+  <% end %>
+    <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms use_restrictions %>
+  <% unless defined? print_view %>
+    </div>
+  <% end %>
+<% end %>
+<!-- In the following initializing of misc_notes, the scope_and_content_values attribute is listed first -->
+<!-- due to requirements. The other attributes of series are listed in alphabetical to facilitate updating -->
+<!-- the implementation since there is  no ordering requirement for these attributes -->
+<% misc_notes = parser.scope_and_content_values +
+                parser.acquisition_information_values +
+                parser.alternative_form_available_values +
+                parser.arrangement_values +
+                parser.biography_or_history_values +
+                parser.custodial_history_values +
+                parser.other_descriptive_data_values +
+                parser.other_finding_aid_values +
+                parser.related_material_values +
+                parser.separated_material_values
+%>
+<%= parser.physical_description_extents_string %>
+<% misc_notes.each do |misc_note| %>
+  <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms misc_note %>
+<% end %>
+<div class="component-view">
+  <%- parser.each_child_component_info(series, 0) do |child_element, child_component_info, child_nesting_level| %>
+    <%= render Acfa::Ead::Components::ComponentsComponent.new(component_info: child_component_info, element: child_element, parser: parser, nesting_level: child_nesting_level, repository: repository, aeon_enabled: aeon_enabled?, component_id: component_id), layout: (aeon_enabled? ? 'components/with_aeon' : 'components/without_aeon') %>
+  <%- end %>
+</div>

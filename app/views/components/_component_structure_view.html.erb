@@ -28,6 +28,7 @@
       <% end %>
       <%== checkbox_display(unittitle_string,
                             component_id,
+                            (@checkbox_id += 1),
                             container_info_string,
                             component.container_info_barcode) unless component.container_info_strings.empty?
       %>

@@ -45,6 +45,7 @@ module ArchiveSpace
         :related_material_values,
         :scope_and_content_head,
         :scope_and_content_values,
+        :series,
         :separated_material_head,
         :separated_material_values,
         :unit_dates,
@@ -90,13 +91,28 @@ module ArchiveSpace
         generate_children_components_info(root_component)
       end
 
-      def generate_children_components_info(component, previous_nesting_level = 0)
-        current_nesting_level = previous_nesting_level + 1
-        child_components = ::Ead::Elements::Component.c_node_set(component)
-        return if child_components.empty?
-        child_components.each do |child_component|
-          @flattened_component_tree_structure.append generate_child_component_info(child_component, current_nesting_level)
-          generate_children_components_info(child_component, current_nesting_level)
+      # yield tuple of each immediately contained element, ComponentInfo, and child nesting level
+      def each_child_component_info(element, previous_nesting_level = 0, &block)
+        child_nesting_level = previous_nesting_level + 1
+        ::Ead::Elements::Component.c_node_set(element)&.each do |child_element|
+          block.yield [child_element, generate_child_component_info(child_element, child_nesting_level), child_nesting_level]
+        end
+      end
+
+      def checkbox_counter
+        @checkbox_counter ||= 0
+        @checkbox_counter += 1
+      end
+
+      def subseries_counter
+        @subseries_counter ||= 0
+        @subseries_counter += 1
+      end
+
+      def generate_children_components_info(element, previous_nesting_level = 0)
+        each_child_component_info(element, previous_nesting_level) do |child_element, component_info, nesting_level|
+          @flattened_component_tree_structure.append component_info
+          generate_children_components_info(child_element, nesting_level)
         end
       end
 
@@ -149,7 +165,7 @@ module ArchiveSpace
 
       def parse(nokogiri_xml_document, series_num)
         arch_desc_dsc = nokogiri_xml_document.xpath('/xmlns:ead/xmlns:archdesc/xmlns:dsc')
-        series = ::Ead::Elements::Dsc.c_level_attribute_series_array(arch_desc_dsc)[series_num -1]
+        @series = ::Ead::Elements::Dsc.c_level_attribute_series_array(arch_desc_dsc)[series_num -1]
         did = ::Ead::Elements::Component.did_node_set(series).first
         # puts series.inspect
 #        @accruals_head = ::Ead::Elements::Component.accruals_head_array(series).first.text unless

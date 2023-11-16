@@ -104,6 +104,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Run against the latest stable release
 group :development, :test do
+  gem 'capybara', '~> 3.32'
   gem 'rspec-rails'
   gem "solr_wrapper", ">= 0.3"
 end

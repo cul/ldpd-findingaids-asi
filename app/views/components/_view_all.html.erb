@@ -1,20 +1,3 @@
-<% @series_array.each_with_index do |series, index| %>
-  <!-- INFORMATION FOR TOP-LEVEL <c> ELEMENT, CURRENTLY A SERIES -->
-  <%= render partial: 'components/component_structure_view_top_level_c',
-             locals: {series: series, print_view: @print_view}
-  %>
-  <!-- INFORMATION FOR SECOND LEVEL <C> ELEMENTS AND CONTAINED <C> ELEMENTS AT LOWER LEVELS -->
-  <% if @repository.aeon_enabled? %>
-    <!-- component_id needed for the creation of checkboxes for repos using aeon -->
-    <%= render partial: "component_structure_view",
-               locals: {series: series,
-                        aeon_enabled: true,
-                        component_id: index + 1}
-    %>
-  <% else %>
-    <%= render partial: "component_structure_view",
-               locals: {series: series,
-                        aeon_enabled: false}
-    %>
-  <% end %>
+<% @series_array.each_with_index do |parser, index| %>
+  <%= render Acfa::Ead::Components::SeriesComponent.new(parser: parser, series: parser.series, repository: @repository, aeon_enabled: @repository.aeon_enabled?, component_id: index + 1) %>
 <% end %>
