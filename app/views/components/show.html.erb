@@ -1,4 +1,5 @@
 <%- breadcrumb(:ead_component, @repository, params[:finding_aid_id], @finding_aid_title, params[:id], @series.unit_title.text) %>
+<div class="container">
 <div class="row">
   <div class="sidebar col-6 col-sm-4 col-md-3 col-lg-2">
         <%
@@ -18,4 +19,5 @@
     <!-- INFORMATION FOR TOP-LEVEL <c> ELEMENT, CURRENTLY A SERIES -->
     <%= render Acfa::Ead::Components::SeriesComponent.new(parser: @series, series: @series.series, repository: @repository, aeon_enabled: @repository.aeon_enabled?, component_id: params[:id]), layout: (@repository.aeon_enabled? ? "with_aeon" : "without_aeon") %>
   </div>
+</div>
 </div>
