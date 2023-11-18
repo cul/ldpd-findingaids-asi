@@ -1,7 +1,7 @@
 <%- breadcrumb(:ead_components, @repository, params[:finding_aid_id], @finding_aid_title) %>
 <div class="container">
 <div class="row">
-  <div class="sidebar col-6 col-sm-4 col-md-3 col-lg-2">
+  <div class="sidebar col-6 col-sm-4 col-md-3 col-lg-2 px-0">
         <%
           series_titles_urls =
             @arch_desc_dsc.series_compound_title_array.map.with_index do |series_title, index|
@@ -16,16 +16,18 @@
         %>
   </div>
   <div class="col ead_content">
-        <!-- MAIN FINDING AID INFORMATION -->
-        <%= render partial: 'finding_aids/top_level_info',
-            locals: {finding_aid_id: params[:finding_aid_id]}
-        %>
-        <!-- SERIES INFORMATION -->
-	<a class="fa_anchor" name="view_all"></a>
-    <%= render partial: 'view_all',
-               locals: {series_titles: @arch_desc_dsc.series_compound_title_array},
-               layout: (@repository.aeon_enabled? ? "with_aeon" : "without_aeon")
+    <!-- MAIN FINDING AID INFORMATION -->
+    <%= render partial: 'finding_aids/top_level_info',
+        locals: {finding_aid_id: params[:finding_aid_id]}
     %>
+    <!-- SERIES INFORMATION -->
+    <a class="fa_anchor" name="view_all"></a>
+    <%- layout_component = @repository.aeon_enabled? ? Acfa::AeonWrapperComponent : Acfa::SeriesCollectionComponent %>
+    <%= render layout_component.new(repository: @repository) do |wrapper| %>
+      <%- @series_array.each_with_index do |parser, index| %>
+        <%- wrapper.with_series_resource(parser: parser, series: parser.series, repository: @repository, aeon_enabled: @repository.aeon_enabled?, component_id: index + 1) %>
+      <% end %>
+    <%- end %>
   </div>
 </div>
 </div>

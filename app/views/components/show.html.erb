@@ -1,7 +1,7 @@
 <%- breadcrumb(:ead_component, @repository, params[:finding_aid_id], @finding_aid_title, params[:id], @series.unit_title.text) %>
 <div class="container">
 <div class="row">
-  <div class="sidebar col-6 col-sm-4 col-md-3 col-lg-2">
+  <div class="sidebar col-6 col-sm-4 col-md-3 col-lg-2 px-0">
         <%
           series_titles_urls =
             @arch_desc_dsc.series_compound_title_array.map.with_index do |series_title, index|
@@ -16,8 +16,10 @@
         %>
   </div>
   <div class="col ead_content">
-    <!-- INFORMATION FOR TOP-LEVEL <c> ELEMENT, CURRENTLY A SERIES -->
-    <%= render Acfa::Ead::Components::SeriesComponent.new(parser: @series, series: @series.series, repository: @repository, aeon_enabled: @repository.aeon_enabled?, component_id: params[:id]), layout: (@repository.aeon_enabled? ? "with_aeon" : "without_aeon") %>
+    <%- layout_component = @repository.aeon_enabled? ? Acfa::AeonWrapperComponent : Acfa::SeriesCollectionComponent %>
+    <%= render layout_component.new(repository: @repository) do |wrapper| %>
+      <%- wrapper.with_series_resource(parser: @series, series: @series.series, repository: @repository, aeon_enabled: @repository.aeon_enabled?, component_id: params[:id]) %>
+    <%- end %>
   </div>
 </div>
 </div>
