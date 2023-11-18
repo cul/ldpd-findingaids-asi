@@ -6,3 +6,10 @@ import githubAutoCompleteElement from "@github/auto-complete-element"
 import Blacklight from "blacklight"
 
 import "arclight"
+
+window.clearAeonCheckBoxes  = function () {
+  Array.prototype.forEach.call(
+    document.getElementsByClassName('aeon_checkbox'),
+    function(checkbox) { checkbox.checked = false; }
+  );
+};
