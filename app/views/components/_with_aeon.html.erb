@@ -2,7 +2,7 @@
 <div class="aeon_blurb">
 <p><%= t('aeon.text_submit_container_list') %></p>
 <%= submit_tag 'Submit Request'%>
-<input type="button" id="clear_checkboxes" value="Clear Checkboxes">
+<input type="button" id="clear_checkboxes" value="Clear Checkboxes" onclick="clearAeonCheckBoxes()">
 </div>
 <hr>
 <div style="clear:both;">
@@ -22,9 +22,4 @@
   <input type="hidden" name="series_titles[<%= index + 1 %>]" value="<%= series_title %>">
 <% end %>
 <% end %>
-<%= javascript_tag do %>
-$("#clear_checkboxes").click(function() {
-  $(".aeon_checkbox").removeAttr('checked');
-  return false;
-});
-<% end %>
+
