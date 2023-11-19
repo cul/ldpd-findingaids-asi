@@ -3,3 +3,8 @@ $logo-image: image_url('arclight/logo.png') !default;
 @import 'bootstrap';
 @import 'blacklight/blacklight';
 @import 'arclight/application';
+
+#search_field.custom-select {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}

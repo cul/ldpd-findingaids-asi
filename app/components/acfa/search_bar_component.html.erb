@@ -7,7 +7,7 @@
       <label class="input-group-text" for="within_collection">
         <%= t('arclight.within_collection_dropdown.label_html') %>
       </label>
-      <%= select_tag ('f[collection][]' if collection_name.present?), within_collection_options, id: 'within_collection', class: 'form-select search-field rounded-end' %>
+      <%= select_tag ('f[collection][]' if collection_name.present?), within_collection_options, id: 'within_collection', class: 'form-select search-field rounded-0' %>
     </div>
   <% end %>
 
