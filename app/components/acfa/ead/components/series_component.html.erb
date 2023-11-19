@@ -1,4 +1,4 @@
-<h2 style="color:#2c5277;font-size:16px;font-weight:bold;"><%= parser.compound_title_string %></h2>
+<h2 class="al-show-sub-heading"><%= parser.compound_title_string %></h2>
 <% parser.digital_archival_objects.each do |digital_archival_object| %>
   <%= link_to 'Access digital content: ' + digital_archival_object.description, digital_archival_object.href %>
   <br>

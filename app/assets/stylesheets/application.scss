@@ -74,13 +74,12 @@ $url_7: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.
 	}
 }
 div.toc {
-	background: #eee;
-	padding: 10px;
 	font-size: 12px;
-}
-
-#contentMenu1 {
-	margin-left: 5px;
+	clear:both;
+	.dropdown .nav {
+	  margin-left: -1rem;
+	  margin-right: -1rem;
+	}
 }
 
 div.item {
@@ -144,5 +143,20 @@ a.external-link {
 	  font-family: 'Font Awesome 6 Pro';
 	  content: '\f35d';
 	  padding-left: 0.5em;
+	}
+}
+
+.reset-layout {
+  .list-group-item {
+    position: relative;
+    display: block;
+    padding: var(--bs-list-group-item-padding-y) var(--bs-list-group-item-padding-x);
+    margin-bottom:0;
+  }
+}
+
+.no-item-border {
+	.list-group-item {
+	  border: 0 !important;
 	}
 }

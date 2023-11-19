@@ -4,15 +4,14 @@
   <%= render Acfa::SidebarComponent.new(arch_desc_dsc: @arch_desc_dsc, arch_desc_misc: @arch_desc_misc, preview_flag: @preview_flag, restricted_access: @restricted_access_flag, finding_aid_id: params[:finding_aid_id]) %>
   <div class="col ead_content">
     <!-- MAIN FINDING AID INFORMATION -->
-    <%= render partial: 'finding_aids/top_level_info',
-        locals: {finding_aid_id: params[:finding_aid_id]}
+    <%- # render partial: 'finding_aids/top_level_info', locals: {finding_aid_id: params[:finding_aid_id]}
     %>
     <!-- SERIES INFORMATION -->
     <a class="fa_anchor" name="view_all"></a>
     <%- layout_component = @repository.aeon_enabled? ? Acfa::AeonWrapperComponent : Acfa::SeriesCollectionComponent %>
-    <%= render layout_component.new(repository: @repository) do |wrapper| %>
+    <%= render layout_component.new(repository: @repository, finding_aid_title: @finding_aid_title) do |wrapper| %>
       <%- @series_array.each_with_index do |parser, index| %>
-        <%- wrapper.with_series_resource(parser: parser, series: parser.series, repository: @repository, aeon_enabled: @repository.aeon_enabled?, component_id: index + 1) %>
+        <%- wrapper.with_series_resource(parser: parser, series: parser.series, repository: @repository, aeon_enabled: @repository.aeon_enabled?, component_id: index + 1,) %>
       <% end %>
     <%- end %>
   </div>

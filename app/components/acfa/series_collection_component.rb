@@ -5,8 +5,9 @@ class Acfa::SeriesCollectionComponent < ViewComponent::Base
 
   attr_reader :repository
 
-  def initialize(repository:, **_args)
+  def initialize(repository:, finding_aid_title:, **_args)
     super
+    @finding_aid_title = finding_aid_title
     @repository = repository
   end
 end
