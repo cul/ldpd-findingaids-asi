@@ -22,11 +22,11 @@
   <% end %>
   <% if (component_info.nesting_level == 1 && component_info.level_attribute == 'subseries') %>
     <a class="subseries_anchor" name="<%= "subseries_#{parser.subseries_counter}" %>"></a>
-    <span class="subseries_title">
+    <h3 class="al-show-sub-heading">
       <%== [remove_unittitle_tags(component_info.unit_title),
             ArchiveSpace::Parsers::EadHelper.compound_dates_into_string(component_info.unit_dates),
             component_info.physical_description_extents_string].reject(&:blank?).join(", ") %>
-    </span>
+    </h3>
   <% else %>
     <span class="<%== repository.slug %> component_title">
       <%== [remove_unittitle_tags(component_info.unit_title),
