@@ -5,8 +5,7 @@ module Acfa::Arclight
   class SearchResultBreadcrumbsComponent < ::Arclight::SearchResultBreadcrumbsComponent
     def breadcrumbs
       offset = grouped? ? 2 : 0
-
-      Acfa::Arclight::BreadcrumbComponent.new(document: document, count: breadcrumb_count, offset: offset)
+      Acfa::Arclight::BreadcrumbComponent.new(document: document, offset: offset)
     end
   end
 end

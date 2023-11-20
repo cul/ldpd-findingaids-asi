@@ -10,4 +10,8 @@ module ApplicationHelper
     breadcrumbs.tap { |links| detected = links.any? }
     detected
   end
+
+  def repository_entry_url(repository_slug)
+    search_action_url(f: { repository: [repository_slug] }, group: true)
+  end
 end
