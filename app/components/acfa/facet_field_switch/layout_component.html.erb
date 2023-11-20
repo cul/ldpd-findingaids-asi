@@ -1,0 +1,8 @@
+<div class="card facet-limit blacklight-<%= @facet_field.key %> <%= 'facet-limit-active' if @facet_field.active? %>">
+  <h3 class="card-header facet-field-heading"><%= @facet_field.label %></h3>
+  <div id="<%= html_id %>" aria-labelledby="<%= header_html_id %>" class="facet-content">
+    <div class="card-body">
+      <%= body %>
+    </div>
+  </div>
+</div>
