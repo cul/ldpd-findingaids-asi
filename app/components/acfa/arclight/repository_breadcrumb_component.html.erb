@@ -2,8 +2,8 @@
   <span class="ml-3 ms-3" aria-hidden="true">
     <%= blacklight_icon(:repository, classes: 'al-repository-content-icon') %>
   </span>
-  <% if repository_path %>
-    <%= link_to(@document.repository, helpers.repository_finding_aids_path(repository_id: @document['repository_id_ssi'])) %>
+  <% if @document['repository_id_ssi'] %>
+    <%= link_to(@document.repository, helpers.repository_entry_url(@document['repository_id_ssi'])) %>
   <% else %>
     <%= @document.repository %>
   <% end %>

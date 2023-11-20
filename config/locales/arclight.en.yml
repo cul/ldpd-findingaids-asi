@@ -35,7 +35,7 @@ en:
         group_results_count:
           one: 1 result
           other: "%{count} results"
-          zero: 0 results
+          zero: No additional results
         number_of_components:
           one: component
           other: components

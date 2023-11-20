@@ -24,8 +24,6 @@ module Acfa
         aspace_id = doc['id'].sub(finding_aid_id, '')
         aspace_id = nil unless aspace_id =~ /^aspace/
 
-        unit_titles = doc.fetch('parent_unittitles_ssm', []) + doc.fetch('title_ssm', [])
-        parent_series_title = doc.fetch('parent_unittitles_ssm', []).detect { |title| title =~ SERIES }
         parent_dsc = Acfa::SearchState.series_to_dsc(doc.fetch('parent_unittitles_ssm', []))
         resource_dsc = Acfa::SearchState.series_to_dsc(doc.fetch('title_ssm', [])) unless parent_dsc
         routing_params = { controller: 'components', repository_id: doc['repository_id_ssi'], finding_aid_id: finding_aid_id }
