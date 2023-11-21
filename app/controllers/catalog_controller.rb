@@ -158,6 +158,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'collection', field: 'collection_ssim', limit: 10
     config.add_facet_field 'creator', field: 'creator_ssim', limit: 10
     config.add_facet_field 'date_range', field: 'date_range_isim', range: true, range_config: { segments: false }
+    config.add_facet_field 'language', field: 'language_ssim', limit: 10, solr_params: { 'facet.missing' => true }
     config.add_facet_field 'level', field: 'level_ssim', limit: 10
     config.add_facet_field 'names', field: 'names_ssim', limit: 10
     config.add_facet_field 'places', field: 'geogname_ssim', limit: 10
@@ -279,7 +280,7 @@ class CatalogController < ApplicationController
     config.add_summary_field 'creators', field: 'creators_ssim', link_to_facet: true
     config.add_summary_field 'abstract', field: 'abstract_html_tesm', helper_method: :render_html_tags
     config.add_summary_field 'extent', field: 'extent_ssm'
-    config.add_summary_field 'language', field: 'language_ssim'
+    config.add_summary_field 'language', field: 'language_material_ssm'
     config.add_summary_field 'prefercite', field: 'prefercite_html_tesm', helper_method: :render_html_tags
 
     # Collection Show Page - Background Section

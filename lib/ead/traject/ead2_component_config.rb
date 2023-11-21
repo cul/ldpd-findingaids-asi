@@ -79,3 +79,7 @@ to_field 'aspace_path_ssi', extract_xpath('./did/unitid[@type = \'aspace_uri\']'
   accumulator.slice!(1..-1)
   accumulator
 end
+
+@index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['language_ssim'].include?(index_step.field_name) }
+to_field 'language_material_ssm', extract_xpath('./did/langmaterial')
+to_field 'language_ssim', extract_xpath('./did/langmaterial/language')

@@ -88,4 +88,12 @@ describe Traject::Indexer do
       it { expect(index_document).not_to be_nil }
       it { expect(index_document[:aspace_path_ssi]).to eql [expected_value] }
   end
+  describe 'language indexing' do
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+      let(:expected_language_value) { 'Dutch' }
+      let(:expected_language_material_value) { 'Material is in English and in French, with some materials in Dutch.' }
+      it { expect(index_document).not_to be_nil }
+      it { expect(index_document[:language_ssim]).to eql [expected_language_value] }
+      it { expect(index_document[:language_material_ssm]).to include expected_language_material_value }
+  end
 end
