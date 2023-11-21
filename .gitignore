@@ -42,7 +42,9 @@ credentials.yml.enc
 database.yml
 finding_aids.yml
 master.key
+redis.yml
 repositories.yml
+resque.yml
 local_fixtures.yml
 secrets.yml
 
