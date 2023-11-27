@@ -308,5 +308,22 @@
       <str>suggest</str>
     </arr>
   </requestHandler>
+  <updateHandler class="solr.DirectUpdateHandler2">
+    <!-- keep a transaction log --> 
+    <updateLog>
+      <str name="dir">${solr.ulog.dir:}</str>
+      <int name="numVersionBuckets">${solr.ulog.numVersionBuckets:65536}</int>
+    </updateLog>
 
+    <!-- autoCommit periodically to control the tlog size -->
+    <autoCommit>
+      <maxTime>${solr.autoCommit.maxTime:15000}</maxTime>
+      <openSearcher>false</openSearcher>
+    </autoCommit>
+
+    <!-- soft commits are not free, so we will require them from the client unless specified -->
+    <autoSoftCommit>
+      <maxTime>${solr.autoSoftCommit.maxTime:-1}</maxTime>
+    </autoSoftCommit>
+  </updateHandler>
 </config>
