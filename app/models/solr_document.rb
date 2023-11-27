@@ -13,4 +13,19 @@ class SolrDocument
   # and Blacklight::Document::SemanticFields#to_semantic_values
   # Recommendation: Use field names from Dublin Core
   use_extension(Blacklight::Document::DublinCore)
+
+  def repository_id
+    self['repository_id_ssi']
+  end
+
+  def repository_config
+    return unless repository_id
+
+    @repository_config ||= Arclight::Repository.find_by(slug: repository_id)
+  end
+
+  def repository
+    first('repository_ssm') || collection&.first('repository_ssm') ||
+    first('repository_ssim') || collection&.first('repository_ssim')
+  end
 end
