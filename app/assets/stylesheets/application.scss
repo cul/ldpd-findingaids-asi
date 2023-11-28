@@ -163,3 +163,10 @@ a.external-link {
 	  border: 0 !important;
 	}
 }
+
+a.dropdown-item {
+/* toolkit visited link style interferes with dropdown legibility */
+  &.active {
+    color: var(--bs-dropdown-link-active-color) !important;
+  }
+}
