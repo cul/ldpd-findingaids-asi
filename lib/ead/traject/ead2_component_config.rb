@@ -18,7 +18,7 @@ end
 
 to_field 'repository_id_ssi' do |record, accumulator, context|
   if settings[:root]&.clipboard
-  	repository_id = settings[:root].clipboard[:repository_id]
+    repository_id = settings[:root].clipboard[:repository_id]
     accumulator.concat([repository_id]) if repository_id
   end
 end
@@ -83,3 +83,7 @@ end
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['language_ssim'].include?(index_step.field_name) }
 to_field 'language_material_ssm', extract_xpath('./did/langmaterial')
 to_field 'language_ssim', extract_xpath('./did/langmaterial/language')
+
+to_field 'collection_sort' do |_rec, accumulator, _context|
+  accumulator.concat((settings[:root].output_hash['normalized_title_ssm'] || []).slice(0,1))
+end

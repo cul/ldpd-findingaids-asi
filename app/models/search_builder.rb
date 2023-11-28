@@ -23,4 +23,12 @@ class SearchBuilder < Blacklight::SearchBuilder
   #   def add_custom_data_to_query(solr_parameters)
   #     solr_parameters[:custom] = blacklight_params[:user_value]
   #   end
+
+  def sort
+    return search_state.sort_field&.sort unless search_state.sort_field && search_state.params[:group].to_s == 'true'
+
+    return "#{search_state.sort_field.group_under}, #{search_state.sort_field.sort}" if search_state.sort_field.group_under
+
+    search_state.sort_field.sort
+  end
 end

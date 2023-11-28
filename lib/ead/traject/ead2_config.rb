@@ -56,6 +56,10 @@ load_config_file "#{Arclight::Engine.root}/lib/arclight/traject/ead2_config.rb"
 
 extend TrajectPlus::Macros
 
+to_field 'collection_sort' do |_record, accumulator, context|
+  accumulator.concat context.output_hash.fetch('normalized_title_ssm', []).slice(0,1)
+end
+
 ## Arclight fails hard when indexed components have blank parent IDs, so
 ## we must catch at index any circumstance where eadid is blank
 # to_field 'id', extract_xpath('/ead/eadheader/eadid'), strip, gsub('.', '-')
@@ -155,4 +159,3 @@ end
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['language_ssim'].include?(index_step.field_name) }
 to_field 'language_material_ssm', extract_xpath('/ead/archdesc/did/langmaterial')
 to_field 'language_ssim', extract_xpath('/ead/archdesc/did/langmaterial/language')
-
