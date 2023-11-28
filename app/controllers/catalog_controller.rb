@@ -260,8 +260,8 @@ class CatalogController < ApplicationController
     config.add_sort_field 'date_sort desc', label: 'date (descending)'
     config.add_sort_field 'creator_sort asc', label: 'creator (A-Z)'
     config.add_sort_field 'creator_sort desc', label: 'creator (Z-A)'
-    config.add_sort_field 'title_sort asc', label: 'title (A-Z)'
-    config.add_sort_field 'title_sort desc', label: 'title (Z-A)'
+    config.add_sort_field 'title_sort asc', label: 'title (A-Z)', group_under: 'collection_sort asc'
+    config.add_sort_field 'title_sort desc', label: 'title (Z-A)', group_under: 'collection_sort desc'
 
     # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.

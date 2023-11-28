@@ -96,4 +96,10 @@ describe Traject::Indexer do
       it { expect(index_document[:language_ssim]).to eql [expected_language_value] }
       it { expect(index_document[:language_material_ssm]).to include expected_language_material_value }
   end
+  describe 'aspace path indexing' do
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_eadid/from_unitid.xml') }
+      let(:expected_value) { 'Ead Fixture' }
+      it { expect(index_document).not_to be_nil }
+      it { expect(index_document[:collection_sort]).to eql [expected_value] }
+  end
 end
