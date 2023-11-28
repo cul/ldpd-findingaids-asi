@@ -35,7 +35,7 @@ base: &BASE
         - label: 'Suggestions & Feedback'
           url: "https://feedback.cul.columbia.edu/feedback_submission/lweb?submitted_from_page=https%3A%2F%2Ffindingaids.library.columbia.edu%2F"
         - label: 'Report an E-Resource Problem'
-          url: https://library.columbia.edu/resolve/lweb0006
+          url: https://resolver.library.columbia.edu/lweb0006
         - label: 'The Bancroft Prizes'
           url: https://library.columbia.edu/about/awards/bancroft.html
         - label: 'Student Library Advisory Committee'
