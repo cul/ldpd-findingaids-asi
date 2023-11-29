@@ -2,6 +2,8 @@
 
 module Cul::Footer
   class ContactComponent < ViewComponent::Base
+    delegate :link_to_repository_location, to: :helpers
+
     def initialize(repository:)
       @repository = repository
     end
