@@ -10,7 +10,7 @@ en:
       total_components: Total components
     hierarchy:
       view_all: View
-    masthead_heading_html: Archival Collections at Columbia University
+    masthead_heading_html: "Archival Collections<span class=\"d-none d-sm-inline\"> at Columbia University</span>"
     repositories: Repositories
     request:
       container: Request
