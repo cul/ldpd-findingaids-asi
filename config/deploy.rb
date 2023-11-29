@@ -48,7 +48,9 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/database.yml',
   'config/finding_aids.yml',
   'config/master.key',
+  'config/redis.yml',
   'config/repositories.yml',
+  'config/resque.yml',
   'config/secrets.yml'
 )
 
