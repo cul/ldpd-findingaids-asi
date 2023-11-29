@@ -16,7 +16,7 @@
         <%= [@series_titles[series_num], component_title].join(' ') %>
       </p>
     <% end %>
-    <%= form_tag login_aeon_request_path do %>
+    <%= form_tag(login_aeon_request_path, data: {turbo: false}) do %>
       <p>
         <b>Request Notes</b>
         <br>

@@ -1,5 +1,5 @@
 <h1><%= @finding_aid_title %></h1>
-<%= form_tag(aeon_request_path, {target: '_blank', authenticity_token: authenticity_token}) do %>
+<%= form_tag(aeon_request_path, {target: '_blank', authenticity_token: authenticity_token, data: {turbo: false}}) do %>
 <div class="card border-danger">
   <p class="card-body my-0"><%= t('aeon.text_submit_container_list') %></p>
   <div class="card-footer">
