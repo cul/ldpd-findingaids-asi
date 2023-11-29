@@ -17,32 +17,3 @@
 a.address-data, span.address-data, strong.address-data {
   display: block;
 }
-/*
-Begin Source: /etc/clientlibs/cul_core_2019/shared/css/ask-a-librarian-floating-button.less
-*/
-#aal-floater {
-  right: 0;
-  bottom: 5%;
-  left: auto;
-  .btn {
-    color: $white;
-    background-color: $cyan; // #539fe6 in original
-  }
-}
-#aal-floater .svg-inline--fa {
-  font-size: 3rem;
-}
-#aal-floater .btn {
-  opacity: .95;
-  border-radius: 0;
-  background-color: $cyan;
-}
-#aal-floater .btn:hover {
-  opacity: 1;
-}
-#aal-floater .small {
-  font-size: .9rem;
-}
-/*
-End Source: /etc/clientlibs/cul_core_2019/shared/css/ask-a-librarian-floating-button.less
-*/
