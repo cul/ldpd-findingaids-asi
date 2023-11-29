@@ -12,6 +12,7 @@ development: &DEV
   # No need to change the given string.
   container_info_delimiter: 'CONTAINERINFODELIMITER'
   fa_lists_dir: test/fixtures/files/fa_lists
+  lweb_help_url: https://library.columbia.edu/collections.html
   # During development/testing, the AS server may not be accessible. In this case, the code
   # should not attempt to authenticate on the AS server. To bypass authentication, set
   # the following to true. On the production server, it should be set to false since
@@ -49,6 +50,7 @@ production:
   # No need to change the given string.
   container_info_delimiter: 'CONTAINERINFODELIMITER'
   fa_lists_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_CONTAINING_LISTS_OF_FINDING_AIDS'
+  lweb_help_url: https://library.columbia.edu/collections.html
   # During development/testing, the AS server may not be accessible. In this case, the code
   # should not attempt to authenticate on the AS server. To bypass authentication, set
   # the following to true. On the production server, it should be set to false since
