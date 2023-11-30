@@ -171,6 +171,11 @@ a.dropdown-item {
   }
 }
 
+.rounded-left {
+	border-top-right-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+}
+
 .modal {
 /* toolkit is hiding all overflow, and thus some UI on some screens */
 	overflow-x: hidden !important;
