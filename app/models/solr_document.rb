@@ -14,6 +14,8 @@ class SolrDocument
   # Recommendation: Use field names from Dublin Core
   use_extension(Blacklight::Document::DublinCore)
 
+  attribute :title, :string, 'normalized_title_ssm'
+
   def repository_id
     self['repository_id_ssi']
   end

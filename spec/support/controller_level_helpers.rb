@@ -8,6 +8,10 @@ module ControllerLevelHelpers
     def blacklight_configuration_context
       @blacklight_configuration_context ||= Blacklight::Configuration::Context.new(controller)
     end
+
+    def blacklight_config; end
+    def search_action_path; end
+    def search_facet_path; end
   end
 
   def initialize_controller_helpers(helper)
