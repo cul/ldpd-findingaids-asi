@@ -13,3 +13,9 @@ window.clearAeonCheckBoxes  = function () {
     function(checkbox) { checkbox.checked = false; }
   );
 };
+
+// add this listener on page load to ensure we don't stack them up
+document.addEventListener("turbo:load", function(event) {
+  const aeonForm = document.querySelector("#aeon_form");
+  if (aeonForm) aeonForm.submit();
+});
