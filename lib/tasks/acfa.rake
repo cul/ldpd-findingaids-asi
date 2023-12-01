@@ -48,7 +48,7 @@ namespace :acfa do
     solr_response = solr_con.delete_by_query "_root_:#{ENV['COLLECTION']}"
     solr_con.commit(softCommit: true)
     solr_url = solr_con.base_uri
-    `curl #{solr_url}suggest?suggest.build=true`
+    Acfa::Index.build_suggester
     puts solr_response.inspect
   end
 end

@@ -2,10 +2,11 @@
 
 module Api
   module V1
-    class IndexEadController < ApiController
-      before_action :ensure_json_request
+    class IndexController < ApiController
+      before_action :authenticate_request_token
 
-      def index_ead(bibids)
+      def index_ead
+        bibids = params[:bibids]
         solr_url = ENV.fetch('SOLR_URL', Blacklight.default_index.connection.base_uri)
         CONFIG[:ead_cache_dir]
         indexed = 0
@@ -15,11 +16,11 @@ module Api
           indexed += indexing_job.perform(filename)
         end
         if indexed.positive?
-          puts "curl #{solr_url}suggest?suggest.build=true"
-          `curl #{solr_url}suggest?suggest.build=true`
+          Acfa::Index.build_suggester
         else
           puts "no files indexed at #{glob_pattern}"
         end
+        render plain: "Success!"
       end
     end
   end

@@ -1,0 +1,5 @@
+development:
+  remote_request_api_key: test
+
+test:
+  remote_request_api_key: test
