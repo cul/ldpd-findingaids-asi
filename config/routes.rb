@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   end
   get 'pages/home'
   get 'resolve/:id', to: 'catalog#resolve'
+
+  get 'ead/:repository_id', to: redirect('/archives?f[repository][]=%{repository_id}&group=true&sort=title_sort+asc')
   scope 'ead' do
     resources :repositories, only: [:index], path: '' do
       resources :finding_aids, only: [:index, :show], path: '' do

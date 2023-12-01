@@ -11,7 +11,7 @@ module ApplicationHelper
     detected
   end
 
-  def repository_entry_url(repository_slug)
-    search_action_url(f: { repository: [repository_slug] }, group: true)
+  def repository_entry_url(repository_slug, **opts)
+    search_action_url(f: { repository: [repository_slug] }, group: true, **opts)
   end
 end
