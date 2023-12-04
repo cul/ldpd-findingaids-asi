@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'acfa/index'
+
 module Api
   module V1
     class IndexController < ApiController
