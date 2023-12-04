@@ -16,7 +16,7 @@ module Api
           indexed += indexing_job.perform(filename)
         end
         if indexed.positive?
-          Acfa::Index.build_suggester
+          Acfa::Index.build_suggester(solr_url)
         else
           puts "no files indexed at #{glob_pattern}"
         end
