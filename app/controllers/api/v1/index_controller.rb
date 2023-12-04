@@ -8,7 +8,6 @@ module Api
       def index_ead
         bibids = params[:bibids]
         solr_url = ENV.fetch('SOLR_URL', Blacklight.default_index.connection.base_uri)
-        CONFIG[:ead_cache_dir]
         indexed = 0
         bibids.each do |bibid|
           filename = "as_ead_#{bibid}.xml"
@@ -18,7 +17,7 @@ module Api
         if indexed.positive?
           Acfa::Index.build_suggester(solr_url)
         else
-          puts "no files indexed at #{glob_pattern}"
+          Rails.logger.debug "no files indexed at #{glob_pattern}"
         end
         render plain: "Success!"
       end
