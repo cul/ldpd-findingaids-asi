@@ -41,6 +41,33 @@ namespace :acfa do
     end
   end
   
+  desc 'Seed a list of EADs by path to Solr'
+  task index_list: :environment do
+    rails_env = (ENV['RAILS_ENV'] || 'development')
+    solr_url = ENV.fetch('SOLR_URL', Blacklight.default_index.connection.base_uri)
+    ead_dir = CONFIG[:ead_cache_dir]
+    puts "Indexing into #{rails_env} #{solr_url}"
+    indexed = 0
+    list_path = ENV['LIST']
+    if File.exist?(list_path)
+      puts "Indexing ead paths from #{list_path}..."
+      open(list_path) do |io|
+        io.each do |line|
+          path = line.strip
+          filename = File.basename(path)
+          indexing_job = IndexEadJob.new
+          indexed += indexing_job.perform(filename)
+        end
+      end
+    end
+    if indexed > 0
+      puts "curl #{solr_url}suggest?suggest.build=true"
+      `curl #{solr_url}suggest?suggest.build=true`
+    else
+      puts "no files indexed from #{list_path}"
+    end
+  end
+
   desc 'Delete finding aid from index by collection id'
   task delete_collection: :environment do
     rails_env = (ENV['RAILS_ENV'] || 'development')
