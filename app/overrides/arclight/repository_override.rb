@@ -38,7 +38,7 @@ Arclight::Repository.class_eval do
 
   # local method
   def aeon_user_review_set_to_yes?
-    @attributes.dig(:request_types, :aeon_local_request, :user_review)
+    aeon_enabled? && @attributes.dig(:request_types, :aeon_local_request, :user_review)
   end
 
   # Override to pull repository configs from an environment keyed top-level hash

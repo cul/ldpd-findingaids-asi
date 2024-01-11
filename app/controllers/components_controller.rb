@@ -117,7 +117,7 @@ class ComponentsController < ApplicationController
     end
     @cache_html = CONFIG.fetch(:cache_html, !@preview_flag)
     @aeon_site_code = REPOS[params[:repository_id]][:aeon_site_code]
-    if REPOS[params[:repository_id]][:aeon_user_review_set_to_yes]
+    if @repository.aeon_user_review_set_to_yes?
       @user_review_value = 'yes'
     else
       @user_review_value = 'no'
