@@ -18,12 +18,12 @@
         aria-expanded="false"
         aria-controls="collapse_series_<%= series_index + 1 %>"
         href="#collapse_series_<%= series_index + 1 %>"
-        class="collape-toggle"
+        class="collapse-toggle"
         aria-expanded="false"
         aria-controls="collapse_series_<%= series_index + 1 %>">
         <%= title_url.first %><i class="fa fa-caret-down pl-1"></i>
       </a>
-      <ul class="collapse nav nav-collapse bg-light" id="collapse_series_<%= series_index + 1 %>">
+      <ul class="nav nav-collapse bg-light collapse show pl-3 border-bottom mt-2" id="collapse_series_<%= series_index + 1 %>">
         <li class="nav-item">
           <%= link_to "Go to Series", slug_prefix + title_url.second, class: "nav-link" %>
         </li>
