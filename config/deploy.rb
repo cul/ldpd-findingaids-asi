@@ -47,6 +47,7 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/blacklight.yml',
   'config/database.yml',
   'config/finding_aids.yml',
+  'config/index_api.yml',
   'config/master.key',
   'config/redis.yml',
   'config/repositories.yml',
