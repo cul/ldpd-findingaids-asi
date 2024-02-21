@@ -10,7 +10,9 @@
       <% document.extent.each do |extent| %>
               <%= tag.span extent, class: 'al-document-extent badge' unless compact? %>
             <% end %>
+      <dl>
       <%= render Arclight::IndexMetadataFieldComponent.with_collection(presenter.field_presenters.select { |field| !compact? || field.field_config.compact }) %>
+      </dl>
     </div>
   </div>
 </div>
