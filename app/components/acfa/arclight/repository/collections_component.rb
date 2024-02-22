@@ -17,8 +17,7 @@ module Acfa::Arclight::Repository
 
         File.join(doc_repo.aspace_base_uri, doc['aspace_path_ssi'])
       else
-        repository_id = doc['repository_id_ssi'] # || @repository.slug
-        { controller: '/finding_aids', action: 'show', repository_id: repository_id , id: doc['ead_ssi'] }
+        helpers.search_state.url_for_document(doc)
       end
     end
 

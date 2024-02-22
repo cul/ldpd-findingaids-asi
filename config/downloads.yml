@@ -17,9 +17,7 @@ sample_unitid:
     href: 'http://example.com/sample.xml'
     size: 123456
     # size_accessor: 'level'
+# these template URLs are handled in the application server, not rails
 default:
-  disabled: true
-  pdf:
-    template: 'http://example.com/%{unitid}.pdf'
   ead:
-    template: 'http://example.com/%{unitid}.xml'
+    template: '/ead/%{id}.xml'

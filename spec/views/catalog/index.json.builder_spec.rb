@@ -79,7 +79,7 @@ RSpec.describe "catalog/index.json", type: :view do
           attributes: {
             title: 'CUL Collection'
           },
-          links: { self: '/ead/nnc/ldpd_ABCDEFG' }
+          links: { self: '/archives/ldpd_ABCDEFG' }
         }
       )
     end
@@ -92,7 +92,7 @@ RSpec.describe "catalog/index.json", type: :view do
           attributes: {
             title: 'CUL No ASpace'
           },
-          links: { self: '/ead/nnc/ldpd_ABCDEFG/dsc#view_all' }
+          links: { self: '/archives/123' }
         }
       )
     end
@@ -105,7 +105,7 @@ RSpec.describe "catalog/index.json", type: :view do
           attributes: {
             title: 'CUL'
           },
-          links: { self: '/ead/nnc/ldpd_ABCDEFG/dsc#aspace_456' }
+          links: { self: '/archives/aspace_456' }
         }
       )
     end

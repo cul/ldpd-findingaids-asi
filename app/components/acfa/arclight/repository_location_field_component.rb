@@ -10,8 +10,8 @@ module Acfa::Arclight
         if repository.location_html.present?
           safe_concat(repository.location_html.html_safe)
         else
-          safe_concat(location_url_element)
-          safe_concat(location_building_element)
+          safe_concat(location_url_element || '')
+          safe_concat(location_building_element || '')
           location_address_elements.each do |location_address_element|
             safe_concat(location_address_element)
           end

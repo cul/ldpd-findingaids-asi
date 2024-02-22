@@ -32,7 +32,7 @@ RSpec.describe "catalog/_document.rss.builder", type: :view do
     let(:solr_document) { collection_doc }
     it "includes links and attributes" do
       expect(response_xml.elements["/item/title"].text).to eq "CUL Collection"
-      expect(response_xml.elements["/item/link"].text).to eq "/ead/nnc/ldpd_ABCDEFG"
+      expect(response_xml.elements["/item/link"].text).to eq "/archives/#{solr_document[:id]}"
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe "catalog/_document.rss.builder", type: :view do
     let(:solr_document) { local_doc }
     it "includes links and attributes" do
       expect(response_xml.elements["/item/title"].text).to eq "CUL"
-      expect(response_xml.elements["/item/link"].text).to eq "/ead/nnc/ldpd_ABCDEFG/dsc#aspace_456"
+      expect(response_xml.elements["/item/link"].text).to eq "/archives/#{solr_document[:id]}"
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe "catalog/_document.rss.builder", type: :view do
     let(:solr_document) { local_no_aspace_doc }
     it "includes links and attributes" do
       expect(response_xml.elements["/item/title"].text).to eq "CUL No ASpace"
-      expect(response_xml.elements["/item/link"].text).to eq "/ead/nnc/ldpd_ABCDEFG/dsc#view_all"
+      expect(response_xml.elements["/item/link"].text).to eq "/archives/#{solr_document[:id]}"
     end
   end
 
