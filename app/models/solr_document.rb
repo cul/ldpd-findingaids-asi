@@ -30,4 +30,9 @@ class SolrDocument
     first('repository_ssm') || collection&.first('repository_ssm') ||
     first('repository_ssim') || collection&.first('repository_ssim')
   end
+  
+  def aeon_request
+      @aeon_request ||= AeonRequest.new(self)
+  end
+    
 end
