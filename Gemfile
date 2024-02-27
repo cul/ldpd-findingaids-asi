@@ -11,7 +11,7 @@ end
 ruby "~> 3.1.3"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.6'
+gem 'rails', '~> 7.0.8'
 
 gem 'resque', '~> 2.6'
 
