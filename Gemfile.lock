@@ -249,7 +249,7 @@ GEM
     puma (5.6.5)
       nio4r (~> 2.0)
     racc (1.7.1)
-    rack (2.2.7)
+    rack (2.2.8.1)
     rack-protection (3.1.0)
       rack (~> 2.2, >= 2.2.4)
     rack-test (2.1.0)
@@ -407,12 +407,6 @@ GEM
     yell (2.2.2)
     zeitwerk (2.6.9)
 
-GEM
-  remote: https://token:CED764BD-489C-4D2D-8063-0D52DEFDEB5E@dl.fontawesome.com/basic/fontawesome-pro/ruby/
-  specs:
-    font-awesome-pro-sass (6.4.2)
-      sassc (~> 2.0)
-
 PLATFORMS
   ruby
 
@@ -430,7 +424,6 @@ DEPENDENCIES
   capybara (~> 3.32)
   devise
   devise-guests (~> 0.8)
-  font-awesome-pro-sass (~> 6.4.0)!
   font-awesome-sass (~> 6.4.0)
   importmap-rails
   iso-639
