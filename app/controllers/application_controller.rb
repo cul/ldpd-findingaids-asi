@@ -2,7 +2,6 @@ require 'archive_space'
 require 'open-uri'
 class ApplicationController < ActionController::Base
   include  ArchiveSpace::Ead::MarcHelper
-  include Acfa::EadParsingController
   include Blacklight::Controller
 
   before_action :set_preview_flag, :set_print_view_flag
