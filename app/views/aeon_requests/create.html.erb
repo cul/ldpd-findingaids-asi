@@ -1,8 +1,0 @@
-<div style="margin-top:60px;"></div>
-<% if @display_request_notice %>
-  <div style="padding: 1em 2em">
-    <%= content_tag(:h3, t('aeon.header_notice_submit_request'), style: "color: red;") %>
-    <%= content_tag(:p, t('aeon.text_notice_submit_request')) %>
-  </div>
-<% end %>
-<%= render partial: 'request_form' if @allow_requests %>
