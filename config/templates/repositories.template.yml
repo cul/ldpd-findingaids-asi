@@ -275,7 +275,6 @@ base: &BASE
   nynybaw:
     requestable_via_aeon: false
     as_repo_id: clio_only
-    aspace_base_uri: https://collections.barnard.edu/public/
     name: Barnard Archives & Special Collections
     url: https://archives.barnard.edu/
     has_fa_list: true

@@ -110,7 +110,7 @@ RSpec.describe "catalog/index.json", type: :view do
       )
     end
 
-    it "serializes a finding aid hosted externally" do
+    it "serializes an external aspace resource" do
       expect(response_data).to include(
         {
           id: 'aspace_789',
@@ -118,7 +118,7 @@ RSpec.describe "catalog/index.json", type: :view do
           attributes: {
             title: 'BA'
           },
-          links: { self: 'https://collections.barnard.edu/public/12345' }
+          links: { self: '/archives/aspace_789' }
         }
       )
     end

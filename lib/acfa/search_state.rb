@@ -8,16 +8,6 @@ module Acfa
     ROMAN_SERIES = /^\s*Series ([clxvi]+)\:/i
     ARABIC_SERIES = /^\s*Series ([\d]+)\:/i
 
-    def url_for_document(doc, options = {})
-
-      if doc['aspace_path_ssi'] && (doc_repo = ::Arclight::Repository.find_by(slug: doc['repository_id_ssi']))&.attributes.fetch('aspace_base_uri', nil)
-        return doc['aspace_path_ssi'] if doc['aspace_path_ssi'].starts_with?('http')
-
-        File.join(doc_repo.aspace_base_uri, doc['aspace_path_ssi'])
-      else
-        super
-      end
-    end
 
     def self.series_to_dsc(unit_titles)
       return nil unless unit_titles

@@ -18,18 +18,7 @@ RSpec.describe Acfa::SearchState do
       expect(actual).to be(document)
     end
   end
-  context "repo has aspace_base_uri configured" do
-    let(:expected) { 'http://localhost/7654321' }
-    before do
-      ENV['REPOSITORY_FILE'] = File.join(file_fixture_path, 'config/aspace_repositories.yml')
-    end
-    after do
-      ENV['REPOSITORY_FILE'] = nil
-    end
-    it 'returns a composed link literal' do
-      expect(actual).to eql(expected)
-    end
-  end
+
 
   describe '.roman_to_arabic' do
     it "works" do
