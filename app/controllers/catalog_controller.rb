@@ -394,7 +394,7 @@ class CatalogController < ApplicationController
   end
 
   def default_grouped!
-    @search_state = search_state.reset_search('group' => 'true') if params[:group].nil?
+    @search_state = search_state.reset_search('group' => 'true', 'page' => params[:page]) if params[:group].nil?
   end
 
   def resolve
