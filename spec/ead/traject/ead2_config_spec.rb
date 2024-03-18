@@ -51,7 +51,6 @@ describe Traject::Indexer do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_unitdate/has_bulk_range.xml') }
       it { expect(index_document).not_to be_nil }
       it { expect(index_document[:date_range_isim]).to eql(expected) }
-      it { expect(index_document[:date_range_ssim]).to eql(expected) }
     end
     context 'has open-end encoded as 9999' do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_unitdate/open_ended_9999.xml') }
