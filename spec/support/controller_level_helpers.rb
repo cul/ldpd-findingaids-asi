@@ -2,7 +2,7 @@
 module ControllerLevelHelpers
   module ControllerViewHelpers
     def search_state
-      @search_state ||= Acfa::SearchState.new(params, blacklight_config, controller)
+      @search_state ||= Blacklight::SearchState.new(params, blacklight_config, controller)
     end
 
     def blacklight_configuration_context

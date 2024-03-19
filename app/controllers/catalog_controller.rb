@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'acfa/search_state'
-
 # Blacklight controller that handles searches and document requests
 class CatalogController < ApplicationController
   layout :determine_layout if respond_to? :layout
@@ -11,7 +9,7 @@ class CatalogController < ApplicationController
 
   include Arclight::Catalog
 
-  self.search_state_class = Acfa::SearchState
+  self.search_state_class = Blacklight::SearchState
 
   before_action :default_grouped!, only: :index
 
