@@ -60,7 +60,7 @@ RSpec.describe "catalog/_document.atom.builder", type: :view do
     let(:solr_document) { external_aspace_doc }
     it "includes links and attributes" do
       expect(response_xml.elements["/entry/title"].text).to eq "BA"
-      expect(html_link.attributes['href']).to eq "https://collections.barnard.edu/public/12345"
+      expect(html_link.attributes['href']).to eq "/archives/#{solr_document[:id]}"
     end
   end
 end

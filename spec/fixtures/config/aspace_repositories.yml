@@ -26,4 +26,3 @@ test:
     description: Libraries!
     thumbnail_url: https://library.edu/thumbnail.jpg
     icon: light fa-book-sparkles
-    aspace_base_uri: 'http://localhost/'
