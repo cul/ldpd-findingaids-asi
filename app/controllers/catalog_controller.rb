@@ -82,7 +82,7 @@ class CatalogController < ApplicationController
 
     # solr field configuration for document/show views
     # config.show.title_field = 'title_display'
-    config.show.document_component = Arclight::DocumentComponent
+    config.show.document_component = Acfa::Arclight::DocumentComponent
     config.show.sidebar_component = Acfa::Arclight::SidebarComponent
     config.show.breadcrumb_component = Arclight::BreadcrumbsHierarchyComponent
     config.show.embed_component = Arclight::EmbedComponent
