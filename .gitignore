@@ -53,7 +53,7 @@ secrets.yml
 /spec/fixtures/asi/local_dev_fixtures/*
 !/spec/fixtures/asi/local_dev_fixtures/.keep
 
-# Vite Ruby
+# Vite
 /public/vite*
 node_modules
 # Vite uses dotenv and suggests to ignore local-only env files. See

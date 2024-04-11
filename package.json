@@ -1,8 +1,15 @@
 {
   "name": "ldpd-findingaids-asi",
   "private": true,
+  "scripts": {
+    "start:dev": "./bin/vite dev"
+  },
   "devDependencies": {
     "vite": "^5.2.8",
     "vite-plugin-ruby": "^5.0.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

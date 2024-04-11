@@ -1,7 +1,7 @@
 import React from 'react';
 
-
-export default class RequestCart {
+const RequestCart = () => {
+  console.log("carting!")
   return (
     <div>
       <h1>Cart</h1>
@@ -9,3 +9,5 @@ export default class RequestCart {
     </div>
   );
 };
+
+export default RequestCart;
