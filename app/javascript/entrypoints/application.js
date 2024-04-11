@@ -26,3 +26,7 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 
 // Example: Import a stylesheet in app/frontend/index.css
 // import '~/index.css'
+
+const container = document.getElementById('cart-widget');
+const root = createRoot(container);
+root.render(<RequestCart />); // or some other better name for the component
