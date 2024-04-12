@@ -75,6 +75,8 @@ if fa_token
   source "https://token:#{fa_token}@dl.fontawesome.com/basic/fontawesome-pro/ruby/" do
     gem "font-awesome-pro-sass", "~> 6.4.0"
   end
+else
+  raise 'ERROR: You are missing font_awesome_token in secrets.yml.  It is required for `bundle install` to work.'
 end
 gem "rsolr", ">= 1.0", "< 3"
 gem "bootstrap", "\~\>\ 5.1"
