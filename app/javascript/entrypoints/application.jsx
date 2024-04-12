@@ -34,6 +34,5 @@ import RequestCart from '../components/RequestCart';
 const container = document.getElementById('cart-widget');
 if (container) {
   const root = createRoot(container);
-  console.log('rendering cart');
-  root.render(<RequestCart />); // or some other better name for the component
+  root.render(<RequestCart />);
 }
