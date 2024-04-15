@@ -117,6 +117,18 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.20.2.tgz#9c907b21e30a52db959ba4f80bb01a0cc403d5cc"
   integrity sha512-N49X4lJX27+l9jbLKSqZ6bKNjzQvHaT8IIFUy+YIqmXQdjYCToGWwOItDrfby14c78aDd5NHQl29xingXfCdLQ==
 
+"@github/auto-complete-element@^3.6.2":
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@github/auto-complete-element/-/auto-complete-element-3.6.2.tgz#85800e185ce3f8fef48413d2a9907965ee95a68b"
+  integrity sha512-AgkrawNa2Focapn05yc/mNVTlAOqPFlMPhqkkMygPtOddms6NYxlCuVx8OM6aCTzBeEJlYur+/CS56hk4mvwmA==
+  dependencies:
+    "@github/combobox-nav" "^2.1.7"
+
+"@github/combobox-nav@^2.1.7":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@github/combobox-nav/-/combobox-nav-2.3.1.tgz#76da4c47f1e33af56392c5c9cf661a28d5b4168e"
+  integrity sha512-gwxPzLw8XKecy1nP63i9lOBritS3bWmxl02UX6G0TwMQZbMem1BCS1tEZgYd3mkrkiDrUMWaX+DbFCuDFo3K+A==
+
 "@hotwired/turbo-rails@^8.0.4":
   version "8.0.4"
   resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-8.0.4.tgz#d224f524a9e33fe687cec5d706054eb6fe13fa5b"
