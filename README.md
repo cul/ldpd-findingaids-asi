@@ -19,10 +19,11 @@ testing by running the command `docker-compose up`. The docker configuration
 will create a core called "acfa".
 
 ### Setting Up A Vite Server
-1. Install `nvm` if you do not already have it with `brew install nvm`
+1. Install `nvm` (Node Version Manager) if you do not already have it with `brew install nvm`
 2. Open a new terminal window at the repo — this should automatically switch you to run the `node` version specified by `.nvmrc` and download it if necessary.
-3. Install Javascript dependencies with `yarn install`.
-4. Run the vite server `yarn start:dev` - this will handle asset imports for the app.
+3. Install yarn with `npm install --global yarn`
+4. Install Javascript dependencies with `yarn install`.
+5. Run the vite server `yarn start:dev` - this will handle asset imports for the app.
 
 ### Setting Up A Development Finding Aids Server
 1. Install Ruby dependencies with `bundle install`. The application Gemfile indicates the required Ruby version.
