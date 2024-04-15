@@ -19,8 +19,11 @@ import RequestCart from '../components/RequestCart';
 
 // Example: Load Rails libraries in Vite.
 //
-// import * as Turbo from '@hotwired/turbo'
-// Turbo.start()
+
+// import "@hotwired/turbo"
+
+import * as Turbo from '@hotwired/turbo-rails'
+Turbo.start()
 //
 // import ActiveStorage from '@rails/activestorage'
 // ActiveStorage.start()
@@ -34,5 +37,6 @@ import RequestCart from '../components/RequestCart';
 const container = document.getElementById('cart-widget');
 if (container) {
   const root = createRoot(container);
-  root.render(<RequestCart />);
+  console.log('rendering cart');
+  root.render(<RequestCart />); // or some other better name for the component
 }
