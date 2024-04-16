@@ -30,8 +30,8 @@ gem 'terser'
 # Use Puma as the app server
 gem 'puma', '~> 5.2'
 
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails"
+# Use JavaScript with Vite [https://github.com/sergii/vite_rails]
+gem 'vite_rails'
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
