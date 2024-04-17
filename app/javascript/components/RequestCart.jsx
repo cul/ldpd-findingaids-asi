@@ -1,12 +1,10 @@
 import React from 'react';
 
-const makeCartItem = (itemName, collection, readingRoom) => {
-  return {
-    'name': itemName,
-    'collection': collection,
-    'readingRoom': readingRoom
-  }
-}
+const makeCartItem = (itemName, collection, readingRoom) => ({
+  name: itemName,
+  collection,
+  readingRoom,
+});
 
 // const cart = [
 //   makeCartItem('Item 1', 'Collection 1', 'Room 1'),
@@ -17,14 +15,14 @@ const makeCartItem = (itemName, collection, readingRoom) => {
 //   makeCartItem('Item 6', 'Collection 6', 'Room 6')
 // ]
 
-const cart = JSON.parse(localStorage.getItem('cart'))
+const cart = JSON.parse(localStorage.getItem('cart'));
 
-const RequestCart = () => {
+function RequestCart() {
   return (
     <div>
       <h1>Cart</h1>
       <p>Cart stuff goes here!</p>
-      <table className='table'>
+      <table className="table">
         <thead>
           <tr>
             <th>Item Name</th>
@@ -33,19 +31,15 @@ const RequestCart = () => {
           </tr>
         </thead>
         <tbody>
-          {cart.map((cartItem) => {
-            return (
-              <tr key={cartItem.name}>
-                <td>{cartItem.name}</td>
-                <td>{cartItem.collection}</td>
-                <td>{cartItem.readingRoom}</td>
-              </tr>
-            )
-          })}
+          {cart.map((cartItem) => (
+            <tr key={cartItem.name}>
+              <td>{cartItem.name}</td>
+              <td>{cartItem.collection}</td>
+              <td>{cartItem.readingRoom}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
   );
 }
-
-export default RequestCart;
