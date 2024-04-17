@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import '@hotwired/turbo-rails';
 import '@github/auto-complete-element';
-import { RequestCart } from '../components/RequestCart';
+import RequestCart from '../components/RequestCart';
 
 // To see this message, add the following to the `<head>` section in your
 // views/layouts/application.html.erb
