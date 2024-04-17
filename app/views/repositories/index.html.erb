@@ -5,7 +5,7 @@
   <div class="nav container" id="nav-tab" role="tablist">
     <% @repositories.each do |repository| %>
       <div class="nav-item col-6 col-md-3 col-lg">
-        <%= link_to(repository_entry_url(repository.slug, sort: "title_sort asc"), id: "#{repository.id}-tab", class: "nav-link btn btn-link") do -%>
+        <%= link_to(repository_entry_url(repository.slug), id: "#{repository.id}-tab", class: "nav-link btn btn-link") do -%>
           <i class="fa fa-<%= repository.icon || 'box-archive' -%> fa-w-16"></i>
           <div class="mt-1"><%= repository.name -%></div>
         <%- end -%>
