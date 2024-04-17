@@ -19,7 +19,7 @@
 
 <div class="grouped-documents">
   <div class="al-grouped-more">
-    <% if @group.total > 3 %>
+    <% if @group.total > 4 && grouped_documents.length == 3 %>
       <%= t('arclight.views.index.group_results_count', count: @group.total) %>
       <%= link_to(
         t('arclight.views.index.all_group_results', count: @group.total),
