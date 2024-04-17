@@ -33,17 +33,19 @@ const RequestCart = () => {
           </tr>
         </thead>
         <tbody>
-            {cart.map((cartItem) => {
-              return (
-                <tr key={cartItem.name}>
-                  <td>{cartItem.name}</td>
-                  <td>{cartItem.collection}</td>
-                  <td>{cartItem.readingRoom}</td>
-                </tr>
-              )
-            })}
+          {cart.map((cartItem) => {
+            return (
+              <tr key={cartItem.name}>
+                <td>{cartItem.name}</td>
+                <td>{cartItem.collection}</td>
+                <td>{cartItem.readingRoom}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </div>
   );
 }
+
+export default RequestCart;
