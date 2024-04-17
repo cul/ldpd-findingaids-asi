@@ -1,6 +1,6 @@
 import React from 'react';
 
-function RequestCart() {
+export default function RequestCart() {
   return (
     <div>
       <h1>Cart</h1>
@@ -8,5 +8,3 @@ function RequestCart() {
     </div>
   );
 }
-
-export default RequestCart;
