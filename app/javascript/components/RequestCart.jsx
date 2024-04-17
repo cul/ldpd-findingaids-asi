@@ -1,10 +1,10 @@
 import React from 'react';
 
-const makeCartItem = (itemName, collection, readingRoom) => ({
-  name: itemName,
-  collection,
-  readingRoom,
-});
+// const makeCartItem = (itemName, collection, readingRoom) => ({
+//   name: itemName,
+//   collection,
+//   readingRoom,
+// });
 
 // const cart = [
 //   makeCartItem('Item 1', 'Collection 1', 'Room 1'),
@@ -43,3 +43,5 @@ function RequestCart() {
     </div>
   );
 }
+
+export default RequestCart;
