@@ -36,8 +36,17 @@
 <% end %>
 
 <%= access %>
-<i class="fal fa-cart-flatbed-boxes"></i>
-
+<button class="fal fa-cart-flatbed-boxes" onclick="addToCart()"></button>
+<button class="fal fa-cart-flatbed-boxes" onclick="localStorage.setItem('cart', JSON.stringify([]))"></button>
 <div class="offcanvas-body">
   <div id="cart-widget"></div>
 </div>
+
+
+<script>
+function addToCart() {
+  const cart = JSON.parse(localStorage.getItem('cart'));
+  cart.push({ name: 'new_name' + Math.random(), collection: 'newCollection', readingRoom: 'newReadingRoom'});
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+</script>

@@ -8,14 +8,16 @@ const makeCartItem = (itemName, collection, readingRoom) => {
   }
 }
 
-const cart = [
-  makeCartItem('Item 1', 'Collection 1', 'Room 1'),
-  makeCartItem('Item 2', 'Collection 2', 'Room 2'),
-  makeCartItem('Item 3', 'Collection 3', 'Room 3'),
-  makeCartItem('Item 4', 'Collection 4', 'Room 4'),
-  makeCartItem('Item 5', 'Collection 5', 'Room 5'),
-  makeCartItem('Item 6', 'Collection 6', 'Room 6')
-]
+// const cart = [
+//   makeCartItem('Item 1', 'Collection 1', 'Room 1'),
+//   makeCartItem('Item 2', 'Collection 2', 'Room 2'),
+//   makeCartItem('Item 3', 'Collection 3', 'Room 3'),
+//   makeCartItem('Item 4', 'Collection 4', 'Room 4'),
+//   makeCartItem('Item 5', 'Collection 5', 'Room 5'),
+//   makeCartItem('Item 6', 'Collection 6', 'Room 6')
+// ]
+
+const cart = JSON.parse(localStorage.getItem('cart'))
 
 const RequestCart = () => {
   return (
