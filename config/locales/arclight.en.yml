@@ -28,13 +28,13 @@ en:
       view_more: view more
     views:
       index:
-        all_group_results: view all %{count}
+        all_group_results: view all
         all_results: All results
         group_by_collection: Grouped by collection
         group_results: Group results
         group_results_count:
-          one: 1 result
-          other: "%{count} results"
+          one: 1 result in this collection
+          other: "%{count} results in this collection"
           zero: No additional results
         number_of_components:
           one: component
