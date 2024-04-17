@@ -1,8 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import RequestCart from '../components/RequestCart';
-import * as Turbo from '@hotwired/turbo-rails'
-import githubAutoCompleteElement from "@github/auto-complete-element"
+import '@hotwired/turbo-rails';
+import '@github/auto-complete-element';
+import { RequestCart } from '../components/RequestCart';
 
 // To see this message, add the following to the `<head>` section in your
 // views/layouts/application.html.erb
@@ -24,7 +24,6 @@ import githubAutoCompleteElement from "@github/auto-complete-element"
 
 // import "@hotwired/turbo"
 
-
 //
 // import ActiveStorage from '@rails/activestorage'
 // ActiveStorage.start()
@@ -38,6 +37,7 @@ import githubAutoCompleteElement from "@github/auto-complete-element"
 const container = document.getElementById('cart-widget');
 if (container) {
   const root = createRoot(container);
+  // eslint-disable-next-line no-console
   console.log('rendering cart');
   root.render(<RequestCart />); // or some other better name for the component
 }

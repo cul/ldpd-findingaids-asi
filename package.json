@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start:dev": "./bin/vite dev",
-    "lint": "eslint app/javascript"
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.2",
