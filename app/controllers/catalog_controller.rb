@@ -11,8 +11,6 @@ class CatalogController < ApplicationController
 
   self.search_state_class = Blacklight::SearchState
 
-  before_action :default_grouped!, only: :index
-
   configure_blacklight do |config|
     config.bootstrap_version = 5
     ## Class for sending and receiving requests from a search index
@@ -389,10 +387,6 @@ class CatalogController < ApplicationController
 
     # Group header values
     config.add_group_header_field 'abstract_or_scope', accessor: true, truncate: true, helper_method: :render_html_tags
-  end
-
-  def default_grouped!
-    @search_state = search_state.reset_search('group' => 'true') if params[:group].nil?
   end
 
   def resolve
