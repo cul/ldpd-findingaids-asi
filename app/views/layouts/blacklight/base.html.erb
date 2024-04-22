@@ -38,6 +38,9 @@
       <div class="row">
         <%= content_for?(:content) ? yield(:content) : yield %>
       </div>
+      <div class="offcanvas-body">
+        <div id="cart-widget"></div>
+      </div>
     </main>
 
     <%= render partial: 'shared/footer' %>
