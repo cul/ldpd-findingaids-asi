@@ -1,3 +1,4 @@
+import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import React from 'react';
 
 // const makeCartItem = (itemName, collection, readingRoom) => ({
@@ -19,27 +20,73 @@ const cart = JSON.parse(localStorage.getItem('cart'));
 
 function RequestCart() {
   return (
-    <div>
-      <h1>Cart</h1>
-      <p>Cart stuff goes here!</p>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Item Name</th>
-            <th>Collection Name</th>
-            <th>Reading Room Location</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cart.map((cartItem) => (
-            <tr key={cartItem.name}>
-              <td>{cartItem.name}</td>
-              <td>{cartItem.collection}</td>
-              <td>{cartItem.readingRoom}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    // <Sidebar>
+    //   <Menu>
+    //     <MenuItem component={<h1>Cart</h1>} />
+    //     <MenuItem component={<p>Cart stuff goes here!</p>} />
+    //     <MenuItem component={
+    //       (
+    //         <table className="table">
+    //           <thead>
+    //             <tr>
+    //               <th>Item Name</th>
+    //               <th>Collection Name</th>
+    //               <th>Reading Room Location</th>
+    //             </tr>
+    //           </thead>
+    //           <tbody>
+    //             {cart.map((cartItem) => (
+    //               <tr key={cartItem.name}>
+    //                 <td>{cartItem.name}</td>
+    //                 <td>{cartItem.collection}</td>
+    //                 <td>{cartItem.readingRoom}</td>
+    //               </tr>
+    //             ))}
+    //           </tbody>
+    //         </table>
+    //       )
+    //     }
+    //     />
+    //   </Menu>
+    // </Sidebar>
+    <div id="app" style={({ height: '100vh' }, { display: 'flex' })}>
+      <Sidebar rtl closeOnClick style={{ height: '100vh' }}>
+        <Menu>
+          <MenuItem
+            style={
+              ({ textAlign: 'center' }, { display: 'flex', flexDirection: 'row-reverse' })
+            }
+          >
+            {' '}
+            <h2>Cart</h2>
+          </MenuItem>
+          <MenuItem>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Item Name</th>
+                  <th>Collection Name</th>
+                  <th>Reading Room Location</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cart.map((cartItem) => (
+                  <tr key={cartItem.name}>
+                    <td>{cartItem.name}</td>
+                    <td>{cartItem.collection}</td>
+                    <td>{cartItem.readingRoom}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </MenuItem>
+        </Menu>
+      </Sidebar>
+      <main>
+        <h1 style={{ color: 'white', marginLeft: '5rem' }}>
+          React-Pro-Sidebar
+        </h1>
+      </main>
     </div>
   );
 }

@@ -38,10 +38,6 @@
 <%= access %>
 <button class="fal fa-cart-flatbed-boxes" onclick="addToCart()"></button>
 <button class="fal fa-cart-flatbed-boxes" onclick="localStorage.setItem('cart', JSON.stringify([]))"></button>
-<div class="offcanvas-body">
-  <div id="cart-widget"></div>
-</div>
-
 
 <script>
 function addToCart() {

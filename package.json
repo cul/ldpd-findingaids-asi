@@ -21,6 +21,7 @@
     "@github/auto-complete-element": "^3.6.2",
     "@hotwired/turbo-rails": "^8.0.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-pro-sidebar": "^1.1.0"
   }
 }
