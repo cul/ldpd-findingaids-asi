@@ -80,7 +80,7 @@ en:
           component_field: About this %{level}
           component_indexed_terms_field: Related terms
           indexed_terms_field: Related terms
-          related_field: Related
+          related_field: Administrative information
           scope_and_arrangement_field: Scope and arrangement
           summary_field: Summary
         toggle_sidebar: Navigate the collection
