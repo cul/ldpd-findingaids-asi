@@ -19,25 +19,23 @@ import Button from 'react-bootstrap/Button';
 
 const cart = JSON.parse(localStorage.getItem('cart'));
 
-const [show, setShow] = useState(false);
-
-const handleClose = () => setShow(false);
-const handleShow = () => setShow(true);
-
 function RequestCart() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Launch
+        Add to Cart
       </Button>
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+          <Offcanvas.Title>Request Cart</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <h1>Cart</h1>
-          <p>Cart stuff goes here!</p>
           <table className="table">
             <thead>
               <tr>
