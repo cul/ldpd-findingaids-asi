@@ -1,5 +1,6 @@
-import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
-import React from 'react';
+import React, { useState } from 'react';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import Button from 'react-bootstrap/Button';
 
 // const makeCartItem = (itemName, collection, readingRoom) => ({
 //   name: itemName,
@@ -18,76 +19,46 @@ import React from 'react';
 
 const cart = JSON.parse(localStorage.getItem('cart'));
 
+const [show, setShow] = useState(false);
+
+const handleClose = () => setShow(false);
+const handleShow = () => setShow(true);
+
 function RequestCart() {
   return (
-    // <Sidebar>
-    //   <Menu>
-    //     <MenuItem component={<h1>Cart</h1>} />
-    //     <MenuItem component={<p>Cart stuff goes here!</p>} />
-    //     <MenuItem component={
-    //       (
-    //         <table className="table">
-    //           <thead>
-    //             <tr>
-    //               <th>Item Name</th>
-    //               <th>Collection Name</th>
-    //               <th>Reading Room Location</th>
-    //             </tr>
-    //           </thead>
-    //           <tbody>
-    //             {cart.map((cartItem) => (
-    //               <tr key={cartItem.name}>
-    //                 <td>{cartItem.name}</td>
-    //                 <td>{cartItem.collection}</td>
-    //                 <td>{cartItem.readingRoom}</td>
-    //               </tr>
-    //             ))}
-    //           </tbody>
-    //         </table>
-    //       )
-    //     }
-    //     />
-    //   </Menu>
-    // </Sidebar>
-    <div id="app" style={({ height: '100vh' }, { display: 'flex' })}>
-      <Sidebar rtl closeOnClick style={{ height: '100vh' }}>
-        <Menu>
-          <MenuItem
-            style={
-              ({ textAlign: 'center' }, { display: 'flex', flexDirection: 'row-reverse' })
-            }
-          >
-            {' '}
-            <h2>Cart</h2>
-          </MenuItem>
-          <MenuItem>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Item Name</th>
-                  <th>Collection Name</th>
-                  <th>Reading Room Location</th>
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        Launch
+      </Button>
+
+      <Offcanvas show={show} onHide={handleClose}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <h1>Cart</h1>
+          <p>Cart stuff goes here!</p>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Collection Name</th>
+                <th>Reading Room Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((cartItem) => (
+                <tr key={cartItem.name}>
+                  <td>{cartItem.name}</td>
+                  <td>{cartItem.collection}</td>
+                  <td>{cartItem.readingRoom}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {cart.map((cartItem) => (
-                  <tr key={cartItem.name}>
-                    <td>{cartItem.name}</td>
-                    <td>{cartItem.collection}</td>
-                    <td>{cartItem.readingRoom}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </MenuItem>
-        </Menu>
-      </Sidebar>
-      <main>
-        <h1 style={{ color: 'white', marginLeft: '5rem' }}>
-          React-Pro-Sidebar
-        </h1>
-      </main>
-    </div>
+              ))}
+            </tbody>
+          </table>
+        </Offcanvas.Body>
+      </Offcanvas>
+    </>
   );
 }
 
