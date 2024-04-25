@@ -39,6 +39,8 @@
 <button class="fal fa-cart-flatbed-boxes" onclick="addToCart()"></button>
 <button class="fal fa-cart-flatbed-boxes" onclick="localStorage.setItem('cart', JSON.stringify([]))"></button>
 
+<div id="cart-widget"></div>
+
 <script>
 function addToCart() {
   const cart = JSON.parse(localStorage.getItem('cart'));
