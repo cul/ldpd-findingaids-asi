@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+// import removeFromCart from '../../assets/javascripts/cart.js';
 
 // const makeCartItem = (itemName, collection, readingRoom) => ({
 //   name: itemName,
@@ -19,6 +21,12 @@ import Button from 'react-bootstrap/Button';
 
 const cart = JSON.parse(localStorage.getItem('cart'));
 
+function removeFromCart(toRemove) {
+  const newCart = JSON.parse(localStorage.getItem('cart'));
+  newCart.filter((item) => (item.name !== toRemove.name || item.collection !== toRemove.collection));
+  localStorage.setItem('cart', JSON.stringify(newCart));
+}
+
 function RequestCart() {
   const [show, setShow] = useState(false);
 
@@ -31,12 +39,12 @@ function RequestCart() {
         Add to Cart
       </Button>
 
-      <Offcanvas show={show} onHide={handleClose}>
+      <Offcanvas show={show} onHide={handleClose} placement="end" scroll>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Request Cart</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <table className="table">
+          <Table>
             <thead>
               <tr>
                 <th>Item Name</th>
@@ -50,10 +58,15 @@ function RequestCart() {
                   <td>{cartItem.name}</td>
                   <td>{cartItem.collection}</td>
                   <td>{cartItem.readingRoom}</td>
+                  <td>
+                    <Button onClick={removeFromCart(cartItem)}>
+                      Remove
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </Offcanvas.Body>
       </Offcanvas>
     </>
