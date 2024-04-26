@@ -35,16 +35,11 @@
 </div>
 <% end %>
 
+<%= javascript_include_tag('cart.js') %>
+
 <%= access %>
-<button class="fal fa-cart-flatbed-boxes" onclick="addToCart()"></button>
+<button class="fal fa-cart-flatbed-boxes" onclick="addToCart({ name: 'new_name' + Math.random(), collection: 'newCollection', readingRoom: 'newReadingRoom'})"></button>
 <button class="fal fa-cart-flatbed-boxes" onclick="localStorage.setItem('cart', JSON.stringify([]))"></button>
 
 <div id="cart-widget"></div>
 
-<script>
-function addToCart() {
-  const cart = JSON.parse(localStorage.getItem('cart'));
-  cart.push({ name: 'new_name' + Math.random(), collection: 'newCollection', readingRoom: 'newReadingRoom'});
-  localStorage.setItem('cart', JSON.stringify(cart));
-}
-</script>
