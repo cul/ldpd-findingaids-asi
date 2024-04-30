@@ -106,32 +106,6 @@
          text
        </str>
 
-       <str name="qf_name">
-         name_teim
-       </str>
-       <str name="pf_name">
-         name_teim
-       </str>
-       <str name="qf_place">
-         place_teim
-       </str>
-       <str name="pf_place">
-         place_teim
-       </str>
-       <str name="qf_subject">
-         subject_teim
-       </str>
-       <str name="pf_subject">
-         subject_teim
-       </str>
-       <str name="qf_title">
-         title_tesim
-         normalized_title_teim
-       </str>
-       <str name="pf_title">
-         title_tesim
-         normalized_title_teim
-       </str>
 
        <int name="ps">3</int>
        <float name="tie">0.01</float>

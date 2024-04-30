@@ -207,40 +207,6 @@ class CatalogController < ApplicationController
       }
     end
 
-    # Field-based searches. We have registered handlers in the Solr configuration
-    # so we have Blacklight use the `qt` parameter to invoke them
-    config.add_search_field 'keyword', label: 'Keyword' do |field|
-      field.qt = 'search' # default
-    end
-    config.add_search_field 'name', label: 'Name' do |field|
-      field.qt = 'search'
-      field.solr_parameters = {
-        qf:  '${qf_name}',
-        pf:  '${pf_name}'
-      }
-    end
-    config.add_search_field 'place', label: 'Place' do |field|
-      field.qt = 'search'
-      field.solr_parameters = {
-        qf:  '${qf_place}',
-        pf:  '${pf_place}'
-      }
-    end
-    config.add_search_field 'subject', label: 'Subject' do |field|
-      field.qt = 'search'
-      field.solr_parameters = {
-        qf:  '${qf_subject}',
-        pf:  '${pf_subject}'
-      }
-    end
-    config.add_search_field 'title', label: 'Title' do |field|
-      field.qt = 'search'
-      field.solr_parameters = {
-        qf:  '${qf_title}',
-        pf:  '${pf_title}'
-      }
-    end
-
     # These are the parameters passed through in search_state.params_for_search
     config.search_state_fields += %i[id group hierarchy_context original_document paginate]
     config.search_state_fields << { original_parents: [] }
