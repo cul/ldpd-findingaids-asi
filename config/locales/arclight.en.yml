@@ -85,9 +85,9 @@ en:
           summary_field: Summary
         toggle_sidebar: Navigate the collection
     within_collection_dropdown:
-      all_collections: all collections
-      label_html: Search<span class="sr-only visually-hidden"> within</span>
-      this_collection: this collection
+      all_collections: Search all collections
+      label_html: ""
+      this_collection: Search this collection
   blacklight:
     entry_name:
       grouped:
