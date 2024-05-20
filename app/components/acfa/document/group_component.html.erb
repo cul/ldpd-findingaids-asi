@@ -19,16 +19,16 @@
 
 <div class="grouped-documents">
   <div class="al-grouped-more">
-    <% if @group.total > 4 && grouped_documents.length == 3 %>
-      <%= t('arclight.views.index.top_group_results', count: 3) %>
+    <% if @group.total > 3 %>
+      <%= t('arclight.views.index.group_results_count', count: @group.total) %>
       <%= link_to(
         t('arclight.views.index.all_group_results', count: @group.total),
         search_within_collection_url)
       %>
-    <% elsif @group.total >= 1 %>
-      <%= t('arclight.views.index.group_results_count', count: grouped_documents.length) %>
+    <% else %>
+      <%= t('arclight.views.index.group_results_count', count: @group.total) %>
     <% end %>
   </div>
 
-  <%= helpers.render_document_index grouped_documents %>
+  <%= helpers.render_document_index @group.docs %>
 </div>

@@ -12,6 +12,6 @@ module ApplicationHelper
   end
 
   def repository_entry_url(repository_slug, **opts)
-    search_action_url(f: { repository: [repository_slug] }, group: true, **opts)
+    search_action_url(f: { repository: [repository_slug] }, **opts)
   end
 end
