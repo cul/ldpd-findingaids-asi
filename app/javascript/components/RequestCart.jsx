@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
@@ -30,16 +30,23 @@ function removeFromCart(toRemove) {
 function RequestCart() {
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const hideCart = () => setShow(false);
+  const showCart = () => setShow(true);
+
+  useEffect(() => {
+    window.addEventListener('showCart', showCart);
+    return () => {
+      window.removeEventListener('showCart', showCart);
+    };
+  });
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="primary" onClick={showCart}>
         Add to Cart
       </Button>
 
-      <Offcanvas show={show} onHide={handleClose} placement="end" scroll>
+      <Offcanvas show={show} onHide={hideCart} placement="end" scroll>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Request Cart</Offcanvas.Title>
         </Offcanvas.Header>

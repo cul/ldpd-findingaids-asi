@@ -36,10 +36,15 @@ import RequestCart from '../components/RequestCart';
 // Example: Import a stylesheet in app/frontend/index.css
 // import '~/index.css'
 
+// Initialize cart widget
 const container = document.getElementById('cart-widget');
 if (container) {
   const root = createRoot(container);
-  // eslint-disable-next-line no-console
-  console.log('rendering cart');
   root.render(<RequestCart />); // or some other better name for the component
 }
+
+// Define global showCart() function, which will allow us to trigger cart display from anywhere in the app,
+// even outside of a React context.
+window.showCart = () => {
+  window.dispatchEvent(new CustomEvent('showCart', {}));
+};
