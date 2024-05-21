@@ -1,0 +1,12 @@
+<header class="documentHeader row" data-document-id="<%= @document.id %>">
+  <h2 class="index_title document-title-heading col">
+    <%= helpers.link_to_document @document, counter: @counter %>
+    <% @document.extent.each do |extent| %>
+      <%= tag.span extent, class: 'al-document-extent badge' unless compact? %>
+    <% end %>    
+  </h2>
+
+  <% actions.each do |action| %>
+    <%= action %>
+  <% end %>
+</header>
