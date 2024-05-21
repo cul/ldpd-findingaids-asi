@@ -71,7 +71,7 @@ class CatalogController < ApplicationController
     config.index.partials = %i[arclight_index_default]
     config.index.title_field = 'normalized_title_ssm'
     config.index.display_type_field = 'level_ssm'
-    config.index.document_component = Arclight::SearchResultComponent
+    config.index.document_component = Acfa::Arclight::SearchResultComponent
     config.index.group_component = Acfa::Document::GroupComponent
     config.index.constraints_component = Arclight::ConstraintsComponent
     config.index.document_presenter_class = Arclight::IndexPresenter
