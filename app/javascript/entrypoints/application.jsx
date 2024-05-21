@@ -1,7 +1,9 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import '@hotwired/turbo-rails';
+import 'bootstrap';
 import '@github/auto-complete-element';
+import 'blacklight-frontend';
 import RequestCart from '../components/RequestCart';
 
 // To see this message, add the following to the `<head>` section in your
