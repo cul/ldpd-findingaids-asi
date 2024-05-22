@@ -21,12 +21,6 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  ignorePatterns: [
-    // For now, ignoring some Rails js files that might need to be reworked as part of the Vite changes
-    'app/javascript/application.js',
-    'app/javascript/controllers/*',
-    'app/assets/javascripts/aeonform.js',
-  ],
   rules: {
     'max-len': ['error', { code: 120 }],
   },
