@@ -41,12 +41,8 @@ function RequestCart() {
   });
 
   return (
-    <>
-      <Button variant="primary" onClick={showCart}>
-        Add to Cart
-      </Button>
-
-      <Offcanvas show={show} onHide={hideCart} placement="end" scroll>
+    <div className="request-cart">
+      <Offcanvas className="w-50" show={show} onHide={hideCart} placement="end" scroll>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Request Cart</Offcanvas.Title>
         </Offcanvas.Header>
@@ -76,7 +72,7 @@ function RequestCart() {
           </Table>
         </Offcanvas.Body>
       </Offcanvas>
-    </>
+    </div>
   );
 }
 

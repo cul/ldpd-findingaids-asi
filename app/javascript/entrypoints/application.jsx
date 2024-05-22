@@ -36,12 +36,22 @@ import RequestCart from '../components/RequestCart';
 // Example: Import a stylesheet in app/frontend/index.css
 // import '~/index.css'
 
-// Initialize cart widget
-const container = document.getElementById('cart-widget');
-if (container) {
-  const root = createRoot(container);
-  root.render(<RequestCart />); // or some other better name for the component
-}
+// Set up the cart widget react app
+let cartReactRoot = null;
+document.addEventListener('turbo:load', () => {
+  const container = document.getElementById('cart-widget');
+  if (container) {
+    if (!cartReactRoot) { cartReactRoot = createRoot(container); }
+    cartReactRoot.render(<RequestCart />);
+  }
+});
+// Make sure to clean up the cart widget react app before any turbo render, so we dont introduce memory leaks.
+document.addEventListener('turbo:before-render', () => {
+  if (cartReactRoot) {
+    cartReactRoot.unmount();
+    cartReactRoot = null;
+  }
+});
 
 // Define global showCart() function, which will allow us to trigger cart display from anywhere in the app,
 // even outside of a React context.
