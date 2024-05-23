@@ -17,5 +17,18 @@ module Acfa
       end
       use_params
     end
+
+    def within_collection_options
+      value = collection_name || 'none-selected'
+      options_for_select(
+        [
+          [t('arclight.within_collection_dropdown.all_collections'), ''],
+          [t('arclight.within_collection_dropdown.this_collection'), value]
+        ],
+        # When we're in a show view, we always want "Search all collections" to be the default dropdown option
+        selected: params[:action] == 'show' ? 'none-selected' : collection_name,
+        disabled: 'none-selected'
+      )
+    end
   end
 end
