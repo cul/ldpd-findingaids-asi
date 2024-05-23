@@ -19,7 +19,7 @@ module Api
         if indexed.positive?
           Acfa::Index.build_suggester(solr_url)
         else
-          Rails.logger.debug "no files indexed at #{glob_pattern}"
+          Rails.logger.debug "no files indexed for bibids: #{bibids.join(', ')}"
         end
         render plain: "Success!"
       end
