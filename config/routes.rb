@@ -47,4 +47,10 @@ Rails.application.routes.draw do
     get 'redirectnonshib'
   end
   root 'repositories#index'
+  namespace :api do
+      namespace :v1, defaults: { format: :json } do
+        post '/index/index_ead', to: 'index#index_ead'
+        post '/index/delete_ead', to: 'index#delete_ead'
+      end
+    end
 end
