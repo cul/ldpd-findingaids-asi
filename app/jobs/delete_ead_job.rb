@@ -6,7 +6,6 @@ class DeleteEadJob < ApplicationJob
     solr_con.commit(softCommit: true)
     solr_url = solr_con.base_uri
     `curl #{solr_url}suggest?suggest.build=true`
-    puts solr_response.inspect
     1
   end
   
