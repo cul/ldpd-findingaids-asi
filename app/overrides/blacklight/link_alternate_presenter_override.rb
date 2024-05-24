@@ -8,7 +8,12 @@ Blacklight::LinkAlternatePresenter.class_eval do
     case url_or_params
     when String
       return url_or_params
-    when SolrDocument
+    # NOTE: For the `when` case below, we're comparing the class to `Blacklight::Solr::Document` rather than just
+    # `SolrDocument` to work around a class reloading issue (which only affects the development environment).
+    # If we were to instead compare with `SolrDocument`, the check would fail on show pages in the development
+    # environment after an autoload class reload, because SolrDocument (which is one of our app's autoloaded classes)
+    # gets reloaded and the `SolrDocument` class instance is different after the reload.
+    when Blacklight::Solr::Document
       return { id: url_or_params, format: format }
     else
       return view_context.url_for(url_or_params.merge(format: format))
