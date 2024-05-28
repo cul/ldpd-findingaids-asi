@@ -5,6 +5,7 @@ import 'bootstrap';
 import '@github/auto-complete-element';
 import 'blacklight-frontend';
 import RequestCart from '../components/RequestCart';
+import '../autocomplete-setup';
 
 // To see this message, add the following to the `<head>` section in your
 // views/layouts/application.html.erb
