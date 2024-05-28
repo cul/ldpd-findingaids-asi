@@ -19,10 +19,10 @@ import Table from 'react-bootstrap/Table';
 //   makeCartItem('Item 6', 'Collection 6', 'Room 6')
 // ]
 
-const cart = JSON.parse(localStorage.getItem('cart'));
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 function removeFromCart(toRemove) {
-  const newCart = JSON.parse(localStorage.getItem('cart'));
+  const newCart = JSON.parse(localStorage.getItem('cart')) || [];
   newCart.filter((item) => (item.name !== toRemove.name || item.collection !== toRemove.collection));
   localStorage.setItem('cart', JSON.stringify(newCart));
 }
