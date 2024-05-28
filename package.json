@@ -1,6 +1,7 @@
 {
   "name": "ldpd-findingaids-asi",
   "private": true,
+  "type": "module",
   "scripts": {
     "start:dev": "./bin/vite dev",
     "lint": "eslint app/javascript --ext js,jsx"
