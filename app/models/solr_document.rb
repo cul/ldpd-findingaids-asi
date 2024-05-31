@@ -30,4 +30,8 @@ class SolrDocument
     first('repository_ssm') || collection&.first('repository_ssm') ||
     first('repository_ssim') || collection&.first('repository_ssim')
   end
+
+  def requestable?
+    repository_config&.request_types&.any? && self.containers.present?
+  end
 end
