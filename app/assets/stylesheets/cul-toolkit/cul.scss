@@ -1,0 +1,47 @@
+// Note: Based on https://github.com/cul/cul-toolkit/blob/master/src/css/cul.scss
+
+:root {
+   --a-link-color: #2c6bac;
+   --a-visited-color: #769ac5;
+   --nav-a-link-color: #3a6fa2;
+   --icon-grey-color: #595959;
+   --nav-tabs-link-active-color: #f8f9fa;
+   --text-shadow-color: 1px 1px 1px rgba(0,0,0,0.5);
+   --cul-darkblue-color: #093552;
+}
+a:link:not(.btn) {
+ color:var(--a-link-color);
+}
+a:visited:not(.btn) {
+  color:var(--a-link-color);
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: rgba(0,0,0,0.5);
+  font-size: .8rem;
+}
+
+#site-name {
+  display: block;
+  padding: 1rem 0;
+  margin-bottom: 0;
+}
+
+.jumbotron {
+  padding: 2rem 1rem;
+  margin-bottom: 2rem;
+  background-color: #e9ecef;
+  border-radius: .3rem;
+}
+
+@media (min-width: 576px) {
+  .jumbotron {
+    padding: 4rem 2rem;
+  }
+}
+
+#site-footer {
+  img {
+    height: 38px;
+  }
+}
