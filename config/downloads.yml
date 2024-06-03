@@ -21,3 +21,5 @@ sample_unitid:
 default:
   ead:
     template: '/ead/%{id}.xml'
+  pdf:
+    template: '/pdf/%{id}.pdf'
