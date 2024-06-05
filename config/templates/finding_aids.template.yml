@@ -1,5 +1,5 @@
 development: &DEV
-  google_analytics: false
+  web_analytics: false
   # NOTE on authenticity_token_placeholder below: No need to change this string, the
   # code will automatically replace the string below with the authentication token
   # for the specific session
@@ -37,7 +37,7 @@ test:
   clio_bib_id_data_dir: spec/fixtures/asi/as_solr_data
   fa_lists_dir: test/fixtures/files/fa_lists
 production:
-  google_analytics: true
+  web_analytics: true
   # NOTE on authenticity_token_placeholder below: No need to change this string, the
   # code will automatically replace the string below with the authentication token
   # for the specific session

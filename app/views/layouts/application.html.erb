@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <%= render partial: 'google_analytics' if CONFIG[:google_analytics] %>
+    <%= render partial: 'web_analytics' if CONFIG[:web_analytics] %>
     <title><%= [@finding_aid_title, @repository_name, 'Columbia University Libraries Finding Aids'].reject(&:blank?).join(' | ') %></title>
     <%= csp_meta_tag %>
 
