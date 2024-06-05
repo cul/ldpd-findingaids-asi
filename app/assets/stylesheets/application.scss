@@ -180,3 +180,18 @@ a.dropdown-item {
 	overflow-x: hidden !important;
   overflow-y: auto !important;
 }
+
+#metadata {
+	.accordion-header {
+		margin-right: -1rem;
+	}
+	.accordion-button:not(.collapsed) {
+		background: none;
+		box-shadow: none;
+	}
+	.accordion-button {
+		margin-left: -.5rem;
+		padding-left: .5rem !important;
+		padding-right: .5rem !important
+	}
+}

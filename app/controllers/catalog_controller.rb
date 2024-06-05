@@ -91,7 +91,14 @@ class CatalogController < ApplicationController
     config.show.document_presenter_class = Arclight::ShowPresenter
     config.show.metadata_partials = %i[
       summary_field
-      background_field
+      # background_field  # No longer used
+      related_field
+      indexed_terms_field
+      access_field
+    ]
+
+    # This is a CUL custom configuration (not part of vanilla Arclight)
+    config.show.default_collapsed_metadata_partials = %i[
       related_field
       indexed_terms_field
       access_field
@@ -243,22 +250,19 @@ class CatalogController < ApplicationController
     config.add_summary_field 'abstract', field: 'abstract_html_tesm', helper_method: :render_html_tags
     config.add_summary_field 'extent', field: 'extent_ssm'
     config.add_summary_field 'language', field: 'language_material_ssm'
-    config.add_summary_field 'prefercite', field: 'prefercite_html_tesm', helper_method: :render_html_tags
-
-    # Collection Show Page - Background Section
-    config.add_background_field 'scopecontent', field: 'scopecontent_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'bioghist', field: 'bioghist_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'acqinfo', field: 'acqinfo_ssim', helper_method: :render_html_tags
-    config.add_background_field 'appraisal', field: 'appraisal_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'custodhist', field: 'custodhist_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'processinfo', field: 'processinfo_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'arrangement', field: 'arrangement_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'accruals', field: 'accruals_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'phystech', field: 'phystech_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'physloc', field: 'physloc_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'descrules', field: 'descrules_ssm', helper_method: :render_html_tags
+    config.add_summary_field 'scopecontent', field: 'scopecontent_html_tesm', helper_method: :render_html_tags
+    config.add_summary_field 'bioghist', field: 'bioghist_html_tesm', helper_method: :render_html_tags
 
     # Collection Show Page - Related Section
+    config.add_related_field 'acqinfo', field: 'acqinfo_ssim', helper_method: :render_html_tags
+    config.add_related_field 'appraisal', field: 'appraisal_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'custodhist', field: 'custodhist_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'processinfo', field: 'processinfo_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'arrangement', field: 'arrangement_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'accruals', field: 'accruals_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'phystech', field: 'phystech_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'physloc', field: 'physloc_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'descrules', field: 'descrules_ssm', helper_method: :render_html_tags
     config.add_related_field 'relatedmaterial', field: 'relatedmaterial_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'separatedmaterial', field: 'separatedmaterial_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'otherfindaid', field: 'otherfindaid_html_tesm', helper_method: :render_html_tags

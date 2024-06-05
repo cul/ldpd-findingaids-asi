@@ -1,0 +1,26 @@
+<% collapse_by_default = helpers.blacklight_config.show.default_collapsed_metadata_partials.include?(@section) %>
+
+<%= tag.div id: t("arclight.views.show.sections.#{@section}").parameterize do %>
+  <div class="accordion accordion-flush" id="<%= "metadata-section-#{@section}" %>">
+    <div class="accordion-item mb-4">
+      <% if @heading %>
+        <h3 class="accordion-header al-show-sub-heading">
+          <% # TODO: Adjust font weight of text inside button to match font weight of 'ACCESS AND USE' section on show page %>
+          <button class="accordion-button al-show-sub-heading px-0 <%= collapse_by_default ? 'collapsed' : '' %>" aria-expanded="<%= collapse_by_default ? 'false' : 'true' %>" type="button" data-bs-toggle="collapse" data-bs-target="#<%= "collapse-#{@section}" %>" aria-controls="<%= "collapse-#{@section}" %>">
+            <%= t("arclight.views.show.sections.#{@section}", level: @presenter.document.level) %>
+          </button>
+        </h3>
+      <% end %>
+
+      <div id="<%= "collapse-#{@section}" %>" class="accordion-collapse collapse <%= collapse_by_default ? '' : 'show' %>">
+        <div class="accordion-body">
+          <%= tag.dl class: @classes do %>
+            <% @presenter.field_presenters.each do |field_presenter| %>
+              <%= render (field_presenter.component || Blacklight::MetadataFieldComponent).new(field: field_presenter, show: true, **@metadata_attr) %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
