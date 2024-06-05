@@ -1,7 +1,4 @@
 <% content_for(:content) do %>
-    <link rel="stylesheet" type="text/css" href="https://toolkit.library.columbia.edu/v3/css/cul-toolkit.css">
-<% end %>
-<% content_for(:content) do %>
   <% if content_for? :sidebar %>
     <section id="content" class="<%= main_content_classes %> order-last" aria-label="<%= t('blacklight.search.documents.aria.search_results') %>">
       <%= yield %>
