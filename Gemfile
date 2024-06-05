@@ -67,7 +67,7 @@ gem 'iso-639'
 gem 'nokogiri', '~> 1.15.2'
 gem 'loofah', '~> 2.19.1'
 
-gem 'arclight', '~> 1.1.2'
+gem 'arclight', '~> 1.1.4'
 
 gem "font-awesome-sass", "~> 6.4.0"
 fa_token = font_awesome_token
