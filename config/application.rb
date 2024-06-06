@@ -28,6 +28,6 @@ module LdpdFindingaidsAsi
         load override
       end
     end
-    Arclight::Engine.config.catalog_controller_group_query_params['group.limit'] = 4
+    Arclight::Engine.config.catalog_controller_group_query_params['group.limit'] = 3
   end
 end
