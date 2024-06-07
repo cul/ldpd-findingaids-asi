@@ -6,7 +6,7 @@
       <% if @heading %>
         <h3 class="accordion-header al-show-sub-heading">
           <% # TODO: Adjust font weight of text inside button to match font weight of 'ACCESS AND USE' section on show page %>
-          <button class="accordion-button al-show-sub-heading px-0 <%= collapse_by_default ? 'collapsed' : '' %>" aria-expanded="<%= collapse_by_default ? 'false' : 'true' %>" type="button" data-bs-toggle="collapse" data-bs-target="#<%= "collapse-#{@section}" %>" aria-controls="<%= "collapse-#{@section}" %>">
+          <button class="accordion-button al-show-sub-heading px-0 border <%= collapse_by_default ? 'collapsed' : '' %>" aria-expanded="<%= collapse_by_default ? 'false' : 'true' %>" type="button" data-bs-toggle="collapse" data-bs-target="#<%= "collapse-#{@section}" %>" aria-controls="<%= "collapse-#{@section}" %>">
             <%= t("arclight.views.show.sections.#{@section}", level: @presenter.document.level) %>
           </button>
         </h3>
