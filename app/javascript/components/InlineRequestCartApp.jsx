@@ -3,7 +3,9 @@ import RequestCart from './RequestCart';
 
 function InlineRequestCartApp() {
   return (
-    <RequestCart submissionMode="aeon" />
+    <div>
+      <RequestCart submissionMode="create" />
+    </div>
   );
 }
 

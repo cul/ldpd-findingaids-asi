@@ -34,4 +34,8 @@ class SolrDocument
   def requestable?
     repository_config&.request_types&.any? && self.containers.present?
   end
+
+  def aeon_request
+    @aeon_request ||= AeonLocalRequest.new(self)
+  end
 end

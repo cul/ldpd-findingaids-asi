@@ -1,8 +1,8 @@
-<% aeon_external_request ||= Arclight::Requests::AeonLocalRequest.new(@document, document_presenter(@document)) %>
+<% aeon_local_request ||= AeonLocalRequest.new(@document) %>
 <button
   class="btn btn-primary btn-sm add-to-cart-button"
   data-add-to-cart-text="Request"
-  data-remove-from-cart-text="Remove from cart"
+  data-remove-from-cart-text="Remove"
   data-id="<%= @document['id'] %>"
   data-collection-name="<%= @document['collection_ssim'].first %>"
   data-item-name="<%= @document['title_ssm'].first %>"

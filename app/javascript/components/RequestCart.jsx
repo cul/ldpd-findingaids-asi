@@ -9,24 +9,10 @@ const debouncedPersistRequestCartNote = debounce((note) => {
   window.updateCartNote(note);
 }, 250);
 
-const actionForSubmissionMode = (submissionMode, loginMethod) => {
-  const aeonShibDllUrl = document.getElementById('request-cart-widget').getAttribute('data-aeon-shib-dll-url');
-  const aeonNonShibDllUrl = document.getElementById('request-cart-widget').getAttribute('data-aeon-non-shib-dll-url');
+function RequestCart({ submissionMode, header }) {
+  const loginMethod = new URLSearchParams(window.location.search).get('login_method');
 
-  if (submissionMode === 'select_account') {
-    return '/aeon_request/select_account';
-  }
-
-  if (submissionMode === 'aeon') {
-    if (loginMethod === 'shib') { return aeonShibDllUrl; }
-    if (loginMethod === 'nonshib') { return aeonNonShibDllUrl; }
-    throw new Error(`Unknown loginMethod: ${loginMethod}`);
-  }
-
-  throw new Error(`Unknown submission mode: ${submissionMode}`);
-};
-
-function RequestCart({ header, submissionMode }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [items, setItems] = useState(RequestCartStorage.getItems());
   const [note, setNote] = useState(RequestCartStorage.getRequestCartNote());
   // const aeonBaseUrl = document.getElementById('request-cart-widget').getAttribute('data-aeon-base-url');
@@ -43,6 +29,14 @@ function RequestCart({ header, submissionMode }) {
     setNote(e.target.value);
   };
 
+  const renderHiddenCartItemFormValues = () => {
+    const elements = [];
+    items.forEach((item) => {
+      elements.push(<input key={item.id} type="hidden" name="ids[]" value={item.id} />);
+    });
+    return elements;
+  };
+
   useEffect(() => {
     RequestCartStorage.init();
     window.addEventListener('requestCartChange', handleRequestCartChangeEvent);
@@ -56,13 +50,6 @@ function RequestCart({ header, submissionMode }) {
     debouncedPersistRequestCartNote(note);
   }, [note]);
 
-  const renderHiddenFormElementsForAeonSubmission = () => {
-    console.log('Aeon form fields rendered.');
-    return (
-      <input type="hidden" name="Notes" value={note} />
-    );
-  };
-
   return (
     <div className="request-cart d-flex flex-column h-100">
       {header}
@@ -70,20 +57,20 @@ function RequestCart({ header, submissionMode }) {
         <Table responsive>
           <thead className="table-light">
             <tr>
-              <th className="ps-4">Collection Name</th>
-              <th>Item Name</th>
-              <th>Reading Room Location</th>
+              <th className="ps-4 align-middle">Collection Name</th>
+              <th className="align-middle">Item Name</th>
+              <th className="align-middle">Reading Room Location</th>
               <th className="pe-4"><span className="sr-only">Actions</span></th>
             </tr>
           </thead>
           <tbody>
             {
               items.length > 0 && items.map((item) => (
-                <tr key={item.id}>
+                <tr key={item.id} data-id={item.id}>
                   <td className="ps-4">{item.collectionName}</td>
                   <td>{item.itemName}</td>
                   <td>{item.readingRoomLocation}</td>
-                  <td className="pe-4 text-end">
+                  <td className="pe-4 text-end align-middle">
                     <Button size="sm" variant="secondary" onClick={() => { window.removeFromCart(item.id); }}>
                       Remove
                     </Button>
@@ -104,9 +91,7 @@ function RequestCart({ header, submissionMode }) {
           items.length > 0 && (
             <form
               method="POST"
-              action={
-                actionForSubmissionMode(submissionMode, new URLSearchParams(window.location.search).get('login_method'))
-              }
+              action={submissionMode === 'create' ? '/aeon_request/create' : '/aeon_request/select_account'}
               data-turbo="false"
             >
               <textarea
@@ -118,7 +103,14 @@ function RequestCart({ header, submissionMode }) {
                 onChange={handleNoteChange}
               />
               <input type="hidden" name={csrfTokenParamName} value={csrfTokenValue} />
-              {renderHiddenFormElementsForAeonSubmission()}
+              {
+                loginMethod && (
+                  <input type="hidden" name="login_method" value={loginMethod} />
+                )
+              }
+              {
+                renderHiddenCartItemFormValues()
+              }
               <Button
                 type="submit"
                 variant="primary"
@@ -127,13 +119,19 @@ function RequestCart({ header, submissionMode }) {
                   e.preventDefault();
                   window.updateCartNote(note);
                   e.target.closest('form').submit();
+                  setIsSubmitting(true);
                 }}
+                disabled={isSubmitting}
               >
-                Request
-                {' '}
-                {items.length}
-                {' '}
-                {items.length === 1 ? 'Item' : 'Items'}
+                {
+                  isSubmitting
+                    ? (
+                      'Submitting...'
+                    )
+                    : (
+                      `Request ${items.length} ${items.length === 1 ? 'Item' : 'Items'}`
+                    )
+                }
               </Button>
             </form>
           )
@@ -144,7 +142,7 @@ function RequestCart({ header, submissionMode }) {
 }
 
 RequestCart.propTypes = {
-  submissionMode: PropTypes.oneOf(['aeon', 'select_account']).isRequired,
+  submissionMode: PropTypes.oneOf(['select_account', 'create']).isRequired,
   header: PropTypes.element,
 };
 

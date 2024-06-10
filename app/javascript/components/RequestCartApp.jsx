@@ -35,6 +35,7 @@ function RequestCartApp() {
           <RequestCart
             submissionMode="select_account"
             header={<div className="mb-3">Add items from multiple pages and request them all at once.</div>}
+            onSubmit={() => { window.location.href = '/aeon_request/select_account'; }}
           />
         </Offcanvas.Body>
       </Offcanvas>

@@ -19,3 +19,7 @@
     resize: none !important;
   }
 }
+
+.add-to-cart-button {
+  width: 100px; // Set a fixed width so the button doesn't change size when the text inside changes
+}

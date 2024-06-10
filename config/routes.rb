@@ -42,6 +42,9 @@ Rails.application.routes.draw do
   end
 
   resource :aeon_request, only: [:create] do
+    post 'create'
+    get 'create' if Rails.env.development? # Allow GET requests to the select_account page for easier styling during development
+
     post 'redirectshib'
     get 'redirectshib' if Rails.env.development? # Allow GET requests for easier testing during development
     post 'redirectnonshib'
