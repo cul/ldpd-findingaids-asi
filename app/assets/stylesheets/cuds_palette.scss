@@ -14,7 +14,8 @@ $black:   #000000;
 
 // documentary semantic assigns and overrides for Bootstrap 5
 $primary:       $blue;
-$secondary:     #75787B; // CUDS Secondary: PMS Cool Gray 9C
+// Secondary was previously "PMS Cool Gray 9C" (#75787B), but changed to #707377 to fix contrast issue with white text
+$secondary:     #707377;
 $success:       $green;
 $info:          $cyan;
 $warning:       $yellow;
