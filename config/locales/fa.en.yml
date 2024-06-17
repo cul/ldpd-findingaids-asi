@@ -31,10 +31,34 @@
 
 en:
   fa:
-    rbml_advance_appointment:
-      "You will need to make an appointment in advance to use
-       this collection material in the Rare Book and Manuscript
-       Library reading room. You can schedule an appointment
-       once you've submitted your request through your Special
-       Collections Research Account."
+    advance_appointment:
+      nnc-rb:
+        class: "error"
+        msg:
+          "You will need to make an appointment in advance to use
+           this collection material in the Rare Book and Manuscript
+           Library reading room. You can schedule an appointment
+           once you've submitted your request through your Special
+           Collections Research Account."
+      nnc-ua:
+        class: "error"
+        msg:
+          "You will need to make an appointment in advance to use
+           this collection material in the Rare Book and Manuscript
+           Library reading room. You can schedule an appointment
+           once you've submitted your request through your Special
+           Collections Research Account."
+      nnc-ccoh:
+        class: "error"
+        msg:
+          "You will need to make an appointment in advance to use
+           this collection material in the Rare Book and Manuscript
+           Library reading room. You can schedule an appointment
+           once you've submitted your request through your Special
+           Collections Research Account."
+      nnc-a:
+        class: "error"
+        msg:
+          "Avery Drawings is currently closed to researchers and will
+          reopen for appointments in Fall 2024."
 
