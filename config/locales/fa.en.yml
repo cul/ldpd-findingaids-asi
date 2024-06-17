@@ -33,7 +33,7 @@ en:
   fa:
     advance_appointment:
       nnc-rb:
-        class: "error"
+        class: "warning-text"
         msg:
           "You will need to make an appointment in advance to use
            this collection material in the Rare Book and Manuscript
@@ -41,7 +41,7 @@ en:
            once you've submitted your request through your Special
            Collections Research Account."
       nnc-ua:
-        class: "error"
+        class: "warning-text"
         msg:
           "You will need to make an appointment in advance to use
            this collection material in the Rare Book and Manuscript
@@ -49,7 +49,7 @@ en:
            once you've submitted your request through your Special
            Collections Research Account."
       nnc-ccoh:
-        class: "error"
+        class: "warning-text"
         msg:
           "You will need to make an appointment in advance to use
            this collection material in the Rare Book and Manuscript
@@ -57,7 +57,7 @@ en:
            once you've submitted your request through your Special
            Collections Research Account."
       nnc-a:
-        class: "error"
+        class: ""
         msg:
           "Avery Drawings is currently closed to researchers and will
           reopen for appointments in Fall 2024."
