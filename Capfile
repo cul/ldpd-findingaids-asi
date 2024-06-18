@@ -11,6 +11,7 @@ install_plugin Capistrano::SCM::Git
 # additional modules
 require 'capistrano/rails'
 require 'capistrano/passenger'
+require 'capistrano/sitemap_generator'
 require 'capistrano/cul'
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
