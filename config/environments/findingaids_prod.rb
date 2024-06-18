@@ -91,4 +91,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  #set default host for sitemap generator
+  config.default_host = "https://findingaids.library.columbia.edu"
 end
