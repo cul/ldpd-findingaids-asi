@@ -20,9 +20,9 @@ gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
 # fcd1, 03/29/22: Rails 6 doesn't like '~> 1.3.13'. As ldpd-amesa does, spec to ~> 1.4
-gem 'sqlite3', '~> 1.4'
+gem 'sqlite3', '~> 1.6.7'
 # Use mysql2 as the database for CUL
-gem 'mysql2'
+gem 'mysql2', '0.5.6'
 
 # Use terser as compressor for JavaScript assets
 gem 'terser'
@@ -83,6 +83,7 @@ gem "devise"
 gem "devise-guests", "~> 0.8"
 gem "blacklight-locale_picker"
 gem "blacklight_range_limit"
+gem "sitemap_generator"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
