@@ -22,6 +22,9 @@ Rails.application.configure do
     "Cache-Control" => "public, max-age=#{1.hour.to_i}"
   }
 
+  #set default host for sitemap generator
+  config.default_host = 'http://localhost:3000'
+
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false

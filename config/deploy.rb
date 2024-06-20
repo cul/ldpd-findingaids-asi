@@ -55,6 +55,9 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/secrets.yml'
 )
 
+# Namespace crontab based on app environment.
+set :whenever_identifier, ->{ fetch(:deploy_name) }
+
 namespace :deploy do
   desc "Report the environment"
   task :report do
