@@ -14,8 +14,16 @@ en:
       range_html: '<span class="from" data-blrl-begin="%{begin_value}">%{begin}</span> to <span class="to" data-blrl-end="%{end_value}">%{end}</span>'
     search:
       facets:
+        title: 'Refine your search'
         missing: "[None Given]"
+        group:
+          open: Show filters
+          close: Hide filters
       zero_results:
         title: "No results found for your search"
         modify_search: "Try modifying your search"
         use_fewer_keywords: "Use fewer keywords or remove any filters that may have narrowed your search too much."
+      documents:
+        aria:
+          limit_search: 'refine your search'
+      
