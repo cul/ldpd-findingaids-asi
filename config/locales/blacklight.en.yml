@@ -15,3 +15,7 @@ en:
     search:
       facets:
         missing: "[None Given]"
+      zero_results:
+        title: "No results found for your search"
+        modify_search: "Try modifying your search"
+        use_fewer_keywords: "Use fewer keywords or remove any filters that may have narrowed your search too much."
