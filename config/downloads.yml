@@ -19,7 +19,7 @@ sample_unitid:
     # size_accessor: 'level'
 # these template URLs are handled in the application server, not rails
 default:
-  ead:
-    template: '/ead/%{id}.xml'
   pdf:
     template: '/pdf/%{id}.pdf'
+  ead:
+    template: '/ead/%{id}.xml'
