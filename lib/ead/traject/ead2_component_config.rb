@@ -62,3 +62,10 @@ to_field 'language_ssim', extract_xpath('./did/langmaterial/language')
 to_field 'collection_sort' do |_rec, accumulator, _context|
   accumulator.concat((settings[:root].output_hash['normalized_title_ssm'] || []).slice(0,1))
 end
+
+# Get the <accessrestrict> from the closest ancestor that has one (includes top-level)
+to_field 'parent_access_restrict_tesm' do |record, accumulator|
+  accumulator.concat Array
+    .wrap(record.xpath('(./ancestor::*/accessrestrict)[position() < last()]/*[local-name()!="head"]')
+    .map(&:text))
+end
