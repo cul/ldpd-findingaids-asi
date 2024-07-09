@@ -81,7 +81,7 @@ class CatalogController < ApplicationController
     # solr field configuration for document/show views
     # config.show.title_field = 'title_display'
     config.show.document_component = Acfa::Arclight::DocumentComponent
-    config.show.sidebar_component = Arclight::SidebarComponent
+    config.show.sidebar_component = Acfa::SidebarComponent
     config.show.breadcrumb_component = Arclight::BreadcrumbsHierarchyComponent
     config.show.embed_component = Arclight::EmbedComponent
     config.show.access_component = Arclight::AccessComponent
@@ -207,6 +207,12 @@ class CatalogController < ApplicationController
       field.include_in_simple_select = true
     end
 
+    config.add_search_field 'within_collection' do |field|
+      field.include_in_simple_select = false
+      field.solr_parameters = {
+        fq: '-level_ssim:Collection'
+      }
+    end
 
     # These are the parameters passed through in search_state.params_for_search
     config.search_state_fields += %i[id group hierarchy_context original_document paginate]
