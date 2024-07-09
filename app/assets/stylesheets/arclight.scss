@@ -121,3 +121,7 @@ article.document {
 .blacklight-catalog-index #appliedParams {
   margin-bottom: ($spacer * 3) !important;
 }
+
+body.blacklight-repositories-index #hero .jumbotron {
+  height: 36vh;
+}
