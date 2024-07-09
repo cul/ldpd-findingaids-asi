@@ -11,7 +11,7 @@ module Acfa
     end
 
     def params_for_search
-      use_params = @params.merge(f: (@params[:f] || {}).except(:collection)).except(:repository_id)
+      use_params = @params.merge(f: (@params[:f] || {})).except(:repository_id)
       if @params[:repository_id]
         use_params[:repository] ||= @params[:repository_id]
       end

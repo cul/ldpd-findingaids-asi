@@ -207,12 +207,6 @@ class CatalogController < ApplicationController
       field.include_in_simple_select = true
     end
 
-    config.add_search_field 'within_collection' do |field|
-      field.include_in_simple_select = false
-      field.solr_parameters = {
-        fq: '-level_ssim:Collection'
-      }
-    end
 
     # These are the parameters passed through in search_state.params_for_search
     config.search_state_fields += %i[id group hierarchy_context original_document paginate]
