@@ -82,7 +82,7 @@ class CatalogController < ApplicationController
     # config.show.title_field = 'title_display'
     config.show.document_component = Acfa::Arclight::DocumentComponent
     config.show.sidebar_component = Acfa::SidebarComponent
-    config.show.breadcrumb_component = Arclight::BreadcrumbsHierarchyComponent
+    config.show.breadcrumb_component = Acfa::Arclight::BreadcrumbsHierarchyComponent
     config.show.embed_component = Arclight::EmbedComponent
     config.show.access_component = Arclight::AccessComponent
     config.show.online_status_component = Arclight::OnlineStatusIndicatorComponent
