@@ -1,9 +1,9 @@
 <li class='breadcrumb-item'>
-  <span class="ml-3 ms-3" aria-hidden="true">
+  <span class="ms-3" aria-hidden="true">
     <%= blacklight_icon(:repository, classes: 'al-repository-content-icon') %>
   </span>
-  <% if @document['repository_id_ssi'] %>
-    <%= link_to(@document.repository, helpers.repository_entry_url(@document['repository_id_ssi'])) %>
+  <% if repository_path %>
+    <%= link_to(@document.repository, helpers.repository_entry_url(repository_path)) %>
   <% else %>
     <%= @document.repository %>
   <% end %>

@@ -7,5 +7,7 @@ module Acfa::Arclight
       offset = grouped? ? 2 : 0
       Acfa::Arclight::BreadcrumbComponent.new(document: document, offset: offset)
     end
+    
+    
   end
 end

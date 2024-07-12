@@ -29,10 +29,12 @@ crumb :repositories do
 end
 
 crumb :repository do |repository|
-  link repository.name, arclight_engine.repository_path(repository.slug)
+  link repository.name, link_to(repository_entry_url(repository.slug)
 
   parent :repositories
 end
+
+
 
 crumb :search_results do |search_state|
   if search_state.filter('level').values == ['Collection']
