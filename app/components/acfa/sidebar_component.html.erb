@@ -4,10 +4,12 @@
   <%= collection_sidebar %>
   <div id="collection-context" class="sidebar-section">
     <h2><%= t('arclight.views.show.has_content') %></h2>
-    <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass-location"></i></span>
-      <input id="search_within_collection" type="text" class="form-control" placeholder="Search within collection" aria-label="Search within collection">
-    </div>
+    <form class="input-group mb-3" action="<%= helpers.search_action_url %>">
+    <input type="hidden" id="within_collection" name="f[collection][]" value="<%= collection_name %>">
+    <input type="hidden" name="repository" value="<%= repository_id %>">
+      <%= render(Blacklight::SearchButtonComponent.new(id: "collection_search", text: 'submit')) %>
+      <input id="search_within_collection" name="q" type="text" class="form-control" placeholder="Search within collection" aria-label="Search within collection">
+    </form>
     <%= turbo_frame_tag "al-hierarchy-#{document.root}", loading: 'lazy', src: hierarchy_solr_document_path(id: document.root, nest_path: @document.nest_path, hierarchy: true) %>
   </div>
 </div>
