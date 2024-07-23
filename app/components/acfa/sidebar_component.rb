@@ -15,7 +15,7 @@ module Acfa
     def render_search_bar
       sb = Acfa::SearchBarComponent.new(url: helpers.search_action_url, params: {repository_id: repository_id, f: {collection: [collection_name]}})
       sb.with_search_button do
-        '<button class="btn btn-primary search-btn" type="submit" id="search"><span class="visually-hidden-sm me-sm-1 submit-search-text">Search</span><i class="fa-solid fa-folder-magnifying-glass"></i></button>'.html_safe
+        '<button class="btn btn-primary search-btn align-items-center" type="submit" id="search"><span class="visually-hidden-sm me-sm-1 submit-search-text">Search</span><i class="fa-solid fa-lg fa-folder-magnifying-glass"></i></button>'.html_safe
       end
       render sb
     end
