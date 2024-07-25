@@ -112,4 +112,4 @@ function initMirador() {
   );
 }
 
-document.addEventListener('DOMContentLoaded', initMirador);
+document.addEventListener('turbo:load', initMirador);
