@@ -1,0 +1,39 @@
+<div class="container">
+  <% if(@documents.length > 0) %>
+    <h2>Submission in progress</h1>
+    <p>
+      Submitting your request...
+      <i class="fa fa-spinner fa-pulse"></i>
+    </p>
+    <%= form_tag(@aeon_dll_url, id:'aeon-submission-form', data: { turbo: false }) do %>
+      <%
+        #################
+        # Global fields #
+        #################
+      %>
+      <input type='hidden' name='AeonForm' value='EADRequest'>
+      <input type='hidden' name='SubmitButton' value='Submit Request'>
+      <input type="hidden" name="Notes" value="<%= @notes %>">
+      <%= hidden_field_tag('ItemInfo3', 'UNPROCESSED') if @unprocessed %>
+      <input type="hidden" name="UserReview" value="<%= @user_review_value %>">
+      <input type="hidden" name="ScheduledDate" value="<%= @scheduled_date %>">
+
+      <%
+        ######################
+        # Per-request fields #
+        ######################
+        @documents.each_with_index do |solr_document, index|
+          %>
+            <%= hidden_field_tag :Request, "request_#{index}", id: nil %>
+            <% solr_document.aeon_request.form_attributes.each do |name, value| %>
+              <%= hidden_field_tag "#{name}_#{index}", value %>
+            <% end %>
+          <%
+        end
+      %>
+    <% end %>
+  <% else %>
+    <h2>Your cart is empty</h2>
+    <p>Perform a new search to find new items to add to your cart, or <%= link_to('return to the home page', root_path) %>.</p>
+  <% end %>
+</div>

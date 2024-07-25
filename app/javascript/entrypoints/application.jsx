@@ -11,8 +11,8 @@ import '@hotwired/turbo-rails';
 import 'bootstrap';
 import '@github/auto-complete-element';
 import 'blacklight-frontend';
-import RequestCart from '../components/RequestCart';
 import '../autocomplete-setup';
+import '../request-cart-setup';
 
 // To see this message, add the following to the `<head>` section in your
 // views/layouts/application.html.erb
@@ -113,3 +113,4 @@ function initMirador() {
 }
 
 document.addEventListener('turbo:load', initMirador);
+

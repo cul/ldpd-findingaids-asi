@@ -7,6 +7,7 @@
     <%= render partial: 'web_analytics' if CONFIG[:web_analytics] %>
     <title><%= [@finding_aid_title, @repository_name, 'Columbia University Libraries Finding Aids'].reject(&:blank?).join(' | ') %></title>
     <%= csp_meta_tag %>
+    <%= csrf_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= vite_client_tag %>
@@ -14,7 +15,7 @@
     <link rel="stylesheet" href="https://vjs.zencdn.net/7.11.4/video-js.css"/>
   </head>
 
-  <body>
+  <body class="<%= render_body_class %>">
     <%= render Acfa::HeaderComponent.new(blacklight_config: controller.blacklight_config) unless @print_view %>
     <%= yield %>
     <%= render 'shared/footer' %>
