@@ -14,19 +14,21 @@
       <input type='hidden' name='AeonForm' value='EADRequest'>
       <input type='hidden' name='SubmitButton' value='Submit Request'>
       <input type="hidden" name="Notes" value="<%= @notes %>">
-      <%= hidden_field_tag('ItemInfo3', 'UNPROCESSED') if @unprocessed %>
-      <input type="hidden" name="UserReview" value="<%= @user_review_value %>">
-      <input type="hidden" name="ScheduledDate" value="<%= @scheduled_date %>">
+      <% # Note: User takes care of scheduling in the Aeon app (see: ACFA-99), so ScheduledDate is not needed. %>
+      <% # TODO: Remove the line below after confirming that Aeon submissions go through successfully without ScheduledDate %>
+      <% # <input type="hidden" name="ScheduledDate" value=""> %>
+      <input type="hidden" name="GroupingIdentifier" value="GroupingField">
 
       <%
         ######################
         # Per-request fields #
         ######################
         @documents.each_with_index do |solr_document, index|
+          request_identifier = "r#{index}"
           %>
-            <%= hidden_field_tag :Request, "request_#{index}", id: nil %>
+            <%= hidden_field_tag :Request, request_identifier, id: nil %>
             <% solr_document.aeon_request.form_attributes.each do |name, value| %>
-              <%= hidden_field_tag "#{name}_#{index}", value %>
+              <%= hidden_field_tag "#{name}_#{request_identifier}", value %>
             <% end %>
           <%
         end

@@ -43,20 +43,14 @@ Rails.application.routes.draw do
 
   resource :aeon_request, only: [:create] do
     post 'create'
-    get 'create'# if Rails.env.development? # Allow GET requests to the select_account page for easier styling during development
+    get 'create' if Rails.env.development? # Allow GET requests to the select_account page for easier styling during development
 
-    post 'redirectshib'
-    get 'redirectshib'# if Rails.env.development? # Allow GET requests for easier testing during development
-    post 'redirectnonshib'
-    get 'redirectnonshib'# if Rails.env.development? # Allow GET requests for easier testing during development
-    post 'select_account'
-    get 'select_account'# if Rails.env.development? # Allow GET requests to the select_account page for easier styling during development
-    post 'checkout'
-    # Allow GET requests to the checkout page for easier styling during development
-    # NOTE: Form submission will fail if you have not previously set an Aeon cookie
-    get 'checkout'# if Rails.env.development?
-    # get 'redirectshib'
-    # get 'redirectnonshib'
+    get 'redirectshib'
+    get 'redirectnonshib'
+    get 'select_account'
+    get 'checkout'
+
+    get 'test_submission' if Rails.env.development?
   end
 
   root 'repositories#index'

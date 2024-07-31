@@ -8,40 +8,75 @@ class AeonLocalRequest
     @solr_document = solr_document
   end
 
-  def config
-    @config ||= @solr_document.repository_config.request_config_for_type('aeon_local_request')
+  def repository_config
+    @repository_config ||= @solr_document.repository_config
+  end
+
+  def repository_local_request_config
+    @config ||= self.repository_config.request_config_for_type('aeon_local_request')
   end
 
   def unprocessed?
     @solr_document['parent_access_restrict_tesm'].find { |value| value.downcase.include?('unprocessed') } != nil
   end
 
-  def form_attributes
-    # I'm not sure that we want to parse EAD XML every time we generate this, but it might be
-    # the only way to get all of the fields of information that we need right now.
-    # TODO: Look into indexing additional fields, if needed.
-    bib_id = @solr_document['id'].delete_prefix('ldpd_').to_i
+  def grouping_field(container_names)
+    if container_names.length > 1 && container_names.first.downcase.include?('mapcase')
+      # This is a mapcase and we should group one level below it
+      container_names[1]
+    else
+      # Otherwise we'll just use the top level container as the grouping field
+      container_names[0]
+    end
+  end
 
+  def reference_number
+    # NOTE: Barnard items won't have a bibid, so we might need to update this later
+    match_data = @solr_document['id'].match(/ldpd_(.+)_aspace.*/);
+    match_data.nil? ? nil : match_data[0]
+  end
+
+  def form_attributes
     # series_num, component_title, container_info_string, container_info_barcode =
     #   container_info.split(CONFIG[:container_info_delimiter])
+
+
+
+    puts repository_config.inspect
+    puts repository_local_request_config.inspect
+
     form_fields = {}
-    form_fields['Site'] = self.config['site_code']
-    form_fields['ItemTitle'] = @solr_document['normalized_title_ssm']&.first
-    form_fields['ItemAuthor'] = @solr_document['creator_ssim']&.first # Is this correct?
-    form_fields['ItemDate'] = @solr_document['normalized_date_ssm']&.first # Is this correct?
-    form_fields['ItemDate'] = @solr_document['normalized_date_ssm']&.first # Is this correct?
-    form_fields['ReferenceNumber'] = bib_id
+    form_fields['GroupingField'] = grouping_field(@solr_document.containers)
+    form_fields['Site'] = self.repository_local_request_config['site_code']
+    # NOTE: We might need to truncate this field later on if values are too long
+    form_fields['ItemTitle'] = @solr_document['title_ssm']&.first
+    # NOTE: Some documents may not have a creator because they're meant to inherit creator from a parent container document.
+    # NOTE: This might mean that in the future we'll want to extract the parent (or grandparent) container creator at index time.
+    form_fields['ItemAuthor'] = @solr_document['creator_ssim']&.first
+    form_fields['ItemDate'] = @solr_document['normalized_date_ssm']&.first
+    form_fields['ReferenceNumber'] = reference_number
     form_fields['DocumentType'] = 'All'
-    form_fields['ItemInfo1'] = 'Archival Materials'
-    form_fields['ItemInfo1'] = 'UNPROCESSED' if self.unprocessed?
+    form_fields['ItemInfo1'] = 'Archival Materials' # Format/Genre in Aeon
+    form_fields['ItemInfo3'] = 'UNPROCESSED' if self.unprocessed?
+    # The UserReview field controls whether or not the request is directly submitted for processing
+    # or is instead saved in a user’s Aeon account for submittal at a future date.
+    form_fields['UserReview'] = repository_local_request_config.fetch('user_review', false)
+
+    # The container_info_string is already in solr, and is an array that we can break apart for some of fields below
+
+    # form_fields['ItemVolume'] = container_info_string, # Box number, in solr already, TODO: Check field name
+
+    # This is the barcode -- where does this come from in solr? (maybe we need to index it?)
+    # form_fields['ItemNumber'] = container_info_barcode, if container_info_barcode
+
+    # form_fields['ItemSubTitle']  component_title.prepend(@series_titles[series_num]),
+    # form_fields['CallNumber'] = @call_number, # We can extract call number from EAD and add to solr (note: this is NOT the bib id)
+    # This is different from the site code, and generally formatted as full library name liek "Rare Book and Manuscript Library"  As an example, these are formatted like "gax" (for graphic arts).
+
+    # Probably look at repository.name (example: "C.V. Starr East Asian Library")
+    # form_fields['Location'] = @location
 
     form_fields
-
-    # 'ItemVolume' => container_info_string,
-    # 'ItemNumber' => container_info_barcode, if container_info_barcode
-    # 'ItemSubTitle' => component_title.prepend(@series_titles[series_num]),
-    # 'CallNumber' => @call_number,
-    # 'Location' => @location,
 
     # <%= hidden_field_tag :Site, @aeon_site_code %>
     # <% @selected_containers.each_with_index do |container_info, index| %>

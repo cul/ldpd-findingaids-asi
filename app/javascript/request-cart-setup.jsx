@@ -31,8 +31,7 @@ window.clearCart = () => {
 };
 
 // Handle cart button clicks
-function onAddToCartButtonClick(e) {
-  const buttonElement = e.currentTarget;
+window.handleAddToCartButtonClick = (buttonElement) => {
   const id = buttonElement.getAttribute('data-id');
   if (RequestCartStorage.containsItem(id)) {
     window.removeFromCart(id);
@@ -44,6 +43,22 @@ function onAddToCartButtonClick(e) {
       readingRoomLocation: buttonElement.getAttribute('data-reading-room-location'),
     });
   }
+};
+
+function refreshAddToCartButtons() {
+  document.querySelectorAll('.add-to-cart-button')?.forEach((buttonElement) => {
+    const id = buttonElement.getAttribute('data-id');
+    const buttonTextElement = buttonElement.querySelector('.button-text');
+    if (RequestCartStorage.containsItem(id)) {
+      buttonTextElement.innerHTML = buttonElement.getAttribute('data-remove-from-cart-text');
+      buttonElement.classList.remove('btn-primary');
+      buttonElement.classList.add('btn-outline-primary');
+    } else {
+      buttonTextElement.innerHTML = buttonElement.getAttribute('data-add-to-cart-text');
+      buttonElement.classList.remove('btn-outline-primary');
+      buttonElement.classList.add('btn-primary');
+    }
+  });
 }
 
 // Handle cart change events
@@ -55,14 +70,7 @@ function onRequestCartChange(e) {
     el.innerHTML = items.length;
   });
   // Update the state of any add-to-cart buttons on the page
-  document.querySelectorAll('.add-to-cart-button')?.forEach((el) => {
-    const id = el.getAttribute('data-id');
-    const buttonTextElement = el.querySelector('.button-text');
-    // eslint-disable-next-line no-param-reassign
-    buttonTextElement.innerHTML = RequestCartStorage.containsItem(id)
-      ? el.getAttribute('data-remove-from-cart-text')
-      : el.getAttribute('data-add-to-cart-text');
-  });
+  refreshAddToCartButtons();
 }
 
 // Setup and cleanup
@@ -81,20 +89,20 @@ function setup() {
     if (!inlineCartReactRoot) { inlineCartReactRoot = createRoot(inlineCartContainerElement); }
     inlineCartReactRoot.render(<InlineRequestCartApp />);
   }
-  document.getElementById('show-cart-button')?.addEventListener('click', window.showCart);
-  document.querySelectorAll('.add-to-cart-button').forEach((el) => {
-    el.addEventListener('click', onAddToCartButtonClick);
-  });
   window.addEventListener('requestCartChange', onRequestCartChange);
+
+  document.querySelectorAll('.show-cart-button').forEach((el) => {
+    el.addEventListener('click', window.showCart);
+  });
 
   // On submission form page
   if (document.getElementById('aeon-submission-form')) {
-    // Clear cart
-    window.clearCart();
-    // And submit the form shortly after
-    setTimeout(() => {
-      document.getElementById('aeon-submission-form').submit();
-    }, 500);
+    // // Clear cart
+    // window.clearCart();
+    // // And submit the form shortly after
+    // setTimeout(() => {
+    //   document.getElementById('aeon-submission-form').submit();
+    // }, 500);
   }
 }
 
@@ -107,14 +115,24 @@ function cleanup() {
     inlineCartReactRoot.unmount();
     inlineCartReactRoot = null;
   }
-  document.getElementById('show-cart-button')?.removeEventListener('click', window.showCart);
-  document.querySelectorAll('.add-to-cart-button').forEach((el) => {
-    el.removeEventListener('click', onAddToCartButtonClick);
-  });
   window.removeEventListener('requestCartChange', onRequestCartChange);
+
+  document.querySelectorAll('.show-cart-button').forEach((el) => {
+    el.removeEventListener('click', window.showCart);
+  });
 }
 
 // Set up cart functionality after a turbo:load event.
 document.addEventListener('turbo:load', setup);
 // Clean up cart functionality before a turbo:before-render event.
 document.addEventListener('turbo:before-render', cleanup);
+
+// The handler below is for making sure that we refresh
+document.addEventListener('turbo:frame-load', (e) => {
+  const turboFrameElement = e.target;
+  // If a frame is loaded and it contains an .add-to-cart-button element,
+  // refresh the state of all .add-to-cart-button elements on the page.
+  if (turboFrameElement.querySelector('.add-to-cart-button')) {
+    refreshAddToCartButtons();
+  }
+});
