@@ -67,7 +67,6 @@ end
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['parent_access_restrict_tesm'].include?(index_step.field_name) }
 to_field 'parent_access_restrict_tesm' do |record, accumulator|
   accumulator.concat Array
-    # .wrap(record.xpath('(./ancestor::*/accessrestrict)[position() < last()]/*[local-name()!="head"]')
     .wrap(record.xpath('(./ancestor::*[accessrestrict])[last()]/accessrestrict/*[local-name()!="head"]')
     .map(&:text))
 end
