@@ -1,22 +1,23 @@
 <header id="header">
-  <nav class="navbar d-block navbar-expand-sm navbar-light bg-white">
-    <div class="d-flex flex-row justify-content-between">
-        <div class="">
-            <button class="navbar-toggler mt-2 border-0" type="button" data-toggle="collapse" data-target="#navbarCUL" aria-controls="navbarCUL" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fal fa-bars"></i>
-            </button>
-        </div>
-        <div class="">
-            <a class="navbar-brand w-100 d-sm-none" href="/">Archival Collections</a>
-        </div>
-        <div class="">
-            <a class="navbar-text d-sm-none" title="Ask A Librarian" href="https://library.columbia.edu/services/askalibrarian.html">
-                <i class="fal fa-comments-alt w-30"></i>
-            </a>
-        </div>
+  <nav class="navbar d-block navbar-expand-md navbar-light bg-white">
+    <div class="d-flex flex-row justify-content-between align-items-center">
+      <div>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCUL" aria-controls="navbarCUL" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fal fa-bars"></i>
+        </button>
+      </div>
+      <div class="align-self-center">
+        <a class="navbar-brand w-100 d-md-none site-heading" href="/">Archival Collections</a>
+      </div>
+      <div class="d-md-none d-flex align-items-center">
+        <button class="show-cart-button text-primary nav-link btn btn-link btn-sm px-1">
+          (<span class="request-cart-item-count">0</span>)
+          <i class="fa fa-cart-shopping"></i>
+        </button>
+      </div>
     </div>
     <div class="container d-flex">
-      <div class="collapse navbar-collapse" id="navbarCUL">
+      <div class="collapse navbar-collapse pt-2" id="navbarCUL">
           <%= masthead %>
       </div>
     </div>

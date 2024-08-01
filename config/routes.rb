@@ -42,10 +42,17 @@ Rails.application.routes.draw do
   end
 
   resource :aeon_request, only: [:create] do
-    post 'login'
+    post 'create'
+    get 'create' if Rails.env.development? # Allow GET requests to the select_account page for easier styling during development
+
     get 'redirectshib'
     get 'redirectnonshib'
+    get 'select_account'
+    get 'checkout'
+
+    get 'test_submission' if Rails.env.development?
   end
+
   root 'repositories#index'
   namespace :api do
       namespace :v1, defaults: { format: :json } do

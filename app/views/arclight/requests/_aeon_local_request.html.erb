@@ -1,26 +1,6 @@
-<% # For now, while this feature is in development, just return a simple button. %>
-<% return button_to 'Local Request', {}, onClick: 'showCart(); return false;' %>
-
-<% document ||= @document %>
-<% aeon_external_request ||= Arclight::Requests::AeonLocalRequest.new(document, document_presenter(document)) %>
-
-<%# content_for :head do %>
-  <%#= javascript_include_tag 'aeonform' %>
-<%# end %>
-
-<%= form_tag aeon_external_request.url,
-             name: "EADRequest",
-             id: "EADRequestFormId",
-             method: :post,
-             target: '_blank',
-             class: 'al-request-form' do %>
-  <span id="aeon_fixed_fields">
-    <% aeon_external_request.form_mapping.each do |mapping| %>
-        <input type="hidden" name="<%= mapping[0]%>" value="<%= mapping[1] %>">
-    <% end %>
-    <input type="hidden" name="OriginatingUrl" value="<%= request.url %>">
-  </span>
-<% end %>
-  <button type='submit' class='btn btn-primary btn-sm' onclick="SubmitAeonRequestForm()">Request</button>
-  <button class='btn btn-secondary btn-sm' onclick="ClearAllCheckboxes()">Clear</button>
-  <span id="selected-items-count" aria-live="polite" class="badge badge-secondary"></span>
+<%
+  # NOTE: This partial only renders if @document.requestable? returns true,
+  # so there's no need to conditionally render the button. We can always
+  # render it here.
+%>
+<%= render Acfa::RequestButtonComponent.new(@document) %>

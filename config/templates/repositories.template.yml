@@ -1,7 +1,18 @@
 base: &BASE
   nnc:
-    # requestable_via_aeon is set to true to enable aeon requests for a repo
-    requestable_via_aeon: false
+    # Add a request type to display a request button
+    request_types:
+      # Display the aeon request button, which will allow the user to add an item to their cart
+      aeon_local_request:
+        # The Aeon site code that identifies this repository.  This value is
+        # supplied to the Aeon 'Site' field during an Aeon submission.
+        site_code: PLACEHOLDERSITECODE
+        # When user_review is set to true, this will result in an Aeon submission with a
+        # UserReview parameter value of "Yes".  This will cause the submision to be routed to
+        # the Aeon "Awaiting User Review" queue, and the user will need to approve it in the
+        # Aeon UI before it moves to any other queue.  If this value is set to false,
+        # this will result in an Aeon submission with a UserReview parameter value of "No".
+        user_review: true
     # in the original implementation for RBML, a checkbox was created only at
     # the container level. So if a few consecutive items were in the same
     # container (for example, Box 1), there was only one checkbox for the
@@ -10,12 +21,6 @@ base: &BASE
     # requestable_via_aeon is set to true to make each item selectable
     # individually, which was a feature requested by Avery.
     checkbox_per_unittitle: false
-    # aeon_user_review_set_to_yes is set to true if the UserReview parameter
-    # value sent to aeon should be 'yes'. If aeon_user_review_set_to_yes is set
-    # to false, the value sent to aeon will be 'no'
-    aeon_user_review_set_to_yes: false
-    # aeon_site_code is used by the aeon server to identify the repo
-    aeon_site_code: DONOTUSE
     # as_repo_id indicates the ID used to identify the repo on the archivespace
     # server. Note that some repos share the same ID
     as_repo_id: '-1'
@@ -23,7 +28,7 @@ base: &BASE
     # url is the desired url to be used for the library link at the top of a
     # finding aids page
     url: https://library.columbia.edu
-    # has_fa_list indicates whether or not a repo has an entry in the 
+    # has_fa_list indicates whether or not a repo has an entry in the
     # home/main/landingpage for the findingaids app
     has_fa_list: false
     contact:
@@ -59,10 +64,11 @@ base: &BASE
     thumbnail_url: "https://library.columbia.edu/content/dam/locations/butler.jpg"
     icon: "light fa-landmark-flag"
   nnc-a:
-    requestable_via_aeon: true
+    request_types:
+      aeon_local_request:
+        site_code: AVERYDACUL
+        user_review: true
     checkbox_per_unittitle: true
-    aeon_user_review_set_to_yes: false
-    aeon_site_code: AVERYDACUL
     as_repo_id: 3
     name: 'Avery Drawings & Archives Collections'
     url: https://findingaids.library.columbia.edu/ead/nnc-a
@@ -86,9 +92,11 @@ base: &BASE
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_avery.png"
     icon: "light fa-compass-drafting"
   nnc-ccoh:
-    requestable_via_aeon: true
+    request_types:
+      aeon_local_request:
+        site_code: RBMLCUL
+        user_review: true
     checkbox_per_unittitle: false
-    aeon_site_code: RBMLCUL
     as_repo_id: 2
     name: Oral History Archives at Columbia
     url: https://findingaids.library.columbia.edu/ead/nnc-ccoh
@@ -114,9 +122,11 @@ base: &BASE
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_ccoh.png"
     icon: 'light fa-microphone-lines'
   nnc-ea:
-    requestable_via_aeon: true
+    request_types:
+      aeon_local_request:
+        site_code: STARRCUL
+        user_review: true
     checkbox_per_unittitle: false
-    aeon_site_code: STARRCUL
     as_repo_id: 4
     name: C.V. Starr East Asian Library
     url: https://findingaids.library.columbia.edu/ead/nnc-ea
@@ -140,9 +150,11 @@ base: &BASE
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_eastasian.png"
     icon: 'light fa-earth-asia'
   nnc-rb:
-    requestable_via_aeon: true
+    request_types:
+      aeon_local_request:
+        site_code: RBMLCUL
+        user_review: true
     checkbox_per_unittitle: false
-    aeon_site_code: RBMLCUL
     as_repo_id: 2
     name: Rare Book & Manuscript Library
     url: https://findingaids.library.columbia.edu/ead/nnc-rb
@@ -166,9 +178,11 @@ base: &BASE
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_rbml.png"
     icon: 'light fa-book-sparkles'
   nnc-ua:
-    requestable_via_aeon: true
+    request_types:
+      aeon_local_request:
+        site_code: RBMLCUL
+        user_review: true
     checkbox_per_unittitle: false
-    aeon_site_code: RBMLCUL
     as_repo_id: 2
     name: Columbia University Archives
     url: https://findingaids.library.columbia.edu/ead/nnc-ua
@@ -194,9 +208,11 @@ base: &BASE
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_cuarchives.png"
     icon: "light fa-box-archive"
   nnc-ut:
-    requestable_via_aeon: true
+    request_types:
+      aeon_local_request:
+        site_code: BURKECUL
+        user_review: true
     checkbox_per_unittitle: false
-    aeon_site_code: BURKECUL
     as_repo_id: 5
     name: Burke Library at Union Theological Seminary
     url: https://findingaids.library.columbia.edu/ead/nnc-ut
@@ -220,7 +236,6 @@ base: &BASE
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_burke.png"
     icon: light fa-scroll-old
   nnc-m:
-    requestable_via_aeon: false
     as_repo_id: clio_only
     name: Health Sciences Library
     url: https://www.library-archives.cumc.columbia.edu/finding-aids
@@ -246,7 +261,6 @@ base: &BASE
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_burke.png"
     icon: 'light fa-stethoscope'
   nynycoh:
-    requestable_via_aeon: false
     as_repo_id: clio_only
     name: Oral History Archives at Columbia
     url: https://library.columbia.edu/locations/ccoh.html
@@ -268,12 +282,10 @@ base: &BASE
         building: 6th Floor East Butler Library
         address: ['535 West 114th Street']
         city_state_zip_country: New York, NY 10027, USA
-        city_state_zip_country: New York, NY 10027, USA
     description: "OHAC is a wonderful repository"
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_ccoh.png"
     icon: 'light fa-microphone-lines'
   nynybaw:
-    requestable_via_aeon: false
     as_repo_id: clio_only
     name: Barnard Archives & Special Collections
     url: https://archives.barnard.edu/

@@ -78,6 +78,9 @@ class CatalogController < ApplicationController
     config.index.search_bar_component = Acfa::SearchBarComponent
     # config.index.thumbnail_field = 'thumbnail_path_ss'
 
+    # The line below to enables the request button for lists of containers.
+    config.index.document_actions << :request_action
+
     # solr field configuration for document/show views
     # config.show.title_field = 'title_display'
     config.show.document_component = Acfa::Arclight::DocumentComponent

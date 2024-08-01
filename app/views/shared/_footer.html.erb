@@ -1,2 +1,7 @@
 <%= render Cul::FooterComponent.new(repository: Arclight::Repository.find_by(slug: @repository&.id || 'nnc')) %>
-<div id="cart-widget"></div>
+<div
+  id="request-cart-widget"
+  data-aeon-base-url="<%= AEON[:aeon_url] %>"
+  data-aeon-shib-dll-url="<%= AEON[:shib_dll_url] %>"
+  data-aeon-non-shib-dll-url="<%= AEON[:non_shib_dll_url] %>"
+></div>
