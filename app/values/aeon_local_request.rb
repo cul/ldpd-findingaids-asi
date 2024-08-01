@@ -45,8 +45,11 @@ class AeonLocalRequest
     puts repository_config.inspect
     puts repository_local_request_config.inspect
 
+    # temp_box_name_field = 'Box 2' # for testing
+
     form_fields = {}
     form_fields['GroupingField'] = grouping_field(@solr_document.containers)
+    # form_fields['GroupingField'] = self.repository_local_request_config['site_code']  # for testing
     form_fields['Site'] = self.repository_local_request_config['site_code']
     # NOTE: We might need to truncate this field later on if values are too long
     form_fields['ItemTitle'] = @solr_document['title_ssm']&.first
@@ -54,25 +57,30 @@ class AeonLocalRequest
     # NOTE: This might mean that in the future we'll want to extract the parent (or grandparent) container creator at index time.
     form_fields['ItemAuthor'] = @solr_document['creator_ssim']&.first
     form_fields['ItemDate'] = @solr_document['normalized_date_ssm']&.first
-    form_fields['ReferenceNumber'] = reference_number
+    form_fields['ReferenceNumber'] = reference_number # TODO: This is currently sending the entire record identifier, and not just the bibid.  Need to fix.
     form_fields['DocumentType'] = 'All'
     form_fields['ItemInfo1'] = 'Archival Materials' # Format/Genre in Aeon
     form_fields['ItemInfo3'] = 'UNPROCESSED' if self.unprocessed?
     # The UserReview field controls whether or not the request is directly submitted for processing
     # or is instead saved in a user’s Aeon account for submittal at a future date.
-    form_fields['UserReview'] = repository_local_request_config.fetch('user_review', false)
+    form_fields['UserReview'] = repository_local_request_config['user_review'].to_s == 'false' ? 'No' : 'Yes'
 
     # The container_info_string is already in solr, and is an array that we can break apart for some of fields below
 
-    # form_fields['ItemVolume'] = container_info_string, # Box number, in solr already, TODO: Check field name
+    # labeled "Box / Volume" in AEON. In solr already? TODO: Check field name
+    # form_fields['ItemVolume'] = container_info_string
+    # form_fields['ItemVolume'] = temp_box_name_field # for testing
 
-    # This is the barcode -- where does this come from in solr? (maybe we need to index it?)
+    # labeled "Barcode" in AEON
     # form_fields['ItemNumber'] = container_info_barcode, if container_info_barcode
 
-    # form_fields['ItemSubTitle']  component_title.prepend(@series_titles[series_num]),
-    # form_fields['CallNumber'] = @call_number, # We can extract call number from EAD and add to solr (note: this is NOT the bib id)
-    # This is different from the site code, and generally formatted as full library name liek "Rare Book and Manuscript Library"  As an example, these are formatted like "gax" (for graphic arts).
+    # labeled "Series" in AEON
+    # form_fields['ItemSubTitle'] = component_title.prepend(@series_titles[series_num]),
 
+    # We can extract call number from EAD and add to solr (note: this is NOT the bib id)
+    # form_fields['CallNumber'] = @call_number
+
+    # This is different from the site code, and generally formatted as full library name liek "Rare Book and Manuscript Library"  As an example, these are formatted like "gax" (for graphic arts).
     # Probably look at repository.name (example: "C.V. Starr East Asian Library")
     # form_fields['Location'] = @location
 

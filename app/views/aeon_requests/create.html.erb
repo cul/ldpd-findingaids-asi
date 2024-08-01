@@ -11,13 +11,28 @@
         # Global fields #
         #################
       %>
-      <input type='hidden' name='AeonForm' value='EADRequest'>
+      <input type='hidden' name='AeonForm' value='ExternalRequest'>
+      <% #<input type='hidden' name='AeonForm' value='EADRequest'> %>
+      <input type="hidden" name="SystemID" value="finding_aids">
       <input type='hidden' name='SubmitButton' value='Submit Request'>
+      <% # TODO: Look into why note isn't being set here. %>
       <input type="hidden" name="Notes" value="<%= @notes %>">
       <% # Note: User takes care of scheduling in the Aeon app (see: ACFA-99), so ScheduledDate is not needed. %>
       <% # TODO: Remove the line below after confirming that Aeon submissions go through successfully without ScheduledDate %>
       <% # <input type="hidden" name="ScheduledDate" value=""> %>
       <input type="hidden" name="GroupingIdentifier" value="GroupingField">
+
+      <input type="hidden" name="GroupingOption_ItemTitle" value="Concatenate">
+      <input type="hidden" name="GroupingOption_ItemAuthor" value="Concatenate">
+      <input type="hidden" name="GroupingOption_ItemDate" value="Concatenate">
+      <input type="hidden" name="GroupingOption_ReferenceNumber" value="Concatenate">
+      <input type="hidden" name="GroupingOption_ItemInfo1" value="Concatenate">
+      <input type="hidden" name="GroupingOption_ItemInfo3" value="Concatenate">
+      <input type="hidden" name="GroupingOption_ItemVolume" value="FirstValue">
+      <input type="hidden" name="GroupingOption_ItemNumber" value="FirstValue">
+      <input type="hidden" name="GroupingOption_ItemSubTitle" value="Concatenate">
+      <input type="hidden" name="GroupingOption_CallNumber" value="FirstValue">
+      <input type="hidden" name="GroupingOption_Location" value="FirstValue">
 
       <%
         ######################

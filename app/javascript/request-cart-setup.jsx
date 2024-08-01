@@ -97,12 +97,12 @@ function setup() {
 
   // On submission form page
   if (document.getElementById('aeon-submission-form')) {
-    // // Clear cart
-    // window.clearCart();
-    // // And submit the form shortly after
-    // setTimeout(() => {
-    //   document.getElementById('aeon-submission-form').submit();
-    // }, 500);
+    // Clear cart
+    window.clearCart();
+    // And submit the form shortly after
+    setTimeout(() => {
+      document.getElementById('aeon-submission-form').submit();
+    }, 500);
   }
 }
 

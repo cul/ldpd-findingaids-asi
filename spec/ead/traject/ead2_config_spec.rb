@@ -81,11 +81,11 @@ describe Traject::Indexer do
       it { expect(index_document[:repository_ssim]).to eql [repository_name] }
     end
   end
-  describe 'aspace path indexing' do
+  describe 'call number indexing', focus: true do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_eadid/from_unitid.xml') }
-      let(:expected_value) { '/7654321' }
+      let(:expected_value) { 'UA#0284' }
       it { expect(index_document).not_to be_nil }
-      it { expect(index_document[:aspace_path_ssi]).to eql [expected_value] }
+      it { expect(index_document[:call_number_ss]).to eql expected_value }
   end
   describe 'language indexing' do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }

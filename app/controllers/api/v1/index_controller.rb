@@ -23,7 +23,7 @@ module Api
         end
         render plain: "Success!"
       end
-      
+
       def delete_ead
         bibids = params[:bibids]
         solr_url = ENV.fetch('SOLR_URL', Blacklight.default_index.connection.base_uri)
@@ -39,7 +39,7 @@ module Api
         end
         render plain: "Success!"
       end
-      
+
     end
   end
 end

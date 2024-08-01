@@ -18,6 +18,12 @@ module LdpdFindingaidsAsi
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    #
+    # TODO: See if we can autoload lib so that explicit `require` statements aren't
+    # necessary for referencing /lib directory files.  Right now, autoloading the
+    # lib directory works locally, but causes an issue in GitHub actions when the
+    # tests run.  We get this error: `uninitialized constant TrajectPlus`
+    config.eager_load_paths << Rails.root.join('lib')
 
     # https://edgeguides.rubyonrails.org/engines.html#overriding-models-and-controllers
     overrides = "#{Rails.root}/app/overrides"
