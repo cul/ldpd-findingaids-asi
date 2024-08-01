@@ -50,11 +50,6 @@ to_field 'date_range_isim', extract_xpath('./did/unitdate/@normal', to_text: fal
   accumulator.replace years
 end
 
-to_field 'aspace_path_ssi', extract_xpath('./did/unitid[@type = \'aspace_uri\']') do |_record, accumulator|
-  accumulator.slice!(1..-1)
-  accumulator
-end
-
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['language_ssim'].include?(index_step.field_name) }
 to_field 'language_material_ssm', extract_xpath('./did/langmaterial')
 to_field 'language_ssim', extract_xpath('./did/langmaterial/language')
@@ -71,3 +66,8 @@ to_field 'parent_access_restrict_tesm' do |record, accumulator|
     .map(&:text))
 end
 
+# Extract call number, which is the first did/unitit that is NOT all-numeric
+to_field 'call_number_ss', extract_xpath('./did/unitid') do |_record, accumulator|
+  puts 'this is running'
+  # puts "accumulator: #{accumulator.inspect}"
+end.compact.first

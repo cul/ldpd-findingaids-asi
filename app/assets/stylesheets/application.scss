@@ -196,3 +196,9 @@ a.dropdown-item {
 		padding-right: .5rem !important
 	}
 }
+
+// This prevents document action buttons from stretching to
+// match the height of an item title.
+.index-document-functions {
+  align-items: flex-start;
+}
