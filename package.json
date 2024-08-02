@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "start:dev": "./bin/vite dev",
+    "start:dev:anyhostname": "VITE_RUBY_HOST=0.0.0.0 ./bin/vite dev",
+    "start:dev:anyhostname:ssl": "VITE_RUBY_HOST=0.0.0.0 VITE_RUBY_HTTPS=true ./bin/vite dev",
     "lint": "eslint app/javascript --ext js,jsx"
   },
   "devDependencies": {
@@ -23,8 +25,10 @@
     "@columbia-libraries/mirador": "3.3.1-3789.10",
     "@github/auto-complete-element": "^3.6.2",
     "@hotwired/turbo-rails": "^8.0.4",
+    "@mui/material": "^5.16.6",
     "@mui/system": "^5.13.5",
     "@popperjs/core": "^2.11.8",
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
     "arclight": "^1.1.4",
     "blacklight-frontend": "^8.0.1",
     "bootstrap": "^5.3.3",
