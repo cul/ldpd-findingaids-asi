@@ -34,7 +34,8 @@ function RequestCartApp() {
         <Offcanvas.Body>
           <RequestCart
             submissionMode="select_account"
-            header={<div className="mb-3">Add items from multiple pages and request them all at once.</div>}
+// eslint-disable-next-line
+            header={<div className="mb-3">Ready to view these items in the reading room? Click &quot;Request&quot; to log in and schedule an appointment.</div>}
           />
         </Offcanvas.Body>
       </Offcanvas>
