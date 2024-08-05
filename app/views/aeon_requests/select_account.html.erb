@@ -8,7 +8,7 @@
         render_login_method_content(
           'Columbia University Patrons',
           'Columbia University Affiliates include current students, faculty, officers, and staff.',
-          :shib,
+          Acfa::LoginMethods::SHIB,
           'First-time users will be directed to a registration form to create a research account.'
         )
       %>
@@ -19,7 +19,7 @@
           'Non-Columbia University Patrons',
           'Non-Columbia University patrons are everyone not actively affiliated with the University. '\
           'This includes special borrower card holders, alumni, and staff retirees.',
-          :nonshib,
+          Acfa::LoginMethods::NONSHIB,
           ''
         )
       %>

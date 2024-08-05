@@ -27,7 +27,6 @@ $brand_text: $white;
 @import "facets";
 @import "topnav";
 @import "cul_footer";
-@import "request_cart.scss";
 
 //urls
 $url_0: url(//cdn.cul.columbia.edu/ldpd-toolkit/img/crown-bts-24x24.png);
@@ -98,7 +97,7 @@ a.subseries_anchor, a.fa_anchor {
 	visibility: hidden;
 }
 
-.al-masthead H1, #site-name {
+.al-masthead H1, .site-heading {
 	font-family: TrajanProRegular, trajan, serif;
 	color: $brand;
 	a {

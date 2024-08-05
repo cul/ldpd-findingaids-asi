@@ -36,7 +36,6 @@ function RequestCartApp() {
             submissionMode="select_account"
 // eslint-disable-next-line
             header={<div className="mb-3">Ready to view these items in the reading room? Click &quot;Request&quot; to log in and schedule an appointment.</div>}
-            onSubmit={() => { window.location.href = '/aeon_request/select_account'; }}
           />
         </Offcanvas.Body>
       </Offcanvas>

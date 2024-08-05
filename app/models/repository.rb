@@ -14,8 +14,6 @@ class Repository
     url: '',
     has_fa_list: false,
     as_repo_id: nil,
-    aeon_enabled: false,
-    aeon_user_review_set_to_yes: false,
     request_types: {},
     contact_html: '',
     location_html: '',
@@ -25,14 +23,6 @@ class Repository
   def initialize(id, properties = {})
     @id = id
     @attributes = DEFAULTS.merge(properties.symbolize_keys).with_indifferent_access
-    if @attributes[:requestable_via_aeon]
-      @attributes[:request_types] = {
-        aeon_local_request: {
-          site_code: @attributes[:aeon_site_code],
-          user_review: @attributes[:aeon_user_review_set_to_yes]
-        }
-      }
-    end
   end
 
   def name

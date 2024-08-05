@@ -1,6 +1,10 @@
 class AeonRequestsController < ApplicationController
   MAX_NUM_ALLOWED_REQUESTS = 100
 
+  # TODO: Delete this (and the associated view) after multi-item Aeon testing is complete
+  def test_submission
+  end
+
   # GET /aeon_requests/redirectshib
   def redirectshib
     redirect_to checkout_aeon_request_url(login_method: 'shib')
@@ -18,6 +22,9 @@ class AeonRequestsController < ApplicationController
 
   # GET /aeon_requests/checkout
   def checkout
+    # If someone visits the checkout url without a valid login_method param, redirect to the select_account page
+    # so that a login method can be selected.
+    redirect_to action: 'select_account' unless Acfa::LoginMethods::ALLOWED_LOGIN_METHODS.include?(params[:login_method])
   end
 
   # POST /aeon_requests/create

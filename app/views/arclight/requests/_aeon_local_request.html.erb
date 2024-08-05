@@ -1,13 +1,6 @@
-<% aeon_local_request ||= AeonLocalRequest.new(@document) %>
-<button
-  class="btn btn-primary btn-sm add-to-cart-button"
-  data-add-to-cart-text="Request"
-  data-remove-from-cart-text="Remove"
-  data-id="<%= @document['id'] %>"
-  data-collection-name="<%= @document['collection_ssim'].first %>"
-  data-item-name="<%= @document['title_ssm'].first %>"
-  <% # NOTE: repository_ssim is probably not what we want below (per note in requirements doc) %>
-  data-reading-room-location="<%= @document['repository_ssim'].first %>"
->
-  <i class="fa fa-cart-shopping"></i> <span class="button-text">Request</span>
-</button>
+<%
+  # NOTE: This partial only renders if @document.requestable? returns true,
+  # so there's no need to conditionally render the button. We can always
+  # render it here.
+%>
+<%= render Acfa::RequestButtonComponent.new(@document) %>

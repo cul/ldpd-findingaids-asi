@@ -37,6 +37,62 @@ function RequestCart({ submissionMode, header }) {
     return elements;
   };
 
+  const renderSubmissionElement = () => {
+    if (items.length === 0) { return null; }
+    if (submissionMode === 'create') {
+      return (
+        <form method="POST" action="/aeon_request/create" data-turbo="false">
+          <input type="hidden" name={csrfTokenParamName} value={csrfTokenValue} />
+          {
+            loginMethod && (
+              <input type="hidden" name="login_method" value={loginMethod} />
+            )
+          }
+          {
+            renderHiddenCartItemFormValues()
+          }
+          <Button
+            type="submit"
+            variant="primary"
+            className="w-100 mb-3"
+            onClick={(e) => {
+              e.preventDefault();
+              window.updateCartNote(note);
+              e.target.closest('form').submit();
+              setIsSubmitting(true);
+            }}
+            disabled={isSubmitting}
+          >
+            {
+              isSubmitting
+                ? (
+                  'Submitting...'
+                )
+                : (
+                  `Request ${items.length} ${items.length === 1 ? 'Item' : 'Items'}`
+                )
+            }
+          </Button>
+        </form>
+      );
+    }
+
+    // Otherwise submission mode is select_account
+    return (
+      <a href="/aeon_request/select_account" className="btn btn-primary w-100">
+        {
+          isSubmitting
+            ? (
+              'Submitting...'
+            )
+            : (
+              `Request ${items.length} ${items.length === 1 ? 'Item' : 'Items'}`
+            )
+        }
+      </a>
+    );
+  };
+
   useEffect(() => {
     RequestCartStorage.init();
     window.addEventListener('requestCartChange', handleRequestCartChangeEvent);
@@ -65,77 +121,38 @@ function RequestCart({ submissionMode, header }) {
           </thead>
           <tbody>
             {
-              items.length > 0 && items.map((item) => (
-                <tr key={item.id} data-id={item.id}>
-                  <td className="ps-4">{item.collectionName}</td>
-                  <td>{item.itemName}</td>
-                  <td>{item.readingRoomLocation}</td>
-                  <td className="pe-4 text-end align-middle">
-                    <Button size="sm" variant="secondary" onClick={() => { window.removeFromCart(item.id); }}>
-                      Remove
-                    </Button>
-                  </td>
-                </tr>
-              ))
-            }
-            {
-              items.length === 0 && (
-                <tr><td colSpan={4}>Your cart is empty.</td></tr>
-              )
+              items.length > 0
+                ? (
+                  items.map((item) => (
+                    <tr key={item.id} data-id={item.id}>
+                      <td className="ps-4">{item.collectionName}</td>
+                      <td>{item.itemName}</td>
+                      <td>{item.readingRoomLocation}</td>
+                      <td className="pe-4 text-end align-middle">
+                        <Button size="sm" variant="secondary" onClick={() => { window.removeFromCart(item.id); }}>
+                          Remove
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
+                )
+                : (
+                  <tr><td colSpan={4}>Your cart is empty.</td></tr>
+                )
             }
           </tbody>
         </Table>
       </div>
       <div>
-        {
-          items.length > 0 && (
-            <form
-              method="POST"
-              action={submissionMode === 'create' ? '/aeon_request/create' : '/aeon_request/select_account'}
-              data-turbo="false"
-            >
-              <textarea
-                placeholder="Notes to special collections staff"
-                rows="3"
-                maxLength={256}
-                className="w-100 form-control mb-1"
-                value={note}
-                onChange={handleNoteChange}
-              />
-              <input type="hidden" name={csrfTokenParamName} value={csrfTokenValue} />
-              {
-                loginMethod && (
-                  <input type="hidden" name="login_method" value={loginMethod} />
-                )
-              }
-              {
-                renderHiddenCartItemFormValues()
-              }
-              <Button
-                type="submit"
-                variant="primary"
-                className="w-100 mb-3"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.updateCartNote(note);
-                  e.target.closest('form').submit();
-                  setIsSubmitting(true);
-                }}
-                disabled={isSubmitting}
-              >
-                {
-                  isSubmitting
-                    ? (
-                      'Submitting...'
-                    )
-                    : (
-                      `Request ${items.length} ${items.length === 1 ? 'Item' : 'Items'}`
-                    )
-                }
-              </Button>
-            </form>
-          )
-        }
+        <textarea
+          placeholder="Notes to special collections staff"
+          rows="3"
+          maxLength={256}
+          className="w-100 form-control mb-1"
+          value={note}
+          onChange={handleNoteChange}
+        />
+        {renderSubmissionElement()}
       </div>
     </div>
   );
