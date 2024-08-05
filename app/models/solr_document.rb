@@ -43,4 +43,8 @@ class SolrDocument
     self['callnum_ss']
   end
   
+  def container_information
+    self['container_information_ssm']
+  end
+  
 end
