@@ -58,5 +58,5 @@ to_field 'collection_sort' do |_rec, accumulator, _context|
   accumulator.concat((settings[:root].output_hash['normalized_title_ssm'] || []).slice(0,1))
 end
 
-to_field 'callnum_ssm',
+to_field 'callnum_ss',
          extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")]')
