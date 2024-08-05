@@ -67,4 +67,4 @@ to_field 'parent_access_restrict_tesm' do |record, accumulator|
 end
 
 # Extract call number, which is the first did/unitit that is NOT all-numeric
-to_field 'callnum_ssm', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")]')
+to_field 'callnum_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")]')
