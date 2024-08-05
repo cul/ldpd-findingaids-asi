@@ -38,4 +38,9 @@ class SolrDocument
   def aeon_request
     @aeon_request ||= AeonLocalRequest.new(self)
   end
+  
+  def callnum
+    self['callnum_ssm']
+  end
+  
 end

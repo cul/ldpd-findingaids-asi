@@ -58,8 +58,5 @@ to_field 'collection_sort' do |_rec, accumulator, _context|
   accumulator.concat((settings[:root].output_hash['normalized_title_ssm'] || []).slice(0,1))
 end
 
-# Extract call number, which is the first did/unitit that is NOT all-numeric
-to_field 'call_number_ss', extract_xpath('./did/unitid') do |_record, accumulator|
-  puts 'this is running'
-  # puts "accumulator: #{accumulator.inspect}"
-end.compact.first
+to_field 'callnum_ssm',
+         extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")]')
