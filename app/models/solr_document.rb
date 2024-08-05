@@ -40,7 +40,7 @@ class SolrDocument
   end
   
   def callnum
-    self['callnum_ssm']
+    self['callnum_ss']
   end
   
 end
