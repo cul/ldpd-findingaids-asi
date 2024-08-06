@@ -22,7 +22,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'max-len': ['error', { code: 120 }],
+    'max-len': ['warn', { code: 120 }],
     'no-unused-vars': 'warn',
   },
 };

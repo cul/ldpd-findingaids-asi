@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
 #require 'solr_wrapper'
+require 'acfa/setup'
 
 namespace :acfa do
+  desc 'Setup templated configurations as necessary'
+  task :setup_config do
+    Acfa::Setup.configuration(File.expand_path('../..', __dir__))
+  end
+
   desc 'Run Solr and Application for interactive development'
   task :server, %i[rails_server_args] do |_t, args|
     print 'Starting Solr...'
@@ -16,7 +22,7 @@ namespace :acfa do
   end
 
   desc 'Seed fixture data to Solr'
-  task seed: :environment do
+  task seed: [:setup_config, :environment] do
     rails_env = (ENV['RAILS_ENV'] || 'development')
     solr_url = ENV.fetch('SOLR_URL', Blacklight.default_index.connection.base_uri)
     ead_dir = CONFIG[:ead_cache_dir]
@@ -42,7 +48,7 @@ namespace :acfa do
   end
   
   desc 'Delete finding aid from index by collection id'
-  task delete_collection: :environment do
+  task delete_collection: [:setup_config, :environment] do
     rails_env = (ENV['RAILS_ENV'] || 'development')
     solr_con = Blacklight.default_index.connection
     solr_response = solr_con.delete_by_query "_root_:#{ENV['COLLECTION']}"
