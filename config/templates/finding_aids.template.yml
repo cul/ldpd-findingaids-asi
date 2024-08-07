@@ -30,6 +30,7 @@ development: &DEV
   # repo codes.
   bib_id_repo_id_hash_cache_expiration_in_hours: 12
   cache_html: false
+  mirador_base_url: https://dlc-staging.library.columbia.edu
 test:
   <<: *DEV
   ead_cache_dir: test/fixtures/files/ead
@@ -51,3 +52,4 @@ production:
   container_info_delimiter: 'CONTAINERINFODELIMITER'
   fa_lists_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_CONTAINING_LISTS_OF_FINDING_AIDS'
   lweb_help_url: https://library.columbia.edu/collections.html
+  mirador_base_url: https://dlc.library.columbia.edu

@@ -22,7 +22,7 @@ module Acfa::Viewers
 
     def doi_manifest(href)
       doi = /\/(10\.7916\/[A-Za-z0-9\-\.]+)/.match(href)[1]
-      "https://dlc-staging.library.columbia.edu/iiif/3/presentation/#{doi}/manifest"
+      "#{CONFIG[:mirador_base_url]}/iiif/3/presentation/#{doi}/manifest"
     end
 
     def ia_manifest(href)
