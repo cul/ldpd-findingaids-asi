@@ -37,15 +37,11 @@ class AeonLocalRequest
   end
 
   def container_info
-    @container_info ||= JSON.parse(@solr_document['container_information_ssm'])
+    @container_info ||= @solr_document['container_information_ssm'].map {|info_json| JSON.parse(info_json) }
   end
 
-  def
-
   def barcode
-    @barcode ||= container_info.find do |container|
-      container['barcode'].present?
-    end.first
+    @barcode ||= container_info.find { |container| container['barcode'].present? }
   end
 
   def box_number
@@ -60,7 +56,7 @@ class AeonLocalRequest
   end
 
   def call_number
-    @doc['call_number_ss']
+    @solr_document['call_number_ss']
   end
 
   def form_attributes
@@ -85,15 +81,15 @@ class AeonLocalRequest
     # TODO: Test out submission of newly added fields below
 
     # Labeled "Box / Volume" in AEON
-    form_fields['ItemVolume'] = box_number
+    form_fields['ItemVolume'] = self.box_number
     # Labeled "Barcode" in AEON
-    form_fields['ItemNumber'] = barcode
+    form_fields['ItemNumber'] = self.barcode
     # Labeled "Series" in AEON
-    form_fields['ItemSubTitle'] = series
+    form_fields['ItemSubTitle'] = self.series
     # Labeled "Call Number" in AEON
-    form_fields['CallNumber'] = call_number
+    form_fields['CallNumber'] = self.call_number
     # This is different from the site code, and generally formatted as full library name like "Rare Book and Manuscript Library".
-    form_fields['Location'] = repository_config['name']
+    form_fields['Location'] = self.repository_config.name
 
     form_fields
   end
