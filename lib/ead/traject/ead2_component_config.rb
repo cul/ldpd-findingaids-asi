@@ -67,21 +67,22 @@ to_field 'parent_access_restrict_tesm' do |record, accumulator|
 end
 
 # Extract call number, which is the first did/unitit that is NOT all-numeric
-to_field 'callnum_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")]')
+to_field 'call_number_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")]'), first_only
 
 to_field "container_information_ssm" do |record, accumulator, context|
   record.xpath("./did/container").each do |container_element|
     type = container_element.attributes["type"].to_s
     barcode_label = container_element.attributes["label"].to_s
-    barcode_match = barcode_label.match(/\[(\d+?)\]/)
+    barcode_match = barcode_label.match(/\[([^\]]+)\]/)
     barcode = barcode_match[1] if barcode_match
     text = [container_element.attribute("type"), container_element.text].join(" ").strip
-    accumulator << {
+    container_information = {
       id: container_element.attributes["id"].to_s.gsub("aspace_", ""),
       barcode: barcode,
       label: text,
       parent: container_element.attribute("parent").to_s.gsub("aspace_", ""),
       type: type
-    }.to_json
+    }
+    accumulator << container_information.to_json
   end
 end
