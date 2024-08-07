@@ -36,17 +36,34 @@ class AeonLocalRequest
     match_data.nil? ? nil : match_data[0]
   end
 
+  def container_info
+    @container_info ||= JSON.parse(@solr_document['container_information_ssm'])
+  end
+
+  def
+
+  def barcode
+    @barcode ||= container_info.find do |container|
+      container['barcode'].present?
+    end.first
+  end
+
+  def box_number
+    @box_number ||= container_info.find do |container|
+      container['label'].present? && container['label'].downcase.include?('box')
+    end.first
+  end
+
+  def series
+    @solr_document['parent_unittitles_ssm'][1] if @solr_document['parent_unittitles_ssm'].length > 1
+    nil
+  end
+
+  def call_number
+    @doc['call_number_ss']
+  end
+
   def form_attributes
-    # series_num, component_title, container_info_string, container_info_barcode =
-    #   container_info.split(CONFIG[:container_info_delimiter])
-
-
-
-    puts repository_config.inspect
-    puts repository_local_request_config.inspect
-
-    # temp_box_name_field = 'Box 2' # for testing
-
     form_fields = {}
     form_fields['GroupingField'] = grouping_field(@solr_document.containers)
     # form_fields['GroupingField'] = self.repository_local_request_config['site_code']  # for testing
@@ -65,44 +82,20 @@ class AeonLocalRequest
     # or is instead saved in a user’s Aeon account for submittal at a future date.
     form_fields['UserReview'] = repository_local_request_config['user_review'].to_s == 'false' ? 'No' : 'Yes'
 
-    # The container_info_string is already in solr, and is an array that we can break apart for some of fields below
+    # TODO: Test out submission of newly added fields below
 
-    # labeled "Box / Volume" in AEON. In solr already? TODO: Check field name
-    # form_fields['ItemVolume'] = container_info_string
-    # form_fields['ItemVolume'] = temp_box_name_field # for testing
-
-    # labeled "Barcode" in AEON
-    # form_fields['ItemNumber'] = container_info_barcode, if container_info_barcode
-
-    # labeled "Series" in AEON
-    # form_fields['ItemSubTitle'] = component_title.prepend(@series_titles[series_num]),
-
-    # We can extract call number from EAD and add to solr (note: this is NOT the bib id)
-    # form_fields['CallNumber'] = @call_number
-
-    # This is different from the site code, and generally formatted as full library name liek "Rare Book and Manuscript Library"  As an example, these are formatted like "gax" (for graphic arts).
-    # Probably look at repository.name (example: "C.V. Starr East Asian Library")
-    # form_fields['Location'] = @location
+    # Labeled "Box / Volume" in AEON
+    form_fields['ItemVolume'] = box_number
+    # Labeled "Barcode" in AEON
+    form_fields['ItemNumber'] = barcode
+    # Labeled "Series" in AEON
+    form_fields['ItemSubTitle'] = series
+    # Labeled "Call Number" in AEON
+    form_fields['CallNumber'] = call_number
+    # This is different from the site code, and generally formatted as full library name like "Rare Book and Manuscript Library".
+    form_fields['Location'] = repository_config['name']
 
     form_fields
-
-    # <%= hidden_field_tag :Site, @aeon_site_code %>
-    # <% @selected_containers.each_with_index do |container_info, index| %>
-    #   <% series_num, component_title, container_info_string, container_info_barcode =
-    #       container_info.split(CONFIG[:container_info_delimiter]) %>
-    #   <%= hidden_field_tag :Request, "request_#{index}" %>
-    #   <%= hidden_field_tag "ItemVolume_request_#{index}", container_info_string %>
-    #   <%= hidden_field_tag("ItemNumber_request_#{index}", container_info_barcode) if container_info_barcode %>
-    #   <%= hidden_field_tag "ItemTitle_request_#{index}", @item_title %>
-    #   <%= hidden_field_tag "ItemAuthor_request_#{index}", @author %>
-    #   <%= hidden_field_tag "ItemDate_request_#{index}", @item_date %>
-    #   <%= hidden_field_tag "ItemSubTitle_request_#{index}", component_title.prepend(@series_titles[series_num]) %>
-    #   <%= hidden_field_tag "ReferenceNumber_request_#{index}", @bib_id %>
-    #   <%= hidden_field_tag "CallNumber_request_#{index}", @call_number %>
-    #   <%= hidden_field_tag "Location_request_#{index}", @location %>
-    #   <%= hidden_field_tag "DocumentType_request_#{index}", 'All' %>
-    #   <%= hidden_field_tag "ItemInfo1_request_#{index}", 'Archival Materials' %>
-    # <% end %>
   end
 
   # def url
