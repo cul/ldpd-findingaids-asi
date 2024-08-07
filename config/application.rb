@@ -18,12 +18,19 @@ module LdpdFindingaidsAsi
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    #
-    # TODO: See if we can autoload lib so that explicit `require` statements aren't
-    # necessary for referencing /lib directory files.  Right now, autoloading the
-    # lib directory works locally, but causes an issue in GitHub actions when the
-    # tests run.  We get this error: `uninitialized constant TrajectPlus`
+
+    # NOTE: In Rails 7.1, it might be possible to replace the lines below with:
+    # config.autoload_lib(ignore: %w(assets tasks ead))
+    # See: https://guides.rubyonrails.org/autoloading_and_reloading_constants.html#config-autoload-lib-ignore
     config.eager_load_paths << Rails.root.join('lib')
+    Rails.autoloaders.main.ignore(
+      # Ignore this directory because Zeitwerk doesn't like autoloading files that do not contain classes or modules
+      Rails.root.join('lib', 'ead'),
+      # No need to autoload lib/assets directory.
+      Rails.root.join('lib', 'assets'),
+      # No need to autoload lib/tasks directory.
+      Rails.root.join('lib', 'tasks'),
+    )
 
     # https://edgeguides.rubyonrails.org/engines.html#overriding-models-and-controllers
     overrides = "#{Rails.root}/app/overrides"
