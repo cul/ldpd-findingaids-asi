@@ -36,18 +36,18 @@ class AeonLocalRequest
     match_data.nil? ? nil : match_data[0]
   end
 
-  def container_info
-    @container_info ||= @solr_document['container_information_ssm'].map {|info_json| JSON.parse(info_json) }
+  def container_information
+    @container_information ||= @solr_document.fetch('container_information_ssm', []).map {|info_json| JSON.parse(info_json) }
   end
 
   def barcode
-    @barcode ||= container_info.find { |container| container['barcode'].present? }
+    @barcode ||= container_information.find { |container| container['barcode'].present? }
   end
 
   def box_number
-    @box_number ||= container_info.find do |container|
+    @box_number ||= container_information.find do |container|
       container['label'].present? && container['label'].downcase.include?('box')
-    end.first
+    end
   end
 
   def series
