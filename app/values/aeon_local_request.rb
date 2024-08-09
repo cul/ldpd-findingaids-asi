@@ -20,20 +20,24 @@ class AeonLocalRequest
     @solr_document['parent_access_restrict_tesm'].find { |value| value.downcase.include?('unprocessed') } != nil
   end
 
-  def grouping_field(container_names)
-    if container_names.length > 1 && container_names.first.downcase.include?('mapcase')
+  def grouping_field
+    if container_labels.length > 1 && container_labels.first.downcase.include?('mapcase')
       # This is a mapcase and we should group one level below it
-      container_names[1]
+      container_labels[1]
     else
       # Otherwise we'll just use the top level container as the grouping field
-      container_names[0]
+      container_labels[0]
     end
   end
 
   def reference_number
     # NOTE: Barnard items won't have a bibid, so we might need to update this later
     match_data = @solr_document['id'].match(/ldpd_(.+)_aspace.*/);
-    match_data.nil? ? nil : match_data[0]
+    match_data.nil? ? nil : match_data[1]
+  end
+
+  def container_labels
+    @container_labels ||= container_information.map {|container| container['label']}
   end
 
   def container_information
@@ -41,17 +45,17 @@ class AeonLocalRequest
   end
 
   def barcode
-    @barcode ||= container_information.find { |container| container['barcode'].present? }
+    @barcode ||= container_information.map {|container| container['barcode']}.find { |barcode| barcode.present? }
   end
 
   def box_number
-    @box_number ||= container_information.find do |container|
-      container['label'].present? && container['label'].downcase.include?('box')
-    end
+    @box_number ||= container_information.map {|container| container['label']}.find { |label|
+      label.downcase.include?('box')
+    }
   end
 
   def series
-    @solr_document['parent_unittitles_ssm'][1] if @solr_document['parent_unittitles_ssm'].length > 1
+    return @solr_document['parent_unittitles_ssm'][1] if @solr_document['parent_unittitles_ssm'].length > 1
     nil
   end
 
@@ -61,7 +65,7 @@ class AeonLocalRequest
 
   def form_attributes
     form_fields = {}
-    form_fields['GroupingField'] = grouping_field(@solr_document.containers)
+    form_fields['GroupingField'] = self.grouping_field
     # form_fields['GroupingField'] = self.repository_local_request_config['site_code']  # for testing
     form_fields['Site'] = self.repository_local_request_config['site_code']
     # NOTE: We might need to truncate this field later on if values are too long
@@ -77,9 +81,6 @@ class AeonLocalRequest
     # The UserReview field controls whether or not the request is directly submitted for processing
     # or is instead saved in a user’s Aeon account for submittal at a future date.
     form_fields['UserReview'] = repository_local_request_config['user_review'].to_s == 'false' ? 'No' : 'Yes'
-
-    # TODO: Test out submission of newly added fields below
-
     # Labeled "Box / Volume" in AEON
     form_fields['ItemVolume'] = self.box_number
     # Labeled "Barcode" in AEON
@@ -93,26 +94,4 @@ class AeonLocalRequest
 
     form_fields
   end
-
-  # def url
-  #   config['request_url'].to_s
-  # end
-
-  # def form_mapping
-  #   static_mappings.merge(dynamic_mappings)
-  # end
-
-  # def static_mappings
-  #   config['request_mappings']['static']
-  # end
-
-  # def dynamic_mappings
-  #   config['request_mappings']['accessor'].transform_values do |v|
-  #     @solr_document.send(v.to_sym)
-  #   end
-  # end
-
-  # def url_params
-  #   config['request_mappings']['url_params'].to_query
-  # end
 end

@@ -35,9 +35,6 @@ class AeonRequestsController < ApplicationController
       return
     end
 
-    # TODO: Delete line below.  It's just for testing.
-    #ids = "ldpd_8972723_aspace_17f77f5888ed9466208d646733b805c7", "ldpd_13202800_aspace_87a59b7912dd1d74ebf75f3939de6782"
-
     # TODO: Verify that use has not exceeded maximum number of allowed requests per repository.
     blacklight_repository = Blacklight.repository_class.new(blacklight_config)
     quote_escaped_ids = ids.map { |id| id.gsub('"', '\"') }
@@ -49,6 +46,12 @@ class AeonRequestsController < ApplicationController
 
     @documents = solr_response.dig('response', 'docs').map { |doc| SolrDocument.new(doc) }
     @aeon_dll_url = params[:login_method] == 'shib' ? AEON[:shib_dll_url] : AEON[:non_shib_dll_url]
-    @notes = params[:notes]
+    @note = params[:note]
+
+    # If a user navigates to the checkout page without any items in their cart, redirect to account selection page
+    if @documents.length < 1
+      redirect_to action: 'select_account'
+      return
+    end
   end
 end

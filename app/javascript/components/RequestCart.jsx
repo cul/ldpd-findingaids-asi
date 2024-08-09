@@ -34,6 +34,7 @@ function RequestCart({ submissionMode, header }) {
     items.forEach((item) => {
       elements.push(<input key={item.id} type="hidden" name="ids[]" value={item.id} />);
     });
+    elements.push(<input key="note" type="hidden" name="note" value={note} />);
     return elements;
   };
 
