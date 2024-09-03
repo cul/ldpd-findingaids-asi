@@ -157,7 +157,7 @@ class CatalogController < ApplicationController
     #  (note: It is case sensitive when searching values)
 
     config.add_facet_field 'access',
-      query: { online: { label: 'Only online results', fq: 'has_online_content_ssim:true' } },
+      query: { online: { label: 'Show only results with digital matches', fq: 'has_online_content_ssim:true' } },
       component: Acfa::FacetFieldSwitchComponent, item_component: Acfa::FacetFieldSwitch::CheckboxComponent
 
     config.add_facet_field 'repository', field: 'repository_id_ssi', limit: 10, helper_method: :repository_label
