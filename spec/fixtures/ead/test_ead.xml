@@ -131,6 +131,14 @@
 			<head>Restrictions on Access</head>
 			<p>This collection has no restrictions.</p>
 		</accessrestrict>
+		<accessrestrict>
+			<head>Restrictions on Access</head>
+			<p>This collection is unprocessed.</p>
+		</accessrestrict>
+		<accessrestrict>
+			<head>Restrictions on Access</head>
+			<p>This collection needs to be vetted.</p>
+		</accessrestrict>
 		<accruals>
 			<head>Accruals</head>
 			<p>No additional material is expected in the short term.</p>

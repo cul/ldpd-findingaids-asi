@@ -136,4 +136,10 @@ describe Traject::Indexer do
       )
     end
   end
+  describe 'unprocessed access note indexing' do
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+    it do
+      expect(index_document[:components][0][:aeon_unprocessed_ssi]).to eq([true])
+    end
+  end
 end

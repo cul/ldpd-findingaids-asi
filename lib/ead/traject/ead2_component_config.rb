@@ -86,3 +86,7 @@ to_field "container_information_ssm" do |record, accumulator, context|
     accumulator << container_information.to_json
   end
 end
+
+to_field "aeon_unprocessed_ssi", extract_xpath("/ead/archdesc/accessrestrict[contains(., 'vetted') or contains(., 'unprocessed')]", to_text: false), first_only do |_record, accumulator|
+  accumulator.replace([accumulator.any?])
+end
