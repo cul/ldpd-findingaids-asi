@@ -87,7 +87,9 @@ to_field "container_information_ssm" do |record, accumulator, context|
   end
 end
 
-to_field "aeon_unprocessed_ssim", extract_xpath("/ead/archdesc/accessrestrict[contains(., 'vetted') or contains(., 'unprocessed')]", to_text: false) do |_record, accumulator|
-  puts "Aeon!"
+# to_field "aeon_unprocessed_ssi", extract_xpath("/ead/archdesc/accessrestrict[contains(., 'vetted') or contains(., 'unprocessed')]", to_text: false), first_only
+
+
+to_field "aeon_unprocessed_ssi", extract_xpath("/ead/archdesc/accessrestrict[contains(., 'vetted') or contains(., 'unprocessed')]", to_text: false), first_only do |_record, accumulator|
   accumulator.replace([accumulator.any?])
 end
