@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table';
-import RequestCartStorage from '../RequestCartStorage';
+import sortBy from 'lodash.sortby';
+import RequestCartStorage from '../../RequestCartStorage';
 
 const debouncedPersistRequestCartNote = debounce((note) => {
   window.updateCartNote(note);
@@ -15,8 +15,6 @@ function RequestCart({ submissionMode, header }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [items, setItems] = useState(RequestCartStorage.getItems());
   const [note, setNote] = useState(RequestCartStorage.getRequestCartNote());
-  // const aeonBaseUrl = document.getElementById('request-cart-widget').getAttribute('data-aeon-base-url');
-  // const aeonLogonUrl = `${aeonBaseUrl}/logon`;
   const csrfTokenParamName = document.querySelector('meta[name="csrf-param"]').getAttribute('content');
   const csrfTokenValue = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -80,7 +78,7 @@ function RequestCart({ submissionMode, header }) {
 
     // Otherwise submission mode is select_account
     return (
-      <a href="/aeon_request/select_account" className="btn btn-primary w-100">
+      <a href="/aeon_request/select_account" className="btn btn-primary w-100 mb-3">
         {
           isSubmitting
             ? (
@@ -107,49 +105,83 @@ function RequestCart({ submissionMode, header }) {
     debouncedPersistRequestCartNote(note);
   }, [note]);
 
+  const cartItemsGroupedByReadingRoomLocation = (ungroupedItems, groupByField, sortByFields) => {
+    const groups = [];
+    const sortedUngroupedItems = sortBy(
+      ungroupedItems,
+      [groupByField, ...sortByFields],
+    );
+    let latestGroup = [];
+    for (let i = 0; i < sortedUngroupedItems.length; i += 1) {
+      const currentItem = sortedUngroupedItems[i];
+      latestGroup.push(currentItem);
+
+      const nextItem = sortedUngroupedItems[i + 1];
+      if (currentItem[groupByField] !== nextItem?.[groupByField]) {
+        groups.push(latestGroup);
+        latestGroup = [];
+      }
+    }
+
+    return groups;
+  };
+
   return (
     <div className="request-cart d-flex flex-column h-100">
       {header}
       <div className="flex-fill">
-        <Table responsive>
-          <thead className="table-light">
-            <tr>
-              <th className="ps-4 align-middle">Collection Name</th>
-              <th className="align-middle">Item Name</th>
-              <th className="align-middle">Reading Room Location</th>
-              <th className="pe-4"><span className="sr-only">Actions</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              items.length > 0
-                ? (
-                  items.map((item) => (
-                    <tr key={item.id} data-id={item.id}>
-                      <td className="ps-4">{item.collectionName}</td>
-                      <td>{item.itemName}</td>
-                      <td>{item.readingRoomLocation}</td>
-                      <td className="pe-4 text-end align-middle">
-                        <Button size="sm" variant="secondary" onClick={() => { window.removeFromCart(item.id); }}>
-                          Remove
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                )
-                : (
-                  <tr><td colSpan={4}>Your cart is empty.</td></tr>
-                )
-            }
-          </tbody>
-        </Table>
+        {
+          items.length > 0
+            ? cartItemsGroupedByReadingRoomLocation(
+              items,
+              'readingRoomLocation',
+              ['collectionName', 'containerInfo', 'itemName'],
+            ).map((groupedItems) => {
+              const firstItem = groupedItems[0];
+              return (
+                <div className="card mb-3" key={firstItem.readingRoomLocation}>
+                  <div className="card-header">
+                    {firstItem.readingRoomLocation}
+                  </div>
+                  <ul className="list-group list-group-flush">
+                    {
+                      groupedItems.map((item) => (
+                        <li className="list-group-item">
+                          <div className="d-flex">
+                            <div className="flex-fill">
+                              <dl className="row mb-0">
+                                <dt className="col-sm-3">Collection</dt>
+                                <dl className="col-sm-9 mb-0">{item.collectionName}</dl>
+                                <dt className="col-sm-3">Container</dt>
+                                <dl className="col-sm-9 mb-0">{item.containerInfo}</dl>
+                                <dt className="col-sm-3">Name</dt>
+                                <dl className="col-sm-9 mb-0">{item.itemName}</dl>
+                              </dl>
+                            </div>
+                            <div>
+                              <Button size="sm" variant="danger" onClick={() => { window.removeFromCart(item.id); }}>
+                                Remove
+                              </Button>
+                            </div>
+                          </div>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </div>
+              );
+            })
+            : (
+              <tr><td colSpan={4}>Your cart is empty.</td></tr>
+            )
+        }
       </div>
       <div>
         <textarea
           placeholder="Notes to special collections staff"
           rows="3"
           maxLength={256}
-          className="w-100 form-control mb-1"
+          className="w-100 form-control mb-3"
           value={note}
           onChange={handleNoteChange}
         />

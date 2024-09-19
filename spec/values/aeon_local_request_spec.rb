@@ -79,7 +79,7 @@ RSpec.describe AeonLocalRequest do
     end
   end
 
-  describe '#grouping_field' do
+  describe '#grouping_field_value' do
     context "when the top level container is a mapcase and a second level container is present" do
       let(:mapcase_label) { 'mapcase 15-J-8' }
       let(:container_information_ssm) do
@@ -101,12 +101,12 @@ RSpec.describe AeonLocalRequest do
         ]
       end
       it 'returns the second level container' do
-        expect(aeon_local_request.grouping_field).to eq('folder 3')
+        expect(aeon_local_request.grouping_field_value).to eq('folder 3')
       end
     end
     context "when the top level container is NOT a mapcase" do
       it 'returns the top level container' do
-        expect(aeon_local_request.grouping_field).to eq(box_number)
+        expect(aeon_local_request.grouping_field_value).to eq(box_number)
       end
     end
     context "when the top level container is a mapcase, but there is no second level container" do
@@ -123,7 +123,7 @@ RSpec.describe AeonLocalRequest do
         ]
       end
       it 'returns the top level container' do
-        expect(aeon_local_request.grouping_field).to eq(mapcase_label)
+        expect(aeon_local_request.grouping_field_value).to eq(mapcase_label)
       end
     end
   end
@@ -187,7 +187,6 @@ end
   describe '#form_attributes' do
     let(:expected_form_attributes) do
       {
-        'GroupingField' => box_number,
         'Site' => 'RBMLCUL',
         'ItemTitle' => title_ssm.first,
         'ItemAuthor' => creator_ssim.first,

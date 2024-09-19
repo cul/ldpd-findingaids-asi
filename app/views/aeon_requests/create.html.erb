@@ -1,5 +1,5 @@
 <div class="container">
-  <% if(@documents.length > 0) %>
+  <% if(@aeon_requests.length > 0) %>
     <h2>Submission in progress</h1>
     <p>
       Submitting your request...
@@ -22,32 +22,19 @@
       <input type="hidden" name="Notes" value="<%= @note %>">
       <% # Note: User takes care of scheduling in the Aeon app (see: ACFA-99), so ScheduledDate is not needed. %>
       <% # <input type="hidden" name="ScheduledDate" value=""> %>
-      <input type="hidden" name="GroupingIdentifier" value="GroupingField">
-
-      <input type="hidden" name="GroupingOption_ItemTitle" value="Concatenate">
-      <input type="hidden" name="GroupingOption_ItemAuthor" value="Concatenate">
-      <input type="hidden" name="GroupingOption_ItemDate" value="Concatenate">
-      <input type="hidden" name="GroupingOption_ReferenceNumber" value="Concatenate">
-      <input type="hidden" name="GroupingOption_ItemInfo1" value="Concatenate">
-      <input type="hidden" name="GroupingOption_ItemInfo3" value="Concatenate">
-      <input type="hidden" name="GroupingOption_ItemVolume" value="FirstValue">
-      <input type="hidden" name="GroupingOption_ItemNumber" value="FirstValue">
-      <input type="hidden" name="GroupingOption_ItemSubTitle" value="Concatenate">
-      <input type="hidden" name="GroupingOption_CallNumber" value="FirstValue">
-      <input type="hidden" name="GroupingOption_Location" value="FirstValue">
 
       <%
-        ######################
-        # Per-request fields #
-        ######################
-        @documents.each_with_index do |solr_document, index|
+        #######################################################
+        # Per-request fields.                                 #
+        # NOTE: We create one request per group of documents, #
+        # grouped by grouping_field_value.                    #
+        #######################################################
+        @aeon_requests.group_by {|aeon_request| aeon_request.grouping_field_value }.to_h.values.each_with_index do |grouped_aeon_requests, index|
           request_identifier = "r#{index}"
-          %>
-            <%= hidden_field_tag :Request, request_identifier, id: nil %>
-            <% solr_document.aeon_request.form_attributes.each do |name, value| %>
-              <%= hidden_field_tag "#{name}_#{request_identifier}", value %>
-            <% end %>
-          <%
+          %><%= hidden_field_tag :Request, request_identifier, id: nil %><%
+            Acfa::Aeon::MergedAeonLocalRequest.new(grouped_aeon_requests).form_attributes.each do |name, value|
+            %><%= hidden_field_tag "#{name}_#{request_identifier}", value %><%
+          end
         end
       %>
     <% end %>

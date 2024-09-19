@@ -44,12 +44,12 @@ class AeonRequestsController < ApplicationController
       rows: ids.length
     )
 
-    @documents = solr_response.dig('response', 'docs').map { |doc| SolrDocument.new(doc) }
+    @aeon_requests = solr_response.dig('response', 'docs').map { |doc| SolrDocument.new(doc) }.map { |doc| doc.aeon_request }
     @aeon_dll_url = params[:login_method] == 'shib' ? AEON[:shib_dll_url] : AEON[:non_shib_dll_url]
     @note = params[:note]
 
     # If a user navigates to the checkout page without any items in their cart, redirect to account selection page
-    if @documents.length < 1
+    if @aeon_requests.length < 1
       redirect_to action: 'select_account'
       return
     end

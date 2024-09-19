@@ -1,3 +1,4 @@
+<% aeon_request = @document.aeon_request %>
 <button
   onClick="window.handleAddToCartButtonClick(this);"
   class="btn btn-primary btn-sm add-to-cart-button"
@@ -8,6 +9,7 @@
   data-item-name="<%= @document['normalized_title_ssm'].first %>"
   <% # NOTE: Verify that repository_ssim value is what we want (below) %>
   data-reading-room-location="<%= @document['repository_ssim'].first %>"
+  data-container-info="<%= aeon_request.container_information.map {|container_level| container_level['label']}.join(', ') %>"
 >
   <i class="fa fa-cart-shopping"></i> <span class="button-text d-none d-sm-inline">Request</span>
 </button>

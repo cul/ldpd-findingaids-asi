@@ -20,7 +20,9 @@ class AeonLocalRequest
     @solr_document['parent_access_restrict_tesm'].find { |value| value.downcase.include?('unprocessed') } != nil
   end
 
-  def grouping_field
+  def grouping_field_value
+    # self.repository_local_request_config['site_code']  # TODO: Remove this line when testing is complete
+
     if container_labels.length > 1 && container_labels.first.downcase.include?('mapcase')
       # This is a mapcase and we should group one level below it
       container_labels[1]
@@ -65,8 +67,6 @@ class AeonLocalRequest
 
   def form_attributes
     form_fields = {}
-    form_fields['GroupingField'] = self.grouping_field
-    # form_fields['GroupingField'] = self.repository_local_request_config['site_code']  # for testing
     form_fields['Site'] = self.repository_local_request_config['site_code']
     # NOTE: We might need to truncate this field later on if values are too long
     form_fields['ItemTitle'] = @solr_document['title_ssm']&.first
