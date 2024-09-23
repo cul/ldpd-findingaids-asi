@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import Button from 'react-bootstrap/Button';
 import sortBy from 'lodash.sortby';
+import { Table } from 'react-bootstrap';
 import RequestCartStorage from '../../RequestCartStorage';
 
 const debouncedPersistRequestCartNote = debounce((note) => {
@@ -130,51 +132,85 @@ function RequestCart({ submissionMode, header }) {
     <div className="request-cart d-flex flex-column h-100">
       {header}
       <div className="flex-fill">
-        {
-          items.length > 0
-            ? cartItemsGroupedByReadingRoomLocation(
-              items,
-              'readingRoomLocation',
-              ['collectionName', 'containerInfo', 'itemName'],
-            ).map((groupedItems) => {
-              const firstItem = groupedItems[0];
-              return (
-                <div className="card mb-3" key={firstItem.readingRoomLocation}>
-                  <div className="card-header">
-                    {firstItem.readingRoomLocation}
-                  </div>
-                  <ul className="list-group list-group-flush">
-                    {
-                      groupedItems.map((item) => (
-                        <li className="list-group-item">
-                          <div className="d-flex">
-                            <div className="flex-fill">
-                              <dl className="row mb-0">
-                                <dt className="col-sm-3">Collection</dt>
-                                <dl className="col-sm-9 mb-0">{item.collectionName}</dl>
-                                <dt className="col-sm-3">Container</dt>
-                                <dl className="col-sm-9 mb-0">{item.containerInfo}</dl>
-                                <dt className="col-sm-3">Name</dt>
-                                <dl className="col-sm-9 mb-0">{item.itemName}</dl>
-                              </dl>
-                            </div>
-                            <div>
-                              <Button size="sm" variant="danger" onClick={() => { window.removeFromCart(item.id); }}>
-                                Remove
-                              </Button>
-                            </div>
-                          </div>
-                        </li>
-                      ))
-                    }
-                  </ul>
-                </div>
-              );
-            })
-            : (
-              <tr><td colSpan={4}>Your cart is empty.</td></tr>
-            )
-        }
+        <Table responsive>
+          <thead className="table-light">
+            <tr>
+              <th className="align-middle">Repository</th>
+              <th className="ps-4 align-middle">Collection</th>
+              <th className="align-middle">Title</th>
+              <th className="align-middle">Container</th>
+              <th className="pe-4"><span className="sr-only">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              items.length > 0
+                ? cartItemsGroupedByReadingRoomLocation(
+                  items,
+                  'readingRoomLocation',
+                  ['collectionName', 'containerInfo', 'itemName'],
+                ).map((groupedItems) => {
+                  const firstItem = groupedItems[0];
+                  const jsxElements = [];
+                  return groupedItems.map((item) => (
+                    <tr key={item.id} data-id={item.id}>
+                      <td>{item.readingRoomLocation}</td>
+                      <td className="ps-4">{item.collectionName}</td>
+                      <td>{item.itemName}</td>
+                      <td className="ps-4">{item.containerInfo}</td>
+                      <td className="pe-4 text-end align-middle">
+                        <Button size="sm" variant="secondary" onClick={() => { window.removeFromCart(item.id); }}>
+                          <i className="fa fa-x" />
+                        </Button>
+                      </td>
+                    </tr>
+                  ));
+                  // return (
+                  //   <div className="card mb-3" key={firstItem.readingRoomLocation}>
+                  //     <div className="card-header">
+                  //       {firstItem.readingRoomLocation}
+                  //     </div>
+                  //     <ul className="list-group list-group-flush">
+                  //       {
+                  //         groupedItems.map((item) => (
+                  //           <li className="list-group-item">
+                  //             <div className="d-flex">
+                  //               <div className="flex-fill">
+                  //                 <div>
+                  //                   <strong>Collection:</strong>
+                  //                   {' '}
+                  //                   {item.collectionName}
+                  //                 </div>
+                  //                 <div>
+                  //                   <strong>Container:</strong>
+                  //                   {' '}
+                  //                   {item.containerInfo}
+                  //                 </div>
+                  //                 <div>
+                  //                   <strong>Name:</strong>
+                  //                   {' '}
+                  //                   {item.itemName}
+                  //                 </div>
+                  //               </div>
+                  //               <div>
+                  //                 <Button size="sm" variant="danger" onClick={() => { window.removeFromCart(item.id); }}>
+                  //                   Remove
+                  //                 </Button>
+                  //               </div>
+                  //             </div>
+                  //           </li>
+                  //         ))
+                  //       }
+                  //     </ul>
+                  //   </div>
+                  // );
+                })
+                : (
+                  <tr><td colSpan={4}>Your cart is empty.</td></tr>
+                )
+            }
+          </tbody>
+        </Table>
       </div>
       <div>
         <textarea

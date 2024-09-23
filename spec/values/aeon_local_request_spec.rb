@@ -9,7 +9,8 @@ RSpec.describe AeonLocalRequest do
   let(:repository_id) { 'nnc-rb' }
   let(:parent_access_restrict_tesm_value) { ['unprocessed material'] }
   let(:barcode) { 'RH00002380' }
-  let(:box_number) { 'box 230' }
+  let(:box_label) { 'box 230' }
+  let(:folder_label) { 'folder 1 to 3' }
   let(:parent_unittitles_ssm) { ['First value', 'Series 2'] }
   let(:call_number) { 'MS#1234' }
   let(:container_information_ssm) do
@@ -18,20 +19,20 @@ RSpec.describe AeonLocalRequest do
         'barcode' => barcode,
         'id' => 'ef18c12f57c6c1c39c2f2ece677e6070',
         'parent' => '',
-        'label' => box_number,
+        'label' => box_label,
         'type' => 'box',
       }.to_json,
       {
         'barcode' => nil,
         'id' => 'b4ed1e77add4128f44588571fcd85b7e',
         'parent' => 'ef18c12f57c6c1c39c2f2ece677e6070',
-        'label' => 'folder 1 to 3',
+        'label' => folder_label,
         'type' => 'folder'
       }.to_json
     ]
   end
   let(:solr_doc) do
-    doc = SolrDocument.new({
+    SolrDocument.new({
       'id' => id,
       'title_ssm' => title_ssm,
       'creator_ssim' => creator_ssim,
@@ -100,13 +101,13 @@ RSpec.describe AeonLocalRequest do
           }.to_json
         ]
       end
-      it 'returns the second level container' do
-        expect(aeon_local_request.grouping_field_value).to eq('folder 3')
+      it 'returns the second level container, prefixed with "mapcase, "' do
+        expect(aeon_local_request.grouping_field_value).to eq('mapcase, folder 3')
       end
     end
     context "when the top level container is NOT a mapcase" do
       it 'returns the top level container' do
-        expect(aeon_local_request.grouping_field_value).to eq(box_number)
+        expect(aeon_local_request.grouping_field_value).to eq(box_label)
       end
     end
     context "when the top level container is a mapcase, but there is no second level container" do
@@ -157,12 +158,6 @@ end
     end
   end
 
-  describe '#box_number' do
-    it "returns the expected value" do
-      expect(aeon_local_request.box_number).to eq(box_number)
-    end
-  end
-
   describe '#series' do
     context "when parent_unittitles_ssm has at least two levels" do
       it 'returns the second level as the series value' do
@@ -189,7 +184,6 @@ end
       {
         'Site' => 'RBMLCUL',
         'ItemTitle' => title_ssm.first,
-        'ItemAuthor' => creator_ssim.first,
         'ItemDate' => normalized_date_ssm.first,
         'ReferenceNumber' => '12345678',
         'DocumentType' => 'All',

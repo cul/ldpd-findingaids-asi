@@ -9,11 +9,11 @@ describe Traject::Indexer do
     _indexer.load_config_file(Rails.root.join('lib/ead/traject/ead2_config.rb'))
     _indexer
   end
-  let(:fixture_file) do
+  let(:fixture_file_data) do
     File.read(fixture_path)
   end
   let(:nokogiri_reader) do
-    Arclight::Traject::NokogiriNamespacelessReader.new(File.read(fixture_path), {})
+    Arclight::Traject::NokogiriNamespacelessReader.new(fixture_file_data, {})
   end
   let(:records) do
     nokogiri_reader.to_a
@@ -136,10 +136,72 @@ describe Traject::Indexer do
       )
     end
   end
+
   describe 'unprocessed access note indexing' do
     let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
-    it do
-      expect(index_document[:components][0][:aeon_unprocessed_ssi]).to eq([true])
+    let(:fixture_file_data) do
+      File.read(fixture_path).gsub('This collection is PLACEHOLDER_PROCESSING_STATUS.', "This collection is #{keyword}.")
+    end
+    context 'when unprocessed/vetted keywords are not present' do
+      let(:keyword) { 'fine' }
+      it do
+        expect(index_document[:components][0][:aeon_unprocessed_ssi]).to eq([false])
+      end
+    end
+    context 'when "unprocessed" keyword is present' do
+      let(:keyword) { 'unprocessed' }
+      it do
+        expect(index_document[:components][0][:aeon_unprocessed_ssi]).to eq([true])
+      end
+    end
+    context 'when "vetted" keyword is present' do
+      let(:keyword) { 'vetted' }
+      it do
+        expect(index_document[:components][0][:aeon_unprocessed_ssi]).to eq([true])
+      end
+    end
+    context 'when a mixed-case relevant keyword is present' do
+      let(:keyword) { 'VeTtEd' }
+      it do
+        expect(index_document[:components][0][:aeon_unprocessed_ssi]).to eq([true])
+      end
+    end
+  end
+
+  describe 'restricted/closed/missing access note indexing' do
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+    let(:fixture_file_data) do
+      File.read(fixture_path).gsub('[Vetted, PLACEHOLDER_AVAILABILITY_KEYWORD]', "[Vetted, #{keyword}]")
+    end
+    context 'when restricted/closed/missing keywords are not present' do
+      let(:keyword) { 'open' }
+      it do
+        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([false])
+      end
+    end
+    context 'when "restricted" keyword is present' do
+      let(:keyword) { 'restricted' }
+      it do
+        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+      end
+    end
+    context 'when "closed" keyword is present' do
+      let(:keyword) { 'closed' }
+      it do
+        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+      end
+    end
+    context 'when "missing" keyword is present' do
+      let(:keyword) { 'missing' }
+      it do
+        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+      end
+    end
+    context 'when a mixed-case relevant keyword is present' do
+      let(:keyword) { 'MiSsInG' }
+      it do
+        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+      end
     end
   end
 end

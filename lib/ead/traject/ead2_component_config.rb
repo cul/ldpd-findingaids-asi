@@ -87,6 +87,12 @@ to_field "container_information_ssm" do |record, accumulator, context|
   end
 end
 
-to_field "aeon_unprocessed_ssi", extract_xpath("/ead/archdesc/accessrestrict[contains(., 'vetted') or contains(., 'unprocessed')]", to_text: false), first_only do |_record, accumulator|
-  accumulator.replace([accumulator.any?])
+to_field "aeon_unprocessed_ssi", extract_xpath("/ead/archdesc/accessrestrict") do |_record, accumulator|
+  unprocessed_regex = /vetted|unprocessed/i
+  accumulator.replace([accumulator.map {|value| value.match(unprocessed_regex) }.any?])
+end
+
+to_field "aeon_unavailable_for_request_ssi", extract_xpath("./accessrestrict/p") do |_record, accumulator|
+  unavailable_for_request = /restricted|closed|missing/i
+  accumulator.replace([accumulator.map {|value| value.match(unavailable_for_request) }.any?])
 end

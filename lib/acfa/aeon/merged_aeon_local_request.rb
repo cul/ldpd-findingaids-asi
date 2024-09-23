@@ -5,17 +5,24 @@ class Acfa::Aeon::MergedAeonLocalRequest
   MERGE_RULES = {
     'Site' => :first,
     'ItemTitle' => DEFAULT_DELIMETER,
-    'ItemAuthor' => DEFAULT_DELIMETER,
+    # 'ItemAuthor' => DEFAULT_DELIMETER, # This is commented out because we're not currently sending ItemAuthor to Aeon
     'ItemDate' => DEFAULT_DELIMETER,
     'ReferenceNumber' => DEFAULT_DELIMETER,
     'DocumentType' => :first,
     'ItemInfo1' => :first,
-    'ItemInfo3' => DEFAULT_DELIMETER,
+    'ItemInfo3' => :first,
     'UserReview' => :first,
     'ItemVolume' => :first,
+    # Every box should have one barcode, so it's fine to use the first value only
     'ItemNumber' => :first,
-    'ItemSubTitle' => DEFAULT_DELIMETER,
+    # It's possible, but infrequent, for two items in the same box to have different
+    # ItemSubTitle (a.k.a. "series") values, so to keep our Aeon submission cleaner
+    # (to avoid concatenating and repeating the same series over and over) we're only
+    # going to send the first one.
+    'ItemSubTitle' => :first,
+    # Call number is at the collection level, so first value is fine here
     'CallNumber' => :first,
+    # All items in the same box are from the same repository, so first value is fine here
     'Location' => :first
   }
 

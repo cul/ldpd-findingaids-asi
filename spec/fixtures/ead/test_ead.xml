@@ -133,11 +133,7 @@
 		</accessrestrict>
 		<accessrestrict>
 			<head>Restrictions on Access</head>
-			<p>This collection is unprocessed.</p>
-		</accessrestrict>
-		<accessrestrict>
-			<head>Restrictions on Access</head>
-			<p>This collection needs to be vetted.</p>
+			<p>This collection is PLACEHOLDER_PROCESSING_STATUS.</p>
 		</accessrestrict>
 		<accruals>
 			<head>Accruals</head>
@@ -642,6 +638,10 @@
 						<scopecontent id="aspace_c35fc09c1d77badb7e08caaa0d60dccf">
 							<head>Scope and Contents</head>
 							<p>In twenty boxes</p>
+						</scopecontent>
+						<accessrestrict id="aspace_335fc0931d773ad37e083aa30d30da33">
+								<head>Conditions Governing Access</head>
+								<p>[Vetted, PLACEHOLDER_AVAILABILITY_KEYWORD]</p>
 						</scopecontent>
 					</c>
 				</c>
