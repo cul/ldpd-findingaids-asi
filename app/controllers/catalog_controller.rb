@@ -264,6 +264,8 @@ class CatalogController < ApplicationController
     config.add_related_field 'arrangement', field: 'arrangement_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'accruals', field: 'accruals_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'phystech', field: 'phystech_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'physdesc', field: 'physdesc_tesim', helper_method: :render_html_tags
+    config.add_related_field 'physfacet', field: 'physfacet_tesim', helper_method: :render_html_tags
     config.add_related_field 'physloc', field: 'physloc_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'descrules', field: 'descrules_ssm', helper_method: :render_html_tags
     config.add_related_field 'relatedmaterial', field: 'relatedmaterial_html_tesm', helper_method: :render_html_tags
@@ -271,6 +273,7 @@ class CatalogController < ApplicationController
     config.add_related_field 'otherfindaid', field: 'otherfindaid_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'altformavail', field: 'altformavail_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'originalsloc', field: 'originalsloc_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tags
 
     # Collection Show Page - Indexed Terms Section
     config.add_indexed_terms_field 'subjects', field: 'access_subjects_ssim', link_to_facet: true, separator_options: {
@@ -303,17 +306,26 @@ class CatalogController < ApplicationController
     }, if: lambda { |_context, _field_config, document|
       document.containers.present?
     }
-    config.add_component_field 'abstract', field: 'abstract_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'extent', field: 'extent_ssm'
+    config.add_component_field 'altformavail', field: 'altformavail_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'scopecontent', field: 'scopecontent_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'bioghist', field: 'bioghist_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'acqinfo', field: 'acqinfo_ssim', helper_method: :render_html_tags
+    config.add_component_field 'phystech', field: 'phystech_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'physloc', field: 'physloc_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'dimensions', field: 'dimensions_tesim', helper_method: :render_html_tags
+    config.add_component_field 'physdesc', field: 'physdesc_tesim', helper_method: :render_html_tags
+    config.add_component_field 'physfacet', field: 'physfacet_tesim', helper_method: :render_html_tags
     config.add_component_field 'appraisal', field: 'appraisal_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'custodhist', field: 'custodhist_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'processinfo', field: 'processinfo_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'arrangement', field: 'arrangement_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'accruals', field: 'accruals_html_tesm', helper_method: :render_html_tags
-    config.add_component_field 'phystech', field: 'phystech_html_tesm', helper_method: :render_html_tags
-    config.add_component_field 'physloc', field: 'physloc_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'otherfindaid', field: 'otherfindaid_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'originalsloc', field: 'originalsloc_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'relatedmaterial', field: 'relatedmaterial_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tags
+    
 
     # Component Show Page - Indexed Terms Section
     config.add_component_indexed_terms_field 'access_subjects', field: 'access_subjects_ssim', link_to_facet: true, separator_options: {
