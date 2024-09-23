@@ -149,62 +149,19 @@ function RequestCart({ submissionMode, header }) {
                   items,
                   'readingRoomLocation',
                   ['collectionName', 'containerInfo', 'itemName'],
-                ).map((groupedItems) => {
-                  const firstItem = groupedItems[0];
-                  const jsxElements = [];
-                  return groupedItems.map((item) => (
-                    <tr key={item.id} data-id={item.id}>
-                      <td>{item.readingRoomLocation}</td>
-                      <td className="ps-4">{item.collectionName}</td>
-                      <td>{item.itemName}</td>
-                      <td className="ps-4">{item.containerInfo}</td>
-                      <td className="pe-4 text-end align-middle">
-                        <Button size="sm" variant="secondary" onClick={() => { window.removeFromCart(item.id); }}>
-                          <i className="fa fa-x" />
-                        </Button>
-                      </td>
-                    </tr>
-                  ));
-                  // return (
-                  //   <div className="card mb-3" key={firstItem.readingRoomLocation}>
-                  //     <div className="card-header">
-                  //       {firstItem.readingRoomLocation}
-                  //     </div>
-                  //     <ul className="list-group list-group-flush">
-                  //       {
-                  //         groupedItems.map((item) => (
-                  //           <li className="list-group-item">
-                  //             <div className="d-flex">
-                  //               <div className="flex-fill">
-                  //                 <div>
-                  //                   <strong>Collection:</strong>
-                  //                   {' '}
-                  //                   {item.collectionName}
-                  //                 </div>
-                  //                 <div>
-                  //                   <strong>Container:</strong>
-                  //                   {' '}
-                  //                   {item.containerInfo}
-                  //                 </div>
-                  //                 <div>
-                  //                   <strong>Name:</strong>
-                  //                   {' '}
-                  //                   {item.itemName}
-                  //                 </div>
-                  //               </div>
-                  //               <div>
-                  //                 <Button size="sm" variant="danger" onClick={() => { window.removeFromCart(item.id); }}>
-                  //                   Remove
-                  //                 </Button>
-                  //               </div>
-                  //             </div>
-                  //           </li>
-                  //         ))
-                  //       }
-                  //     </ul>
-                  //   </div>
-                  // );
-                })
+                ).map((groupedItems) => groupedItems.map((item) => (
+                  <tr key={item.id} data-id={item.id}>
+                    <td>{item.readingRoomLocation}</td>
+                    <td className="ps-4">{item.collectionName}</td>
+                    <td>{item.itemName}</td>
+                    <td className="ps-4">{item.containerInfo}</td>
+                    <td className="pe-4 text-end align-middle">
+                      <Button size="sm" variant="secondary" onClick={() => { window.removeFromCart(item.id); }}>
+                        <i className="fa fa-x" />
+                      </Button>
+                    </td>
+                  </tr>
+                )))
                 : (
                   <tr><td colSpan={4}>Your cart is empty.</td></tr>
                 )
