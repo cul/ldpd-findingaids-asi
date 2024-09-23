@@ -135,10 +135,10 @@ function RequestCart({ submissionMode, header }) {
         <Table responsive>
           <thead className="table-light">
             <tr>
-              <th className="align-middle">Repository</th>
-              <th className="ps-4 align-middle">Collection</th>
-              <th className="align-middle">Title</th>
-              <th className="align-middle">Container</th>
+              <th className="align-middle pe-4">Repository</th>
+              <th className="align-middle pe-4">Collection</th>
+              <th className="align-middle pe-4">Title</th>
+              <th className="align-middle pe-4">Container</th>
               <th className="pe-4"><span className="sr-only">Actions</span></th>
             </tr>
           </thead>
@@ -151,10 +151,10 @@ function RequestCart({ submissionMode, header }) {
                   ['collectionName', 'containerInfo', 'itemName'],
                 ).map((groupedItems) => groupedItems.map((item) => (
                   <tr key={item.id} data-id={item.id}>
-                    <td>{item.readingRoomLocation}</td>
-                    <td className="ps-4">{item.collectionName}</td>
-                    <td>{item.itemName}</td>
-                    <td className="ps-4">{item.containerInfo}</td>
+                    <td className="pe-4">{item.readingRoomLocation}</td>
+                    <td className="pe-4">{item.collectionName}</td>
+                    <td className="pe-4">{item.itemName}</td>
+                    <td className="pe-4">{item.containerInfo}</td>
                     <td className="pe-4 text-end align-middle">
                       <Button size="sm" variant="secondary" onClick={() => { window.removeFromCart(item.id); }}>
                         <i className="fa fa-x" />
