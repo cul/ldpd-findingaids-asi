@@ -163,7 +163,7 @@ function RequestCart({ submissionMode, header }) {
                   </tr>
                 )))
                 : (
-                  <tr><td colSpan={4}>Your cart is empty.</td></tr>
+                  <tr><td colSpan={5}>Your cart is empty.</td></tr>
                 )
             }
           </tbody>
