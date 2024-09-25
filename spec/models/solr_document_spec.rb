@@ -34,7 +34,7 @@ describe SolrDocument, type: :model do
   let(:containers_ssim) do
     container_information_ssm.map {|container_info| container_info['label'] }
   end
-  let(:aeon_unavailable_for_request_ssi) { false }
+  let(:aeon_unavailable_for_request_ssi) { 'false' }
 
   let(:solr_doc) do
     described_class.new({
@@ -75,7 +75,7 @@ describe SolrDocument, type: :model do
     end
 
     context "when the record is marked as unavailable" do
-      let(:aeon_unavailable_for_request_ssi) { true }
+      let(:aeon_unavailable_for_request_ssi) { 'true' }
       it "returns false" do
         expect(solr_doc.requestable?).to eq(false)
       end
