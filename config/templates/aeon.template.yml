@@ -1,11 +1,9 @@
 development:
-  aeon_url: 'https://example.com/aeon'
   aeon_shib_boom_url: 'https://example.com/aeon/boom.html'
   shib_dll_url: 'https://example.com/aeon/aeon.dll'
   non_shib_dll_url: 'https://example.com/nonshib/aeon.dll'
 
 test:
-  aeon_url: 'https://example.com/aeon'
   aeon_shib_boom_url: 'https://example.com/aeon/boom.html'
   shib_dll_url: 'https://example.com/aeon/aeon.dll'
   non_shib_dll_url: 'https://example.com/nonshib/aeon.dll'

@@ -73,13 +73,4 @@ export default class RequestCartStorage {
   static getItems() {
     return this.getCartData().items;
   }
-
-  // static archiveCartData() {
-  //   localStorage.setItem(REQUEST_CART_LOCAL_STORAGE_KEY, JSON.stringify(this.getCartData()));
-  //   this.clearCart();
-  // }
-
-  // static getArchivedCartData() {
-  //   return JSON.parse(localStorage.getItem(ARCHIVED_REQUEST_CART_LOCAL_STORAGE_KEY)) || initialCartData;
-  // }
 }

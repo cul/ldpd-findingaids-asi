@@ -25,8 +25,6 @@ class AeonLocalRequest
   end
 
   def box_or_highest_requestable_level_label
-    # self.repository_local_request_config['site_code']  # TODO: Remove this line when testing is complete
-
     # A mapcase itself is not requestable, so for mapcases we return the second-level container
     # (which we are referring to here as the "highest requestable level") and we prefix it with "mapcase, "
     # so that the staff member processing this request knows that the secondary level is something

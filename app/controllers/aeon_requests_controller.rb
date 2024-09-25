@@ -1,10 +1,6 @@
 class AeonRequestsController < ApplicationController
   MAX_NUM_ALLOWED_REQUESTS = 100
 
-  # TODO: Delete this (and the associated view) after multi-item Aeon testing is complete
-  def test_submission
-  end
-
   # GET /aeon_requests/redirectshib
   def redirectshib
     redirect_to checkout_aeon_request_url(login_method: 'shib')

@@ -7,7 +7,6 @@
   data-id="<%= @document['id'] %>"
   data-collection-name="<%= @document['collection_ssim'].first %>"
   data-item-name="<%= @document['normalized_title_ssm'].first %>"
-  <% # NOTE: Verify that repository_ssim value is what we want (below) %>
   data-reading-room-location="<%= @document['repository_ssim'].first %>"
   data-container-info="<%= aeon_request.container_information.map {|container_level| container_level['label']}.join(', ') %>"
 >
