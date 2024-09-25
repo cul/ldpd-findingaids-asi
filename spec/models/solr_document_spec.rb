@@ -62,7 +62,7 @@ describe SolrDocument, type: :model do
       before do
         allow(solr_doc.repository_config).to receive(:request_types).and_return([])
       end
-      it "returns false", focus: true do
+      it "returns false" do
         expect(solr_doc.requestable?).to eq(false)
       end
     end
