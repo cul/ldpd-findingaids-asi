@@ -49,8 +49,6 @@ Rails.application.routes.draw do
     get 'redirectnonshib'
     get 'select_account'
     get 'checkout'
-
-    get 'test_submission' if Rails.env.development?
   end
 
   root 'repositories#index'

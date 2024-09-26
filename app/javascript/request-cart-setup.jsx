@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import RequestCartApp from './components/RequestCartApp';
-import InlineRequestCartApp from './components/InlineRequestCartApp';
+import RequestCartApp from './components/request-cart/RequestCartApp';
+import InlineRequestCartApp from './components/request-cart/InlineRequestCartApp';
 import RequestCartStorage from './RequestCartStorage';
 
 // Define some global event dispatching functions that will allow us to send data to the cart app
@@ -12,9 +12,9 @@ window.showCart = () => {
 
 window.addToCart = (recordData) => {
   const {
-    id, collectionName, itemName, readingRoomLocation,
+    id, collectionName, itemName, readingRoomLocation, containerInfo,
   } = recordData;
-  RequestCartStorage.addItem(id, collectionName, itemName, readingRoomLocation);
+  RequestCartStorage.addItem(id, collectionName, itemName, readingRoomLocation, containerInfo);
   window.showCart();
 };
 
@@ -41,6 +41,7 @@ window.handleAddToCartButtonClick = (buttonElement) => {
       collectionName: buttonElement.getAttribute('data-collection-name'),
       itemName: buttonElement.getAttribute('data-item-name'),
       readingRoomLocation: buttonElement.getAttribute('data-reading-room-location'),
+      containerInfo: buttonElement.getAttribute('data-container-info'),
     });
   }
 };

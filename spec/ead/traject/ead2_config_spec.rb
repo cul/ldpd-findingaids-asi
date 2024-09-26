@@ -9,11 +9,11 @@ describe Traject::Indexer do
     _indexer.load_config_file(Rails.root.join('lib/ead/traject/ead2_config.rb'))
     _indexer
   end
-  let(:fixture_file) do
+  let(:fixture_file_data) do
     File.read(fixture_path)
   end
   let(:nokogiri_reader) do
-    Arclight::Traject::NokogiriNamespacelessReader.new(File.read(fixture_path), {})
+    Arclight::Traject::NokogiriNamespacelessReader.new(fixture_file_data, {})
   end
   let(:records) do
     nokogiri_reader.to_a
@@ -81,11 +81,15 @@ describe Traject::Indexer do
       it { expect(index_document[:repository_ssim]).to eql [repository_name] }
     end
   end
-  describe 'aspace path indexing' do
-      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_eadid/from_unitid.xml') }
-      let(:expected_value) { '/7654321' }
-      it { expect(index_document).not_to be_nil }
-      it { expect(index_document[:aspace_path_ssi]).to eql [expected_value] }
+  describe 'call number indexing' do
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+      let(:expected_value) { 'MS#0030' }
+      it do
+        expect(index_document).not_to be_nil
+        expect(index_document[:components][0][:call_number_ss]).to eql [expected_value]
+        expect(index_document[:components][0][:components][0][:call_number_ss]).to eql [expected_value]
+        expect(index_document[:components][0][:components][0][:components][0][:call_number_ss]).to eql [expected_value]
+      end
   end
   describe 'language indexing' do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
@@ -100,5 +104,104 @@ describe Traject::Indexer do
       let(:expected_value) { 'Ead Fixture' }
       it { expect(index_document).not_to be_nil }
       it { expect(index_document[:collection_sort]).to eql [expected_value] }
+  end
+  describe 'container information indexing' do
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+    let(:info_for_one_of_the_containers) do
+      index_document[:components][0][:components][2][:container_information_ssm].map {|info_json| JSON.parse(info_json) }
+    end
+    it do
+      expect(index_document).not_to be_nil
+    end
+    it 'extracts the expected information for a known box' do
+      expect(info_for_one_of_the_containers).to include(
+        {
+          'barcode' => 'RH00002380',
+          'id' => 'ef18c12f57c6c1c39c2f2ece677e6070',
+          'parent' => '',
+          'label' => 'box 230',
+          'type' => 'box',
+        }
+      )
+    end
+    it 'extracts the expected information for a known folder' do
+      expect(info_for_one_of_the_containers).to include(
+        {
+          'barcode' => nil,
+          'id' => 'b4ed1e77add4128f44588571fcd85b7e',
+          'parent' => 'ef18c12f57c6c1c39c2f2ece677e6070',
+          'label' => 'folder 1 to 3',
+          'type' => 'folder'
+        }
+      )
+    end
+  end
+
+  describe 'unprocessed access note indexing' do
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+    let(:fixture_file_data) do
+      File.read(fixture_path).gsub('This collection is PLACEHOLDER_PROCESSING_STATUS.', "This collection is #{keyword}.")
+    end
+    context 'when unprocessed/vetted keywords are not present' do
+      let(:keyword) { 'fine' }
+      it do
+        expect(index_document[:components][0][:aeon_unprocessed_ssi]).to eq([false])
+      end
+    end
+    context 'when "unprocessed" keyword is present' do
+      let(:keyword) { 'unprocessed' }
+      it do
+        expect(index_document[:components][0][:aeon_unprocessed_ssi]).to eq([true])
+      end
+    end
+    context 'when "vetted" keyword is present' do
+      let(:keyword) { 'vetted' }
+      it do
+        expect(index_document[:components][0][:aeon_unprocessed_ssi]).to eq([true])
+      end
+    end
+    context 'when a mixed-case relevant keyword is present' do
+      let(:keyword) { 'VeTtEd' }
+      it do
+        expect(index_document[:components][0][:aeon_unprocessed_ssi]).to eq([true])
+      end
+    end
+  end
+
+  describe 'restricted/closed/missing access note indexing' do
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+    let(:fixture_file_data) do
+      File.read(fixture_path).gsub('[Vetted, PLACEHOLDER_AVAILABILITY_KEYWORD]', "[Vetted, #{keyword}]")
+    end
+    context 'when restricted/closed/missing keywords are not present' do
+      let(:keyword) { 'open' }
+      it do
+        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([false])
+      end
+    end
+    context 'when "restricted" keyword is present' do
+      let(:keyword) { 'restricted' }
+      it do
+        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+      end
+    end
+    context 'when "closed" keyword is present' do
+      let(:keyword) { 'closed' }
+      it do
+        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+      end
+    end
+    context 'when "missing" keyword is present' do
+      let(:keyword) { 'missing' }
+      it do
+        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+      end
+    end
+    context 'when a mixed-case relevant keyword is present' do
+      let(:keyword) { 'MiSsInG' }
+      it do
+        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+      end
+    end
   end
 end

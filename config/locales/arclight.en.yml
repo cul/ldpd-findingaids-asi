@@ -113,8 +113,12 @@ en:
         arrangement: Arrangement
         accruals: Accruals
         phystech: Physical / technical requirements
+        physdesc: Physical description
+        physfacet: Physical facet
         physloc: Physical location
         descrules: Rules or conventions
+        odd: Other information
+        dimensions: Dimensions
 
         relatedmaterial: Related material
         separatedmaterial: Separated material

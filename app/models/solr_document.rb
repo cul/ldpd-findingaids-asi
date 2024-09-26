@@ -32,7 +32,10 @@ class SolrDocument
   end
 
   def requestable?
-    repository_config&.request_types&.any? && self.containers.present?
+    return false unless repository_config&.request_types&.any?
+    return false unless self.containers.present?
+    return false if self['aeon_unavailable_for_request_ssi'] == 'true' # NOTE: 'true' is a string here
+    true
   end
 
   def aeon_request

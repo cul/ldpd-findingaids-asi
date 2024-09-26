@@ -1,7 +1,6 @@
 require 'rails_helper'
 require 'acfa/index.rb'
 
-
 url = "/api/v1/index/delete_ead"
 
 RSpec.describe url, type: :request do

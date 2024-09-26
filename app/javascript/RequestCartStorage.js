@@ -34,7 +34,7 @@ export default class RequestCartStorage {
     this.persistCartData(cartData);
   }
 
-  static addItem(id, collectionName, itemName, readingRoomLocation) {
+  static addItem(id, collectionName, itemName, readingRoomLocation, containerInfo) {
     const cartData = this.getCartData();
 
     const newItem = {
@@ -42,6 +42,7 @@ export default class RequestCartStorage {
       collectionName,
       itemName,
       readingRoomLocation,
+      containerInfo,
     };
 
     // Check for identical existing item.  If found, skip adding this duplicate.
@@ -72,13 +73,4 @@ export default class RequestCartStorage {
   static getItems() {
     return this.getCartData().items;
   }
-
-  // static archiveCartData() {
-  //   localStorage.setItem(REQUEST_CART_LOCAL_STORAGE_KEY, JSON.stringify(this.getCartData()));
-  //   this.clearCart();
-  // }
-
-  // static getArchivedCartData() {
-  //   return JSON.parse(localStorage.getItem(ARCHIVED_REQUEST_CART_LOCAL_STORAGE_KEY)) || initialCartData;
-  // }
 }

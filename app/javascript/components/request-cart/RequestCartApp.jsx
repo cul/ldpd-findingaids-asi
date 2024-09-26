@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import RequestCartStorage from '../RequestCartStorage';
+import RequestCartStorage from '../../RequestCartStorage';
 import RequestCart from './RequestCart';
 
 function RequestCartApp() {
@@ -34,7 +34,7 @@ function RequestCartApp() {
         <Offcanvas.Body>
           <RequestCart
             submissionMode="select_account"
-// eslint-disable-next-line
+            // eslint-disable-next-line
             header={<div className="mb-3">Ready to view these items in the reading room? Click &quot;Request&quot; to log in and schedule an appointment.</div>}
           />
         </Offcanvas.Body>

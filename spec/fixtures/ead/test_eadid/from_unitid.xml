@@ -8,8 +8,7 @@
   </eadheader>
   <archdesc level="collection">
     <did>
-      <unitid>1234567</unitid><unitid>UNEXPECTED</unitid>
-      <unitid type='aspace_uri'>/7654321</unitid><unitid type='aspace_uri'>UNEXPECTED</unitid>
+      <unitid>1234567</unitid>
       <unittitle>Ead Fixture</unittitle>
     </did>
   </archdesc>
