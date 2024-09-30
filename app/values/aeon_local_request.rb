@@ -74,11 +74,23 @@ class AeonLocalRequest
     @solr_document['call_number_ss']
   end
 
+  def collection
+    @solr_document['collection_ssim']&.first
+  end
+
+  def title
+    @solr_document['title_ssm']&.first
+  end
+
+  def location
+    @solr_document['collection_offsite_ssi'] == 'true' ? 'Offsite' : self.repository_config.name
+  end
+
   def form_attributes
     form_fields = {}
     form_fields['Site'] = self.repository_local_request_config['site_code']
-    # NOTE: We might need to truncate this field later on if values are too long
-    form_fields['ItemTitle'] = @solr_document['title_ssm']&.first
+    # We intentionally send collection name to the AEON "ItemTitle" field because this was requested by CUL staff.
+    form_fields['ItemTitle'] = self.collection
     # NOTE about ItemAuthor field:
     # 1) Some documents may not have a creator_ssim value because we only index creator_ssim on some parent level documents.
     # 2) This might mean that in the future we'll want to extract the parent (or grandparent) container creator at index time.
@@ -96,12 +108,13 @@ class AeonLocalRequest
     form_fields['ItemVolume'] = self.box_or_highest_requestable_level_label
     # Labeled "Barcode" in AEON
     form_fields['ItemNumber'] = self.barcode
-    # Labeled "Series" in AEON
-    form_fields['ItemSubTitle'] = self.series
+    # "ItemSubTitle" is labeled "Series" in AEON.
+    # We intentionally send the item title to the AEON "ItemSubTitle" field because this was requested by CUL staff.
+    form_fields['ItemSubTitle'] = title
     # Labeled "Call Number" in AEON
     form_fields['CallNumber'] = self.call_number
     # This is different from the site code, and generally formatted as full library name like "Rare Book and Manuscript Library".
-    form_fields['Location'] = self.repository_config.name
+    form_fields['Location'] = self.location
 
     form_fields
   end
