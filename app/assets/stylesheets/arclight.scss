@@ -6,7 +6,7 @@ $logo-image: image_url('arclight/logo.png') !default;
 
 
 
-.documents-list {
+.documents-list, .documents-compact {
   margin-bottom: $spacer;
 
   // Result item header

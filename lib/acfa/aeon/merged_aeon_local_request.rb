@@ -4,10 +4,10 @@ class Acfa::Aeon::MergedAeonLocalRequest
 
   MERGE_RULES = {
     'Site' => :first,
-    'ItemTitle' => DEFAULT_DELIMETER,
+    'ItemTitle' => :first,
     # 'ItemAuthor' => DEFAULT_DELIMETER, # This is commented out because we're not currently sending ItemAuthor to Aeon
     'ItemDate' => DEFAULT_DELIMETER,
-    'ReferenceNumber' => DEFAULT_DELIMETER,
+    'ReferenceNumber' => :first,
     'DocumentType' => :first,
     'ItemInfo1' => :first,
     'ItemInfo3' => :first,
@@ -19,7 +19,7 @@ class Acfa::Aeon::MergedAeonLocalRequest
     # ItemSubTitle (a.k.a. "series") values, so to keep our Aeon submission cleaner
     # (to avoid concatenating and repeating the same series over and over) we're only
     # going to send the first one.
-    'ItemSubTitle' => :first,
+    'ItemSubTitle' => DEFAULT_DELIMETER,
     # Call number is at the collection level, so first value is fine here
     'CallNumber' => :first,
     # All items in the same box are from the same repository, so first value is fine here

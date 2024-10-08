@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe AeonLocalRequest do
   let(:id) { "ldpd_#{bibid}_aspace_abcdefabcdefabcdefabcdefabcdefab" }
   let(:bibid) { '12345678' }
+  let(:collection_ssim) { ['Great Collection Name'] }
   let(:title_ssm) { ['Great Title'] }
   let(:creator_ssim) { ['Great Author'] }
   let(:normalized_date_ssm) { ['07-20-1969'] }
@@ -13,6 +14,7 @@ RSpec.describe AeonLocalRequest do
   let(:folder_label) { 'folder 1 to 3' }
   let(:parent_unittitles_ssm) { ['First value', 'Series 2'] }
   let(:call_number) { 'MS#1234' }
+  let(:collection_offsite_ssi) { 'false' }
   let(:container_information_ssm) do
     [
       {
@@ -34,6 +36,7 @@ RSpec.describe AeonLocalRequest do
   let(:solr_doc) do
     SolrDocument.new({
       'id' => id,
+      'collection_ssim' => collection_ssim,
       'title_ssm' => title_ssm,
       'creator_ssim' => creator_ssim,
       'normalized_date_ssm' => normalized_date_ssm,
@@ -41,7 +44,8 @@ RSpec.describe AeonLocalRequest do
       'parent_access_restrict_tesm' => parent_access_restrict_tesm_value,
       'container_information_ssm' => container_information_ssm,
       'parent_unittitles_ssm' => parent_unittitles_ssm,
-      'call_number_ss' => call_number
+      'call_number_ss' => call_number,
+      'collection_offsite_ssi' => collection_offsite_ssi,
     })
   end
   let(:aeon_local_request) { described_class.new(solr_doc) }
@@ -179,11 +183,39 @@ end
     end
   end
 
+  describe '#collection' do
+    it 'returns the expected value' do
+      expect(aeon_local_request.collection).to eq(collection_ssim.first)
+    end
+  end
+
+  describe '#title' do
+    it 'returns the expected value' do
+      expect(aeon_local_request.title).to eq(title_ssm.first)
+    end
+  end
+
+  describe '#location' do
+    context 'an item from an onsite collection' do
+      let(:collection_offsite_ssi) { 'false' }
+      it 'returns the expected value' do
+        expect(aeon_local_request.location).to eq('Rare Book & Manuscript Library')
+      end
+    end
+
+    context 'an item from an offsite collection' do
+      let(:collection_offsite_ssi) { 'true' }
+      it 'returns the expected value' do
+        expect(aeon_local_request.location).to eq('Offsite')
+      end
+    end
+  end
+
   describe '#form_attributes' do
     let(:expected_form_attributes) do
       {
         'Site' => 'RBMLCUL',
-        'ItemTitle' => title_ssm.first,
+        'ItemTitle' => collection_ssim.first,
         'ItemDate' => normalized_date_ssm.first,
         'ReferenceNumber' => '12345678',
         'DocumentType' => 'All',
@@ -192,7 +224,7 @@ end
         'UserReview' => 'Yes',
         'ItemVolume' => 'box 230',
         'ItemNumber' => 'RH00002380',
-        'ItemSubTitle' => 'Series 2',
+        'ItemSubTitle' => title_ssm.first,
         'CallNumber' => 'MS#1234',
         'Location' => 'Rare Book & Manuscript Library',
 

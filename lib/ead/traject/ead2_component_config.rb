@@ -92,6 +92,11 @@ to_field "aeon_unprocessed_ssi", extract_xpath("/ead/archdesc/accessrestrict") d
   accumulator.replace([accumulator.map {|value| value.match(unprocessed_regex) }.any?])
 end
 
+to_field "collection_offsite_ssi", extract_xpath("/ead/archdesc/accessrestrict") do |_record, accumulator|
+  offsite_regex = /off[\s-]?site/i
+  accumulator.replace([accumulator.map {|value| value.match(offsite_regex) }.any?])
+end
+
 to_field "aeon_unavailable_for_request_ssi", extract_xpath("./accessrestrict/p") do |_record, accumulator|
   unavailable_for_request = /restricted|closed|missing/i
   accumulator.replace([accumulator.map {|value| value.match(unavailable_for_request) }.any?])

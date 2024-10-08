@@ -168,6 +168,37 @@ describe Traject::Indexer do
     end
   end
 
+  describe 'offsite collection access note indexing' do
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+    let(:fixture_file_data) do
+      File.read(fixture_path).gsub('This collection is PLACEHOLDER_O.F.F.S.I.T.E_STATUS.', "This collection is #{keyword}.")
+    end
+    context 'when the offsite keyword is not present' do
+      let(:keyword) { 'onsite' }
+      it do
+        expect(index_document[:components][0][:collection_offsite_ssi]).to eq([false])
+      end
+    end
+    context 'when the "offsite" keyword is present' do
+      let(:keyword) { 'offsite' }
+      it do
+        expect(index_document[:components][0][:collection_offsite_ssi]).to eq([true])
+      end
+    end
+    context 'when the "off-site" keyword is present' do
+      let(:keyword) { 'off-site' }
+      it do
+        expect(index_document[:components][0][:collection_offsite_ssi]).to eq([true])
+      end
+    end
+    context 'when the "off site" keyword is present' do
+      let(:keyword) { 'off site' }
+      it do
+        expect(index_document[:components][0][:collection_offsite_ssi]).to eq([true])
+      end
+    end
+  end
+
   describe 'restricted/closed/missing access note indexing' do
     let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
     let(:fixture_file_data) do
