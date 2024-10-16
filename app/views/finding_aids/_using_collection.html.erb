@@ -4,7 +4,7 @@
   <%== ArchiveSpace::Parsers::EadHelper.apply_ead_to_html_transforms other_finding_aid_value %>
 <% end %>
 <%= content_tag(:h3, @arch_desc_misc.access_restrictions_head, class: 'al-show-sub-heading') unless @arch_desc_misc.access_restrictions_head.nil? %>
-<%- advance_appt = ['nnc-rb', 'nnc-ua', 'nnc-ccoh', 'nnc-a'].include? @repository_code %>
+<%- advance_appt = ['nnc-rb', 'nnc-ua', 'nnc-ccoh'].include? @repository_code %>
 <% if advance_appt %>
   <%= content_tag(:p, t("fa.advance_appointment.#{@repository_code}.msg"), style: "color: red;") %>
 <% end %>

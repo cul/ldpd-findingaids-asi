@@ -35,7 +35,7 @@
       <dd class="col-md-10"><%= link_to nil, @eadid_other_finding_aid_url %></dd>
     <% end %>
       <dt class="col-md-2"> Access: </dt>
-      <%- advance_appt = ['nnc-rb', 'nnc-ua', 'nnc-ccoh', 'nnc-a'].include? @repository_code %>
+      <%- advance_appt = ['nnc-rb', 'nnc-ua', 'nnc-ccoh'].include? @repository_code %>
       <% if advance_appt %>
         <dd class="col-md-10 <%= t("fa.advance_appointment.#{@repository_code}.class") %>">
         <%= t("fa.advance_appointment.#{@repository_code}.msg") %>
