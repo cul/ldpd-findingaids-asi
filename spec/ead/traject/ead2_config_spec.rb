@@ -235,4 +235,26 @@ describe Traject::Indexer do
       end
     end
   end
+  describe 'digital object indexing' do
+    context 'when given in daogrp/daoloc' do
+      let(:digital_objects_values) { index_document[:components][0][:components][1][:digital_objects_ssm] }
+      let(:digital_objects) { digital_objects_values.map { |json| Arclight::DigitalObject.from_json(json) } }
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_digital_objects/from_did_daogrp.xml') }
+      let(:expected_hrefs) { ['https://dx.doi.org/10.7916/d8-knzx-9990', 'https://dlc.library.columbia.edu/iiif/3/presentation/10.7916/d8-knzx-9990/manifest'] }
+      it do
+        expect(digital_objects.length).to be 2
+        expect(digital_objects.map(&:href)).to eql(expected_hrefs)
+      end
+    end
+    context 'when given in dao' do
+      let(:digital_objects_values) { index_document[:components][0][:components][0][:digital_objects_ssm] }
+      let(:digital_objects) { digital_objects_values.map { |json| Arclight::DigitalObject.from_json(json) } }
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_digital_objects/from_did.xml') }
+      let(:expected_labels) { ['The First DAO', 'The Second DAO', 'The Third DAO Fallback'] }
+      it do
+        expect(digital_objects.length).to be 3
+        expect(digital_objects.map(&:label)).to eql(expected_labels)
+      end
+    end
+  end
 end

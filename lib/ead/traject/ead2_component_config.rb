@@ -101,3 +101,24 @@ to_field "aeon_unavailable_for_request_ssi", extract_xpath("./accessrestrict/p")
   unavailable_for_request = /restricted|closed|missing/i
   accumulator.replace([accumulator.map {|value| value.match(unavailable_for_request) }.any?])
 end
+
+# delete upstream digital_objects_ssm rule because we need to override
+@index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['digital_objects_ssm'].include?(index_step.field_name) }
+
+to_field 'digital_objects_ssm' do |record, accumulator, context|
+  record.xpath('./daogrp/daoloc|./did/daogrp/daoloc').each do |daoloc|
+    label = daoloc.parent.attributes['title']&.text ||
+            daoloc.parent.attributes['xlink:title']&.text ||
+            daoloc.xpath('./parent::daogrp/daodesc/p')&.text
+    href = daoloc.attributes['href']&.value || daoloc.attributes['xlink:href']&.value
+    accumulator << Arclight::DigitalObject.new(label: label, href: href).to_json
+  end
+  record.xpath('./dao|./did/dao').each do |dao|
+    label = dao.attributes['title']&.value ||
+            dao.attributes['xlink:title']&.value ||
+            dao.xpath('daodesc/p')&.text
+    href = (dao.attributes['href'] || dao.attributes['xlink:href'])&.value
+    accumulator << Arclight::DigitalObject.new(label: label, href: href).to_json
+  end
+end
+
