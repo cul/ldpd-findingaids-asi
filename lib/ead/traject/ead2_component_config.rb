@@ -101,3 +101,13 @@ to_field "aeon_unavailable_for_request_ssi", extract_xpath("./accessrestrict/p")
   unavailable_for_request = /restricted|closed|missing/i
   accumulator.replace([accumulator.map {|value| value.match(unavailable_for_request) }.any?])
 end
+
+# add each daoloc as a digital_objects_ssm
+
+to_field 'digital_objects_ssm', extract_xpath('./daogrp/daoloc|./did/daogrp/daoloc', to_text: false) do |_record, accumulator|
+  accumulator.map! do |daoloc|
+    label = daoloc.xpath('./parent::daogrp/@title')&.text
+    href = daoloc.attributes['href']&.value
+    Arclight::DigitalObject.new(label: label, href: href).to_json
+  end
+end
