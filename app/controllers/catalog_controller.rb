@@ -397,6 +397,10 @@ class CatalogController < ApplicationController
     super
   end
 
+  def iiif_collection
+    # TBD
+  end
+
   # Override because ArcLight wants to use name rather than slug everywhere
   def repository_faceted_on
     repos = search_state.filter('repository').values

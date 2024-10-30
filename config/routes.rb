@@ -16,8 +16,9 @@ Rails.application.routes.draw do
   concern :hierarchy, Arclight::Routes::Hierarchy.new
 
   resources :solr_documents, only: [:show], path: '/archives', controller: 'catalog' do
-  concerns :hierarchy
+    concerns :hierarchy
     concerns :exportable
+    get 'iiif-collection', as: 'iiif_collection', controller: 'catalog', defaults: { format: :json }
   end
 
   resources :bookmarks do
