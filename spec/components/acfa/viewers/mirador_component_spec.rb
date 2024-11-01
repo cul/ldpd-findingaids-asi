@@ -18,7 +18,7 @@ describe Acfa::Viewers::MiradorComponent, type: :component do
   context "has one embeddable resource" do
     let(:label) { 'resource label' }
     let(:href) { 'https://doi.org/10.7916/d8-3tyk-ew60' }
-    let(:iiif_object) { instance_double(Arclight::DigitalObject, label: label, href: href) }
+    let(:iiif_object) { instance_double(Acfa::DigitalObject, label: label, href: href) }
     let(:digital_objects) { [iiif_object] }
     it "renders" do
       expect(rendered_node).to have_selector "div#mirador[data-manifest=\"#{CONFIG[:mirador_base_url]}/iiif/3/presentation/10.7916/d8-3tyk-ew60/manifest\"]"
@@ -28,11 +28,11 @@ describe Acfa::Viewers::MiradorComponent, type: :component do
   context "has multiple embeddable resources" do
     let(:label1) { 'resource label 1' }
     let(:href1) { 'https://doi.org/10.7916/d8-3tyk-ew60' }
-    let(:iiif_object1) { instance_double(Arclight::DigitalObject, label: label1, href: href1) }
+    let(:iiif_object1) { instance_double(Acfa::DigitalObject, label: label1, href: href1) }
 
     let(:label2) { 'resource label 2' }
     let(:href2) { 'https://doi.org/10.7916/d8-3tyk-ew61' }
-    let(:iiif_object2) { instance_double(Arclight::DigitalObject, label: label2, href: href2) }
+    let(:iiif_object2) { instance_double(Acfa::DigitalObject, label: label2, href: href2) }
 
     let(:digital_objects) { [iiif_object1, iiif_object2] }
     it "renders" do

@@ -41,4 +41,14 @@ class SolrDocument
   def aeon_request
     @aeon_request ||= AeonLocalRequest.new(self)
   end
+
+  # Override to permit indexing of more xlink attributes via Acfa::DigitalObject subclass of Arclight::DigitalObject
+  def digital_objects
+    digital_objects_field = fetch('digital_objects_ssm', []).reject(&:empty?)
+    return [] if digital_objects_field.blank?
+
+    digital_objects_field.map do |object|
+      Acfa::DigitalObject.from_json(object)
+    end
+  end
 end
