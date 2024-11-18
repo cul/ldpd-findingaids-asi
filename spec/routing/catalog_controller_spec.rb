@@ -10,4 +10,12 @@ describe CatalogController, type: :routing do
       format: 'json'
     )
   end
+
+  it 'routes to #resolve' do
+    expect(get: "/resolve/#{well_known_id}").to route_to(
+      action: 'resolve',
+      controller: 'catalog',
+      id: well_known_id
+    )
+  end
 end

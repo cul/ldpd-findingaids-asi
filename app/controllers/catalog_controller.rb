@@ -376,13 +376,23 @@ class CatalogController < ApplicationController
 
   def resolve
     if params[:id].present?
-      @document = search_service.fetch(params[:id])
-      bib_id = params[:id].delete_prefix('ldpd_')
-      repo_id = @document&.fetch(:repository_id_ssi, nil)
-      if repo_id
-        redirect_to repository_finding_aid_path(repository_id: repo_id, id: bib_id.prepend('ldpd_'))
-      else
-        redirect_to CONFIG[:clio_redirect_url] + bib_id
+      solr_id = (params[:id] =~ /^\d+$/) ? "ldpd_#{params[:id]}" : params[:id]
+      begin
+        @document = search_service.fetch(solr_id)
+        repo_id = @document&.fetch(:repository_id_ssi, nil)
+        if repo_id
+          redirect_to repository_finding_aid_path(repository_id: repo_id, id: solr_id)
+        else
+          redirect_to CONFIG[:clio_redirect_url] + params[:id].delete_prefix('ldpd_')
+        end
+      rescue Blacklight::Exceptions::RecordNotFound
+        Rails.logger.warn("Record not found: #{solr_id}")
+        redirect_url = (CONFIG[:clio_redirect_url] + solr_id.delete_prefix('ldpd_')) if (solr_id =~ /^ldpd_\d+$/)
+        if redirect_url
+          redirect_to(redirect_url, allow_other_host: true)
+        else
+          raise
+        end
       end
     else
       Rails.logger.warn("no Bib ID in url")
