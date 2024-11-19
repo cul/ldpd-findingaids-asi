@@ -41,6 +41,7 @@ blacklight.yml
 credentials.yml.enc
 database.yml
 finding_aids.yml
+index_api.yml
 master.key
 redis.yml
 repositories.yml
@@ -51,3 +52,11 @@ secrets.yml
 # Ignore local fixture files
 /spec/fixtures/asi/local_dev_fixtures/*
 !/spec/fixtures/asi/local_dev_fixtures/.keep
+
+# Vite
+/public/vite*
+node_modules
+# Vite uses dotenv and suggests to ignore local-only env files. See
+# https://vitejs.dev/guide/env-and-mode.html#env-files
+*.local
+

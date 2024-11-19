@@ -7,24 +7,29 @@
         </div>
       <% end %>
       <h3><%= helpers.link_to_document document %></h3>
-      <%= tag.span(document.extent, class: 'al-document-extent badge') if document.extent %>
+      <% document.extent.each do |extent| %>
+              <%= tag.span extent, class: 'al-document-extent badge' unless compact? %>
+            <% end %>
+      <dl>
       <%= render Arclight::IndexMetadataFieldComponent.with_collection(presenter.field_presenters.select { |field| !compact? || field.field_config.compact }) %>
+      </dl>
+      <div class="al-grouped-more">
+        <% if @group.total > 3 %>
+          <%= t('arclight.views.index.group_results_count', count: @group.total) %>
+          <%= link_to(
+            t('arclight.views.index.all_group_results', count: @group.total),
+            search_within_collection_url)
+          %>
+        <% else %>
+          <%= t('arclight.views.index.group_results_count', count: @group.total) %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="grouped-documents">
-  <div class="al-grouped-more">
-    <% if @group.total > 4 && grouped_documents.length == 3 %>
-      <%= t('arclight.views.index.top_group_results', count: 3) %>
-      <%= link_to(
-        t('arclight.views.index.all_group_results', count: @group.total),
-        search_within_collection_url)
-      %>
-    <% elsif @group.total >= 1 %>
-      <%= t('arclight.views.index.group_results_count', count: grouped_documents.length) %>
-    <% end %>
-  </div>
+  
 
-  <%= helpers.render_document_index grouped_documents %>
+  <%= helpers.render_document_index @group.docs %>
 </div>

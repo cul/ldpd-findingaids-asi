@@ -1,0 +1,14 @@
+<% aeon_request = @document.aeon_request %>
+<button
+  onClick="window.handleAddToCartButtonClick(this);"
+  class="btn btn-primary btn-sm add-to-cart-button"
+  data-add-to-cart-text="Request"
+  data-remove-from-cart-text="Remove"
+  data-id="<%= @document['id'] %>"
+  data-collection-name="<%= @document['collection_ssim'].first %>"
+  data-item-name="<%= @document['normalized_title_ssm'].first %>"
+  data-reading-room-location="<%= @document['repository_ssim'].first %>"
+  data-container-info="<%= aeon_request.container_information.map {|container_level| container_level['label']}.join(', ') %>"
+>
+  <i class="fa fa-cart-shopping"></i> <span class="button-text d-none d-sm-inline">Request</span>
+</button>

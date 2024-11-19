@@ -30,4 +30,25 @@ class SolrDocument
     first('repository_ssm') || collection&.first('repository_ssm') ||
     first('repository_ssim') || collection&.first('repository_ssim')
   end
+
+  def requestable?
+    return false unless repository_config&.request_types&.any?
+    return false unless self.containers.present?
+    return false if self['aeon_unavailable_for_request_ssi'] == 'true' # NOTE: 'true' is a string here
+    true
+  end
+
+  def aeon_request
+    @aeon_request ||= AeonLocalRequest.new(self)
+  end
+
+  # Override to permit indexing of more xlink attributes via Acfa::DigitalObject subclass of Arclight::DigitalObject
+  def digital_objects
+    digital_objects_field = fetch('digital_objects_ssm', []).reject(&:empty?)
+    return [] if digital_objects_field.blank?
+
+    digital_objects_field.map do |object|
+      Acfa::DigitalObject.from_json(object)
+    end
+  end
 end

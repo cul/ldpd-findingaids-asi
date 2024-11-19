@@ -16,8 +16,9 @@ Rails.application.routes.draw do
   concern :hierarchy, Arclight::Routes::Hierarchy.new
 
   resources :solr_documents, only: [:show], path: '/archives', controller: 'catalog' do
-  concerns :hierarchy
+    concerns :hierarchy
     concerns :exportable
+    get 'iiif-collection', as: 'iiif_collection', controller: 'catalog', defaults: { format: :json }
   end
 
   resources :bookmarks do
@@ -40,20 +41,22 @@ Rails.application.routes.draw do
       end
     end
   end
-  scope 'preview' do
-    scope 'ead' do
-      resources :repositories, only: [:index], path: '' do
-        resources :finding_aids, only: [:index, :show], path: '' do
-          get 'summary'
-          resources :components, only: [:index, :show], path: 'dsc'
-        end
-      end
-    end
-  end
+
   resource :aeon_request, only: [:create] do
-    post 'login'
+    post 'create'
+    get 'create' if Rails.env.development? # Allow GET requests to the select_account page for easier styling during development
+
     get 'redirectshib'
     get 'redirectnonshib'
+    get 'select_account'
+    get 'checkout'
   end
+
   root 'repositories#index'
+  namespace :api do
+      namespace :v1, defaults: { format: :json } do
+        post '/index/index_ead', to: 'index#index_ead'
+        post '/index/delete_ead', to: 'index#delete_ead'
+      end
+    end
 end

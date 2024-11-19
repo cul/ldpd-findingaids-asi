@@ -30,8 +30,8 @@ gem 'terser'
 # Use Puma as the app server
 gem 'puma', '~> 5.2'
 
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails"
+# Use JavaScript with Vite [https://github.com/sergii/vite_rails]
+gem 'vite_rails'
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
@@ -67,7 +67,8 @@ gem 'iso-639'
 gem 'nokogiri', '~> 1.15.2'
 gem 'loofah', '~> 2.19.1'
 
-gem 'arclight', '~> 1.0.0'
+gem 'arclight', '~> 1.1.4'
+gem 'blacklight', '~> 8.2.2'
 
 gem "font-awesome-sass", "~> 6.4.0"
 fa_token = font_awesome_token
@@ -75,6 +76,8 @@ if fa_token
   source "https://token:#{fa_token}@dl.fontawesome.com/basic/fontawesome-pro/ruby/" do
     gem "font-awesome-pro-sass", "~> 6.4.0"
   end
+else
+  raise 'ERROR: You are missing font_awesome_token in secrets.yml.  It is required for `bundle install` to work.'
 end
 gem "rsolr", ">= 1.0", "< 3"
 gem "bootstrap", "\~\>\ 5.1"
@@ -95,10 +98,10 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem "capistrano", "~> 3.11", require: false
-  gem "capistrano-rails", "~> 1.4", require: false
-  gem 'capistrano-rvm', '~> 0.1', require: false
-  gem 'capistrano-passenger', '~> 0.2', require: false
+  gem 'capistrano', '~> 3.18.0', require: false
+  gem 'capistrano-cul', require: false
+  gem 'capistrano-passenger', '~> 0.1', require: false
+  gem 'capistrano-rails', '~> 1.4', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

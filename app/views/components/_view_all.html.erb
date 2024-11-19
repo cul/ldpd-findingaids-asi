@@ -1,3 +1,0 @@
-<% @series_array.each_with_index do |parser, index| %>
-  <%= render Acfa::Ead::Components::SeriesComponent.new(parser: parser, series: parser.series, repository: @repository, aeon_enabled: @repository.aeon_enabled?, component_id: index + 1) %>
-<% end %>

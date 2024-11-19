@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ead xmlns="urn:isbn:1-931666-22-9" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:isbn:1-931666-22-9 http://www.loc.gov/ead/ead.xsd"><eadheader countryencoding="iso3166-1" dateencoding="iso8601" langencoding="iso639-2b" repositoryencoding="iso15511"><eadid countrycode="US" mainagencycode="US-NNC-RB"></eadid><filedesc><titlestmt><titleproper>Test for Access Restriction Inheritance<num>TEST.2024.07.22</num> <num>TEST.2024.07.22</num></titleproper></titlestmt><publicationstmt><publisher>Rare Book and Manuscript Library</publisher><address><addressline>Butler Library, 6th Floor</addressline><addressline>Columbia University, Mail Code 1127</addressline><addressline>535 W. 114th St.</addressline><addressline>New York, NY 10027</addressline><addressline>Business Number: (212) 867-5309</addressline><addressline>Fax Number: (212) 867-5309</addressline><addressline>rbml@libraries.cul.columbia.edu</addressline><addressline>URL: <extptr xlink:href="http://www.columbia.edu/cu/lweb/indiv/rbml/index.html" xlink:show="new" xlink:title="http://www.columbia.edu/cu/lweb/indiv/rbml/index.html" xlink:type="simple"/></addressline></address></publicationstmt></filedesc><profiledesc><creation>This finding aid was produced using ArchivesSpace on <date>2024-11-01 10:34:41 -0400</date>.</creation><langusage>Description is written in: English, Latin script.</langusage></profiledesc></eadheader><archdesc level="collection">
+  <did>
+    <repository>
+      <corpname>Rare Book and Manuscript Library</corpname>
+    </repository>
+    <unittitle>Test for Access Restriction Inheritance</unittitle>
+    <unitid>TEST.2024.07.22</unitid>
+    <langmaterial id="aspace_c8d8e5919f8d6506db52fbff5dc0dc11">English .</langmaterial>
+    <physdesc altrender="whole">
+      <extent altrender="materialtype spaceoccupied">1 Linear Feet</extent>
+    </physdesc>
+    <unitdate calendar="gregorian" datechar="creation" era="ce">undated</unitdate>
+  </did>
+  <accessrestrict id="aspace_1dd5c604b2c882f32eda12e43c1e81af">
+    <head>Conditions Governing Access</head>
+<p>This is the first collection-level conditions governing access note.</p>  </accessrestrict>
+  <accessrestrict id="aspace_ab7ad8b258fd5057b1413fb5cc520fe2">
+    <head>Conditions Governing Access</head>
+<p>This is the second collection-level conditions governing access note.</p>  </accessrestrict>
+  <userestrict id="aspace_f80c0070d4debcd47abdebd80570d915">
+    <head>Conditions Governing Use</head>
+<p>This is the first collection-level use restriction note.</p>  </userestrict>
+  <userestrict id="aspace_8ae8aa0dc97a91d5d39601e1dc9cd87f">
+    <head>Conditions Governing Use</head>
+<p>This is the second collection-level use restriction note.</p>  </userestrict>
+  <dsc><c id="aspace_740fe73c8ce0e0a6fb09f0e04cb358c8" level="series"><did><unittitle>Series 1</unittitle></did><accessrestrict id="aspace_2f388b77cec4869df1662752044ac358"><head>Conditions Governing Access</head><p>This is the first series-level access restriction.</p></accessrestrict><accessrestrict id="aspace_f367e7c16841f7a4030035d456387d72"><head>Conditions Governing Access</head><p>This is the second series-level access restriction.</p></accessrestrict><c id="aspace_808b114e51a5db4f702728f6936e86d6" level="file"><did><unittitle>File</unittitle></did><accessrestrict id="aspace_0d77111c4c48a0cb3c22092b77c6d50b"><head>Conditions Governing Access</head><p>This is a file-level conditions governing access note.</p></accessrestrict></c><c id="aspace_c18618f2cce859e1705d725bfbb244d6" level="file"><did><unittitle>Second file</unittitle><daogrp xlink:title="Test Digital Object -- IIIF Manifest" xlink:type="extended"><daodesc><p>Test Digital Object -- IIIF Manifest</p></daodesc><daoloc xlink:href="https://dx.doi.org/10.7916/d8-knzx-9990" xlink:type="locator"/><daoloc xlink:href="https://dlc.library.columbia.edu/iiif/3/presentation/10.7916/d8-knzx-9990/manifest" xlink:role="iiif-manifest" xlink:type="locator"/></daogrp></did></c></c></dsc>
+</archdesc>
+</ead>

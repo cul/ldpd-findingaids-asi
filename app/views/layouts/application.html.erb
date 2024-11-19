@@ -4,16 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <%= render partial: 'google_analytics' if CONFIG[:google_analytics] %>
+    <%= render partial: 'web_analytics' if CONFIG[:web_analytics] %>
     <title><%= [@finding_aid_title, @repository_name, 'Columbia University Libraries Finding Aids'].reject(&:blank?).join(' | ') %></title>
     <%= csp_meta_tag %>
+    <%= csrf_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
-    <link rel="stylesheet" type="text/css" href="https://toolkit.library.columbia.edu/v3/css/cul-toolkit.css">
-    <%= javascript_importmap_tags %>
+    <%= vite_client_tag %>
+    <%= vite_javascript_tag 'application.jsx' %>
+    <%= vite_stylesheet_tag 'application.scss' %>
+    <link rel="stylesheet" href="https://vjs.zencdn.net/7.11.4/video-js.css"/>
   </head>
 
-  <body>
+  <body class="<%= render_body_class %>">
     <%= render Acfa::HeaderComponent.new(blacklight_config: controller.blacklight_config) unless @print_view %>
     <%= yield %>
     <%= render 'shared/footer' %>

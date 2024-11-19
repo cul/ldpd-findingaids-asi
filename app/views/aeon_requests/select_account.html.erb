@@ -1,0 +1,28 @@
+<div class="container">
+  <h2>Special Collections Research Account</h1>
+  <p>Log in below to request materials.</p>
+
+  <div class="d-flex align-items-stretch">
+    <div class="border p-3 w-50 me-3">
+      <%=
+        render_login_method_content(
+          'Columbia University Patrons',
+          'Columbia University Affiliates include current students, faculty, officers, and staff.',
+          Acfa::LoginMethods::SHIB,
+          'First-time users will be directed to a registration form to create a research account.'
+        )
+      %>
+    </div>
+    <div class="border p-3 w-50 ms-3">
+      <%=
+        render_login_method_content(
+          'Non-Columbia University Patrons',
+          'Non-Columbia University patrons are everyone not actively affiliated with the University. '\
+          'This includes special borrower card holders, alumni, and staff retirees.',
+          Acfa::LoginMethods::NONSHIB,
+          ''
+        )
+      %>
+    </div>
+  </div>
+</div>

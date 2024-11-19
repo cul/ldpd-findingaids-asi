@@ -15,10 +15,16 @@
           <li class="nav-item">
               <a class="nav-link" href="https://library.columbia.edu/services/askalibrarian.html">Ask a Librarian</a>
           </li>
+          <li class="nav-item border-left d-none d-md-block">
+              <button class="show-cart-button nav-link btn btn-link btn-sm">
+                (<span class="request-cart-item-count"><i class="fa fa-spinner fa-pulse"></i></span>)
+                <i class="fa fa-cart-shopping"></i>
+              </button>
+          </li>
       </ul>
   </nav>
-  <section id="branding" class="d-none d-sm-flex flex-fill justify-content-center">
-    <h1 id="site-name"><%= link_to(root_url) do -%><%= heading %><% end %></h1>
+  <section id="branding" class="d-none d-sm-flex flex-fill justify-content-center align-items-center">
+    <h1 id="site-name" class="site-heading"><%= link_to(root_url) do -%><%= heading %><% end %></h1>
   </section>
   <%= main_menu %>
 </div>

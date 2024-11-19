@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'acfa/search_state'
-
 # Blacklight controller that handles searches and document requests
 class CatalogController < ApplicationController
   layout :determine_layout if respond_to? :layout
@@ -11,9 +9,7 @@ class CatalogController < ApplicationController
 
   include Arclight::Catalog
 
-  self.search_state_class = Acfa::SearchState
-
-  before_action :default_grouped!, only: :index
+  self.search_state_class = Blacklight::SearchState
 
   configure_blacklight do |config|
     config.bootstrap_version = 5
@@ -75,19 +71,22 @@ class CatalogController < ApplicationController
     config.index.partials = %i[arclight_index_default]
     config.index.title_field = 'normalized_title_ssm'
     config.index.display_type_field = 'level_ssm'
-    config.index.document_component = Arclight::SearchResultComponent
+    config.index.document_component = Acfa::Arclight::SearchResultComponent
     config.index.group_component = Acfa::Document::GroupComponent
     config.index.constraints_component = Arclight::ConstraintsComponent
     config.index.document_presenter_class = Arclight::IndexPresenter
     config.index.search_bar_component = Acfa::SearchBarComponent
     # config.index.thumbnail_field = 'thumbnail_path_ss'
 
+    # The line below to enables the request button for lists of containers.
+    config.index.document_actions << :request_action
+
     # solr field configuration for document/show views
     # config.show.title_field = 'title_display'
-    config.show.document_component = Arclight::DocumentComponent
-    config.show.sidebar_component = Arclight::SidebarComponent
-    config.show.breadcrumb_component = Arclight::BreadcrumbsHierarchyComponent
-    config.show.embed_component = Arclight::EmbedComponent
+    config.show.document_component = Acfa::Arclight::DocumentComponent
+    config.show.sidebar_component = Acfa::SidebarComponent
+    config.show.breadcrumb_component = Acfa::Arclight::BreadcrumbsHierarchyComponent
+    config.show.embed_component = Acfa::Viewers::MiradorComponent
     config.show.access_component = Arclight::AccessComponent
     config.show.online_status_component = Arclight::OnlineStatusIndicatorComponent
     config.show.display_type_field = 'level_ssm'
@@ -95,7 +94,14 @@ class CatalogController < ApplicationController
     config.show.document_presenter_class = Arclight::ShowPresenter
     config.show.metadata_partials = %i[
       summary_field
-      background_field
+      # background_field  # No longer used
+      related_field
+      indexed_terms_field
+      access_field
+    ]
+
+    # This is a CUL custom configuration (not part of vanilla Arclight)
+    config.show.default_collapsed_metadata_partials = %i[
       related_field
       indexed_terms_field
       access_field
@@ -151,7 +157,7 @@ class CatalogController < ApplicationController
     #  (note: It is case sensitive when searching values)
 
     config.add_facet_field 'access',
-      query: { online: { label: 'Only online results', fq: 'has_online_content_ssim:true' } },
+      query: { online: { label: 'Show only results with digital matches', fq: 'has_online_content_ssim:true' } },
       component: Acfa::FacetFieldSwitchComponent, item_component: Acfa::FacetFieldSwitch::CheckboxComponent
 
     config.add_facet_field 'repository', field: 'repository_id_ssi', limit: 10, helper_method: :repository_label
@@ -178,7 +184,7 @@ class CatalogController < ApplicationController
     }, compact: true, component: Arclight::IndexMetadataFieldComponent
     config.add_index_field 'creator', accessor: true, component: Arclight::IndexMetadataFieldComponent
     config.add_index_field 'abstract_or_scope', accessor: true, truncate: true, repository_context: true, helper_method: :render_html_tags, component: Arclight::IndexMetadataFieldComponent
-    config.add_index_field 'breadcrumbs', accessor: :itself, component: Arclight::SearchResultBreadcrumbsComponent, compact: { count: 2 }
+    config.add_index_field 'breadcrumbs', accessor: :itself, component: Acfa::Arclight::SearchResultBreadcrumbsComponent, compact: { count: 2 }
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -211,42 +217,8 @@ class CatalogController < ApplicationController
       }
     end
 
-    # Field-based searches. We have registered handlers in the Solr configuration
-    # so we have Blacklight use the `qt` parameter to invoke them
-    config.add_search_field 'keyword', label: 'Keyword' do |field|
-      field.qt = 'search' # default
-    end
-    config.add_search_field 'name', label: 'Name' do |field|
-      field.qt = 'search'
-      field.solr_parameters = {
-        qf:  '${qf_name}',
-        pf:  '${pf_name}'
-      }
-    end
-    config.add_search_field 'place', label: 'Place' do |field|
-      field.qt = 'search'
-      field.solr_parameters = {
-        qf:  '${qf_place}',
-        pf:  '${pf_place}'
-      }
-    end
-    config.add_search_field 'subject', label: 'Subject' do |field|
-      field.qt = 'search'
-      field.solr_parameters = {
-        qf:  '${qf_subject}',
-        pf:  '${pf_subject}'
-      }
-    end
-    config.add_search_field 'title', label: 'Title' do |field|
-      field.qt = 'search'
-      field.solr_parameters = {
-        qf:  '${qf_title}',
-        pf:  '${pf_title}'
-      }
-    end
-
     # These are the parameters passed through in search_state.params_for_search
-    config.search_state_fields += %i[id group hierarchy_context original_document paginate]
+    config.search_state_fields += %i[id group hierarchy_context original_document paginate key solr_document_id]
     config.search_state_fields << { original_parents: [] }
     config.search_state_fields += %i[repository_id finding_aid_id]
     config.search_state_fields << :utf8
@@ -281,27 +253,27 @@ class CatalogController < ApplicationController
     config.add_summary_field 'abstract', field: 'abstract_html_tesm', helper_method: :render_html_tags
     config.add_summary_field 'extent', field: 'extent_ssm'
     config.add_summary_field 'language', field: 'language_material_ssm'
-    config.add_summary_field 'prefercite', field: 'prefercite_html_tesm', helper_method: :render_html_tags
-
-    # Collection Show Page - Background Section
-    config.add_background_field 'scopecontent', field: 'scopecontent_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'bioghist', field: 'bioghist_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'acqinfo', field: 'acqinfo_ssim', helper_method: :render_html_tags
-    config.add_background_field 'appraisal', field: 'appraisal_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'custodhist', field: 'custodhist_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'processinfo', field: 'processinfo_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'arrangement', field: 'arrangement_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'accruals', field: 'accruals_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'phystech', field: 'phystech_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'physloc', field: 'physloc_html_tesm', helper_method: :render_html_tags
-    config.add_background_field 'descrules', field: 'descrules_ssm', helper_method: :render_html_tags
+    config.add_summary_field 'scopecontent', field: 'scopecontent_html_tesm', helper_method: :render_html_tags
+    config.add_summary_field 'bioghist', field: 'bioghist_html_tesm', helper_method: :render_html_tags
 
     # Collection Show Page - Related Section
+    config.add_related_field 'acqinfo', field: 'acqinfo_ssim', helper_method: :render_html_tags
+    config.add_related_field 'appraisal', field: 'appraisal_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'custodhist', field: 'custodhist_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'processinfo', field: 'processinfo_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'arrangement', field: 'arrangement_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'accruals', field: 'accruals_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'phystech', field: 'phystech_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'physdesc', field: 'physdesc_tesim', helper_method: :render_html_tags
+    config.add_related_field 'physfacet', field: 'physfacet_tesim', helper_method: :render_html_tags
+    config.add_related_field 'physloc', field: 'physloc_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'descrules', field: 'descrules_ssm', helper_method: :render_html_tags
     config.add_related_field 'relatedmaterial', field: 'relatedmaterial_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'separatedmaterial', field: 'separatedmaterial_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'otherfindaid', field: 'otherfindaid_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'altformavail', field: 'altformavail_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'originalsloc', field: 'originalsloc_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tags
 
     # Collection Show Page - Indexed Terms Section
     config.add_indexed_terms_field 'subjects', field: 'access_subjects_ssim', link_to_facet: true, separator_options: {
@@ -334,17 +306,26 @@ class CatalogController < ApplicationController
     }, if: lambda { |_context, _field_config, document|
       document.containers.present?
     }
-    config.add_component_field 'abstract', field: 'abstract_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'extent', field: 'extent_ssm'
+    config.add_component_field 'altformavail', field: 'altformavail_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'scopecontent', field: 'scopecontent_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'bioghist', field: 'bioghist_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'acqinfo', field: 'acqinfo_ssim', helper_method: :render_html_tags
+    config.add_component_field 'phystech', field: 'phystech_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'physloc', field: 'physloc_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'dimensions', field: 'dimensions_tesim', helper_method: :render_html_tags
+    config.add_component_field 'physdesc', field: 'physdesc_tesim', helper_method: :render_html_tags
+    config.add_component_field 'physfacet', field: 'physfacet_tesim', helper_method: :render_html_tags
     config.add_component_field 'appraisal', field: 'appraisal_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'custodhist', field: 'custodhist_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'processinfo', field: 'processinfo_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'arrangement', field: 'arrangement_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'accruals', field: 'accruals_html_tesm', helper_method: :render_html_tags
-    config.add_component_field 'phystech', field: 'phystech_html_tesm', helper_method: :render_html_tags
-    config.add_component_field 'physloc', field: 'physloc_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'otherfindaid', field: 'otherfindaid_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'originalsloc', field: 'originalsloc_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'relatedmaterial', field: 'relatedmaterial_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tags
+
 
     # Component Show Page - Indexed Terms Section
     config.add_component_indexed_terms_field 'access_subjects', field: 'access_subjects_ssim', link_to_facet: true, separator_options: {
@@ -393,10 +374,6 @@ class CatalogController < ApplicationController
     config.add_group_header_field 'abstract_or_scope', accessor: true, truncate: true, helper_method: :render_html_tags
   end
 
-  def default_grouped!
-    @search_state = search_state.reset_search('group' => 'true') if params[:group].nil?
-  end
-
   def resolve
     if params[:id].present?
       @document = search_service.fetch(params[:id])
@@ -418,6 +395,12 @@ class CatalogController < ApplicationController
       @document.fetch('repository_id_ssi', nil)&.tap { |repository_id| @repository = Arclight::Repository.find_by(slug: repository_id) }
     end
     super
+  end
+
+  def iiif_collection
+    @document = search_service.fetch(params.require(:solr_document_id))
+
+    render json: Acfa::IiifCollectionPresenter.new(@document, view_context, view_config: blacklight_config.view_config(:index)).as_json
   end
 
   # Override because ArcLight wants to use name rather than slug everywhere

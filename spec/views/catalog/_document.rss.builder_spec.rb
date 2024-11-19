@@ -56,7 +56,7 @@ RSpec.describe "catalog/_document.rss.builder", type: :view do
     let(:solr_document) { external_aspace_doc }
     it "includes links and attributes" do
       expect(response_xml.elements["/item/title"].text).to eq "BA"
-      expect(response_xml.elements["/item/link"].text).to eq "https://collections.barnard.edu/public/12345"
+      expect(response_xml.elements["/item/link"].text).to eq "/archives/#{solr_document[:id]}"
     end
   end
 end

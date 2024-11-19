@@ -99,32 +99,8 @@ to_field 'repository_id_ssi' do |record, accumulator, context|
   accumulator.concat([context.clipboard[:repository_id]])
 end
 
-@index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['date_range_ssim'].include?(index_step.field_name) }
+@index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['date_range_isim'].include?(index_step.field_name) }
 
-to_field 'date_range_ssim', extract_xpath('/ead/archdesc/did/unitdate/@normal', to_text: false) do |_record, accumulator|
-  range = Arclight::YearRange.new
-  next range.years if accumulator.blank?
-
-  ranges = accumulator.map(&:to_s)
-  ranges.delete_if { |range| range =~ /\/9999/ && range != '9999/9999' }
-  if ranges.blank?
-    accumulator.replace ranges
-    next range.years
-  end
-  begin
-    range << ranges.map do |date|
-      range.parse_range(date)
-    rescue ArgumentError
-      nil
-    end.compact.flatten.sort.uniq
-  end
-  years = range.years
-  if years.blank? || (years.max - years.min) > 1000
-    accumulator.replace []
-    next []
-  end
-  accumulator.replace years
-end
 
 to_field 'date_range_isim', extract_xpath('/ead/archdesc/did/unitdate/@normal', to_text: false) do |_record, accumulator|
   range = Arclight::YearRange.new
@@ -159,3 +135,28 @@ end
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['language_ssim'].include?(index_step.field_name) }
 to_field 'language_material_ssm', extract_xpath('/ead/archdesc/did/langmaterial')
 to_field 'language_ssim', extract_xpath('/ead/archdesc/did/langmaterial/language')
+
+# delete upstream digital_objects_ssm rule because we need to override
+@index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['digital_objects_ssm'].include?(index_step.field_name) }
+
+to_field 'digital_objects_ssm' do |record, accumulator, context|
+  record.xpath('./daogrp/daoloc|./did/daogrp/daoloc').each do |daoloc|
+    label = daoloc.parent.attributes['title']&.text ||
+            daoloc.parent.attributes['xlink:title']&.text ||
+            daoloc.xpath('./parent::daogrp/daodesc/p')&.text
+    href = (daoloc.attributes['href'] || daoloc.attributes['xlink:href'])&.value
+    role = (daoloc.attributes['role'] || daoloc.attributes['xlink:role'])&.value
+    type = (daoloc.attributes['type'] || daoloc.attributes['xlink:type'])&.value
+    accumulator << Acfa::DigitalObject.new(label: label, href: href, role: role, type: type).to_json
+  end
+  record.xpath('./dao|./did/dao').each do |dao|
+    label = dao.attributes['title']&.value ||
+            dao.attributes['xlink:title']&.value ||
+            dao.xpath('daodesc/p')&.text
+    href = (dao.attributes['href'] || dao.attributes['xlink:href'])&.value
+    role = (dao.attributes['role'] || dao.attributes['xlink:role'])&.value
+    type = (dao.attributes['type'] || dao.attributes['xlink:type'])&.value
+    accumulator << Acfa::DigitalObject.new(label: label, href: href, role: role, type: type).to_json
+  end
+end
+

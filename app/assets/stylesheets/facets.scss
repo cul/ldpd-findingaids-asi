@@ -1,0 +1,18 @@
+@import "cuds_palette";
+
+.facet-limit-active {
+	.facet-field-heading {
+		color: #fff;
+	}
+	.form-check{
+		&.selected {
+			.form-check-label {
+				color: $success;
+			}
+			.form-check-input:checked {
+				background-color: $success;
+				border-color: $success;
+			}
+		}
+	}
+}

@@ -1,0 +1,6 @@
+<%
+  # NOTE: This partial only renders if @document.requestable? returns true,
+  # so there's no need to conditionally render the button. We can always
+  # render it here.
+%>
+<%= render Acfa::RequestButtonComponent.new(@document) %>

@@ -1,0 +1,11 @@
+<div id="embed" class="mb-2">
+  <h2 class="al-show-sub-heading"><%= t('arclight.views.show.embedded_content') %></h2>
+  <% if embed_iiif_manifest %>
+    <div class="position-relative"><%= mirador_container(class: %w(container-fluid px-0)) %></div>
+  <% end %>
+  <% linked_resources.each do |resource| %>
+    <div class="al-digital-object">
+      <%= link_to(resource.label, resource.href) %>
+    </div>
+  <% end %>
+</div>

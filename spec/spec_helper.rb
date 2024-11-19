@@ -17,19 +17,8 @@ require 'yaml'
 require 'fileutils'
 # Set up config files if necessary - may move to rake task in the future
 root_dir = File.expand_path('../..', __FILE__)
-Dir.glob(File.join(root_dir, "config/templates/*.template.yml")).each do |template_yml_path|
-  target_yml_path = File.join(root_dir, 'config', File.basename(template_yml_path).sub(".template.yml", ".yml"))
-  FileUtils.touch(target_yml_path) # Create if it doesn't exist
-  target_yml = YAML.load_file(target_yml_path, aliases: true) || YAML.load_file(template_yml_path, aliases: true)
-  File.open(target_yml_path, 'w') {|f| f.write target_yml.to_yaml }
-end
-Dir.glob(File.join(root_dir, "config/templates/*.template.yml.erb")).each do |template_yml_path|
-  target_yml_path = File.join(root_dir, 'config', File.basename(template_yml_path).sub(".template.yml.erb", ".yml"))
-  FileUtils.touch(target_yml_path) # Create if it doesn't exist
-  target_yml = YAML.load_file(target_yml_path, aliases: true) || YAML.load(ERB.new(File.read(template_yml_path)).result(binding), aliases: true)
-  File.open(target_yml_path, 'w') {|f| f.write target_yml.to_yaml }
-end
-
+require 'acfa/setup'
+Acfa::Setup.configuration(root_dir)
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -62,15 +51,16 @@ RSpec.configure do |config|
   # triggering implicit auto-inclusion in groups with matching metadata.
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-# The settings below are suggested to provide a good initial experience
-# with RSpec, but feel free to customize to your heart's content.
-=begin
   # This allows you to limit a spec run to individual examples or groups
   # you care about by tagging them with `:focus` metadata. When nothing
   # is tagged with `:focus`, all examples get run. RSpec also provides
   # aliases for `it`, `describe`, and `context` that include `:focus`
   # metadata: `fit`, `fdescribe` and `fcontext`, respectively.
   config.filter_run_when_matching :focus
+
+  # The settings below are suggested to provide a good initial experience
+# with RSpec, but feel free to customize to your heart's content.
+=begin
 
   # Allows RSpec to persist some state between runs in order to support
   # the `--only-failures` and `--next-failure` CLI options. We recommend

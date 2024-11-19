@@ -1,5 +1,5 @@
 development: &DEV
-  google_analytics: false
+  web_analytics: false
   # NOTE on authenticity_token_placeholder below: No need to change this string, the
   # code will automatically replace the string below with the authentication token
   # for the specific session
@@ -30,6 +30,7 @@ development: &DEV
   # repo codes.
   bib_id_repo_id_hash_cache_expiration_in_hours: 12
   cache_html: false
+  mirador_base_url: https://dlc-staging.library.columbia.edu
 test:
   <<: *DEV
   ead_cache_dir: test/fixtures/files/ead
@@ -37,7 +38,7 @@ test:
   clio_bib_id_data_dir: spec/fixtures/asi/as_solr_data
   fa_lists_dir: test/fixtures/files/fa_lists
 production:
-  google_analytics: true
+  web_analytics: true
   # NOTE on authenticity_token_placeholder below: No need to change this string, the
   # code will automatically replace the string below with the authentication token
   # for the specific session
@@ -51,20 +52,4 @@ production:
   container_info_delimiter: 'CONTAINERINFODELIMITER'
   fa_lists_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_CONTAINING_LISTS_OF_FINDING_AIDS'
   lweb_help_url: https://library.columbia.edu/collections.html
-  # During development/testing, the AS server may not be accessible. In this case, the code
-  # should not attempt to authenticate on the AS server. To bypass authentication, set
-  # the following to true. On the production server, it should be set to false since
-  # authentication is required to access the AS server API.
-  bypass_as_authentication: false
-  # valid_finding_aid_bib_ids indicates the full path to the file containing
-  # the set of valid bib IDs and matching repo code (nnc-rb, etc.)
-  valid_finding_aid_bib_ids: 'ABSOLUTE_PATH_TO_FILE_CONTAINING_VALID_BIB_IDS'
-  # log_bib_id_repo_id_hash_cache_expiration is set to true to turn on expiration
-  # of the cache contaning the info from file of valid bib IDs and associated
-  # repo codes.
-  log_bib_id_repo_id_hash_cache_expiration: true
-  # bib_id_repo_id_hash_cache_expiration_in_hours indicates when to expire
-  # the cache contaning the info from file of valid bib IDs and associated
-  # repo codes.
-  bib_id_repo_id_hash_cache_expiration_in_hours: 12
-  cache_html: false
+  mirador_base_url: https://dlc.library.columbia.edu

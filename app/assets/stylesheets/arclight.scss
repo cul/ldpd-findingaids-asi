@@ -4,24 +4,128 @@ $logo-image: image_url('arclight/logo.png') !default;
 @import 'blacklight/blacklight';
 @import 'arclight/application';
 
-#search_field.custom-select {
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
+
+
+.documents-list, .documents-compact {
+  margin-bottom: $spacer;
+
+  // Result item header
+  .al-document-title-bar {
+    background-color: $gray-200;
+    border: $default-border-styling;
+    font-size: $font-size-sm;
+    margin: 0 (-$result-item-body-padding - 1px) 0.5rem;
+    padding: 3px $result-item-body-padding;
+  }
+
+  // Result item body
+  article.document {
+    border-bottom: 0;
+    margin-top: 0;
+    padding: 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    .document-title-heading {
+      font-size: $h5-font-size;
+      .al-document-extent {
+        @include extent-badge;
+      }
+    }
+
+    .breadcrumb-links,
+    .al-document-creator,
+    .al-document-extent,
+    .al-document-abstract-or-scope {
+      font-size: $font-size-sm;
+    }
+
+    .al-document-abstract-or-scope {
+      margin-bottom: $spacer * .5;
+      max-width: 45em;
+    }
+  }
 }
 
-.facet-limit-active {
-	.facet-field-heading {
-		color: #fff;
-	}
-	.form-check{
-		&.selected {
-			.form-check-label {
-				color: $success;
-			}
-			.form-check-input:checked {
-				background-color: $success;
-				border-color: $success;
-			}
-		}
-	}
+article.document {
+  .blacklight-icons svg {
+    fill: $secondary;
+  }
+  .al-online-content-icon .blacklight-icons svg {
+    fill: $online-icon-color;
+  }
+  div.breadcrumb-links,
+  dd.al-document-abstract-or-scope,
+  dd.al-document-creator {
+    margin-top: ($spacer * .5);
+  }
+
+  form.bookmark-toggle.col-auto {
+    padding-right: 0;
+  }
+}
+
+.al-grouped-results {
+  .breadcrumb-links {
+    font-size: $font-size-sm;
+  }
+
+  .al-document-abstract-or-scope {
+    margin-bottom: 0;
+    margin-top: $spacer * .75;
+    max-width: 45em;
+  }
+  .al-grouped-repository {
+    font-size: $font-size-sm;
+    margin-bottom: $spacer * .75;
+  }
+
+  .grouped-documents {
+    margin: $result-item-body-padding 0;
+	margin-left: $spacer * .75;
+    h4 {
+      font-size: $h5-font-size;
+    }
+
+    .al-grouped-more {
+      border-bottom: $default-border-styling;
+      margin-bottom: $spacer;
+      padding: ($spacer * .5) 0;
+    }
+
+    .document {
+      border-bottom: 0;
+      margin-top: 0;
+      padding: 0;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  .al-document-extent {
+    @include extent-badge;
+    background-color: $gray-100;
+    border-color: $gray-400;
+    color: $gray-700;
+  }
+}
+
+.al-data-range-histogram {
+  margin-bottom: $spacer;
+}
+
+.blacklight-catalog-index #appliedParams {
+  margin-bottom: ($spacer * 3) !important;
+}
+
+body.blacklight-repositories-index #hero .jumbotron {
+  height: 36vh;
+}
+
+.al-show-breadcrumb {
+  font-size: var(--bs-body-font-size);
 }

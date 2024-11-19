@@ -1,32 +1,23 @@
 # frozen_string_literal: true
 
-class Acfa::SidebarComponent < ViewComponent::Base
-  attr_reader :finding_aid_id, :restricted_access
-
-  def initialize(arch_desc_dsc:, arch_desc_misc:, preview_flag:, restricted_access:, finding_aid_id:, **_args)
-    @arch_desc_dsc = arch_desc_dsc
-    @arch_desc_misc = arch_desc_misc
-    @preview_flag = preview_flag
-    @restricted_access = restricted_access
-    @finding_aid_id = finding_aid_id
-  end
-
-  def has_subjects?
-    controller.instance_variable_get(:@genres_forms).present? || controller.instance_variable_get(:@subjects).present?
-  end
-
-  def series_titles_urls
-    @arch_desc_dsc.series_compound_title_array.map.with_index do |series_title, index|
-      [series_title, repository_finding_aid_component_path(id: index+1, finding_aid_id: @finding_aid_id)]
+module Acfa
+  # A sidebar with collection context widget and tools
+  class SidebarComponent < ::Arclight::SidebarComponent
+    def collection_name
+      @collection_name ||= Array(controller.params.dig(:f, :collection)).reject(&:empty?).first ||
+                           helpers.current_context_document&.collection_name
     end
-  end
-
-  def slug
-    @slug ||= repository_finding_aid_path(id: finding_aid_id)
-    @preview_flag ? "/preview#{@slug}" : @slug
-  end
-
-  def subseries_titles
-    @arch_desc_dsc.subseries_compound_title_array_for_each_series_array
+    
+    def repository_id
+      controller.params[:repository_id]
+    end
+    
+    def render_search_bar
+      sb = Acfa::SearchBarComponent.new(url: helpers.search_action_url, params: {repository_id: repository_id, f: {collection: [collection_name]}})
+      sb.with_search_button do
+        '<button class="btn btn-primary search-btn align-items-center" type="submit" id="search"><span class="visually-hidden-sm me-sm-1 submit-search-text">Search</span><i class="fa-solid fa-lg fa-folder-magnifying-glass"></i></button>'.html_safe
+      end
+      render sb
+    end
   end
 end

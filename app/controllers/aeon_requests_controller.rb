@@ -1,79 +1,53 @@
 class AeonRequestsController < ApplicationController
-  def create
-    @allow_requests = AEON[:allow_requests]
-    @display_request_notice = AEON[:display_request_notice]
-    @display_request_scheduled_date = AEON[:display_request_scheduled_date]
-    @selected_containers = Set.new
-    params.select {|key, value| key.starts_with?('checkbox_')}.each do |checkbox_id, checkbox_value|
-      @selected_containers.add checkbox_value
-    end
-    @bib_id = params[:bib_id]
-    @call_number = params[:call_number]
-    @item_title = params[:item_title]
-    @author = params[:author]
-    @item_date = params[:item_date]
-    @location = params[:location]
-    @unprocessed = params[:unprocessed].present?
-    @aeon_site_code = params[:site]
-    @user_review_value = params[:user_review_value]
-    @series_titles = params[:series_titles]
-  end
+  MAX_NUM_ALLOWED_REQUESTS = 100
 
-  def login
-    @allow_cu_affiliate_login = AEON[:allow_cu_affiliate_login]
-    @allow_non_cu_affiliate_login = AEON[:allow_non_cu_affiliate_login]
-    @allow_non_cu_affiliate_account_creation = AEON[:allow_non_cu_affiliate_account_creation]
-    @display_login_notice = AEON[:display_login_notice]
-    @selected_containers = Set.new
-    params.select {|key, value| key.starts_with?('checkbox_')}.each do |checkbox_id, checkbox_value|
-      @selected_containers.add checkbox_value
-    end
-    session[:selected_containers] = @selected_containers.to_a
-    session[:bib_id] = params[:bib_id]
-    session[:call_number] = params[:call_number]
-    session[:item_title] = params[:item_title]
-    session[:author] = params[:author]
-    session[:item_date] = params[:item_date]
-    session[:location] = params[:location]
-    session[:unprocessed] = params[:unprocessed]
-    session[:notes] = params[:notes]
-    session[:scheduled_date] = Date.strptime(params[:scheduled_date],'%Y-%m-%d').strftime('%m/%d/%Y') unless params[:scheduled_date].blank?
-    session[:site] = params[:site]
-    session[:user_review_value] = params[:user_review_value]
-    session[:series_titles] = params[:series_titles]
-  end
-
+  # GET /aeon_requests/redirectshib
   def redirectshib
-    @selected_containers = session[:selected_containers]
-    @bib_id = session[:bib_id]
-    @call_number = session[:call_number]
-    @item_title = session[:item_title]
-    @author = session[:author]
-    @item_date = session[:item_date]
-    @location = session[:location]
-    @unprocessed = session[:unprocessed].present?
-    @notes = session[:notes]
-    @scheduled_date = session[:scheduled_date]
-    @aeon_site_code = session[:site]
-    @user_review_value = session[:user_review_value]
-    @series_titles = session[:series_titles]
-    session.clear
+    redirect_to checkout_aeon_request_url(login_method: 'shib')
   end
 
   def redirectnonshib
-    @selected_containers = session[:selected_containers]
-    @bib_id = session[:bib_id]
-    @call_number = session[:call_number]
-    @item_title = session[:item_title]
-    @author = session[:author]
-    @item_date = session[:item_date]
-    @location = session[:location]
-    @unprocessed = session[:unprocessed].present?
-    @notes = session[:notes]
-    @scheduled_date = session[:scheduled_date]
-    @aeon_site_code = session[:site]
-    @user_review_value = session[:user_review_value]
-    @series_titles = session[:series_titles]
-    session.clear
+    redirect_to checkout_aeon_request_url(login_method: 'nonshib')
+  end
+
+  # POST /aeon_requests/login
+  # All cart requests are submitted to this page, where a user chooses
+  # whether to check out using uni auth or external (aeon) auth.
+  def select_account
+  end
+
+  # GET /aeon_requests/checkout
+  def checkout
+    # If someone visits the checkout url without a valid login_method param, redirect to the select_account page
+    # so that a login method can be selected.
+    redirect_to action: 'select_account' unless Acfa::LoginMethods::ALLOWED_LOGIN_METHODS.include?(params[:login_method])
+  end
+
+  # POST /aeon_requests/create
+  def create
+    ids = params.fetch(:ids, [])
+    if ids.length > MAX_NUM_ALLOWED_REQUESTS
+      render plain: 'Exceeded maximum number of allowed requests.', status: :bad_request
+      return
+    end
+
+    # TODO: Verify that use has not exceeded maximum number of allowed requests per repository.
+    blacklight_repository = Blacklight.repository_class.new(blacklight_config)
+    quote_escaped_ids = ids.map { |id| id.gsub('"', '\"') }
+    solr_response = blacklight_repository.search(
+      fq: %( id:("#{quote_escaped_ids.join('" OR "')}") ),
+      fl: '*',
+      rows: ids.length
+    )
+
+    @aeon_requests = solr_response.dig('response', 'docs').map { |doc| SolrDocument.new(doc) }.map { |doc| doc.aeon_request }
+    @aeon_dll_url = params[:login_method] == 'shib' ? AEON[:shib_dll_url] : AEON[:non_shib_dll_url]
+    @note = params[:note]
+
+    # If a user navigates to the checkout page without any items in their cart, redirect to account selection page
+    if @aeon_requests.length < 1
+      redirect_to action: 'select_account'
+      return
+    end
   end
 end

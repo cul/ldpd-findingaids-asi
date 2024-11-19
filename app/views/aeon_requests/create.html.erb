@@ -1,8 +1,45 @@
-<div style="margin-top:60px;"></div>
-<% if @display_request_notice %>
-  <div style="padding: 1em 2em">
-    <%= content_tag(:h3, t('aeon.header_notice_submit_request'), style: "color: red;") %>
-    <%= content_tag(:p, t('aeon.text_notice_submit_request')) %>
-  </div>
-<% end %>
-<%= render partial: 'request_form' if @allow_requests %>
+<div class="container">
+  <% if(@aeon_requests.length > 0) %>
+    <h2>Submission in progress</h1>
+    <p>
+      Submitting your request...
+      <i class="fa fa-spinner fa-pulse"></i>
+    </p>
+    <%= form_tag(@aeon_dll_url, id:'aeon-submission-form', data: { turbo: false }) do %>
+      <%
+        #################
+        # Global fields #
+        #################
+      %>
+      <%
+        # NOTE: We used to use value='EADRequest' when we were only sending a single request per form submission,
+        # but value='ExternalRequest' is required for sending multiple requests with different UserReview values
+        # in a single form submission.
+      %>
+      <input type='hidden' name='AeonForm' value='ExternalRequest'>
+      <input type="hidden" name="SystemID" value="finding_aids">
+      <input type='hidden' name='SubmitButton' value='Submit Request'>
+      <input type="hidden" name="Notes" value="<%= @note %>">
+      <% # Note: User takes care of scheduling in the Aeon app (see: ACFA-99), so ScheduledDate is not needed. %>
+      <% # <input type="hidden" name="ScheduledDate" value=""> %>
+
+      <%
+        #######################################################
+        # Per-request fields.                                 #
+        # NOTE: We create one request per group of documents, #
+        # grouped by grouping_field_value.                    #
+        #######################################################
+        @aeon_requests.group_by {|aeon_request| aeon_request.grouping_field_value }.to_h.values.each_with_index do |grouped_aeon_requests, index|
+          request_identifier = "r#{index}"
+          %><%= hidden_field_tag :Request, request_identifier, id: nil %><%
+            Acfa::Aeon::MergedAeonLocalRequest.new(grouped_aeon_requests).form_attributes.each do |name, value|
+            %><%= hidden_field_tag "#{name}_#{request_identifier}", value %><%
+          end
+        end
+      %>
+    <% end %>
+  <% else %>
+    <h2>Your cart is empty</h2>
+    <p>Perform a new search to find new items to add to your cart, or <%= link_to('return to the home page', root_path) %>.</p>
+  <% end %>
+</div>

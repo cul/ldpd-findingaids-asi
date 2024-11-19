@@ -1,62 +1,9 @@
-development: &DEV
-  aeon_url: 'AEON_HOST_GOES_HERE'
-  shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_SHIB_LOGIN'
-  non_shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_NON_SHIB_LOGIN'
-  # if allow_requests is set to false, the form used to confirm and
-  # enter details about the request, such as a note and/or a scheduled
-  # date, will not be displayed.
-  allow_requests: true
-  # if display_request_notice is set to true, a notice will be displayed above
-  # the form used to confirm the request. If the form is not displayed because
-  # allow_requests is set to false, this notice can be used to give an
-  # explanation and/or instructions. The header and text of the notice are
-  # specified in header_notice_submit_request and text_notice_submit_request
-  # in config/locales/aeon.en.yml which is under source control
-  display_request_notice: false
-  # set display_request_scheduled_date to false to hide the date input field
-  # (and associated descriptive text) used to enter the scheduled date
-  display_request_scheduled_date: true
-  # if display_login_notice is set to true, a notice will be displayed on
-  # the page where users input credentials to access aeon.
-  display_login_notice: false
-  allow_cu_affiliate_login: true
-  allow_non_cu_affiliate_login: true
-  allow_non_cu_affiliate_account_creation: true
-  # unittitle_delimiter is used if the checkbox_per_unittitle setting for a
-  # particular repo is set to true in repositories.yml . This string will be
-  # use to delemit the series title from the component title in the request
-  # sent to aeon.
-  unittitle_delimiter: ' ## '
-  characters_in_creator_list_for_aeon_request: 10
+development:
+  aeon_shib_boom_url: 'https://example.com/aeon/boom.html'
+  shib_dll_url: 'https://example.com/aeon/aeon.dll'
+  non_shib_dll_url: 'https://example.com/nonshib/aeon.dll'
+
 test:
-  <<: *DEV
-production:
-  aeon_url: 'AEON_HOST_GOES_HERE'
-  shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_SHIB_LOGIN'
-  non_shib_dll_url: 'REDIRECT_URL_GOES_HERE_FOR_NON_SHIB_LOGIN'
-  # if allow_requests is set to false, the form used to confirm and
-  # enter details about the request, such as a note and/or a scheduled
-  # date, will not be displayed.
-  allow_requests: true
-  # if display_request_notice is set to true, a notice will be displayed above
-  # the form used to confirm the request. If the form is not displayed because
-  # allow_requests is set to false, this notice can be used to give an
-  # explanation and/or instructions. The header and text of the notice are
-  # specified in header_notice_submit_request and text_notice_submit_request
-  # in config/locales/aeon.en.yml which is under source control
-  display_request_notice: false
-  # set display_request_scheduled_date to false to hide the date input field
-  # (and associated descriptive text) used to enter the scheduled date
-  display_request_scheduled_date: true
-  # if display_login_notice is set to true, a notice will be displayed on
-  # the page where users input credentials to access aeon.
-  display_login_notice: false
-  allow_cu_affiliate_login: true
-  allow_non_cu_affiliate_login: true
-  allow_non_cu_affiliate_account_creation: true
-  # unittitle_delimiter is used if the checkbox_per_unittitle setting for a
-  # particular repo is set to true in repositories.yml . This string will be
-  # use to delemit the series title from the component title in the request
-  # sent to aeon.
-  unittitle_delimiter: ' ## '
-  characters_in_creator_list_for_aeon_request: 10
+  aeon_shib_boom_url: 'https://example.com/aeon/boom.html'
+  shib_dll_url: 'https://example.com/aeon/aeon.dll'
+  non_shib_dll_url: 'https://example.com/nonshib/aeon.dll'
