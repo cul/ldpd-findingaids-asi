@@ -68,7 +68,7 @@ gem 'nokogiri', '~> 1.15.2'
 gem 'loofah', '~> 2.19.1'
 
 gem 'arclight', '~> 1.1.4'
-gem 'blacklight', '~> 8.2.2'
+gem 'blacklight', '~> 8.5.0'
 
 gem "font-awesome-sass", "~> 6.4.0"
 fa_token = font_awesome_token
