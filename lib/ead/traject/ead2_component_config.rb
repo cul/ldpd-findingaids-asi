@@ -107,19 +107,21 @@ end
 
 to_field 'digital_objects_ssm' do |record, accumulator, context|
   record.xpath('./daogrp/daoloc|./did/daogrp/daoloc').each do |daoloc|
+    href = (daoloc.attributes['href'] || daoloc.attributes['xlink:href'])&.value
+    next unless href && href =~ /^http/
     label = daoloc.parent.attributes['title']&.text ||
             daoloc.parent.attributes['xlink:title']&.text ||
             daoloc.xpath('./parent::daogrp/daodesc/p')&.text
-    href = (daoloc.attributes['href'] || daoloc.attributes['xlink:href'])&.value
     role = (daoloc.attributes['role'] || daoloc.attributes['xlink:role'])&.value
     type = (daoloc.attributes['type'] || daoloc.attributes['xlink:type'])&.value
     accumulator << Acfa::DigitalObject.new(label: label, href: href, role: role, type: type).to_json
   end
   record.xpath('./dao|./did/dao').each do |dao|
+    href = (dao.attributes['href'] || dao.attributes['xlink:href'])&.value
+    next unless href && href =~ /^http/
     label = dao.attributes['title']&.value ||
             dao.attributes['xlink:title']&.value ||
             dao.xpath('daodesc/p')&.text
-    href = (dao.attributes['href'] || dao.attributes['xlink:href'])&.value
     role = (dao.attributes['role'] || dao.attributes['xlink:role'])&.value
     type = (dao.attributes['type'] || dao.attributes['xlink:type'])&.value
     accumulator << Acfa::DigitalObject.new(label: label, href: href, role: role, type: type).to_json
