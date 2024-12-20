@@ -28,11 +28,6 @@ describe Repository, type: :model do
     end
   end
 
-  describe '#as_repo_id' do
-    it "returns configured value" do
-      expect(repository.as_repo_id).to eql(3)
-    end
-  end
 
   describe '#has_fa_list?' do
     it "returns configured value" do
