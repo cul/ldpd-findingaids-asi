@@ -28,7 +28,7 @@ SitemapGenerator::Sitemap.create do
       )
       collections = response.documents
       collections.each do |collection|
-        add repository_finding_aid_path(repository.slug, collection.id), priority: 0.5, changefreq: 'monthly'
+        add solr_document_path(collection.id), priority: 0.5, changefreq: 'monthly'
       end
     end
 end
