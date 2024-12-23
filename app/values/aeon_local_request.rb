@@ -43,7 +43,7 @@ class AeonLocalRequest
     # but we don't currently send Barnard items to Aeon so we don't need to worry about
     # handling that case.  We can always assume that all relevant records have an
     # extractable bibid.
-    match_data = @solr_document['id'].match(/ldpd_(.+)_aspace.*/);
+    match_data = @solr_document['id'].match(/cul-(.+)_aspace.*/);
     match_data.nil? ? nil : match_data[1]
   end
 

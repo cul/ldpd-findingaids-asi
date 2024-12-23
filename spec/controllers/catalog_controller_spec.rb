@@ -5,7 +5,7 @@ RSpec.describe CatalogController, type: :controller do
   describe "GET #resolve" do
     let(:id) { '123456789' }
     let(:bib_id) { '123456789' }
-    let(:solr_id) { 'ldpd_123456789' }
+    let(:solr_id) { 'cul-123456789' }
     let(:repository_id) { 'nnc' }
     let(:search_service) { instance_double(Blacklight::SearchService) }
     let(:solr_doc) { {id: solr_id, repository_id_ssi: repository_id} }
@@ -38,7 +38,7 @@ RSpec.describe CatalogController, type: :controller do
       end
     end
     context "id has ldpd prefix" do
-      let(:id) { 'ldpd_123456789' }
+      let(:id) { 'cul-123456789' }
       it "redirects to finding aid" do
         expect(controller).to receive(:redirect_to).with(finding_aid_url).and_call_original
         get :resolve, params: { id: id }

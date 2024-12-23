@@ -12,7 +12,7 @@ RSpec.describe url, type: :request do
   end
 
   describe "with authentication" do
-    let(:bibids) { ['ldpd_7746709', 'ldpd_8972723'] }
+    let(:bibids) { ['cul-7746709', 'cul-8972723'] }
     let(:delete_ead_job_double) { double(DeleteEadJob) }
     before do
       allow(DeleteEadJob).to receive(:new).and_return(delete_ead_job_double)

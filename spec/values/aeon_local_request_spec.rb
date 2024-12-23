@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AeonLocalRequest do
-  let(:id) { "ldpd_#{bibid}_aspace_abcdefabcdefabcdefabcdefabcdefab" }
+  let(:id) { "cul-#{bibid}_aspace_abcdefabcdefabcdefabcdefabcdefab" }
   let(:bibid) { '12345678' }
   let(:collection_ssim) { ['Great Collection Name'] }
   let(:title_ssm) { ['Great Title'] }

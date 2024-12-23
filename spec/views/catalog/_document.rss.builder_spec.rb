@@ -4,7 +4,7 @@ require 'rexml/document'
 require 'rails_helper'
 
 RSpec.describe "catalog/_document.rss.builder", type: :view do
-  let(:finding_aid_id) { 'ldpd_ABCDEFG' }
+  let(:finding_aid_id) { 'cul-ABCDEFG' }
   let(:repository_id) { 'nnc' }
   let(:aspace_base_repository_id) { 'nynybaw' }
   let(:arclight_params) { {_root_: finding_aid_id, repository_id_ssi: repository_id, level_ssim: ['File'], component_level_isim: [3]} }

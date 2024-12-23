@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
 
   attr_accessor :authenticity_token
 
+  PREFIX_ID_CUL = 'cul-'
+  PREFIX_ID_LDPD = 'ldpd_'
+
   private
 
   # @as_repo_id => repo ID in ArchiveSpace
@@ -15,9 +18,10 @@ class ApplicationController < ActionController::Base
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.warn(e.message)
     unless params[:id].blank?
-      bib_id = params[:id].delete_prefix('ldpd_')
-      Rails.logger.warn("redirect to CLIO with Bib ID #{bib_id}")
-      redirect_to CONFIG[:clio_redirect_url] + bib_id
+      clio_id = params[:id].delete_prefix(PREFIX_ID_LDPD)
+      clio_id.sub!(PREFIX_ID_CUL, '')
+      Rails.logger.warn("redirect to CLIO with Bib ID #{clio_id}")
+          redirect_to (CONFIG[:clio_redirect_url] + clio_id), allow_other_host: true
     else
       Rails.logger.warn("no Bib ID in url")
       redirect_to '/'
