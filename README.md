@@ -30,4 +30,6 @@ will create a core called "acfa".
 1. Install Ruby dependencies with `bundle install`. The application Gemfile indicates the required Ruby version.
 2. Run the rspec suite with `bundle exec rspec` - this will set up the default template configurations
 3. Run the database migrations against sqlite in development with `bundle exec rake db:migrate`
-4. To run with a local Solr instance: Run `bundle exec rake acfa:server` - this will bring up solr, seed it with example data, and start rails. To run with the Solr container: run `bundle exec rake acfa:seed` then run `bundle exec rails s`.
+4. For running Solr, you have two options:
+   1. **Option 1:** Run `docker compose up` to start the solr server and then run `bundle exec rake acfa:seed` to seed the solr server with sample data.  When you are done with development and wish to shut down the solr server, press ctrl+c to stop the foreground docker process and then run `docker compose down` to fully clean up the docker container.
+   2. **Option 2:** Run `bundle exec rake acfa:server` to start up solr, seed it with example data, and start rails.
