@@ -20,7 +20,7 @@ gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
 # fcd1, 03/29/22: Rails 6 doesn't like '~> 1.3.13'. As ldpd-amesa does, spec to ~> 1.4
-gem 'sqlite3', '~> 1.4'
+gem 'sqlite3', '~> 1.6.7'
 # Use mysql2 as the database for CUL
 gem 'mysql2'
 
@@ -68,7 +68,7 @@ gem 'nokogiri', '~> 1.15.2'
 gem 'loofah', '~> 2.19.1'
 
 gem 'arclight', '~> 1.1.4'
-gem 'blacklight', '~> 8.2.2'
+gem 'blacklight', '~> 8.5.0'
 
 gem "font-awesome-sass", "~> 6.4.0"
 fa_token = font_awesome_token
@@ -86,6 +86,8 @@ gem "devise"
 gem "devise-guests", "~> 0.8"
 gem "blacklight-locale_picker"
 gem "blacklight_range_limit"
+gem "sitemap_generator"
+gem 'whenever', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

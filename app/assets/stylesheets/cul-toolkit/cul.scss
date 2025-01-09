@@ -10,10 +10,17 @@
    --cul-darkblue-color: #093552;
 }
 a:link:not(.btn) {
- color:var(--a-link-color);
+  color:var(--a-link-color);
 }
 a:visited:not(.btn) {
   color:var(--a-link-color);
+}
+.pagination {
+  .active {
+    a:link, a:visited {
+      color:var(--bs-pagination-active-color);
+    }
+  }
 }
 
 .navbar-light .navbar-nav .nav-link {

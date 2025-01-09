@@ -87,6 +87,9 @@ set :default_env, NODE_ENV: 'production'
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
+# Namespace crontab based on app environment.
+set :whenever_identifier, ->{ fetch(:deploy_name) }
+
 namespace :deploy do
   desc "Report the environment"
   task :report do

@@ -2,6 +2,7 @@ $breadcrumb-divider: quote("»");
 $logo-image: image_url('arclight/logo.png') !default;
 @import 'bootstrap';
 @import 'blacklight/blacklight';
+@import 'blacklight-shims';
 @import 'arclight/application';
 
 
@@ -129,3 +130,4 @@ body.blacklight-repositories-index #hero .jumbotron {
 .al-show-breadcrumb {
   font-size: var(--bs-body-font-size);
 }
+
