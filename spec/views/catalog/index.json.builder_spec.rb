@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe "catalog/index.json", type: :view do
   let(:response) { instance_double(Blacklight::Solr::Response, documents: docs, prev_page: nil, next_page: 2, total_pages: 3) }
-  let(:finding_aid_id) { 'ldpd_ABCDEFG' }
+  let(:finding_aid_id) { 'cul-ABCDEFG' }
   let(:repository_id) { 'nnc' }
   let(:aspace_base_repository_id) { 'nynybaw' }
   let(:arclight_params) { {_root_: finding_aid_id, repository_id_ssi: repository_id, level_ssim: ['File'], component_level_isim: [3]} }
@@ -74,12 +74,12 @@ RSpec.describe "catalog/index.json", type: :view do
     it "serializes a local collection" do
       expect(response_data).to include(
         {
-          id: 'ldpd_ABCDEFG',
+          id: finding_aid_id,
           type: 'Collection',
           attributes: {
             title: 'CUL Collection'
           },
-          links: { self: '/archives/ldpd_ABCDEFG' }
+          links: { self: "/archives/#{finding_aid_id}" }
         }
       )
     end

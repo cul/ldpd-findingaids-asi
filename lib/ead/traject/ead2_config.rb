@@ -73,8 +73,14 @@ def eadid_from_url_or_text(field_name)
       ead_url = record.xpath('/ead/eadheader/eadid/@url').first
       ead_id = /ldpd_(\d+)\/?/.match(ead_url.to_s)&.[](1)
     end
+    ead_id.sub!(/^ldpd_/,'')
+    ead_id.gsub!(/[^A-Za-z0-9]/,'-')
     if ead_id
-      accumulator.concat ["ldpd_#{ead_id}"]
+      if ead_id =~ /^\d/
+        accumulator.concat ["cul-#{ead_id}"]
+      else
+        accumulator.concat [ead_id]
+      end
     else
       logger.warn "no id found; skipping #{settings['command_line.filename']}"
       context.skip!

@@ -23,7 +23,7 @@ describe Traject::Indexer do
   end
   let(:index_document) { subject.map_record(record).with_indifferent_access }
   describe 'eadid' do
-    let(:expected_value) { 'ldpd_1234567' }
+    let(:expected_value) { 'cul-1234567' }
     context 'is given in /ead/archdesc/unitid[1]/text()' do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_eadid/from_unitid.xml') }
       it { expect(index_document).not_to be_nil }
@@ -40,6 +40,14 @@ describe Traject::Indexer do
 
     context 'is given in /ead/archdesc/eadid[1]/@url' do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_eadid/from_eadid_att.xml') }
+      it { expect(index_document).not_to be_nil }
+      it { expect(index_document[:id]).to eql [expected_value] }
+      it { expect(index_document[:ead_ssi]).to eql [expected_value] }
+    end
+
+    context 'is a dot-delimited ID' do
+      let(:expected_value) { 'BC20-09' }
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_eadid/from_nynybaw_ead.xml') }
       it { expect(index_document).not_to be_nil }
       it { expect(index_document[:id]).to eql [expected_value] }
       it { expect(index_document[:ead_ssi]).to eql [expected_value] }

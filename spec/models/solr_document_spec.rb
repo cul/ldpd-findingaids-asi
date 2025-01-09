@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe SolrDocument, type: :model do
-  let(:id) { "ldpd_#{bibid}_aspace_abcdefabcdefabcdefabcdefabcdefab" }
+  let(:id) { "cul-#{bibid}_aspace_abcdefabcdefabcdefabcdefabcdefab" }
   let(:bibid) { '12345678' }
   let(:title_ssm) { ['Great Title'] }
   let(:creator_ssim) { ['Great Author'] }

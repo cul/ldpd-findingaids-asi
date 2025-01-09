@@ -27,10 +27,10 @@ namespace :acfa do
     solr_url = ENV.fetch('SOLR_URL', Blacklight.default_index.connection.base_uri)
     ead_dir = CONFIG[:ead_cache_dir]
     puts "Seeding index for #{rails_env}"
-    bib_pattern = /ldpd_(\d+).xml$/
-    bib = ENV['BIB'] ? "ldpd_#{ENV['BIB']}" : '*'
+    bib_pattern = /cul-(\d+).xml$/
+    bib = ENV['BIB'] ? "cul-#{ENV['BIB']}" : '*'
     filename_pattern = ENV['PATTERN']
-    filename_pattern ||= (ENV['CLIO_STUBS'].to_s =~ /true/i) ? "clio_ead_ldpd_#{bib}.xml" : "as_ead_#{bib}.xml"
+    filename_pattern ||= (ENV['CLIO_STUBS'].to_s =~ /true/i) ? "clio_ead_cul-#{bib}.xml" : "as_ead_#{bib}.xml"
     indexed = 0
     glob_pattern = File.join(ead_dir, filename_pattern)
     puts "Seeding index with as_ead data from #{glob_pattern}..."
