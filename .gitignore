@@ -60,3 +60,5 @@ node_modules
 # https://vitejs.dev/guide/env-and-mode.html#env-files
 *.local
 
+
+/public/sitemaps/sitemap*.xml.gz

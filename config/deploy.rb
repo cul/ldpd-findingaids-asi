@@ -30,10 +30,11 @@ append  :linked_files,
         'config/redis.yml',
         'config/repositories.yml',
         'config/resque.yml',
-        'config/secrets.yml'
+        'config/secrets.yml',
+        'public/robots.txt'
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'tmp/pids', 'node_modules'
+append :linked_dirs, 'log', 'tmp/pids', 'node_modules', 'public/sitemaps'
 
 set :passenger_restart_with_touch, true
 

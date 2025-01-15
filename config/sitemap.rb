@@ -3,6 +3,7 @@ host = Rails.application.config.default_host
 SitemapGenerator::Sitemap.default_host = host
 Rails.application.routes.default_url_options[:host] = host
 
+SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps'
 SitemapGenerator::Sitemap.create do
   # The root path '/' and sitemap index file are added automatically for you.
   # Links are added to the Sitemap in the order they are specified.
