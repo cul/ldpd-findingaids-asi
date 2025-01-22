@@ -108,7 +108,7 @@ class AeonLocalRequest
     form_fields['ItemInfo1'] = 'Archival Materials' # Format/Genre in Aeon
     form_fields['ItemInfo3'] = 'UNPROCESSED' if self.unprocessed?
     # The UserReview field controls whether or not the request is directly submitted for processing
-    # or is instead saved in a user’s Aeon account for submittal at a future date.
+    # or is instead saved in a user’s Aeon account for submission at a later date.
     form_fields['UserReview'] = (repository_local_request_config && repository_local_request_config['user_review'].to_s == 'false') ? 'No' : 'Yes'
     # Labeled "Box / Volume" in AEON
     form_fields['ItemVolume'] = self.box_or_highest_requestable_level_label
