@@ -33,6 +33,9 @@ RSpec.describe AeonLocalRequest do
       }.to_json
     ]
   end
+  let(:container_information_json_values) do
+    container_information_ssm.map { |container_information_json| JSON.parse(container_information_json) }
+  end
   let(:solr_doc) do
     SolrDocument.new({
       'id' => id,
@@ -54,11 +57,36 @@ RSpec.describe AeonLocalRequest do
     it 'can be instantiated' do
       expect(aeon_local_request).to be_a(described_class)
     end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+      it 'can be instantiated' do
+        expect(aeon_local_request).to be_a(described_class)
+      end
+    end
+
+    context "when solr_doc is nil" do
+      include_context "nil solr_doc"
+      # this class is only instantiated within SolrDocument, which is passed to the initializer
+      # and should never be nil
+      it 'raises an ArgumentError' do
+        expect {aeon_local_request}.to raise_error ArgumentError
+      end
+    end
   end
 
   describe '#repository_config' do
     it 'returns the expected repository config value' do
       expect(aeon_local_request.repository_config.attributes['name']).to eq('Rare Book & Manuscript Library')
+    end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+
+      # upstream logic returns nil when the repository field data is missing
+      it 'returns a blank value' do
+        expect(aeon_local_request.repository_config).to be_nil
+      end
     end
   end
 
@@ -67,6 +95,13 @@ RSpec.describe AeonLocalRequest do
     expect(aeon_local_request.repository_local_request_config).to eq(
       {'site_code' => 'RBMLCUL', 'user_review' => true}
       )
+    end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+      it 'returns a blank value' do
+        expect(aeon_local_request.repository_local_request_config).to be_blank
+      end
     end
   end
 
@@ -77,9 +112,17 @@ RSpec.describe AeonLocalRequest do
         expect(aeon_local_request.unprocessed?).to eq(false)
       end
     end
+
     context "for an unprocessed record" do
       it 'returns true' do
         expect(aeon_local_request.unprocessed?).to eq(true)
+      end
+    end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+      it 'returns false' do
+        expect(aeon_local_request.unprocessed?).to eq(false)
       end
     end
   end
@@ -109,11 +152,13 @@ RSpec.describe AeonLocalRequest do
         expect(aeon_local_request.grouping_field_value).to eq('mapcase, folder 3')
       end
     end
+
     context "when the top level container is NOT a mapcase" do
       it 'returns the top level container' do
         expect(aeon_local_request.grouping_field_value).to eq(box_label)
       end
     end
+
     context "when the top level container is a mapcase, but there is no second level container" do
       let(:mapcase_label) { 'mapcase 15-J-8' }
       let(:container_information_ssm) do
@@ -131,34 +176,61 @@ RSpec.describe AeonLocalRequest do
         expect(aeon_local_request.grouping_field_value).to eq(mapcase_label)
       end
     end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+      it 'returns a blank value' do
+        expect(aeon_local_request.grouping_field_value).to be_blank
+      end
+    end
   end
 
   describe '#reference_number' do
-  context "when the record id matches our expected bibid id pattern" do
-    it 'extracts the bibid' do
-      expect(aeon_local_request.reference_number).to eq(bibid)
-    end
-  end
-  context "when the record id does NOT matche our expected bibid id pattern" do
-    let(:id) { 'no_match_here' }
-
-    it 'returns nil' do
-      expect(aeon_local_request.reference_number).to eq(nil)
-    end
-  end
-end
-
-  describe '#container_information' do
-    it "returns the json-parsed version of the underlying container json data" do
-      expect(aeon_local_request.container_information).to eq(
-        container_information_ssm.map { |container_information_json| JSON.parse(container_information_json) }
-        )
+    context "when the record id matches our expected bibid id pattern" do
+      it 'extracts the bibid' do
+        expect(aeon_local_request.reference_number).to eq(bibid)
       end
     end
 
-    describe '#barcode' do
+    context "when the record id does NOT match our expected bibid id pattern" do
+      let(:id) { 'no_match_here' }
+
+      it 'returns nil' do
+        expect(aeon_local_request.reference_number).to eq(nil)
+      end
+    end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+      it 'returns a blank value' do
+        expect(aeon_local_request.reference_number).to be_blank
+      end
+    end
+  end
+
+  describe '#container_information' do
+    it "returns the json-parsed version of the underlying container json data" do
+      expect(aeon_local_request.container_information).to eq(container_information_json_values)
+    end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+      it 'returns a blank value' do
+        expect(aeon_local_request.container_information).to be_blank
+      end
+    end
+  end
+
+  describe '#barcode' do
     it "returns the expected value" do
       expect(aeon_local_request.barcode).to eq(barcode)
+    end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+      it 'returns a blank value' do
+        expect(aeon_local_request.barcode).to be_blank
+      end
     end
   end
 
@@ -168,11 +240,19 @@ end
         expect(aeon_local_request.series).to eq(parent_unittitles_ssm[1])
       end
     end
+
     context "when parent_unittitles_ssm has fewer than two levels" do
       let(:parent_unittitles_ssm) { ['only one level'] }
 
       it 'returns nil' do
         expect(aeon_local_request.series).to eq(nil)
+      end
+    end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+      it 'returns a blank value' do
+        expect(aeon_local_request.series).to be_blank
       end
     end
   end
@@ -181,17 +261,38 @@ end
     it 'returns the expected value' do
       expect(aeon_local_request.call_number).to eq(call_number)
     end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+      it 'returns a blank value' do
+        expect(aeon_local_request.call_number).to be_blank
+      end
+    end
   end
 
   describe '#collection' do
     it 'returns the expected value' do
       expect(aeon_local_request.collection).to eq(collection_ssim.first)
     end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+      it 'returns a blank value' do
+        expect(aeon_local_request.collection).to be_blank
+      end
+    end
   end
 
   describe '#title' do
     it 'returns the expected value' do
       expect(aeon_local_request.title).to eq(title_ssm.first)
+    end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+      it 'returns a blank value' do
+        expect(aeon_local_request.title).to be_blank
+      end
     end
   end
 
@@ -207,6 +308,13 @@ end
       let(:collection_offsite_ssi) { 'true' }
       it 'returns the expected value' do
         expect(aeon_local_request.location).to eq('Offsite')
+      end
+    end
+
+    context "when solr_doc has no data" do
+      include_context "empty solr_doc"
+      it 'returns a blank value' do
+        expect(aeon_local_request.location).to be_blank
       end
     end
   end
@@ -227,12 +335,34 @@ end
         'ItemSubTitle' => title_ssm.first,
         'CallNumber' => 'MS#1234',
         'Location' => 'Rare Book & Manuscript Library',
-
       }
     end
 
     it 'generates the expected attributes' do
       expect(aeon_local_request.form_attributes).to eq(expected_form_attributes)
+    end
+
+    context "when solr_doc has no data" do
+      let(:expected_form_attributes) do
+        {
+          'ItemTitle' => nil,
+          'ItemDate' => nil,
+          'ReferenceNumber' => nil,
+          'DocumentType' => 'All',
+          'ItemInfo1' => 'Archival Materials',
+          'UserReview' => 'Yes',
+          'ItemVolume' => nil,
+          'ItemNumber' => nil,
+          'ItemSubTitle' => nil,
+          'CallNumber' => nil,
+          'Location' => nil,
+        }
+      end
+
+      include_context "empty solr_doc"
+      it 'returns a blank value' do
+        expect(aeon_local_request.form_attributes).to eq(expected_form_attributes)
+      end
     end
   end
 end
