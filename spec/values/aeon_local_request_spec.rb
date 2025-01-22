@@ -33,9 +33,6 @@ RSpec.describe AeonLocalRequest do
       }.to_json
     ]
   end
-  let(:container_information_json_values) do
-    container_information_ssm.map { |container_information_json| JSON.parse(container_information_json) }
-  end
   let(:solr_doc) do
     SolrDocument.new({
       'id' => id,
@@ -209,6 +206,10 @@ RSpec.describe AeonLocalRequest do
   end
 
   describe '#container_information' do
+    let(:container_information_json_values) do
+      container_information_ssm.map { |container_information_json| JSON.parse(container_information_json) }
+    end
+
     it "returns the json-parsed version of the underlying container json data" do
       expect(aeon_local_request.container_information).to eq(container_information_json_values)
     end
