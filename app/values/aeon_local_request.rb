@@ -5,6 +5,7 @@
 # endpoint (https://support.atlas-sys.com/hc/en-us/articles/360011820054-External-Request-Endpoint)
 class AeonLocalRequest
   def initialize(solr_document)
+    raise ArgumentError.new("solr_document cannot be nil") if solr_document.nil?
     @solr_document = solr_document
   end
 
@@ -13,10 +14,12 @@ class AeonLocalRequest
   end
 
   def repository_local_request_config
-    @config ||= self.repository_config.request_config_for_type('aeon_local_request')
+    @config ||= self.repository_config&.request_config_for_type('aeon_local_request')
   end
 
   def unprocessed?
+    return false unless @solr_document['parent_access_restrict_tesm']
+
     @solr_document['parent_access_restrict_tesm'].find { |value| value.downcase.include?('unprocessed') } != nil
   end
 
@@ -43,6 +46,8 @@ class AeonLocalRequest
     # but we don't currently send Barnard items to Aeon so we don't need to worry about
     # handling that case.  We can always assume that all relevant records have an
     # extractable bibid.
+    return nil unless @solr_document['id']
+
     match_data = @solr_document['id'].match(/cul-(.+)_aspace.*/);
     match_data.nil? ? nil : match_data[1]
   end
@@ -66,8 +71,9 @@ class AeonLocalRequest
   end
 
   def series
-    return @solr_document['parent_unittitles_ssm'][1] if @solr_document['parent_unittitles_ssm'].length > 1
-    nil
+    return nil unless @solr_document['parent_unittitles_ssm'] && @solr_document['parent_unittitles_ssm'].length > 1
+
+    @solr_document['parent_unittitles_ssm'][1]
   end
 
   def call_number
@@ -83,12 +89,12 @@ class AeonLocalRequest
   end
 
   def location
-    @solr_document['collection_offsite_ssi'] == 'true' ? 'Offsite' : self.repository_config.name
+    @solr_document['collection_offsite_ssi'] == 'true' ? 'Offsite' : self.repository_config&.name
   end
 
   def form_attributes
     form_fields = {}
-    form_fields['Site'] = self.repository_local_request_config['site_code']
+    form_fields['Site'] = self.repository_local_request_config['site_code'] if self.repository_local_request_config
     # We intentionally send collection name to the AEON "ItemTitle" field because this was requested by CUL staff.
     form_fields['ItemTitle'] = self.collection
     # NOTE about ItemAuthor field:
@@ -102,8 +108,8 @@ class AeonLocalRequest
     form_fields['ItemInfo1'] = 'Archival Materials' # Format/Genre in Aeon
     form_fields['ItemInfo3'] = 'UNPROCESSED' if self.unprocessed?
     # The UserReview field controls whether or not the request is directly submitted for processing
-    # or is instead saved in a user’s Aeon account for submittal at a future date.
-    form_fields['UserReview'] = repository_local_request_config['user_review'].to_s == 'false' ? 'No' : 'Yes'
+    # or is instead saved in a user’s Aeon account for submission at a later date.
+    form_fields['UserReview'] = (repository_local_request_config && repository_local_request_config['user_review'].to_s == 'false') ? 'No' : 'Yes'
     # Labeled "Box / Volume" in AEON
     form_fields['ItemVolume'] = self.box_or_highest_requestable_level_label
     # Labeled "Barcode" in AEON
