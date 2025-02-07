@@ -269,4 +269,12 @@ describe Traject::Indexer do
       end
     end
   end
+  describe 'extent indexing' do
+    context 'when multiple extent elements' do
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+      it do
+        expect(index_document[:extent_ssm]).to include(match(/\(/)
+      end
+    end
+  end
 end
