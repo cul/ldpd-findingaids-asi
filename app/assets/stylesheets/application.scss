@@ -31,13 +31,13 @@ $brand_text: $white;
 @import "mirador";
 
 //urls
-$url_0: url(//cdn.cul.columbia.edu/ldpd-toolkit/img/crown-bts-24x24.png);
-$url_1: url(//cdn.cul.columbia.edu/ldpd-toolkit/img/crown-icon-sprite.png);
-$url_3: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.eot);
-$url_4: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.eot?#iefix);
-$url_5: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.woff);
-$url_6: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.ttf);
-$url_7: url(//cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.svg#TrajanProRegular);
+$url_0: url('https://cdn.cul.columbia.edu/ldpd-toolkit/img/crown-bts-24x24.png');
+$url_1: url('https://cdn.cul.columbia.edu/ldpd-toolkit/img/crown-icon-sprite.png');
+$url_3: url('https://cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.eot');
+$url_4: url('https://cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.eot?#iefix');
+$url_5: url('https://cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.woff');
+$url_6: url('https://cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.ttf');
+$url_7: url('https://cdn.cul.columbia.edu/ldpd-toolkit/fonts/trajanpro-regular-webfont.svg#TrajanProRegular');
 
 :root {
   --bs-breadcrumb-divider: "/";
