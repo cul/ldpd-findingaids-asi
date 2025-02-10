@@ -51,6 +51,12 @@ Rails.application.routes.draw do
     get 'select_account'
     get 'checkout'
   end
+  
+  resources :admin, only: [:index] do
+    collection do 
+      post 'refresh_resource'
+    end
+  end
 
   root 'repositories#index'
   namespace :api do
