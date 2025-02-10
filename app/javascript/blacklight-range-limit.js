@@ -3,10 +3,12 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // Remove .sr-only on this element because FontAwesome defines an .sr-only class and we don't want it to apply here
-  document.querySelector(
+  const blacklightRangeLimitButton = document.querySelector(
     '.blacklight-date_range .range-limit-input-group input.btn.sr-only',
-  ).classList.remove('sr-only');
+  );
+  if (blacklightRangeLimitButton) { blacklightRangeLimitButton.classList.remove('sr-only'); }
 
   // Hide .more_facets
-  document.querySelector('.blacklight-date_range .more_facets').classList.add('visually-hidden');
+  const blacklightMoreFacets = document.querySelector('.blacklight-date_range .more_facets');
+  if (blacklightMoreFacets) { blacklightMoreFacets.classList.add('visually-hidden'); }
 });
