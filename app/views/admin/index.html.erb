@@ -1,0 +1,10 @@
+<div class="container">
+	<h1>Admin</h1>
+	<h2>Refresh Resource</h2>
+	<%= form_with id: 'refresh-resource-form', url: refresh_resource_admin_index_path, method: :post, data: {turbo: false} do |form| %>
+		<%= form.label :resource_record_uri, "Resource record URI:" %>
+		<%= form.text_field :resource_record_uri %>
+		<%= form.hidden_field :include_unpublished, value: Rails.env != 'findingaids_prod' %>
+		<%= form.submit "Refresh" %>
+	<% end %>
+</div>
