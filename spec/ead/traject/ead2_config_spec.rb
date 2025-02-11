@@ -269,4 +269,29 @@ describe Traject::Indexer do
       end
     end
   end
+  describe 'extent indexing' do
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+
+    context 'at the ead top level' do
+      it 'wraps the last element in parentheses when there are multiple extent elements, '\
+         'but does not wrap the last element when there is only one element' do
+        expect(index_document[:extent_ssm]).to eq([
+          '3 linear feet (4 boxes 13 slipcases)', # multiple elements
+          '3.6 Tb Digital (one hard disk)', # multiple elements
+          '423 linear feet' # only one element
+        ])
+      end
+    end
+
+    context 'at the component level' do
+      it 'wraps the last element in parentheses when there are multiple extent elements, '\
+         'but does not wrap the last element when there is only one element' do
+        expect(index_document[:components][0][:extent_ssm]).to eq([
+          '5 linear feet (4 boxes 14 slipcases)', # multiple elements
+          '7.6 Tb Digital (one hard disk)', # multiple elements
+          '444 linear feet' # only one element
+        ])
+      end
+    end
+  end
 end

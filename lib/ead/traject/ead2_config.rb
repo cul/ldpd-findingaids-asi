@@ -12,6 +12,7 @@ require 'active_model/conversion' ## Needed for Arclight::Repository
 require 'active_support/core_ext/array/wrap'
 require 'arclight/digital_object'
 require 'arclight/year_range'
+require_relative 'ead2_shared'
 
 # Arclight::Repository expects repositories.yml not to have environment keys
 # so we must monkey patch
@@ -145,3 +146,10 @@ to_field 'language_ssim', extract_xpath('/ead/archdesc/did/langmaterial/language
 # delete upstream digital_objects_ssm rule
 # this is not present in ASpace exports and is further overridden in ead2_component_config.rb
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['digital_objects_ssm'].include?(index_step.field_name) }
+
+@index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['extent_ssm'].include?(index_step.field_name) }
+
+to_field 'extent_ssm' do |record, accumulator|
+  # Add each physdesc separately to the accumulator
+  accumulator.concat(extents_per_physdesc(record.xpath('/ead/archdesc/did/physdesc')))
+end
