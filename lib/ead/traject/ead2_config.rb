@@ -153,3 +153,15 @@ to_field 'extent_ssm' do |record, accumulator|
   # Add each physdesc separately to the accumulator
   accumulator.concat(extents_per_physdesc(record.xpath('/ead/archdesc/did/physdesc')))
 end
+
+to_field 'call_number_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")]'), first_only
+
+
+
+SEARCHABLE_NOTES_FIELDS.map do |selector|
+  to_field "#{selector}_html_tesm", extract_xpath("/ead/archdesc/#{selector}/*[local-name()!='head']", to_text: false) do |_record, accumulator|
+    accumulator.map!(&:to_html)
+  end
+  to_field "#{selector}_heading_ssm", extract_xpath("/ead/archdesc/#{selector}/head") unless selector == 'prefercite'
+  to_field "#{selector}_tesim", extract_xpath("/ead/archdesc/#{selector}/*[local-name()!='head']")
+end
