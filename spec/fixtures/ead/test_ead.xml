@@ -94,7 +94,6 @@
 			</physdesc>
 			<physdesc altrender="whole">
 				<extent altrender="materialtype spaceoccupied">423 linear feet</extent>
-				<extent altrender="carrier">351 record cartons 15 document boxes and 4 flat boxes</extent>
 			</physdesc>
 			<!-- fcd1, 05/21/19: the following combination of unitdate elements might not appear -->
 			<!-- in an actual  AS EAD; it is used here for testing the parsing of the different types-->
@@ -302,7 +301,6 @@
 					</physdesc>
 					<physdesc altrender="whole">
 						<extent altrender="materialtype spaceoccupied">444 linear feet</extent>
-						<extent altrender="carrier">355 record cartons 15 document boxes and 4 flat boxes</extent>
 					</physdesc>
 					<!-- fcd1, 09/15/19: normally would not have container information at the series level. -->
 					<!-- However, have a couple of <container> elements here to test parser -->

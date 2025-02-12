@@ -162,7 +162,7 @@ class CatalogController < ApplicationController
 
     config.add_facet_field 'repository', field: 'repository_id_ssi', limit: 10, helper_method: :repository_label
     config.add_facet_field 'collection', field: 'collection_ssim', limit: 10
-    config.add_facet_field 'creator', field: 'creator_ssim', limit: 10
+    config.add_facet_field 'creators', field: 'creator_ssim', limit: 10
     config.add_facet_field 'date_range', field: 'date_range_isim', range: true, range_config: { segments: false }
     config.add_facet_field 'language', field: 'language_ssim', limit: 10, solr_params: { 'facet.missing' => true }
     config.add_facet_field 'level', field: 'level_ssim', limit: 10
