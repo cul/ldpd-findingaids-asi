@@ -17,7 +17,15 @@ function loadMirador() {
       return null;
     };
     const startCanvas = getStartCanvas(new URL(document.location).searchParams);
-    const viewConfig = {};
+    const viewConfig = {
+      defaultView: 'single',
+      views: [
+        { key: 'single', behaviors: ['individuals'] },
+        { key: 'book', behaviors: ['paged'] },
+        { key: 'scroll', behaviors: ['continuous'] },
+        { key: 'gallery', behaviors: ['continuous', 'individuals', 'paged', 'unordered'] },
+      ],
+    };
     if (numChildren && numChildren === 1) {
       viewConfig.views = [{ key: 'single' }];
       viewConfig.defaultView = 'single';
