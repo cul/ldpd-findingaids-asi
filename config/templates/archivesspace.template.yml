@@ -1,0 +1,8 @@
+development:
+  base_uri: 'https://example-dev.library.columbia.edu/api'
+  username: 'example-user'
+  password: 'example-password'
+test:
+  base_uri: 'https://example-test.library.columbia.edu/api'
+  username: 'example-user'
+  password: 'example-password'

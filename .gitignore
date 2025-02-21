@@ -36,7 +36,7 @@
 
 # Ignore config files with sensitive data
 aeon.yml
-archivespace.yml
+archivesspace.yml
 blacklight.yml
 credentials.yml.enc
 database.yml
@@ -52,6 +52,7 @@ secrets.yml
 # Ignore local fixture files
 /spec/fixtures/asi/local_dev_fixtures/*
 !/spec/fixtures/asi/local_dev_fixtures/.keep
+/test/fixtures/files/ead
 
 # Vite
 /public/vite*
