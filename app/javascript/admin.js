@@ -11,7 +11,7 @@ if (refreshResourceForm) {
     const resourceRecordUri = document.getElementById('resource_record_uri').value;
     const includeUnpublished = document.getElementById('include_unpublished').value === 'true';
 
-    refreshResultStatusElement.innerHTML = 'Loading...';
+    refreshResultStatusElement.innerHTML = 'Downloading and reindexing...';
 
     try {
       const response = await fetch(action, {
@@ -44,8 +44,11 @@ if (refreshResourceForm) {
         throw new Error(data.error);
       }
     } catch (err) {
-      console.log(err);
-      refreshResultStatusElement.innerHTML = `<p class="alert alert-danger mt-3"><strong>An unexpected error occurred</strong>:<br />${err}</p>`;
+      refreshResultStatusElement.innerHTML = `
+        <p class="alert alert-danger mt-3">
+          <strong>An unexpected error occurred</strong>:<br />${err}
+        </p>
+      `;
     }
   });
 }

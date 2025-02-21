@@ -21,7 +21,7 @@ set :deploy_to, "/opt/passenger/#{fetch(:deploy_name)}"
 # Default value for :linked_files is []
 append  :linked_files,
         'config/aeon.yml',
-        'config/archivespace.yml',
+        'config/archivesspace.yml',
         'config/blacklight.yml',
         'config/database.yml',
         'config/finding_aids.yml',
