@@ -1,15 +1,4 @@
-import Mirador from '@columbia-libraries/mirador/dist/es/src';
-import miradorDownloadPlugins from '@columbia-libraries/mirador/dist/es/src/culPlugins/mirador-downloaddialog';
-import canvasRelatedLinksPlugin from '@columbia-libraries/mirador/dist/es/src/culPlugins/mirador-canvasRelatedLinks';
-import citationSidebar from '@columbia-libraries/mirador/dist/es/src/culPlugins/mirador-citations';
-import hintingSidebar from '@columbia-libraries/mirador/dist/es/src/culPlugins/mirador-hinting-sidebar';
-import videoJSPlugin from '@columbia-libraries/mirador/dist/es/src/culPlugins/mirador-videojs';
-import viewerNavigation from '@columbia-libraries/mirador/dist/es/src/culPlugins/mirador-pageIconViewerNavigation';
-import viewXmlPlugin from '@columbia-libraries/mirador/dist/es/src/culPlugins/mirador-viewXml';
-import collectionFoldersPlugin from
-  '@columbia-libraries/mirador/dist/es/src/culPlugins/mirador-selectCollectionFolders';
-
-const flattenPluginConfigs = (...plugins) => plugins.reduce((acc, curr) => acc.concat([...curr]), []);
+import Mirador from '@columbia-libraries/mirador';
 
 function loadMirador() {
   const miradorDiv = document.getElementById('mirador');
@@ -28,24 +17,31 @@ function loadMirador() {
       return null;
     };
     const startCanvas = getStartCanvas(new URL(document.location).searchParams);
-    const viewConfig = {};
+    const viewConfig = {
+      defaultView: 'single',
+      views: [
+        { key: 'single', behaviors: ['individuals'] },
+        { key: 'book', behaviors: ['paged'] },
+        { key: 'scroll', behaviors: ['continuous'] },
+        { key: 'gallery', behaviors: ['continuous', 'individuals', 'paged', 'unordered'] },
+      ],
+    };
     if (numChildren && numChildren === 1) {
       viewConfig.views = [{ key: 'single' }];
       viewConfig.defaultView = 'single';
     }
-    const culMiradorPlugins = flattenPluginConfigs(
-      canvasRelatedLinksPlugin,
-      citationSidebar,
-      hintingSidebar,
-      miradorDownloadPlugins,
-      videoJSPlugin,
-      viewerNavigation,
-      viewXmlPlugin,
-    );
+    const culMiradorPlugins = [...Mirador.culPlugins.downloadDialogPlugin]
+      .concat([...Mirador.culPlugins.viewXmlPlugin])
+      .concat([...Mirador.culPlugins.citationsSidebarPlugin])
+      .concat([...Mirador.culPlugins.videojsPlugin])
+      .concat([...Mirador.culPlugins.canvasRelatedLinksPlugin])
+      .concat([...Mirador.culPlugins.hintingSideBar])
+      .concat([...Mirador.culPlugins.viewerNavigation])
+      .concat([...Mirador.culPlugins.nativeObjectViewerPlugin]);
     const foldersAttValue = miradorDiv.dataset['use-folders'];
     const useFolders = (Boolean(foldersAttValue) && !String.toString(foldersAttValue).match(/false/i));
     if (useFolders) {
-      culMiradorPlugins.push(...collectionFoldersPlugin);
+      culMiradorPlugins.push([...Mirador.culPlugins.collectionFoldersPlugin]);
       viewConfig.allowTopCollectionButton = true;
       viewConfig.sideBarOpen = true;
     }
