@@ -16,5 +16,17 @@ module Acfa
         File.open(target_yml_path, 'w') {|f| f.write target_yml.to_yaml }
       end
     end
+
+    def self.ead_fixtures(root_dir, force: false)
+      ead_sample_fixture_dir = File.join(root_dir, 'test/fixtures/files/ead-sample-data')
+      ead_fixture_dir = File.join(root_dir, 'test/fixtures/files/ead')
+      FileUtils.mkdir_p(ead_fixture_dir)
+      Dir.glob("#{ead_sample_fixture_dir}/*.xml").each do |ead_fixture_file|
+        target_file_path = File.join(ead_fixture_dir, File.basename(ead_fixture_file))
+        next if File.exist?(target_file_path) && !force
+        puts "Creating fixture file: #{target_file_path}"
+        FileUtils.cp(ead_fixture_file, target_file_path)
+      end
+    end
   end
 end

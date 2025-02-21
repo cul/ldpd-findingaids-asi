@@ -4,7 +4,7 @@ development: &DEV
   # code will automatically replace the string below with the authentication token
   # for the specific session
   authenticity_token_placeholder: '!!CUL_REPLACE_THIS_STRING_WITH_AUTHENTICITY_TOKEN!!'
-  ead_cache_dir: test/fixtures/files/ead
+  ead_cache_dir: <%= Rails.root.join('test/fixtures/files/ead') %>
   html_cache_dir: tmp/html_cache
   clio_bib_id_data_dir: spec/fixtures/asi/as_solr_data
   clio_redirect_url: 'https://clio.columbia.edu/catalog/'
@@ -33,7 +33,7 @@ development: &DEV
   mirador_base_url: https://dlc-staging.library.columbia.edu
 test:
   <<: *DEV
-  ead_cache_dir: test/fixtures/files/ead
+  ead_cache_dir: <%= Rails.root.join('test/fixtures/files/ead') %>
   html_cache_dir: tmp/html_cache
   clio_bib_id_data_dir: spec/fixtures/asi/as_solr_data
   fa_lists_dir: test/fixtures/files/fa_lists
