@@ -28,5 +28,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
+  # This overrides the url that Devise redirects to after sign-in
+  def after_sign_in_path
+    admin_index_path
+  end
 end
