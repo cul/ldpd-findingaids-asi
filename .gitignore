@@ -43,6 +43,7 @@ database.yml
 finding_aids.yml
 index_api.yml
 master.key
+permissions.yml
 redis.yml
 repositories.yml
 resque.yml
