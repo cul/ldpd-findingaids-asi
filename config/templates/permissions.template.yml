@@ -1,0 +1,12 @@
+# Permissions
+
+all: &all
+  allowed_user_ids:
+    - abc123
+    - def123
+    - ghi123
+  allowed_user_affils:
+    - CUL_dpts-ldpd
+
+development: *all
+test: *all

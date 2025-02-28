@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     concerns :range_searchable
 
   end
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   concern :exportable, Blacklight::Routes::Exportable.new
   concern :hierarchy, Arclight::Routes::Hierarchy.new
@@ -51,9 +51,9 @@ Rails.application.routes.draw do
     get 'select_account'
     get 'checkout'
   end
-  
+
   resources :admin, only: [:index] do
-    collection do 
+    collection do
       post 'refresh_resource'
     end
   end

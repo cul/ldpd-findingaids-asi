@@ -272,6 +272,13 @@ GEM
     nokogiri (1.15.6)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
+    omniauth (2.1.2)
+      hashie (>= 3.4.6)
+      rack (>= 2.2.3)
+      rack-protection
+    omniauth-cul (0.2.0)
+      devise (>= 4.9)
+      omniauth (>= 2.0)
     orm_adapter (0.5.0)
     ostruct (0.6.1)
     popper_js (2.11.7)
@@ -478,7 +485,7 @@ DEPENDENCIES
   capistrano-passenger (~> 0.1)
   capistrano-rails (~> 1.4)
   capybara (~> 3.32)
-  devise
+  devise (~> 4.9)
   devise-guests (~> 0.8)
   font-awesome-pro-sass (~> 6.4.0)!
   font-awesome-sass (~> 6.4.0)
@@ -488,6 +495,8 @@ DEPENDENCIES
   marc
   mysql2
   nokogiri (~> 1.15.2)
+  omniauth (~> 2.1)
+  omniauth-cul (~> 0.2.0)
   puma (~> 5.2)
   rails (~> 7.0.6)
   redis (~> 4.0)
