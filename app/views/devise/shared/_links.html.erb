@@ -13,3 +13,11 @@
     <br />
   <% end %>
 <% end %>
+
+<%- if Rails.env.development? %>
+  <%= button_to 'Sign in with development account',
+      users_development_sign_in_developer_path,
+      data: { turbo: false },
+      class: 'btn btn-primary'
+  %>
+<% end %>
