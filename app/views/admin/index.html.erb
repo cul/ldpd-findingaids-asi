@@ -1,5 +1,5 @@
 <div>
-  <%= link_to('Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-secondary float-end') %>
+  <%= link_to("Sign Out (#{current_user.uid})", destroy_user_session_path, method: :delete, class: 'btn btn-secondary float-end') %>
 </div>
 <h1 class="mb-4">Admin</h1>
 <div>
