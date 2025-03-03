@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   end
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  post '/users/development/sign_in_developer', to: 'users/development#sign_in_developer' if Rails.env.development?
 
   concern :exportable, Blacklight::Routes::Exportable.new
   concern :hierarchy, Arclight::Routes::Hierarchy.new
