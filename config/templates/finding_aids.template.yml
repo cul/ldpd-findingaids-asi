@@ -6,7 +6,6 @@ development: &DEV
   authenticity_token_placeholder: '!!CUL_REPLACE_THIS_STRING_WITH_AUTHENTICITY_TOKEN!!'
   ead_cache_dir: <%= Rails.root.join('test/fixtures/files/ead') %>
   html_cache_dir: tmp/html_cache
-  clio_bib_id_data_dir: spec/fixtures/asi/as_solr_data
   clio_redirect_url: 'https://clio.columbia.edu/catalog/'
   # Following string is used as a separator when "encoding" the list of requested containers
   # No need to change the given string.
@@ -35,7 +34,6 @@ test:
   <<: *DEV
   ead_cache_dir: <%= Rails.root.join('test/fixtures/files/ead') %>
   html_cache_dir: tmp/html_cache
-  clio_bib_id_data_dir: spec/fixtures/asi/as_solr_data
   fa_lists_dir: test/fixtures/files/fa_lists
 production:
   web_analytics: true
@@ -45,7 +43,6 @@ production:
   authenticity_token_placeholder: '!!CUL_REPLACE_THIS_STRING_WITH_AUTHENTICITY_TOKEN!!'
   ead_cache_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_WHERE_CACHED_EADS_WILL_BE_STORED'
   html_cache_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_WHERE_CACHED_HTML_PAGES_WILL_BE_STORED'
-  clio_bib_id_data_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_CONTAINING_CLIO_BIB_ID_DATA'
   clio_redirect_url: 'https://clio.columbia.edu/catalog/'
   # Following string is used as a separator when "encoding" the list of requested containers
   # No need to change the given string.
