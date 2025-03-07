@@ -43,6 +43,14 @@ class AdminController < ApplicationController
     ead_filename = "as_ead_cul-#{bib_id}.xml"
     full_ead_file_path = File.join(CONFIG[:ead_cache_dir], ead_filename)
 
+    # Validate this XML (just the markup, not the schema)
+    xml_is_valid = Nokogiri::XML(ead_response.body).errors.blank?
+
+    if !xml_is_valid
+      render json: {result: false, error: 'Downloaded EAD did not pass XML validation.'}
+      return
+    end
+
     download_time = Benchmark.measure {
       File.binwrite(full_ead_file_path, ead_response.body)
     }.real
