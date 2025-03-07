@@ -10,16 +10,12 @@ development: &DEV
   # Following string is used as a separator when "encoding" the list of requested containers
   # No need to change the given string.
   container_info_delimiter: 'CONTAINERINFODELIMITER'
-  fa_lists_dir: test/fixtures/files/fa_lists
   lweb_help_url: https://library.columbia.edu/collections.html
   # During development/testing, the AS server may not be accessible. In this case, the code
   # should not attempt to authenticate on the AS server. To bypass authentication, set
   # the following to true. On the production server, it should be set to false since
   # authentication is required to access the AS server API.
   bypass_as_authentication: true
-  # valid_finding_aid_bib_ids indicates the full path to the file containing
-  # the set of valid bib IDs and matching repo code (nnc-rb, etc.)
-  valid_finding_aid_bib_ids: test/fixtures/files/valid_fa_bib_ids.yml
   # log_bib_id_repo_id_hash_cache_expiration is set to true to turn on expiration
   # of the cache contaning the info from file of valid bib IDs and associated
   # repo codes.
@@ -34,7 +30,6 @@ test:
   <<: *DEV
   ead_cache_dir: <%= Rails.root.join('test/fixtures/files/ead') %>
   html_cache_dir: tmp/html_cache
-  fa_lists_dir: test/fixtures/files/fa_lists
 production:
   web_analytics: true
   # NOTE on authenticity_token_placeholder below: No need to change this string, the
@@ -47,6 +42,5 @@ production:
   # Following string is used as a separator when "encoding" the list of requested containers
   # No need to change the given string.
   container_info_delimiter: 'CONTAINERINFODELIMITER'
-  fa_lists_dir: 'ABSOLUTE_PATH_TO_DIRECTORY_CONTAINING_LISTS_OF_FINDING_AIDS'
   lweb_help_url: https://library.columbia.edu/collections.html
   mirador_base_url: https://dlc.library.columbia.edu
