@@ -28,17 +28,21 @@ class AeonLocalRequest
   end
 
   def box_or_highest_requestable_level_label
-    # A mapcase itself is not requestable, so for mapcases we return the second-level container
-    # (which we are referring to here as the "highest requestable level") and we prefix it with "mapcase, "
+    # A mapcase or drawer itself is not requestable, so for mapcases we return the second-level container
+    # (which we are referring to here as the "highest requestable level") and we prefix it with the label,
     # so that the staff member processing this request knows that the secondary level is something
-    # within a mapcase.
-    if container_labels.length > 1 && container_labels.first.downcase.include?('mapcase')
+    # within a mapcase or drawer.
+    if container_labels.length > 1 && mapcase_or_drawer?(container_labels.first)
       # This is a mapcase and we should group one level below it
-      "mapcase, #{container_labels[1]}"
+      "#{container_labels.first}, #{container_labels[1]}"
     else
       # Otherwise we'll just use the top level container as the grouping field
       container_labels[0]
     end
+  end
+  
+  def mapcase_or_drawer?(label)
+    label.downcase.include?('mapcase') || label.downcase.include?('drawer')
   end
 
   def reference_number

@@ -145,8 +145,8 @@ RSpec.describe AeonLocalRequest do
           }.to_json
         ]
       end
-      it 'returns the second level container, prefixed with "mapcase, "' do
-        expect(aeon_local_request.grouping_field_value).to eq('mapcase, folder 3')
+      it 'returns the second level container, prefixed with top container' do
+        expect(aeon_local_request.grouping_field_value).to eq('mapcase 15-J-8, folder 3')
       end
     end
 
