@@ -182,6 +182,20 @@ RSpec.describe AeonLocalRequest do
     end
   end
 
+  describe '#mapcase_or_drawer?' do
+    it 'returns true for mapcase' do
+      expect(aeon_local_request.mapcase_or_drawer?('mapcase 123')).to eq(true)
+    end
+
+    it 'returns true for drawer' do
+      expect(aeon_local_request.mapcase_or_drawer?('Drawer 456')).to eq(true)
+    end
+
+    it 'returns false for other labels' do
+      expect(aeon_local_request.mapcase_or_drawer?('box 789')).to eq(false)
+    end
+  end
+
   describe '#reference_number' do
     context "when the record id matches our expected bibid id pattern" do
       it 'extracts the bibid' do
