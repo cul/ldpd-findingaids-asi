@@ -273,7 +273,8 @@ class CatalogController < ApplicationController
     config.add_related_field 'otherfindaid', field: 'otherfindaid_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'altformavail', field: 'altformavail_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'originalsloc', field: 'originalsloc_html_tesm', helper_method: :render_html_tags
-    config.add_related_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tag
+    config.add_related_field 'callnumber', field: 'call_number_ss', helper_method: :render_html_tags
 
     # Collection Show Page - Indexed Terms Section
     config.add_indexed_terms_field 'subjects', field: 'access_subjects_ssim', link_to_facet: true, separator_options: {
