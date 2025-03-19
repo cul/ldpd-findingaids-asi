@@ -294,4 +294,15 @@ describe Traject::Indexer do
       end
     end
   end
+  
+  describe  'extract call number' do
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+    
+    context 'when non-bibid id unit is present' do
+      it do
+        expect(index_document[:call_number_ss]).to eq(["MS#0030"])
+      end
+    end
+  end
+  
 end
