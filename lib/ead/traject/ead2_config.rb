@@ -153,3 +153,5 @@ to_field 'extent_ssm' do |record, accumulator|
   # Add each physdesc separately to the accumulator
   accumulator.concat(extents_per_physdesc(record.xpath('/ead/archdesc/did/physdesc')))
 end
+
+to_field 'call_number_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")]'), first_only
