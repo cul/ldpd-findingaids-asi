@@ -145,8 +145,8 @@ RSpec.describe AeonLocalRequest do
           }.to_json
         ]
       end
-      it 'returns the second level container, prefixed with "mapcase, "' do
-        expect(aeon_local_request.grouping_field_value).to eq('mapcase, folder 3')
+      it 'returns the second level container, prefixed with top container' do
+        expect(aeon_local_request.grouping_field_value).to eq('mapcase 15-J-8, folder 3')
       end
     end
 
@@ -179,6 +179,20 @@ RSpec.describe AeonLocalRequest do
       it 'returns a blank value' do
         expect(aeon_local_request.grouping_field_value).to be_blank
       end
+    end
+  end
+
+  describe '#mapcase_or_drawer?' do
+    it 'returns true for mapcase' do
+      expect(aeon_local_request.mapcase_or_drawer?('mapcase 123')).to eq(true)
+    end
+
+    it 'returns true for drawer' do
+      expect(aeon_local_request.mapcase_or_drawer?('Drawer 456')).to eq(true)
+    end
+
+    it 'returns false for other labels' do
+      expect(aeon_local_request.mapcase_or_drawer?('box 789')).to eq(false)
     end
   end
 
