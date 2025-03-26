@@ -1215,10 +1215,10 @@ ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-arclight@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.npmjs.org/arclight/-/arclight-1.1.4.tgz"
-  integrity sha512-JiGMe7XIWdWbkx3Z3nGhCIjHx6Kx8i8dHzzWAq2VR+1hotCy6gXM0OxZM1cU715FVh4gCBDIk/EMoi3AL2cgsQ==
+arclight@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/arclight/-/arclight-1.4.0.tgz#1eab61115bc320394247084512e3194fa0a969d1"
+  integrity sha512-a8WGQHWTAg+CbR+1QL4GfDuEwlyEDeeesKe4HjDhaRS5uW3luMW+1FVLtnU79USxjepMkx/stOCQD4KPYVED+g==
 
 argparse@^2.0.1:
   version "2.0.1"
