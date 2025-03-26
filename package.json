@@ -30,7 +30,7 @@
     "@mui/system": "5.14.15",
     "@popperjs/core": "^2.11.8",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
-    "arclight": "^1.1.4",
+    "arclight": "^1.4.0",
     "blacklight-frontend": "^8.0.1",
     "bootstrap": "^5.3.3",
     "dnd-core": "^16.0.1",

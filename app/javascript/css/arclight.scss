@@ -1,9 +1,8 @@
 $breadcrumb-divider: quote("»");
 $logo-image: image_url('arclight/logo.png') !default;
 @import 'bootstrap';
-@import 'blacklight/blacklight';
-@import 'blacklight-shims';
-@import 'arclight/application';
+@import 'blacklight-frontend/app/assets/stylesheets/blacklight/blacklight';
+@import 'arclight/app/assets/stylesheets/arclight/application';
 
 
 
