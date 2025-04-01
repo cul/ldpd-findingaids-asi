@@ -54,9 +54,6 @@ Rails.application.routes.draw do
   end
 
   resources :admin, only: [:index] do
-    collection do
-      post 'refresh_resource'
-    end
   end
 
   root 'repositories#index'
@@ -64,6 +61,7 @@ Rails.application.routes.draw do
       namespace :v1, defaults: { format: :json } do
         post '/index/index_ead', to: 'index#index_ead'
         post '/index/delete_ead', to: 'index#delete_ead'
+        post '/admin/refresh_resource', to: 'admin#refresh_resource'
       end
     end
 end

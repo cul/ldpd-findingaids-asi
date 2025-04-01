@@ -11,7 +11,7 @@ if (refreshResourceForm) {
     const resourceRecordUri = document.getElementById('resource_record_uri').value;
     const includeUnpublished = document.getElementById('include_unpublished').value === 'true';
 
-    refreshResultStatusElement.innerHTML = 'Downloading and reindexing...';
+    refreshResultStatusElement.innerHTML = 'Downloading and reindexing... (this can take a while for large resources)';
 
     try {
       const response = await fetch(action, {
