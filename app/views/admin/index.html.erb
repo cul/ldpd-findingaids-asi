@@ -4,7 +4,7 @@
 <h1 class="mb-4">Admin</h1>
 <div>
   <h2>Refresh Resource</h2>
-  <%= form_with id: 'refresh-resource-form', url: refresh_resource_admin_index_path, method: :post, data: {turbo: false}, class: 'row' do |form| %>
+  <%= form_with id: 'refresh-resource-form', url: api_v1_admin_refresh_resource_path, method: :post, data: {turbo: false}, class: 'row' do |form| %>
     <p>Enter an ArchivesSpace resource record URI below.</p>
     <%= form.label :resource_record_uri, "Resource record URI", class: 'sr-only' %>
     <%= form.hidden_field :include_unpublished, value: Rails.env != 'findingaids_prod' %>
