@@ -155,3 +155,5 @@ to_field 'extent_ssm' do |record, accumulator|
 end
 
 to_field 'call_number_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")][not(@type)]'), first_only
+
+to_field 'bibid_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "") = ""]'), first_only
