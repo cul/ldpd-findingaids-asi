@@ -17,7 +17,7 @@ module ApplicationHelper
   
   def clio_link(args)
     bibid = args[:value]&.first
-    "<a href=\"https://clio.columbia.edu/catalog/#{bibid}\">View in CLIO</a>".html_safe
+    "<a href=\"https://clio.columbia.edu/catalog/#{bibid}\" class=\"external-link\">View in CLIO</a>".html_safe
   end
 
 end
