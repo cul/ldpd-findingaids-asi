@@ -305,4 +305,14 @@ describe Traject::Indexer do
     end
   end
   
+  describe  'extract bibid' do
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+    
+    context 'when bibid id unit is present' do
+      it do
+        expect(index_document[:bibid_ss]).to eq(["4079591"])
+      end
+    end
+  end
+  
 end
