@@ -23,6 +23,10 @@ class AeonLocalRequest
     @solr_document['parent_access_restrict_tesm'].find { |value| value.downcase.include?('unprocessed') } != nil
   end
 
+  def digital?
+    @solr_document['digital_objects_ssm'].present?
+  end
+  
   def grouping_field_value
     box_or_highest_requestable_level_label
   end
@@ -110,7 +114,11 @@ class AeonLocalRequest
     form_fields['ReferenceNumber'] = reference_number
     form_fields['DocumentType'] = 'All'
     form_fields['ItemInfo1'] = 'Archival Materials' # Format/Genre in Aeon
-    form_fields['ItemInfo3'] = 'UNPROCESSED' if self.unprocessed?
+    if self.digital?
+      form_fields['ItemInfo3'] = 'DIGITIZED'
+    elsif self.unprocessed?
+      form_fields['ItemInfo3'] = 'UNPROCESSED'
+    end
     # The UserReview field controls whether or not the request is directly submitted for processing
     # or is instead saved in a user’s Aeon account for submission at a later date.
     form_fields['UserReview'] = (repository_local_request_config && repository_local_request_config['user_review'].to_s == 'false') ? 'No' : 'Yes'
