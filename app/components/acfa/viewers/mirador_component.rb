@@ -22,7 +22,7 @@ module Acfa::Viewers
 
     def use_iiif_folders?
       # TODO: how do we determine when to use the folder UI from the solr data?
-      false
+      true
     end
   end
 end

@@ -248,7 +248,7 @@ describe Traject::Indexer do
       let(:digital_objects_values) { index_document[:components][0][:components][1][:digital_objects_ssm] }
       let(:digital_objects) { digital_objects_values.map { |json| Acfa::DigitalObject.from_json(json) } }
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_digital_objects/from_did_daogrp.xml') }
-      let(:expected_hrefs) { ['https://dx.doi.org/10.7916/d8-knzx-9990', 'https://dlc.library.columbia.edu/iiif/3/presentation/10.7916/d8-knzx-9990/manifest'] }
+      let(:expected_hrefs) { ['https://dx.doi.org/10.7916/d8-knzx-9990', 'https://dlc.library.columbia.edu/iiif/3/presentation/aspace/07a6d30d74e29fabe3cf77fa0e330489/collection'] }
       let(:expected_types) { ['locator', 'locator'] }
       let(:expected_roles) { [nil, 'iiif-manifest'] }
       it do
