@@ -18,7 +18,7 @@ describe Acfa::Viewers::MiradorComponent, type: :component do
   context "has one embeddable resource" do
     let(:label) { 'resource label' }
     let(:href) { 'https://doi.org/10.7916/d8-3tyk-ew60' }
-    let(:iiif_object) { instance_double(Acfa::DigitalObject, label: label, href: href) }
+    let(:iiif_object) { instance_double(Acfa::DigitalObject, label: label, href: href, role: nil) }
     let(:digital_objects) { [iiif_object] }
     it "renders" do
       expect(rendered_node).to have_selector "div#mirador[data-manifest=\"#{CONFIG[:mirador_base_url]}/iiif/3/presentation/10.7916/d8-3tyk-ew60/manifest\"]"
@@ -28,15 +28,34 @@ describe Acfa::Viewers::MiradorComponent, type: :component do
   context "has multiple embeddable resources" do
     let(:label1) { 'resource label 1' }
     let(:href1) { 'https://doi.org/10.7916/d8-3tyk-ew60' }
-    let(:iiif_object1) { instance_double(Acfa::DigitalObject, label: label1, href: href1) }
+    let(:iiif_object1) { instance_double(Acfa::DigitalObject, label: label1, href: href1, role: nil) }
 
     let(:label2) { 'resource label 2' }
     let(:href2) { 'https://doi.org/10.7916/d8-3tyk-ew61' }
-    let(:iiif_object2) { instance_double(Acfa::DigitalObject, label: label2, href: href2) }
+    let(:iiif_object2) { instance_double(Acfa::DigitalObject, label: label2, href: href2, role: nil) }
 
     let(:digital_objects) { [iiif_object1, iiif_object2] }
     it "renders" do
       expect(rendered_node).to have_selector "div#mirador[data-manifest=\"http://test.host/archives/#{document_id}/iiif-collection\"]"
+    end
+    context "with explicit iiif manifests" do
+      let(:href2) { 'https://dlc.library.columbia.edu/iiif/3/presentation/aspace/07a6d30d74e29fabe3cf77fa0e330489/collection' }
+      let(:iiif_object2) { instance_double(Acfa::DigitalObject, label: label2, href: href2, role: 'iiif-manifest') }
+      describe '#embed_iiif_manifest' do
+        it "returns only the explicit manifest" do
+          expect(component.embed_iiif_manifest).to eql href2
+        end
+      end
+      it "renders" do
+        expect(rendered_node).to have_selector "div#mirador[data-manifest=\"#{href2}\"]"
+      end
+      context "for both resources" do
+        let(:href1) { 'https://dlc.library.columbia.edu/iiif/3/presentation/aspace/07a6d30d74e29fabe3cf77fa0e330488/collection' }
+        let(:iiif_object1) { instance_double(Acfa::DigitalObject, label: label1, href: href1, role: 'iiif-manifest') }
+        it "renders" do
+          expect(rendered_node).to have_selector "div#mirador[data-manifest=\"http://test.host/archives/#{document_id}/iiif-collection\"]"
+        end
+      end
     end
   end
 end
