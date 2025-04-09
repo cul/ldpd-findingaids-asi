@@ -5,64 +5,50 @@ module Api
 
       # POST /api/v1/admin/refresh_resource
       def refresh_resource
-        resource_uri = params[:resource_record_uri]
-        include_unpublished = params[:include_unpublished] == 'true'
+        resource_uri = refresh_resource_params[:resource_record_uri]
+        include_unpublished = refresh_resource_params[:include_unpublished] == 'true'
 
-        resource_uri_regexp = /^\/*repositories\/(\d+)\/resources\/(\d+)$/
-        matches = resource_uri_regexp.match(resource_uri)
+        repository_id, resource_id = validate_and_parse_resource_uri!(resource_uri)
 
-        if matches.nil?
-          render json: {result: false, error: 'Invalid format resource_uri.  Expected a value like: /repositories/2/resources/2024'}
-          return
-        else
-          repository_id = matches[1]
-          resource_id = matches[2]
-        end
-
-        client = ArchivesSpace::Client.new(
-          ArchivesSpace::Configuration.new({
-            base_uri: ARCHIVESSPACE[:base_uri],
-            username: ARCHIVESSPACE[:username],
-            password: ARCHIVESSPACE[:password],
-            timeout: 600
-          })
-        ).login
-
-        bib_id = JSON.parse(client.get("/repositories/#{repository_id}/resources/#{resource_id}").body).fetch('id_0')
-
-        ead_response = client.get(
-          "/repositories/#{repository_id}/resource_descriptions/#{resource_id}.xml",
-          query: {
-            include_unpublished: include_unpublished,
-            include_daos: true
-          }
+        client = Acfa::ArchivesSpace::Client(
+          base_uri: ARCHIVESSPACE[:base_uri],
+          username: ARCHIVESSPACE[:username],
+          password: ARCHIVESSPACE[:password],
         )
-        ead_filename = "as_ead_cul-#{bib_id}.xml"
-        full_ead_file_path = File.join(CONFIG[:ead_cache_dir], ead_filename)
 
-        # Validate this XML (just the markup, not the schema)
-        xml_is_valid = Nokogiri::XML(ead_response.body).errors.blank?
+        download_path = client.download_ead(
+          repository_id: repository_id,
+          resource_id: resource_id,
+          download_directory_path: File.join(CONFIG[:ead_cache_dir], ead_filename)
+        )
 
-        if !xml_is_valid
-          render json: {result: false, error: 'Downloaded EAD did not pass XML validation.'}
-          return
-        end
-
-        download_time = Benchmark.measure {
-          File.binwrite(full_ead_file_path, ead_response.body)
-        }.real
-
-        puts "download_time: #{download_time}"
-
-        index_time = Benchmark.measure {
-          IndexEadJob.perform_now(ead_filename)
-        }.real
-
-        puts "index_time: #{index_time}"
+        IndexEadJob.perform_now(File.basename(download_path)) # The IndexEadJob expects only a filename, not a full path
 
         render json: {result: true, resource_id: "cul-#{bib_id}"}
       rescue Net::ReadTimeout
         render json: {result: false, error: 'ArchivesSpace EAD download took too long and the request timed out.'}
+      rescue Acfa::Exceptions::InvalidArchivesSpaceResourceUri => e
+        render json: {result: false, error: e.message}
+      end
+
+      private
+
+      def refresh_resource_params
+        params.expect([:resource_record_uri, :include_unpublished])
+      end
+
+      def validate_and_parse_resource_uri!(resource_uri)
+        # Validate and parse params ###############################################
+        resource_uri_regexp = /^\/*repositories\/(\d+)\/resources\/(\d+)$/
+        matches = resource_uri_regexp.match(resource_uri)
+
+
+        if matches.nil?
+          raise Acfa::Exceptions::InvalidArchivesSpaceResourceUri,
+                'Invalid format resource_uri.  Expected a value like: /repositories/2/resources/2024'
+        end
+
+        [matches[1], matches[2]] # [repository_id, resource_id]
       end
     end
   end
