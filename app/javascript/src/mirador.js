@@ -38,7 +38,7 @@ function loadMirador() {
       .concat([...Mirador.culPlugins.hintingSideBar])
       .concat([...Mirador.culPlugins.viewerNavigation])
       .concat([...Mirador.culPlugins.nativeObjectViewerPlugin]);
-    const foldersAttValue = miradorDiv.dataset['use-folders'];
+    const foldersAttValue = miradorDiv.dataset.useFolders;
     const useFolders = (Boolean(foldersAttValue) && !String.toString(foldersAttValue).match(/false/i));
     if (useFolders) {
       culMiradorPlugins.push([...Mirador.culPlugins.collectionFoldersPlugin]);
