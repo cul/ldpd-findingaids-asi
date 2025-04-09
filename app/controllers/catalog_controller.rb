@@ -275,6 +275,7 @@ class CatalogController < ApplicationController
     config.add_related_field 'originalsloc', field: 'originalsloc_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'callnumber', field: 'call_number_ss', helper_method: :render_html_tags
+    config.add_related_field 'clio', field: 'bibid_ss', helper_method: :clio_link
 
     # Collection Show Page - Indexed Terms Section
     config.add_indexed_terms_field 'subjects', field: 'access_subjects_ssim', link_to_facet: true, separator_options: {
@@ -424,4 +425,5 @@ class CatalogController < ApplicationController
     Arclight::Repository.find_by(slug: repos.first)
   end
   helper_method :repository_faceted_on
+  
 end
