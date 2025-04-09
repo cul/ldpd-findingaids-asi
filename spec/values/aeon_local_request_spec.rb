@@ -15,6 +15,7 @@ RSpec.describe AeonLocalRequest do
   let(:parent_unittitles_ssm) { ['First value', 'Series 2'] }
   let(:call_number) { 'MS#1234' }
   let(:collection_offsite_ssi) { 'false' }
+  let(:digital_objects_ssm) { nil }
   let(:container_information_ssm) do
     [
       {
@@ -46,6 +47,7 @@ RSpec.describe AeonLocalRequest do
       'parent_unittitles_ssm' => parent_unittitles_ssm,
       'call_number_ss' => call_number,
       'collection_offsite_ssi' => collection_offsite_ssi,
+      'digital_objects_ssm' => digital_objects_ssm
     })
   end
   let(:aeon_local_request) { described_class.new(solr_doc) }
@@ -357,6 +359,21 @@ RSpec.describe AeonLocalRequest do
       expect(aeon_local_request.form_attributes).to eq(expected_form_attributes)
     end
 
+    context 'when the record is unprocessed, but also has digital content (indicated by the presence of a digital_objects_ssm solr field)' do
+      let(:digital_objects_ssm) do
+        [{
+          label: 'Interview with the members of the photography group En Foco, including Adál (Adál Alberto Maldonado) and Geno Rodriguez, 1974 May 2',
+          href: 'https://dx.doi.org/10.7916/gvx3-5b81',
+          role: '',
+          type: 'simple'
+        }].to_json
+      end
+
+      it 'sets the ItemInfo3 value to DIGITIZED instead of UNPROCESSED' do
+        expect(aeon_local_request.form_attributes['ItemInfo3']).to eq('DIGITIZED')
+      end
+    end
+
     context "when solr_doc has no data" do
       let(:expected_form_attributes) do
         {
@@ -377,6 +394,29 @@ RSpec.describe AeonLocalRequest do
       include_context "empty solr_doc"
       it 'returns a blank value' do
         expect(aeon_local_request.form_attributes).to eq(expected_form_attributes)
+      end
+    end
+  end
+
+  describe '#digital?' do
+    context 'the underlying solr document has a digital_objects_ssm value' do
+      let(:digital_objects_ssm) do
+        [{
+          label: 'Interview with the members of the photography group En Foco, including Adál (Adál Alberto Maldonado) and Geno Rodriguez, 1974 May 2',
+          href: 'https://dx.doi.org/10.7916/gvx3-5b81',
+          role: '',
+          type: 'simple'
+        }].to_json
+      end
+
+      it 'returns true' do
+        expect(aeon_local_request.digital?).to eq(true)
+      end
+    end
+
+    context 'the underlying solr document does not have a digital_objects_ssm value' do
+      it 'returns false' do
+        expect(aeon_local_request.digital?).to eq(false)
       end
     end
   end
