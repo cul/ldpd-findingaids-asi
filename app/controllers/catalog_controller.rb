@@ -257,25 +257,26 @@ class CatalogController < ApplicationController
     config.add_summary_field 'bioghist', field: 'bioghist_html_tesm', helper_method: :render_html_tags
 
     # Collection Show Page - Related Section
+    config.add_related_field 'clio', field: 'bibid_ss', helper_method: :clio_link
+    config.add_related_field 'callnumber', field: 'call_number_ss', helper_method: :render_html_tags
+    config.add_related_field 'processinfo', field: 'processinfo_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'acqinfo', field: 'acqinfo_ssim', helper_method: :render_html_tags
     config.add_related_field 'appraisal', field: 'appraisal_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'custodhist', field: 'custodhist_html_tesm', helper_method: :render_html_tags
-    config.add_related_field 'processinfo', field: 'processinfo_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'arrangement', field: 'arrangement_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'accruals', field: 'accruals_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'phystech', field: 'phystech_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'physdesc', field: 'physdesc_tesim', helper_method: :render_html_tags
     config.add_related_field 'physfacet', field: 'physfacet_tesim', helper_method: :render_html_tags
     config.add_related_field 'physloc', field: 'physloc_html_tesm', helper_method: :render_html_tags
-    config.add_related_field 'descrules', field: 'descrules_ssm', helper_method: :render_html_tags
     config.add_related_field 'relatedmaterial', field: 'relatedmaterial_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'separatedmaterial', field: 'separatedmaterial_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'otherfindaid', field: 'otherfindaid_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'altformavail', field: 'altformavail_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'originalsloc', field: 'originalsloc_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tags
-    config.add_related_field 'callnumber', field: 'call_number_ss', helper_method: :render_html_tags
-    config.add_related_field 'clio', field: 'bibid_ss', helper_method: :clio_link
+    config.add_related_field 'descrules', field: 'descrules_ssm', helper_method: :render_html_tags
+    
 
     # Collection Show Page - Indexed Terms Section
     config.add_indexed_terms_field 'subjects', field: 'access_subjects_ssim', link_to_facet: true, separator_options: {
