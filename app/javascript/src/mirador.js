@@ -43,7 +43,6 @@ function loadMirador() {
     if (useFolders) {
       culMiradorPlugins.push([...Mirador.culPlugins.collectionFoldersPlugin]);
       viewConfig.allowTopCollectionButton = true;
-      viewConfig.sideBarOpen = true;
     }
 
     Mirador.viewer(
