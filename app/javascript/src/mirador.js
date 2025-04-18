@@ -1,4 +1,5 @@
 import Mirador from '@columbia-libraries/mirador';
+import { __CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE as ReactSharedInternalsClient } from 'react';
 
 function loadMirador() {
   const miradorDiv = document.getElementById('mirador');
@@ -44,6 +45,8 @@ function loadMirador() {
       culMiradorPlugins.push([...Mirador.culPlugins.collectionFoldersPlugin]);
       viewConfig.allowTopCollectionButton = true;
     }
+
+    ReactSharedInternalsClient.actQueue = null;
 
     Mirador.viewer(
       {
