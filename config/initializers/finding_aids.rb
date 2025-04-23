@@ -4,3 +4,6 @@ CONFIG = HashWithIndifferentAccess.new(Rails.application.config_for(:finding_aid
 REPOS = HashWithIndifferentAccess.new(YAML.load_file("#{Rails.root}/config/repositories.yml", aliases: true)[Rails.env]).freeze
 AEON = HashWithIndifferentAccess.new(YAML.load_file("#{Rails.root}/config/aeon.yml", aliases: true)[Rails.env]).freeze
 ARCHIVESSPACE = HashWithIndifferentAccess.new(Rails.application.config_for(:archivesspace))
+
+# Make sure that the ead_cache_dir exists
+FileUtils.mkdir_p(CONFIG[:ead_cache_dir])

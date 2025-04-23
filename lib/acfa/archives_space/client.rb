@@ -1,5 +1,4 @@
 class Acfa::ArchivesSpace::Client
-
   def initialize(base_uri:, username:, password:)
     @base_uri = base_uri
     @username = username
@@ -22,32 +21,43 @@ class Acfa::ArchivesSpace::Client
     @internal_client
   end
 
-  def download_ead(repository_id:, resource_id:, download_directory_path:)
-    bib_id = JSON.parse(internal_client.get("/repositories/#{repository_id}/resources/#{resource_id}").body).fetch('id_0')
-    ead_response = internal_client.get(
-      "/repositories/#{repository_id}/resource_descriptions/#{resource_id}.xml",
-      query: {
-        include_unpublished: include_unpublished,
-        include_daos: true
-      }
-    )
-    ead_filename = "as_ead_cul-#{bib_id}.xml"
-    full_ead_file_path = File.join(CONFIG[:ead_cache_dir], ead_filename)
+  # Splits the given resource_uri into its constituent repository_id and resource_id.
+  # @return [Array] An array of length 2.  The first element is the repository_id and the second is the resource_id.
+  def split_resource_uri(resource_uri)
+    # Validate and parse params ###############################################
+    resource_uri_regexp = /^\/*repositories\/(\d+)\/resources\/(\d+)$/
+    matches = resource_uri_regexp.match(resource_uri)
 
-    # Validate this XML (just the markup, not the schema)
-    xml_is_valid = Nokogiri::XML(ead_response.body).errors.blank?
-
-    if !xml_is_valid
-      render json: {result: false, error: 'Downloaded EAD did not pass XML validation.'}
-      return
+    if matches.nil?
+      raise Acfa::Exceptions::InvalidArchivesSpaceResourceUri,
+            'Invalid format resource_uri.  Expected a value like: /repositories/2/resources/2024'
     end
 
-    download_time = Benchmark.measure {
-      File.binwrite(full_ead_file_path, ead_response.body)
-    }.real
+    [matches[1], matches[2]] # [repository_id, resource_id]
+  end
 
-    puts "download_time: #{download_time}"
+  def bib_id_for_resource(resource_uri:)
+    repository_id, resource_id = split_resource_uri(resource_uri)
+    JSON.parse(internal_client.get("/repositories/#{repository_id}/resources/#{resource_id}").body).fetch('id_0')
+  end
 
-    full_ead_file_path
+  def download_ead(resource_uri:, filename:, include_unpublished:)
+    repository_id, resource_id = split_resource_uri(resource_uri)
+    download_path = File.join(CONFIG[:ead_cache_dir], filename)
+
+    ead_response = internal_client.get(
+      "/repositories/#{repository_id}/resource_descriptions/#{resource_id}.xml",
+      query: { include_unpublished: include_unpublished, include_daos: true }
+    )
+
+    # Validate the downloaded EAD's XML (just the validity of the xml markup, not the schema)
+    xml_content = ead_response.body
+    xml_is_valid = Nokogiri::XML(xml_content).errors.blank?
+
+    raise Acfa::Exceptions::InvalidEadXml, 'Downloaded EAD did not pass XML validation.' if !xml_is_valid
+    download_time = Benchmark.measure { File.binwrite(download_path, xml_content) }.real
+    Rails.logger.debug("Downloaded EAD to #{download_path}.  Took #{download_time} seconds.")
+
+    download_path
   end
 end
