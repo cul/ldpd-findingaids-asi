@@ -13,8 +13,9 @@ if (refreshResourceForm) {
 
     refreshResultStatusElement.innerHTML = 'Downloading and reindexing... (this can take a while for large resources)';
 
+    let response;
     try {
-      const response = await fetch(action, {
+      response = await fetch(action, {
         method,
         headers: {
           'Content-Type': 'application/json',
@@ -25,10 +26,6 @@ if (refreshResourceForm) {
           include_unpublished: includeUnpublished,
         }),
       });
-
-      if (response.status !== 200) {
-        throw new Error(`Received a response status of ${response.status}`);
-      }
 
       const data = await response.json();
 
@@ -43,9 +40,14 @@ if (refreshResourceForm) {
         throw new Error(data.error);
       }
     } catch (err) {
+      let message = err;
+      if (err instanceof SyntaxError) {
+        message = `Received a response status of ${response.status}`;
+      }
+
       refreshResultStatusElement.innerHTML = `
         <p class="alert alert-danger mt-3">
-          <strong>An unexpected error occurred</strong>:<br />${err}
+          <strong>An unexpected error occurred</strong>:<br />${message}
         </p>
       `;
     }

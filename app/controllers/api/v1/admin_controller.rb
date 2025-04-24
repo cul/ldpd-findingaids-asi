@@ -18,7 +18,9 @@ module Api
         render json: {result: true, resource_id: "cul-#{bib_id}"}
       rescue Net::ReadTimeout
         render json: {result: false, error: 'ArchivesSpace EAD download took too long and the request timed out.'}, status: :internal_server_error
-      rescue Acfa::Exceptions::InvalidArchivesSpaceResourceUri, Acfa::Exceptions::InvalidEadXml, Acfa::Exceptions::UnexpectedArchivesSpaceApiResponse => e
+      rescue Acfa::Exceptions::InvalidArchivesSpaceResourceUri => e
+        render json: {result: false, error: e.message}, status: :bad_request
+      rescue Acfa::Exceptions::InvalidEadXml, Acfa::Exceptions::UnexpectedArchivesSpaceApiResponse => e
         render json: {result: false, error: e.message}, status: :internal_server_error
       rescue ArchivesSpace::ConnectionError
         render json: {result: false, error: 'Unable to connect to ArchivesSpace.'}, status: :internal_server_error

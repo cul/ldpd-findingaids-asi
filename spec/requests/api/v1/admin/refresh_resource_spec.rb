@@ -47,27 +47,32 @@ RSpec.describe url, type: :request do
       exceptions_and_expected_responses = [
         [
           Net::ReadTimeout.new,
-          { result: false, error: 'ArchivesSpace EAD download took too long and the request timed out.' }
+          { result: false, error: 'ArchivesSpace EAD download took too long and the request timed out.' },
+          :internal_server_error
         ],
         [
           Acfa::Exceptions::InvalidArchivesSpaceResourceUri.new('error message 1'),
-          { result: false, error: 'error message 1' }
+          { result: false, error: 'error message 1' },
+          :bad_request
         ],
         [
           Acfa::Exceptions::InvalidEadXml.new('error message 2'),
-          { result: false, error: 'error message 2' }
+          { result: false, error: 'error message 2' },
+          :internal_server_error
         ],
         [
           Acfa::Exceptions::UnexpectedArchivesSpaceApiResponse.new('error message 3'),
-          { result: false, error: 'error message 3' }
+          { result: false, error: 'error message 3' },
+          :internal_server_error
         ],
         [
           ArchivesSpace::ConnectionError.new,
-          { result: false, error: 'Unable to connect to ArchivesSpace.' }
+          { result: false, error: 'Unable to connect to ArchivesSpace.' },
+          :internal_server_error
         ]
       ]
 
-      exceptions_and_expected_responses.each do |exception, expected_response|
+      exceptions_and_expected_responses.each do |exception, expected_response, expected_response_status|
         context "when an exception of type #{exception.class.name} is raised" do
           before do
             allow(Acfa::ArchivesSpace::Client.instance).to receive(:bib_id_for_resource).and_raise(exception)
@@ -79,7 +84,7 @@ RSpec.describe url, type: :request do
           end
 
           it "responds with the expected status and response" do
-            expect(response).to have_http_status(:internal_server_error)
+            expect(response).to have_http_status(expected_response_status)
             expect(response.body).to eq(expected_response.to_json)
           end
         end
