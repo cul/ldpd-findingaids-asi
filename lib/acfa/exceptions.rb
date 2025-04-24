@@ -3,4 +3,5 @@ module Acfa::Exceptions
 
   class Acfa::Exceptions::InvalidArchivesSpaceResourceUri < AcfaError; end
   class Acfa::Exceptions::InvalidEadXml < AcfaError; end
+  class Acfa::Exceptions::UnexpectedArchivesSpaceApiResponse < AcfaError; end
 end

@@ -63,6 +63,7 @@ RSpec.describe Acfa::ArchivesSpace::Client do
       allow(instance).to receive(:get).with(
         "/repositories/#{repository_id}/resources/#{resource_id}"
       ).and_return(response)
+      allow(response).to receive(:status_code).and_return(200)
     end
 
     it 'returns the expected value for a valid resource_record_uri' do
@@ -91,6 +92,7 @@ RSpec.describe Acfa::ArchivesSpace::Client do
           "/repositories/#{repository_id}/resource_descriptions/#{resource_id}.xml",
           query: { include_unpublished: include_unpublished, include_daos: true }
         ).and_return(response)
+        allow(response).to receive(:status_code).and_return(200)
       end
 
       context 'when the XML from ArchivesSpace is valid' do
@@ -122,6 +124,40 @@ RSpec.describe Acfa::ArchivesSpace::Client do
       }.to raise_error(
         Acfa::Exceptions::InvalidArchivesSpaceResourceUri
       )
+    end
+  end
+
+  describe '#raise_error_if_unsuccessful_archivesspace_response!' do
+    let(:context_label) { 'some_method_name' }
+    let(:response_body) { 'This is the response body.' }
+    let(:response) do
+      resp = double('Response')
+      allow(resp).to receive(:status_code).and_return(status_code)
+      allow(resp).to receive(:body).and_return(response_body)
+      resp
+    end
+
+    context 'status code is 200' do
+      let(:status_code) { 200 }
+
+      it 'does not raise an exception' do
+        expect {
+          instance.raise_error_if_unsuccessful_archivesspace_response!(context_label, response)
+        }.not_to raise_error
+      end
+    end
+
+    context 'status code is not 200' do
+      let(:status_code) { 403 }
+
+      it 'logs an error and raises an exception' do
+        expect(Rails.logger).to receive(:error).with(
+          "#{context_label}: request returned a status of #{status_code}.  Response: #{response_body}"
+        )
+        expect {
+          instance.raise_error_if_unsuccessful_archivesspace_response!(context_label, response)
+        }.to raise_error(Acfa::Exceptions::UnexpectedArchivesSpaceApiResponse)
+      end
     end
   end
 end
