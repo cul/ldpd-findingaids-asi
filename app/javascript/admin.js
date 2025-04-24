@@ -16,7 +16,6 @@ if (refreshResourceForm) {
     try {
       const response = await fetch(action, {
         method,
-        // credentials: 'include', // TODO: Might uncomment this later if needed
         headers: {
           'Content-Type': 'application/json',
         },
