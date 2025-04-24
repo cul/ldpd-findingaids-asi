@@ -1,0 +1,32 @@
+#cart-offcanvas {
+  width: 100%;
+}
+
+@media (min-width: 768px ) {
+  #cart-offcanvas {
+    width: 75%;
+  }
+}
+
+@media (min-width: 1400px ) {
+  #cart-offcanvas {
+    width: 50%;
+  }
+}
+
+.request-cart {
+  textarea {
+    resize: none !important;
+  }
+}
+
+
+@media (min-width: 576px ) {
+  .add-to-cart-button {
+    min-width: 100px; // Set a fixed width so the button doesn't change size when the text inside changes
+  }
+}
+
+.add-to-cart-button {
+  margin-left: .5rem;
+}

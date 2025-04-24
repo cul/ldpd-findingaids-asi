@@ -62,12 +62,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'marc'
 gem 'iso-639'
 
-# fcd1, 03/29/22: Getting bundle install errors on all-nginx-dev1 for 1.13.3
-# As seen in ldpd-amesa Gemfile, spec at 1.10.10
 gem 'nokogiri', '~> 1.15.2'
 gem 'loofah', '~> 2.19.1'
 
-gem 'arclight', '~> 1.1.4'
+gem 'arclight', '~> 1.4.0'
 gem 'blacklight', '~> 8.5.0'
 
 gem "font-awesome-sass", "~> 6.4.0"
@@ -82,12 +80,16 @@ end
 gem "rsolr", ">= 1.0", "< 3"
 gem "bootstrap", "\~\>\ 5.1"
 gem "sassc-rails", "~> 2.1"
-gem "devise"
+gem "devise", '~> 4.9' # omniauth-cul is only known to be compatible with devise ~> 4.9
+gem "omniauth", '~> 2.1' # omniauth-cul is only known to be compatible with omniauth ~> 2.1
+gem "omniauth-cul", '~> 0.2.0' # omniauth-cul is only known to be compatible with omniauth ~> 2.1
 gem "devise-guests", "~> 0.8"
 gem "blacklight-locale_picker"
 gem "blacklight_range_limit"
 gem "sitemap_generator"
 gem 'whenever', require: false
+
+gem 'archivesspace-client'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -100,7 +102,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'capistrano', '~> 3.18.0', require: false
+  gem 'capistrano', '~> 3.19.2', require: false
   gem 'capistrano-cul', require: false
   gem 'capistrano-passenger', '~> 0.1', require: false
   gem 'capistrano-rails', '~> 1.4', require: false

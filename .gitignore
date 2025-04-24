@@ -36,13 +36,14 @@
 
 # Ignore config files with sensitive data
 aeon.yml
-archivespace.yml
+archivesspace.yml
 blacklight.yml
 credentials.yml.enc
 database.yml
 finding_aids.yml
 index_api.yml
 master.key
+permissions.yml
 redis.yml
 repositories.yml
 resque.yml
@@ -52,6 +53,7 @@ secrets.yml
 # Ignore local fixture files
 /spec/fixtures/asi/local_dev_fixtures/*
 !/spec/fixtures/asi/local_dev_fixtures/.keep
+/test/fixtures/files/ead
 
 # Vite
 /public/vite*
@@ -60,5 +62,7 @@ node_modules
 # https://vitejs.dev/guide/env-and-mode.html#env-files
 *.local
 
-
 /public/sitemaps/sitemap*.xml.gz
+
+# Local rake tasks
+local.rake

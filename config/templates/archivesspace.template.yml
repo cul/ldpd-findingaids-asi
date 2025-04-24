@@ -1,0 +1,10 @@
+development:
+  base_uri: 'https://example-dev.library.columbia.edu/api'
+  username: 'example-user'
+  password: 'example-password'
+  timeout: 600 # long timeout for certain large EAD downloads
+test:
+  base_uri: 'https://example-test.library.columbia.edu/api'
+  username: 'example-user'
+  password: 'example-password'
+  timeout: 20

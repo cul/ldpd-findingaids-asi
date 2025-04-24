@@ -46,7 +46,7 @@ namespace :acfa do
       puts "no files indexed at #{glob_pattern}"
     end
   end
-  
+
   desc 'Delete finding aid from index by collection id'
   task delete_collection: [:setup_config, :environment] do
     rails_env = (ENV['RAILS_ENV'] || 'development')

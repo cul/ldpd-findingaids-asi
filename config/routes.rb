@@ -10,7 +10,8 @@ Rails.application.routes.draw do
     concerns :range_searchable
 
   end
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  post '/users/development/sign_in_developer', to: 'users/development#sign_in_developer' if Rails.env.development?
 
   concern :exportable, Blacklight::Routes::Exportable.new
   concern :hierarchy, Arclight::Routes::Hierarchy.new
@@ -52,11 +53,15 @@ Rails.application.routes.draw do
     get 'checkout'
   end
 
+  resources :admin, only: [:index] do
+  end
+
   root 'repositories#index'
   namespace :api do
       namespace :v1, defaults: { format: :json } do
         post '/index/index_ead', to: 'index#index_ead'
         post '/index/delete_ead', to: 'index#delete_ead'
+        post '/admin/refresh_resource', to: 'admin#refresh_resource'
       end
     end
 end

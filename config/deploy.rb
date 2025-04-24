@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # config valid for current version and patch releases of Capistrano
-lock '~> 3.18.0'
+lock '~> 3.19.2'
 
 # Until we retire all old CentOS VMs, we need to set the rvm_custom_path because rvm is installed
 # in a non-standard location for our AlmaLinux VMs.  This is because our service accounts need to
@@ -21,12 +21,13 @@ set :deploy_to, "/opt/passenger/#{fetch(:deploy_name)}"
 # Default value for :linked_files is []
 append  :linked_files,
         'config/aeon.yml',
-        'config/archivespace.yml',
+        'config/archivesspace.yml',
         'config/blacklight.yml',
         'config/database.yml',
         'config/finding_aids.yml',
         'config/index_api.yml',
         'config/master.key',
+        'config/permissions.yml',
         'config/redis.yml',
         'config/repositories.yml',
         'config/resque.yml',

@@ -1,0 +1,23 @@
+<%- if controller_name != 'sessions' %>
+  <%= link_to "Log in", new_session_path(resource_name) %><br />
+<% end %>
+
+<%- if devise_mapping.omniauthable? %>
+  <%- resource_class.omniauth_providers.each do |provider| %>
+    <%=
+      button_to "Sign in with #{provider.to_s.upcase}",
+                omniauth_authorize_path(resource_name, provider),
+                data: { turbo: false },
+                class: 'btn btn-primary'
+    %>
+    <br />
+  <% end %>
+<% end %>
+
+<%- if Rails.env.development? %>
+  <%= button_to 'Sign in with development account',
+      users_development_sign_in_developer_path,
+      data: { turbo: false },
+      class: 'btn btn-primary'
+  %>
+<% end %>

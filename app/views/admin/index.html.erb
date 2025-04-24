@@ -1,0 +1,19 @@
+<div>
+  <%= link_to("Sign Out (#{current_user.uid})", destroy_user_session_path, method: :delete, class: 'btn btn-secondary float-end') %>
+</div>
+<h1 class="mb-4">Admin</h1>
+<div>
+  <h2>Refresh Resource</h2>
+  <%= form_with id: 'refresh-resource-form', url: api_v1_admin_refresh_resource_path, method: :post, data: {turbo: false}, class: 'row' do |form| %>
+    <p>Enter an ArchivesSpace resource record URI below.</p>
+    <%= form.label :resource_record_uri, "Resource record URI", class: 'sr-only' %>
+    <%= form.hidden_field :include_unpublished, value: Rails.env != 'findingaids_prod' %>
+    <div class="col">
+      <%= form.text_field :resource_record_uri, class: 'form-control', placeholder: 'Example: /repositories/2/resources/2024' %>
+    </div>
+    <div class="col-auto">
+      <%= form.submit "Refresh", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+  <div id="refresh-result-status"></div>
+</div>
