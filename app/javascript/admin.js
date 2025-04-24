@@ -1,5 +1,5 @@
-const csrfParam = document.querySelector('meta[name="csrf-param"]').content;
-const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+const csrfParam = document.querySelector('meta[name="csrf-param"]')?.content;
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
 const refreshResultStatusElement = document.getElementById('refresh-result-status');
 
 const refreshResourceForm = document.getElementById('refresh-resource-form');
