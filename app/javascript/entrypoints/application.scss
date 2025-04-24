@@ -6,7 +6,7 @@ $brand_text: $white;
 @import "../css/arclight"; // includes bootstrap, blacklight, and arclight base styles
 @import "../css/mirador";
 
-// TODO: Later on, see if we can import font-awesome here instead of in app/assets/stylesheets/application.scss
+// TODO: ACFA-605 see if we can import font-awesome here instead of in app/assets/stylesheets/application.scss
 // @import "font-awesome";
 // @import "font-awesome-pro";
 // @import "font-awesome-pro/light";
