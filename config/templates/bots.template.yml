@@ -1,0 +1,9 @@
+development:
+  turnstile:
+    validation_url: http://localhost.dev/
+    site_public_key: development
+
+test:
+  turnstile:
+    validation_url: http://localhost.test/
+    site_public_key: test

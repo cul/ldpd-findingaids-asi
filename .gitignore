@@ -38,6 +38,7 @@
 aeon.yml
 archivesspace.yml
 blacklight.yml
+bots.yml
 credentials.yml.enc
 database.yml
 finding_aids.yml

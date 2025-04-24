@@ -42,5 +42,6 @@ module LdpdFindingaidsAsi
       end
     end
     Arclight::Engine.config.catalog_controller_group_query_params['group.limit'] = 3
+    config.bots = config_for(:bots)
   end
 end
