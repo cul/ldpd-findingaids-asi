@@ -1,4 +1,5 @@
 require 'erb'
+require 'securerandom'
 
 module Acfa
   module Setup
