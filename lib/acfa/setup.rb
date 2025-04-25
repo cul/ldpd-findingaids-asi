@@ -1,3 +1,5 @@
+require 'erb'
+
 module Acfa
   module Setup
     def self.configuration(root_dir, force: false)
