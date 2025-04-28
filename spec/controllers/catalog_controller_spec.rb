@@ -9,7 +9,7 @@ RSpec.describe CatalogController, type: :controller do
     let(:repository_id) { 'nnc' }
     let(:search_service) { instance_double(Blacklight::SearchService) }
     let(:solr_doc) { {id: solr_id, repository_id_ssi: repository_id} }
-    let(:finding_aid_url) { "/ead/#{repository_id}/#{solr_id}" }
+    let(:finding_aid_url) { "/archives/#{solr_id}" }
     let(:clio_url) { "https://clio.columbia.edu/catalog/#{bib_id}" }
     before do
       allow(controller).to receive(:search_service).and_return(search_service)

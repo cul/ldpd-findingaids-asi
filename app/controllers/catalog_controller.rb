@@ -276,7 +276,7 @@ class CatalogController < ApplicationController
     config.add_related_field 'originalsloc', field: 'originalsloc_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'descrules', field: 'descrules_ssm', helper_method: :render_html_tags
-    
+
 
     # Collection Show Page - Indexed Terms Section
     config.add_indexed_terms_field 'subjects', field: 'access_subjects_ssim', link_to_facet: true, separator_options: {
@@ -386,7 +386,7 @@ class CatalogController < ApplicationController
         @document = search_service.fetch(solr_id)
         repo_id = @document&.fetch(:repository_id_ssi, nil)
         if repo_id
-          redirect_to repository_finding_aid_path(repository_id: repo_id, id: solr_id)
+          redirect_to solr_document_path(id: solr_id)
         else
           redirect_to (CONFIG[:clio_redirect_url] + clio_id), allow_other_host: true
         end
@@ -426,5 +426,5 @@ class CatalogController < ApplicationController
     Arclight::Repository.find_by(slug: repos.first)
   end
   helper_method :repository_faceted_on
-  
+
 end
