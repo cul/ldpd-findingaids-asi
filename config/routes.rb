@@ -33,15 +33,6 @@ Rails.application.routes.draw do
   get 'resolve/:id', to: 'catalog#resolve'
 
   get 'ead/:repository_id', to: redirect('/archives?f[repository][]=%{repository_id}&group=true&sort=title_sort+asc')
-  scope 'ead' do
-    resources :repositories, only: [:index], path: '' do
-      resources :finding_aids, only: [:index, :show], path: '' do
-        get 'summary'
-        get 'print'
-        resources :components, only: [:index, :show], path: 'dsc'
-      end
-    end
-  end
 
   resource :aeon_request, only: [:create] do
     post 'create'
