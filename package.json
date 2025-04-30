@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.15",
-    "@columbia-libraries/mirador": "4.0.0-alpha.16-1",
+    "@columbia-libraries/mirador": "4.0.0-alpha.16-2",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@github/auto-complete-element": "^3.6.2",

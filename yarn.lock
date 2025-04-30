@@ -110,10 +110,10 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
-"@columbia-libraries/mirador@4.0.0-alpha.16-1":
-  version "4.0.0-alpha.16-1"
-  resolved "https://registry.yarnpkg.com/@columbia-libraries/mirador/-/mirador-4.0.0-alpha.16-1.tgz#32c9414b2165bf1fe160d7e319c5a7ca2176a3b9"
-  integrity sha512-9Hv6OhTQ9mbK4OJUczlFYB1OJ4O9VC/yQL9FSzTTu7GvLH7+Q6adEBBmnmAHrcDGUJ575kSigZBNH7Gfpy9cUw==
+"@columbia-libraries/mirador@4.0.0-alpha.16-2":
+  version "4.0.0-alpha.16-2"
+  resolved "https://registry.yarnpkg.com/@columbia-libraries/mirador/-/mirador-4.0.0-alpha.16-2.tgz#abe7ef715142bd2079aab070b7a3cd0683dd82c1"
+  integrity sha512-vAaulKog8ATrpCLtxA/KS5Pf8d5ouwVMynQgFsNEnhqHOkBucIYInuMyQu+FLe3JNl686Hs7hIRDtRdF5ekf2Q==
   dependencies:
     "@custom-react-hooks/use-element-size" "^1.5.1"
     "@emotion/cache" "^11.11.0"
