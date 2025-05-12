@@ -18,10 +18,19 @@ describe Acfa::Viewers::MiradorComponent, type: :component do
   context "has one embeddable resource" do
     let(:label) { 'resource label' }
     let(:href) { 'https://doi.org/10.7916/d8-3tyk-ew60' }
-    let(:iiif_object) { instance_double(Acfa::DigitalObject, label: label, href: href, role: nil) }
+    let(:role) { nil }
+    let(:iiif_object) { instance_double(Acfa::DigitalObject, label: label, href: href, role: role) }
     let(:digital_objects) { [iiif_object] }
     it "renders" do
       expect(rendered_node).to have_selector "div#mirador[data-manifest=\"#{CONFIG[:mirador_base_url]}/iiif/3/presentation/10.7916/d8-3tyk-ew60/manifest\"]"
+    end
+    context "with an explicit iiif manifest" do
+      let(:label) { 'Dorothy Oak Scrapbook, 1913-1920' }
+      let(:href) { 'https://digitalcollections.barnard.edu/do/583250c0-38ec-4c6d-b22e-619185fc2157/metadata/iiifmanifest3cws_scrapbook/default.jsonld' }
+      let(:role) { 'iiif-manifest' }
+      it "renders" do
+        expect(rendered_node).to have_selector "div#mirador[data-manifest=\"#{href}\"]"
+      end
     end
   end
 
