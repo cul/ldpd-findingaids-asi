@@ -1,5 +1,6 @@
 module Acfa::SolrDocument::EmbeddableResources
   def embeddable?(object)
+    return true if object.role =~ /iiif-manifest/
     include_patterns.any? do |pattern|
       object.href =~ pattern
     end
@@ -12,14 +13,23 @@ module Acfa::SolrDocument::EmbeddableResources
   end
 
   def embeddable_resources_iiif_manifests
-    @embeddable_resources_iiif_manifests ||= embeddable_resources.map { |r| manifest_for(r) }.compact
+    @embeddable_resources_iiif_manifests ||= begin
+      iiif_manifests = embeddable_resources.map { |r| manifest_for(r, false) }.compact
+      if iiif_manifests.empty?
+        iiif_manifests.concat embeddable_resources.map { |r| manifest_for(r, true) }.compact
+      end
+      iiif_manifests
+    end
   end
 
   def include_patterns
     [/\/(10\.7916\/[A-Za-z0-9\-\.]+)/, /\/\/archive\.org\/details\//]
   end
 
-  def manifest_for(object)
+  def manifest_for(object, permissive = true)
+    return object.href if object.role =~ /iiif-manifest/
+    return unless permissive
+
     return doi_manifest(object.href) if object.href =~ /\/10\.7916\//
     return ia_manifest(object.href) if object.href =~ /\/\/archive\.org\//
   end

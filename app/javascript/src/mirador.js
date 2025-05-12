@@ -1,4 +1,5 @@
 import Mirador from '@columbia-libraries/mirador';
+import { __CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE as ReactSharedInternalsClient } from 'react';
 
 function loadMirador() {
   const miradorDiv = document.getElementById('mirador');
@@ -38,13 +39,14 @@ function loadMirador() {
       .concat([...Mirador.culPlugins.hintingSideBar])
       .concat([...Mirador.culPlugins.viewerNavigation])
       .concat([...Mirador.culPlugins.nativeObjectViewerPlugin]);
-    const foldersAttValue = miradorDiv.dataset['use-folders'];
+    const foldersAttValue = miradorDiv.dataset.useFolders;
     const useFolders = (Boolean(foldersAttValue) && !String.toString(foldersAttValue).match(/false/i));
     if (useFolders) {
       culMiradorPlugins.push([...Mirador.culPlugins.collectionFoldersPlugin]);
       viewConfig.allowTopCollectionButton = true;
-      viewConfig.sideBarOpen = true;
     }
+
+    ReactSharedInternalsClient.actQueue = null;
 
     Mirador.viewer(
       {
