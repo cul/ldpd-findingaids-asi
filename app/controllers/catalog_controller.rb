@@ -276,6 +276,7 @@ class CatalogController < ApplicationController
     config.add_related_field 'originalsloc', field: 'originalsloc_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'descrules', field: 'descrules_ssm', helper_method: :render_html_tags
+    config.add_related_field 'prefercite', field: 'prefercite_html_tesm', helper_method: :render_html_tags
 
 
     # Collection Show Page - Indexed Terms Section
@@ -366,9 +367,6 @@ class CatalogController < ApplicationController
     # Collection and Component Show Page Access Tab - In Person Section
     config.add_in_person_field 'repository_location', values: ->(_, document, _) { document.repository_config }, component: Acfa::Arclight::RepositoryLocationFieldComponent
     config.add_in_person_field 'before_you_visit', values: ->(_, document, _) { document.repository_config&.visit_note }
-
-    # Collection and Component Show Page Access Tab - How to Cite Section
-    config.add_cite_field 'prefercite', field: 'prefercite_html_tesm', helper_method: :render_html_tags
 
     # Collection and Component Show Page Access Tab - Contact Section
     config.add_contact_field 'repository_contact', values: ->(_, document, _) { document.repository_config }, component: Acfa::Arclight::RepositoryContactFieldComponent
