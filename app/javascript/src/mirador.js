@@ -7,7 +7,7 @@ function loadMirador() {
 
   const manifestUrl = miradorDiv.dataset.manifest;
   if (manifestUrl) {
-    const numChildren = miradorDiv.dataset['num-children'] || 1;
+    const numChildren = miradorDiv.dataset['num-children'];
 
     const getStartCanvas = (queryParams) => {
       if (queryParams.get('canvas')) {
