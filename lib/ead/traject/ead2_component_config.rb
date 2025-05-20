@@ -135,3 +135,9 @@ to_field 'extent_ssm' do |record, accumulator|
   # Add each physdesc separately to the accumulator
   accumulator.concat(extents_per_physdesc(record.xpath('./did/physdesc')))
 end
+
+# include digital objects with multiple file versions
+@index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['has_online_content_ssim'].include?(index_step.field_name) }
+to_field 'has_online_content_ssim', extract_xpath('.//dao|.//daogrp') do |_record, accumulator|
+  accumulator.replace([accumulator.any?])
+end
