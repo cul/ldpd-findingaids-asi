@@ -367,6 +367,7 @@
    <copyField source="note_tesim" dest="text" />
    <copyField source="odd_tesim" dest="text" />
    <copyField source="originalsloc_tesim" dest="text" />
+   <copyField source="parent_unittitles_tesim" dest="text" />
    <copyField source="physdesc_tesim" dest="text" />
    <copyField source="physloc_tesim" dest="text" />
    <copyField source="phystech_tesim" dest="text" />
