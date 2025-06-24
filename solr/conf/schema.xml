@@ -215,7 +215,16 @@
          With various TokenFilterFactories to produce a sortable field
          that does not include some properties of the source text
       -->
-    <fieldType name="alphaNumericSort" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+
+    <!-- 
+      In solr 9.8.1, solr.TextField does not support docValues for efficient 
+      sorting. solr.StrField supports docValues but does not support analyzers. 
+      In order to preserve text analysis and benefit from docValues in sorting, 
+      the sort values are preprocessed as text fields and then copied to a simple 
+      sort field of field type solr.String.
+      -->
+
+    <fieldType name="alphaNumericPreprocess" class="solr.TextField" sortMissingLast="true" omitNorms="true">
       <analyzer>
         <!-- KeywordTokenizer does no actual tokenizing, so the entire
              input string is preserved as a single token
@@ -243,6 +252,8 @@
         />
       </analyzer>
     </fieldType>
+
+    <fieldType name="simpleSortField" class="solr.StrField" sortMissingLast="true" docValues="true" />
 
     <!-- A specialized field for geospatial search filters and distance sorting. -->
     <fieldType name="location" class="solr.LatLonPointSpatialField" docValues="true" />
@@ -297,7 +308,8 @@
         both match, the first appearing in the schema will be used.  -->
    <dynamicField name="random_*" type="random" />
 
-   <dynamicField name="*_sort" type="alphaNumericSort" indexed="true" stored="false" multiValued="false" />
+   <dynamicField name="*_sort_processed" type="alphaNumericPreprocess" indexed="true" stored="false" multiValued="false" />
+   <dynamicField name="*_sort" type="simpleSortField" indexed="true" stored="false" multiValued="false" />
    <dynamicField name="*spell" type="textSpell" indexed="true" stored="false" multiValued="true" />
    <dynamicField name="*suggest" type="textSuggest" indexed="true" stored="false" multiValued="true" />
 
@@ -343,6 +355,7 @@
    <copyField source="places_ssim" dest="place_teim"/>
    <copyField source="names_ssim" dest="name_teim"/>
    <copyField source="access_subjects_ssim" dest="subject_teim"/>
+   <copyField source="*_sort_processed" dest="*_sort" />
 
    <!-- The catch all `text` field -->
    <!-- grab the fielded searches -->
