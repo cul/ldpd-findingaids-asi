@@ -260,6 +260,7 @@
 
     <fieldType name="_nest_path_" class="solr.NestPathField" />
 
+    <fieldType name="knn768_vector" class="solr.DenseVectorField" vectorDimension="768" similarityFunction="cosine" />
  </types>
 
 
@@ -337,6 +338,7 @@
    <dynamicField name="*_drsim" type="drange"     stored="true"  indexed="true"  multiValued="true"  />
    <dynamicField name="*_lsi"   type="location"   stored="true"  indexed="true"  multiValued="false"  />
    <dynamicField name="*_lsim"  type="location"   stored="true"  indexed="true"  multiValued="true"  />
+   <dynamicField name="*_vector768si" type="knn768_vector"  indexed="true"  stored="true" />
  </fields>
 
  <!-- Field to use to determine and enforce document uniqueness.
