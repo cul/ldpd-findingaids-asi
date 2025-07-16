@@ -114,7 +114,7 @@
     <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
     <!-- docValues are enabled by default for long type so we don't need to index the version field  -->
     <field name="_version_" type="plong" indexed="false" stored="false"/>
-
+   <field name="timestamp" type="pdate" indexed="true" stored="true" default="NOW" multiValued="false"/>
     <!-- If you don't use child/nested documents, then you should remove the next two fields:  -->
     <!-- for nested documents (minimal; points to root document) -->
     <field name="_root_" type="string" indexed="true" stored="false" />
@@ -134,6 +134,7 @@
       </analyzer>
     </fieldType>
 
+    <fieldType name="dateRange" class="solr.DateRangeField"/>
     <!-- This can be enabled, in case the client does not know what fields may be searched. It isn't enabled by default
          because it's very expensive to index everything twice. -->
     <!-- <copyField source="*" dest="_text_"/> -->
@@ -148,6 +149,20 @@
     <dynamicField name="*_ss"      type="string"   stored="true"   indexed="false"   multiValued="false" />
     <dynamicField name="*_ssi"     type="string"   stored="true"   indexed="true"    multiValued="false" />
     <dynamicField name="*_ssim"    type="string"   stored="true"   indexed="true"    multiValued="true" />
+    <dynamicField name="*_tesim" type="text_en"    stored="true"  indexed="true"  multiValued="true"  />
+   <dynamicField name="*_tesm"  type="text_en"    stored="true"  indexed="false" multiValued="true"  />
+   <dynamicField name="*_teim"  type="text_en"    stored="false" indexed="true"  multiValued="true"  />
+   <dynamicField name="*_si"    type="string"     stored="false" indexed="true"  multiValued="false" />
+   <dynamicField name="*_sim"   type="string"     stored="false" indexed="true"  multiValued="true"  />
+   <dynamicField name="*_ssm"   type="string"     stored="true"  indexed="false" multiValued="true"  />
+   <dynamicField name="*_isim"  type="pint"       stored="true"  indexed="true"  multiValued="true"  />
+   <dynamicField name="*_is"    type="pint"       stored="true"  indexed="false" multiValued="false" />
+   <dynamicField name="*_ii"    type="pint"       stored="false" indexed="true"  multiValued="false" />
+   <dynamicField name="*_isi"   type="pint"       stored="true"  indexed="true"  multiValued="false" />
+   <dynamicField name="*_drsi"  type="dateRange"     stored="true"  indexed="true"  multiValued="false"  />
+   <dynamicField name="*_drsim" type="dateRange"     stored="true"  indexed="true"  multiValued="true"  />
+   <dynamicField name="*_lsi"   type="location"   stored="true"  indexed="true"  multiValued="false"  />
+   <dynamicField name="*_lsim"  type="location"   stored="true"  indexed="true"  multiValued="true"  />
 
     <!-- <dynamicField name="*_i"   type="pint"     indexed="true"  stored="true"/>
     <dynamicField name="*_is"  type="pints"    indexed="true"  stored="true"/>
