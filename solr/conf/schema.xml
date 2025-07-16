@@ -123,6 +123,17 @@
 
     <field name="_text_" type="text_general" indexed="true" stored="false" multiValued="true"/>
 
+    <field name="text" type="text" indexed="true" stored="true" multiValued="true"/>
+    <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
+      <analyzer>
+        <tokenizer class="solr.ICUTokenizerFactory" />
+        <filter class="solr.KeywordRepeatFilterFactory" />
+        <filter class="solr.ICUFoldingFilterFactory" />
+        <filter class="solr.PorterStemFilterFactory"/>
+        <filter class="solr.RemoveDuplicatesTokenFilterFactory" />
+      </analyzer>
+    </fieldType>
+
     <!-- This can be enabled, in case the client does not know what fields may be searched. It isn't enabled by default
          because it's very expensive to index everything twice. -->
     <!-- <copyField source="*" dest="_text_"/> -->
@@ -170,6 +181,9 @@
     <dynamicField name="*_dps" type="delimited_payloads_string" indexed="true"  stored="true"/>
 
     <dynamicField name="attr_*" type="text_general" indexed="true" stored="true" multiValued="true"/>
+
+    <dynamicField name="*_sort" type="simpleSortField" indexed="true" stored="false" multiValued="false" />
+    <fieldType name="simpleSortField" class="solr.StrField" sortMissingLast="true" docValues="true" />
 
     <!-- Field to use to determine and enforce document uniqueness.
       Unless this field is marked with required="false", it will be a required field
