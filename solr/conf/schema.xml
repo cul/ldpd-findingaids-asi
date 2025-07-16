@@ -200,6 +200,29 @@
     <dynamicField name="*_sort" type="simpleSortField" indexed="true" stored="false" multiValued="false" />
     <fieldType name="simpleSortField" class="solr.StrField" sortMissingLast="true" docValues="true" />
 
+    <field name="unitid_identifier_match" type="identifier_match" indexed="true" stored="false" multiValued="true" />
+    <fieldType name="identifier_match" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <filter class="solr.WordDelimiterGraphFilterFactory"
+          catenateWords="1"
+          catenateNumbers="1"
+          catenateAll="1"
+          />
+        <filter class="solr.ICUFoldingFilterFactory" />
+        <filter class="solr.FlattenGraphFilterFactory"/> <!-- required on index analyzers after graph filters -->
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <filter class="solr.WordDelimiterGraphFilterFactory"
+          catenateWords="1"
+          catenateNumbers="1"
+          catenateAll="1"
+          />
+        <filter class="solr.ICUFoldingFilterFactory" />
+      </analyzer>
+    </fieldType>
+
     <!-- Field to use to determine and enforce document uniqueness.
       Unless this field is marked with required="false", it will be a required field
     -->

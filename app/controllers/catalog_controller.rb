@@ -426,5 +426,4 @@ class CatalogController < ApplicationController
     Arclight::Repository.find_by(slug: repos.first)
   end
   helper_method :repository_faceted_on
-
 end
