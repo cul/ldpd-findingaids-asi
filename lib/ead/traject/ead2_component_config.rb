@@ -142,7 +142,7 @@ to_field 'has_online_content_ssim', extract_xpath('.//dao|.//daogrp') do |_recor
   accumulator.replace([accumulator.any?])
 end
 
-to_field 'scopecontent_vector768si' do |record, accumulator, context|
+to_field 'scopecontent_vector768i' do |record, accumulator, context|
   text = record.xpath('//ead//scopecontent').text
   embedding = EmbeddingService::Embedder.convert_text_to_vector_embedding(text.strip) if text.present?
   accumulator.replace(embedding) if embedding.present?

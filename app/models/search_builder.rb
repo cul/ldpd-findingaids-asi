@@ -5,6 +5,8 @@ class SearchBuilder < Blacklight::SearchBuilder
 
   include Arclight::SearchBehavior
 
+  self.default_processor_chain += [:convert_query_to_embedding_for_vector_search]
+
   def add_hierarchy_behavior(solr_parameters)
     return unless search_state.controller&.action_name == 'hierarchy'
     request_id = search_state.controller.params[:id]
@@ -31,4 +33,12 @@ class SearchBuilder < Blacklight::SearchBuilder
 
     search_state.sort_field.sort
   end
+  
+  def convert_query_to_embedding_for_vector_search(solr_parameters)
+    return unless blacklight_params[:vector_search] && blacklight_params[:q].present?
+
+    query_text = blacklight_params[:q]
+    query_vector = EmbeddingService::Embedder.convert_text_to_vector_embedding(query_text)
+    solr_parameters[:q] = "{!knn f=scopecontent_vector768i topK=10}[#{query_vector.join(', ')}]"
+   end
 end

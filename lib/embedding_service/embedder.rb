@@ -9,7 +9,8 @@ module EmbeddingService
         request = Net::HTTP::Post.new(uri)
         puts "emb:"
         puts field_value[0, 2000]
-        request.body = "text=#{field_value}"
+        # request.body = "text=#{field_value}"
+        request.body = "text=#{field_value[0, 1000]}"
         request['Content-Type'] = 'application/x-www-form-urlencoded'
 
         begin
