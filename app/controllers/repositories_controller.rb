@@ -1,6 +1,6 @@
 class RepositoriesController < Arclight::RepositoriesController
   def index
-    @repositories = Arclight::Repository.all.select { |repo| repo.has_fa_list? }
+    @repositories = Arclight::Repository.all.reject { |repo| repo.exclude_from_home? }
     load_collection_counts
   end
 end

@@ -12,7 +12,7 @@ class Repository
   DEFAULTS = {
     name: '',
     url: '',
-    has_fa_list: false,
+    exclude_from_home: false,
     as_repo_id: nil,
     request_types: {},
     contact_html: '',
@@ -41,8 +41,8 @@ class Repository
     request_types.fetch(type, {})
   end
 
-  def has_fa_list?
-    @attributes[:has_fa_list]
+  def exclude_from_home?
+    @attributes[:exclude_from_home]
   end
 
   def as_repo_id

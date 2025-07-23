@@ -6,7 +6,7 @@ test:
     as_repo_id: 2
     name: The Library
     url: https://library.edu/collections
-    has_fa_list: true
+    exclude_from_home: false
     contact:
       email: rbml@library.columbia.edu
       links:
