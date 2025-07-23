@@ -29,9 +29,9 @@ describe Repository, type: :model do
   end
 
 
-  describe '#has_fa_list?' do
+  describe '#exclude_from_home?' do
     it "returns configured value" do
-      expect(repository.has_fa_list?).to be true
+      expect(repository.exclude_from_home?).to be false
     end
   end
 

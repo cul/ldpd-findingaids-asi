@@ -14,8 +14,8 @@ Arclight::Repository.class_eval do
   end
 
   # local method
-  def has_fa_list?
-    @attributes[:has_fa_list]
+  def exclude_from_home?
+    @attributes[:exclude_from_home]
   end
 
   # local method
