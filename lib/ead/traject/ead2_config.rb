@@ -163,4 +163,7 @@ to_field 'bibid_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "01234
 to_field 'has_online_content_ssim', extract_xpath('.//dao|.//daogrp') do |_record, accumulator|
   accumulator.replace([accumulator.any?])
 end
-
+@index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['online_item_count_is'].include?(index_step.field_name) }
+to_field 'online_item_count_is', first_only do |record, accumulator|
+  accumulator << record.xpath('.//dao|.//daogrp').count
+end
