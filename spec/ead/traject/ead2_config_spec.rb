@@ -315,4 +315,19 @@ describe Traject::Indexer do
     end
   end
   
+  describe 'count digital items in collection' do
+      context 'when the record has daos' do
+        let(:fixture_path) { File.join(file_fixture_path, 'ead/test_digital_objects/from_did.xml') }
+        it 'indexes the correct count of online items' do
+          expect(index_document[:online_item_count_is]).to eq([4])
+        end
+      end
+
+      context 'when the record has daogrps' do
+        let(:fixture_path) { File.join(file_fixture_path, 'ead/test_digital_objects/from_did_daogrp.xml') }
+        it 'indexes the correct count of online items' do
+          expect(index_document[:online_item_count_is]).to eq([1])
+        end
+      end
+    end
 end
