@@ -28,7 +28,7 @@ gem 'mysql2'
 gem 'terser'
 
 # Use Puma as the app server
-gem 'puma', '~> 5.2'
+gem 'puma', '~> 6.6.0'
 
 gem 'concurrent-ruby', '1.3.4' # needs Rails 7.1 to unpin
 
@@ -64,7 +64,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'marc'
 gem 'iso-639'
 
-gem 'nokogiri', '~> 1.15.2'
+gem 'nokogiri', '~> 1.18.0'
 gem 'loofah', '~> 2.19.1'
 
 gem 'arclight', '~> 1.4.0'
