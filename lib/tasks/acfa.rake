@@ -27,7 +27,6 @@ namespace :acfa do
     solr_url = ENV.fetch('SOLR_URL', Blacklight.default_index.connection.base_uri)
     ead_dir = CONFIG[:ead_cache_dir]
     puts "Seeding index for #{rails_env}"
-    bib_pattern = /cul-(?:in)?(\d+).xml$/
     bib = ENV['BIB'] ? "cul-#{ENV['BIB']}" : '*'
     filename_pattern = ENV['PATTERN']
     filename_pattern ||= (ENV['CLIO_STUBS'].to_s =~ /true/i) ? "clio_ead_cul-#{bib}.xml" : "as_ead_#{bib}.xml"
