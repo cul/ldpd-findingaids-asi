@@ -77,7 +77,7 @@ def eadid_from_url_or_text(field_name)
     ead_id.sub!(/^ldpd_/,'')
     ead_id.gsub!(/[^A-Za-z0-9]/,'-')
     if ead_id
-      if ead_id =~ /^\d/ || ead_id =~ /^in\d/
+      if ead_id =~ /^(in)?\d/
         accumulator.concat ["cul-#{ead_id}"]
       else
         accumulator.concat [ead_id]
