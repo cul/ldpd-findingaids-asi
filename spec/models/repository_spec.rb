@@ -22,13 +22,6 @@ describe Repository, type: :model do
     end
   end
 
-  describe '#url' do
-    it "returns configured value" do
-      expect(repository.url).to eql('https://findingaids.library.columbia.edu/ead/nnc-a')
-    end
-  end
-
-
   describe '#exclude_from_home?' do
     it "returns configured value" do
       expect(repository.exclude_from_home?).to be false

@@ -13,18 +13,7 @@ base: &BASE
         # Aeon UI before it moves to any other queue.  If this value is set to false,
         # this will result in an Aeon submission with a UserReview parameter value of "No".
         user_review: true
-    # in the original implementation for RBML, a checkbox was created only at
-    # the container level. So if a few consecutive items were in the same
-    # container (for example, Box 1), there was only one checkbox for the
-    # container as a whole for that set of items. This is the behavior if
-    # requestable_via_aeon is set to false
-    # requestable_via_aeon is set to true to make each item selectable
-    # individually, which was a feature requested by Avery.
-    # server. Note that some repos share the same ID
     name: 'Columbia University Libraries'
-    # url is the desired url to be used for the library link at the top of a
-    # finding aids page
-    url: https://library.columbia.edu
     # exclude_from_home indicates whether a repository should be displayed on the homepage
     exclude_from_home: true
     contact:
@@ -65,7 +54,6 @@ base: &BASE
         site_code: AVERYDACUL
         user_review: true
     name: 'Avery Drawings & Archives Collections'
-    url: https://findingaids.library.columbia.edu/ead/nnc-a
     exclude_from_home: false
     contact:
       email: avery@library.columbia.edu
@@ -91,7 +79,6 @@ base: &BASE
         site_code: RBMLCUL
         user_review: true
     name: Oral History Archives at Columbia
-    url: https://findingaids.library.columbia.edu/ead/nnc-ccoh
     exclude_from_home: false
     contact:
       email: oralhist@library.columbia.edu
@@ -145,7 +132,6 @@ base: &BASE
         site_code: RBMLCUL
         user_review: true
     name: Rare Book & Manuscript Library
-    url: https://findingaids.library.columbia.edu/ead/nnc-rb
     exclude_from_home: false
     contact:
       email: rbml@library.columbia.edu
@@ -171,7 +157,6 @@ base: &BASE
         site_code: RBMLCUL
         user_review: true
     name: Columbia University Archives
-    url: https://findingaids.library.columbia.edu/ead/nnc-ua
     exclude_from_home: false
     contact:
       email: uarchives@columbia.edu
@@ -199,7 +184,6 @@ base: &BASE
         site_code: BURKECUL
         user_review: true
     name: Burke Library at Union Theological Seminary
-    url: https://findingaids.library.columbia.edu/ead/nnc-ut
     exclude_from_home: false
     contact:
       email: burke@library.columbia.edu
@@ -221,7 +205,6 @@ base: &BASE
     icon: light fa-scroll-old
   nnc-m:
     name: Health Sciences Library
-    url: https://www.library-archives.cumc.columbia.edu/finding-aids
     exclude_from_home: true
     contact:
       email: hsl@example.org
@@ -245,7 +228,6 @@ base: &BASE
     icon: 'light fa-stethoscope'
   nynycoh:
     name: Oral History Archives at Columbia
-    url: https://library.columbia.edu/locations/ccoh.html
     exclude_from_home: true
     contact:
       email: oralhist@library.columbia.edu
@@ -269,7 +251,6 @@ base: &BASE
     icon: 'light fa-microphone-lines'
   nynybaw:
     name: Barnard Archives & Special Collections
-    url: https://archives.barnard.edu/
     exclude_from_home: false
     contact:
       email: archives@barnard.edu
