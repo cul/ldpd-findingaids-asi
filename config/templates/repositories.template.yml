@@ -21,9 +21,7 @@ base: &BASE
     # requestable_via_aeon is set to true to make each item selectable
     # individually, which was a feature requested by Avery.
     checkbox_per_unittitle: false
-    # as_repo_id indicates the ID used to identify the repo on the archivespace
     # server. Note that some repos share the same ID
-    as_repo_id: '-1'
     name: 'Columbia University Libraries'
     # url is the desired url to be used for the library link at the top of a
     # finding aids page
@@ -68,7 +66,6 @@ base: &BASE
         site_code: AVERYDACUL
         user_review: true
     checkbox_per_unittitle: true
-    as_repo_id: 3
     name: 'Avery Drawings & Archives Collections'
     url: https://findingaids.library.columbia.edu/ead/nnc-a
     exclude_from_home: false
@@ -96,7 +93,6 @@ base: &BASE
         site_code: RBMLCUL
         user_review: true
     checkbox_per_unittitle: false
-    as_repo_id: 2
     name: Oral History Archives at Columbia
     url: https://findingaids.library.columbia.edu/ead/nnc-ccoh
     exclude_from_home: false
@@ -126,7 +122,6 @@ base: &BASE
         site_code: STARRCUL
         user_review: true
     checkbox_per_unittitle: false
-    as_repo_id: 4
     name: C.V. Starr East Asian Library
     url: https://findingaids.library.columbia.edu/ead/nnc-ea
     exclude_from_home: false
@@ -154,7 +149,6 @@ base: &BASE
         site_code: RBMLCUL
         user_review: true
     checkbox_per_unittitle: false
-    as_repo_id: 2
     name: Rare Book & Manuscript Library
     url: https://findingaids.library.columbia.edu/ead/nnc-rb
     exclude_from_home: false
@@ -182,7 +176,6 @@ base: &BASE
         site_code: RBMLCUL
         user_review: true
     checkbox_per_unittitle: false
-    as_repo_id: 2
     name: Columbia University Archives
     url: https://findingaids.library.columbia.edu/ead/nnc-ua
     exclude_from_home: false
@@ -212,7 +205,6 @@ base: &BASE
         site_code: BURKECUL
         user_review: true
     checkbox_per_unittitle: false
-    as_repo_id: 5
     name: Burke Library at Union Theological Seminary
     url: https://findingaids.library.columbia.edu/ead/nnc-ut
     exclude_from_home: false
@@ -235,7 +227,6 @@ base: &BASE
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_burke.png"
     icon: light fa-scroll-old
   nnc-m:
-    as_repo_id: clio_only
     name: Health Sciences Library
     url: https://www.library-archives.cumc.columbia.edu/finding-aids
     exclude_from_home: true
@@ -260,7 +251,6 @@ base: &BASE
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_burke.png"
     icon: 'light fa-stethoscope'
   nynycoh:
-    as_repo_id: clio_only
     name: Oral History Archives at Columbia
     url: https://library.columbia.edu/locations/ccoh.html
     exclude_from_home: true
@@ -285,7 +275,6 @@ base: &BASE
     thumbnail_url: "https://library.columbia.edu/content/dam/templates/libraryweb/banners/banner_ccoh.png"
     icon: 'light fa-microphone-lines'
   nynybaw:
-    as_repo_id: clio_only
     name: Barnard Archives & Special Collections
     url: https://archives.barnard.edu/
     exclude_from_home: false

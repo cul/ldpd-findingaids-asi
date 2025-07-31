@@ -13,7 +13,6 @@ class Repository
     name: '',
     url: '',
     exclude_from_home: false,
-    as_repo_id: nil,
     request_types: {},
     contact_html: '',
     location_html: '',
@@ -43,10 +42,6 @@ class Repository
 
   def exclude_from_home?
     @attributes[:exclude_from_home]
-  end
-
-  def as_repo_id
-    @attributes[:as_repo_id]
   end
 
   def aeon_enabled?
