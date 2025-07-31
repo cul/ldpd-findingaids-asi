@@ -133,7 +133,7 @@ end
 
 to_field 'extent_ssm' do |record, accumulator|
   # Add each physdesc separately to the accumulator
-  accumulator.concat(extents_per_physdesc(record.xpath('./did/physdesc')))
+  accumulator.concat(extents_per_physdesc(record.xpath('./did/physdesc[extent]')))
 end
 
 # include digital objects with multiple file versions
