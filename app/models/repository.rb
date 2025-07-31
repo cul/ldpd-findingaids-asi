@@ -56,10 +56,6 @@ class Repository
     @attributes.dig(:request_types, :aeon_local_request, :user_review)
   end
 
-  def checkbox_per_unittitle
-    @attributes[:checkbox_per_unittitle]
-  end
-
   def self.exists?(id)
     REPOS.key?(id)
   end

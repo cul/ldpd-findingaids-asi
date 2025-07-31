@@ -20,7 +20,6 @@ base: &BASE
     # requestable_via_aeon is set to false
     # requestable_via_aeon is set to true to make each item selectable
     # individually, which was a feature requested by Avery.
-    checkbox_per_unittitle: false
     # server. Note that some repos share the same ID
     name: 'Columbia University Libraries'
     # url is the desired url to be used for the library link at the top of a
@@ -65,7 +64,6 @@ base: &BASE
       aeon_local_request:
         site_code: AVERYDACUL
         user_review: true
-    checkbox_per_unittitle: true
     name: 'Avery Drawings & Archives Collections'
     url: https://findingaids.library.columbia.edu/ead/nnc-a
     exclude_from_home: false
@@ -92,7 +90,6 @@ base: &BASE
       aeon_local_request:
         site_code: RBMLCUL
         user_review: true
-    checkbox_per_unittitle: false
     name: Oral History Archives at Columbia
     url: https://findingaids.library.columbia.edu/ead/nnc-ccoh
     exclude_from_home: false
@@ -121,7 +118,6 @@ base: &BASE
       aeon_local_request:
         site_code: STARRCUL
         user_review: true
-    checkbox_per_unittitle: false
     name: C.V. Starr East Asian Library
     url: https://findingaids.library.columbia.edu/ead/nnc-ea
     exclude_from_home: false
@@ -148,7 +144,6 @@ base: &BASE
       aeon_local_request:
         site_code: RBMLCUL
         user_review: true
-    checkbox_per_unittitle: false
     name: Rare Book & Manuscript Library
     url: https://findingaids.library.columbia.edu/ead/nnc-rb
     exclude_from_home: false
@@ -175,7 +170,6 @@ base: &BASE
       aeon_local_request:
         site_code: RBMLCUL
         user_review: true
-    checkbox_per_unittitle: false
     name: Columbia University Archives
     url: https://findingaids.library.columbia.edu/ead/nnc-ua
     exclude_from_home: false
@@ -204,7 +198,6 @@ base: &BASE
       aeon_local_request:
         site_code: BURKECUL
         user_review: true
-    checkbox_per_unittitle: false
     name: Burke Library at Union Theological Seminary
     url: https://findingaids.library.columbia.edu/ead/nnc-ut
     exclude_from_home: false
