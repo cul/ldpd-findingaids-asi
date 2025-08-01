@@ -151,7 +151,7 @@ to_field 'language_ssim', extract_xpath('/ead/archdesc/did/langmaterial/language
 
 to_field 'extent_ssm' do |record, accumulator|
   # Add each physdesc separately to the accumulator
-  accumulator.concat(extents_per_physdesc(record.xpath('/ead/archdesc/did/physdesc')))
+  accumulator.concat(extents_per_physdesc(record.xpath('/ead/archdesc/did/physdesc[extent]')))
 end
 
 to_field 'call_number_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")][not(@type)]'), first_only
