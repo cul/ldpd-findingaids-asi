@@ -7,13 +7,11 @@
 	</div>
 	<div class="col">
 		<ul class="list-unstyled">
-			<li><%= link_to_repository_location('nnc-a') %></li>
-			<li><%= link_to_repository_location('nnc-ea') %></li>
-			<li><%= link_to_repository_location('nnc-rb') %></li>
-			<li><%= link_to_repository_location('nnc-ua') %></li>
-			<li><%= link_to_repository_location('nynycoh') %></li>
-			<li><%= link_to_repository_location('nnc-ut') %></li>
-			<li><%= link_to_repository_location('nynybaw') %></li>
+			<% @repositories.each do |repository| %>
+				<% unless repository.exclude_from_home %>
+					<li><%= link_to_repository_location(repository.slug) %></li>
+				<% end %>
+			<% end %>
 			<li><%= link_to "Donate Books or Items", "https://library.columbia.edu/about/policies/gifts-policy.html" %></li>
 			<li><%= link_to "Suggestions & Feedback", "https://feedback.cul.columbia.edu/feedback_submission/lweb?submitted_from_page=https%3A%2F%2Ffindingaids.library.columbia.edu%2F" %></li>
 			<li><%= link_to "Report an E-Resource Problem", "https://library.columbia.edu/resolve/lweb0006" %></li>

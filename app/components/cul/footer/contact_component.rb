@@ -4,11 +4,9 @@ module Cul::Footer
   class ContactComponent < ViewComponent::Base
     delegate :link_to_repository_location, to: :helpers
 
-    def initialize(repository:)
-      @repository = repository
-    end
-    def contact_links
-      @repository.contact&.fetch('links', nil) || []
+    def initialize(repositories:, current_repository_slug: nil)
+      @repositories = repositories
+      @repository = repositories.find { |repo| repo.slug == current_repository_slug }
     end
   end
 end
