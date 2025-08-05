@@ -14,7 +14,6 @@ class Repository
     url: '',
     exclude_from_home: false,
     request_types: {},
-    contact_html: '',
     location_html: '',
     visit_note: nil
   }.freeze

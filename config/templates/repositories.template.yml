@@ -19,25 +19,6 @@ base: &BASE
     contact:
       phone: '212-854-7309'
       email: lio@columbia.edu
-      links:
-        - label: 'Donate Books or Items'
-          url: https://library.columbia.edu/about/policies/gifts-policy.html
-        - label: 'Suggestions & Feedback'
-          url: "https://feedback.cul.columbia.edu/feedback_submission/lweb?submitted_from_page=https%3A%2F%2Ffindingaids.library.columbia.edu%2F"
-        - label: 'Report an E-Resource Problem'
-          url: https://resolver.library.columbia.edu/lweb0006
-        - label: 'The Bancroft Prizes'
-          url: https://library.columbia.edu/about/awards/bancroft.html
-        - label: 'Student Library Advisory Committee'
-          url: https://library.columbia.edu/about/student_advisory_committee.html
-        - label: 'Jobs & Internships'
-          url: https://library.columbia.edu/about/jobs-internships.html
-        - label: "Behind the Scenes at Columbia's Libraries"
-          url: https://library.columbia.edu/bts.html
-        - label: Policies
-          url: https://library.columbia.edu/about/policies.html
-        - label: Copyright
-          url: https://www.columbia.edu/content/copyright
     location:
       link:
         url: "https://library.columbia.edu"
@@ -57,11 +38,6 @@ base: &BASE
     exclude_from_home: false
     contact:
       email: avery@library.columbia.edu
-      links:
-        - label: 'Avery Art & Architecture Library'
-          url: https://library.columbia.edu/locations/avery.html
-        - label: 'Columbia University Libraries'
-          url: https://library.columbia.edu
     location:
       link:
         url: "http://library.columbia.edu/locations/avery.html"
@@ -82,13 +58,6 @@ base: &BASE
     exclude_from_home: false
     contact:
       email: oralhist@library.columbia.edu
-      links:
-        - label: 'Oral History Archives at Columbia'
-          url: https://library.columbia.edu/locations/ccoh.html
-        - label: 'Rare Book & Manuscript Library'
-          url: https://library.columbia.edu/libraries/rbml.html
-        - label: 'Columbia University Libraries'
-          url: https://library.columbia.edu
     location:
       link:
         url: "https://library.columbia.edu/libraries/ccoh/FAQ.html"
@@ -110,11 +79,6 @@ base: &BASE
     exclude_from_home: false
     contact:
       email: starr@library.columbia.edu
-      links:
-        - label: 'C.V. Starr East Asian Library'
-          url: https://library.columbia.edu/locations/starr.html
-        - label: 'Columbia University Libraries'
-          url: https://library.columbia.edu
     location:
       link:
         url: "http://library.columbia.edu/locations/eastasian.html"
@@ -135,11 +99,6 @@ base: &BASE
     exclude_from_home: false
     contact:
       email: rbml@library.columbia.edu
-      links:
-        - label: 'Rare Book & Manuscript Library'
-          url: https://findingaids.library.columbia.edu/ead/nnc-rb
-        - label: 'Columbia University Libraries'
-          url: https://library.columbia.edu
     location:
       link:
         url: "http://library.columbia.edu/locations/rbml.html"
@@ -160,13 +119,6 @@ base: &BASE
     exclude_from_home: false
     contact:
       email: uarchives@columbia.edu
-      links:
-        - label: 'Columbia University Archives'
-          url: https://library.columbia.edu/libraries/cuarchives.html
-        - label: 'Rare Book & Manuscript Library'
-          url: https://library.columbia.edu/libraries/rbml.html
-        - label: 'Columbia University Libraries'
-          url: https://library.columbia.edu
     location:
       link:
         url: "http://library.columbia.edu/locations/cuarchives.html"
@@ -187,11 +139,6 @@ base: &BASE
     exclude_from_home: false
     contact:
       email: burke@library.columbia.edu
-      links:
-        - label: 'Burke Library at Union Theological Seminary'
-          url: https://library.columbia.edu/locations/burke.html
-        - label: 'Columbia University Libraries'
-          url: https://library.columbia.edu
     location:
       link:
         url: "http://library.columbia.edu/locations/burke.html"
@@ -208,11 +155,6 @@ base: &BASE
     exclude_from_home: true
     contact:
       email: hsl@example.org
-      links:
-        - label: 'Health Sciences Library'
-          url: https://www.library-archives.cumc.columbia.edu
-        - label: 'Columbia University Libraries'
-          url: https://library.columbia.edu
     location:
       link:
         url: "https://www.library-archives.cumc.columbia.edu/"
@@ -231,13 +173,6 @@ base: &BASE
     exclude_from_home: true
     contact:
       email: oralhist@library.columbia.edu
-      links:
-        - label: 'Oral History Archives at Columbia'
-          url: https://library.columbia.edu/locations/ccoh.html
-        - label: 'Rare Book & Manuscript Library'
-          url: https://library.columbia.edu/libraries/rbml.html
-        - label: 'Columbia University Libraries'
-          url: https://library.columbia.edu
     location:
       link:
         url: "https://library.columbia.edu/libraries/ccoh/FAQ.html"
@@ -254,11 +189,6 @@ base: &BASE
     exclude_from_home: false
     contact:
       email: archives@barnard.edu
-      links:
-      - label: Barnard Archives & Special Collections
-        url: https://archives.barnard.edu/
-      - label: Columbia University Libraries
-        url: https://library.columbia.edu
     location:
       link:
         url: https://archives.barnard.edu/
