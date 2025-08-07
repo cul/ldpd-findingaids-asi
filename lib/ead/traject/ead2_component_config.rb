@@ -55,11 +55,10 @@ end
 to_field 'language_material_ssm', extract_xpath('./did/langmaterial')
 to_field 'language_ssim', extract_xpath('./did/langmaterial/language')
 
-# Preserve HTML tags in the title
-to_field 'title_html_ssm', extract_xpath('./did/unittitle', to_text: false)
-
-to_field 'normalized_title_html_ssm'  do |_record, accumulator, context|
-  title = context.output_hash['title_html_ssm']&.first&.to_s
+# Extract title with HTML tags preserved and normalize it
+to_field 'normalized_title_html_ssm'  do |record, accumulator, context|
+  title_elements = record.xpath('./did/unittitle')
+  title = title_elements.first&.to_s
   date = context.output_hash['normalized_date_ssm']&.first
   accumulator << settings['title_normalizer'].constantize.new(title, date).to_s
 end
