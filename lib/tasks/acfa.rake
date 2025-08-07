@@ -25,6 +25,7 @@ namespace :acfa do
   task seed: [:setup_config, :environment] do
     rails_env = (ENV['RAILS_ENV'] || 'development')
     solr_url = ENV.fetch('SOLR_URL', Blacklight.default_index.connection.base_uri)
+    verbose = ENV.fetch('VERBOSE', 'false') == 'true'
     ead_dir = CONFIG[:ead_cache_dir]
     puts "Seeding index for #{rails_env}"
     bib_pattern = /cul-(\d+).xml$/
@@ -38,6 +39,7 @@ namespace :acfa do
       filename = File.basename(path)
       indexing_job = IndexEadJob.new
       indexed += indexing_job.perform(filename)
+      puts "Processed #{filename}" if verbose
     end
     if indexed > 0
       puts "curl #{solr_url}suggest?suggest.build=true"
