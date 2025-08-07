@@ -4,7 +4,6 @@
 class SolrDocument
   include Blacklight::Solr::Document
   include Arclight::SolrDocument
-
   include ActionView::Helpers::TextHelper
   include EadFormatHelpers
 

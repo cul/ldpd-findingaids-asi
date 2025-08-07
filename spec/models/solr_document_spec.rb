@@ -56,7 +56,7 @@ describe SolrDocument, type: :model do
     context "when the title contains both italicized and non-italicized sections" do
       let(:solr_doc_with_html_title) do
         described_class.new({
-          'normalized_title_html_ssm' => '<unittitle><title render="italic">Administrative</title> files, 1979-1997</unittitle>' ,
+          'normalized_title_html_ssm' => '<unittitle><title render="italic">Administrative</title> files, 1979-1997</unittitle>'
         })
       end
 
@@ -69,7 +69,7 @@ describe SolrDocument, type: :model do
     context "when the title has no render attribute" do
       let(:solr_doc_with_plain_title) do
         described_class.new({
-          'normalized_title_html_ssm' => '<unittitle><title>Administrative files</title>, 1979-1997</unittitle>',
+          'normalized_title_html_ssm' => '<unittitle><title>Administrative files</title>, 1979-1997</unittitle>'
         })
       end
 
