@@ -2,8 +2,8 @@
 
 module Cul
   class FooterComponent < ViewComponent::Base
-    def initialize(repository: Arclight::Repository.find_by(slug: 'nnc'))
-      @repository = repository
+    def initialize(current_repository_slug: 'nnc')
+      @current_repository_slug = current_repository_slug
     end
   end
 end

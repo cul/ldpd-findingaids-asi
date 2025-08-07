@@ -1,6 +1,6 @@
 <section id="contact-footer" class="py-5 mt-5 mb-2">
   <footer class="container small">
-    <%= render Cul::Footer::ContactComponent.new(repository: @repository) %>
+    <%= render Cul::Footer::ContactComponent.new(current_repository_slug: @current_repository_slug) %>
   </footer>
 </section>
 

@@ -1,24 +1,22 @@
 <div class="row">
-	<div class="col">
-		<%= render Cul::Footer::Contact::LocationComponent.new(repository: @repository) %>
-	</div>
-	<div class="col">
-		<%= render Cul::Footer::Contact::InformationComponent.new(repository: @repository) %>
-	</div>
-	<div class="col">
-		<ul class="list-unstyled">
-			<li><%= link_to_repository_location('nnc-a') %></li>
-			<li><%= link_to_repository_location('nnc-ea') %></li>
-			<li><%= link_to_repository_location('nnc-rb') %></li>
-			<li><%= link_to_repository_location('nnc-ua') %></li>
-			<li><%= link_to_repository_location('nynycoh') %></li>
-			<li><%= link_to_repository_location('nnc-ut') %></li>
-			<li><%= link_to_repository_location('nynybaw') %></li>
-			<li><%= link_to "Donate Books or Items", "https://library.columbia.edu/about/policies/gifts-policy.html" %></li>
-			<li><%= link_to "Suggestions & Feedback", "https://feedback.cul.columbia.edu/feedback_submission/lweb?submitted_from_page=https%3A%2F%2Ffindingaids.library.columbia.edu%2F" %></li>
-			<li><%= link_to "Report an E-Resource Problem", "https://library.columbia.edu/resolve/lweb0006" %></li>
-			<li><%= link_to "Policies", "https://library.columbia.edu/about/policies.html" %></li>
-			<li><%= link_to "Copyright", "https://www.columbia.edu/content/copyright" %></li>
-		</ul>
-	</div>
+  <div class="col">
+    <%= render Cul::Footer::Contact::LocationComponent.new(repository: @repository) %>
+  </div>
+  <div class="col">
+    <%= render Cul::Footer::Contact::InformationComponent.new(repository: @repository) %>
+  </div>
+  <div class="col">
+    <ul class="list-unstyled">
+      <% @repositories.each do |repository| %>
+        <% unless repository.exclude_from_home %>
+          <li><%= link_to_repository_location(repository.slug) %></li>
+        <% end %>
+      <% end %>
+      <li><%= link_to "Donate Books or Items", "https://library.columbia.edu/about/policies/gifts-policy.html" %></li>
+      <li><%= link_to "Suggestions & Feedback", "https://feedback.cul.columbia.edu/feedback_submission/lweb?submitted_from_page=https%3A%2F%2Ffindingaids.library.columbia.edu%2F" %></li>
+      <li><%= link_to "Report an E-Resource Problem", "https://library.columbia.edu/resolve/lweb0006" %></li>
+      <li><%= link_to "Policies", "https://library.columbia.edu/about/policies.html" %></li>
+      <li><%= link_to "Copyright", "https://www.columbia.edu/content/copyright" %></li>
+    </ul>
+  </div>
 </div>

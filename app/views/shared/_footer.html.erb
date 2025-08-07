@@ -1,2 +1,2 @@
-<%= render Cul::FooterComponent.new(repository: Arclight::Repository.find_by(slug: @repository&.id || 'nnc')) %>
+<%= render Cul::FooterComponent.new(current_repository_slug: @repository&.slug) %>
 <div id="request-cart-widget"></div>
