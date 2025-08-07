@@ -160,4 +160,51 @@ RSpec.describe Acfa::ArchivesSpace::Client do
       end
     end
   end
+
+  describe '#request' do
+    let(:method) { 'GET' }
+    let(:path) { '/repositories/2/resources/2024' }
+    let(:session_token) { 'abcdef123456abcdef123456abcdef123456abcdef123456abcdef123456aaaa' }
+    let(:options) do
+      {
+        headers: { "X-ArchivesSpace-Session" => session_token },
+        verify: true,
+        query: {}
+      }
+    end
+    let(:options_with_retry) do
+      options.merge({ retry: true })
+    end
+    let(:response_with_412_status_code) do
+      double('Response', status_code: 412)
+    end
+    let(:response_with_200_status_code) do
+      double('Response', status_code: 200)
+    end
+
+    context 'when a login session token is valid and has not expired' do
+      it 'works as expected, and does not attempt to log in again' do
+        allow(instance).to receive(:super_class_request_method).and_return(response_with_200_status_code)
+        expect(instance).not_to receive(:login)
+        expect(instance.request(method, path, options).status_code).to eq(response_with_200_status_code.status_code)
+      end
+    end
+
+    context 'when the login session token has expired' do
+      it 'logs in again and tries the request a second time' do
+        allow(instance).to receive(:super_class_request_method).and_return(response_with_412_status_code)
+        expect(instance).to receive(:'token=').with(nil)
+        expect(instance).to receive(:login)
+
+        # The first call to request should be the original method, since we will invoke it for this test
+        expect(instance).to receive(:request).with(method, path, options).and_call_original
+        # The second call to request will be made by the first call, and we want it to return a mocked response
+        expect(instance).to receive(:request).with(method, path, options_with_retry).and_return(
+          response_with_200_status_code
+        )
+
+        expect(instance.request(method, path, options).status_code).to eq(response_with_200_status_code.status_code)
+      end
+    end
+  end
 end
