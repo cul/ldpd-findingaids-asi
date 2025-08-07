@@ -4,12 +4,7 @@
   <% end %>
   <% component.with_value do %>
     <div class='al-in-person-repository-name'>
-      <% if repository.thumbnail_url %>
-        <%= image_tag repository.thumbnail_url, alt: '', class: 'img-fluid float-left' %>
-      <% end %>
-      <div>
-        <%= link_to(repository.name, arclight_engine.repository_path(repository.slug)) %>
-      </div>
+      <%= link_to(repository.name, arclight_engine.repository_path(repository.slug)) %>
     </div>
     <div class='al-in-person-repository-location'>
       <address>
