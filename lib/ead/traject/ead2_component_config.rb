@@ -55,6 +55,7 @@ end
 to_field 'language_material_ssm', extract_xpath('./did/langmaterial')
 to_field 'language_ssim', extract_xpath('./did/langmaterial/language')
 
+# Preserve HTML tags in the title
 to_field 'title_html_ssm', extract_xpath('./did/unittitle', to_text: false)
 
 to_field 'normalized_title_html_ssm'  do |_record, accumulator, context|

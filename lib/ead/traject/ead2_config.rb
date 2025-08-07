@@ -108,6 +108,7 @@ end
 
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['date_range_isim'].include?(index_step.field_name) }
 
+# Preserve HTML tags in the title
 to_field 'title_html_ssm', extract_xpath('/ead/archdesc/did/unittitle', to_text: false)
 
 to_field 'normalized_title_html_ssm' do |_record, accumulator, context|
