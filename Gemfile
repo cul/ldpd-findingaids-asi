@@ -108,6 +108,9 @@ group :development do
   gem 'capistrano-cul', require: false
   gem 'capistrano-passenger', '~> 0.1', require: false
   gem 'capistrano-rails', '~> 1.4', require: false
+
+  # simplecov for test coverage reports
+  gem 'simplecov', '~> 0.22', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
