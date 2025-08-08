@@ -1,4 +1,6 @@
 class Acfa::ArchivesSpace::Client < ArchivesSpace::Client
+  alias super_class_request_method request
+
   RESOURCE_RECORD_URI_REGEXP = /^\/*repositories\/(\d+)\/resources\/(\d+)$/
 
   def self.instance
@@ -12,6 +14,32 @@ class Acfa::ArchivesSpace::Client < ArchivesSpace::Client
       @instance.login # Our Acfa::ArchivesSpace::Client subclass logs in automatically when it is initialized
     end
     @instance
+  end
+
+  # We are overriding the ArchivesSpace::Client#request method so that if the request fails because your
+  # session has expired, we'll log in again and retry the request.
+  def request(method, path, options = {})
+    response = super_class_request_method(method, path, options)
+
+    # If this request has not been retried already, and we received a response status of 412, it generally means
+    # that our session token has expired and needs to be refreshed.
+    # NOTE: If ArchivesSpace ever changes its API and returns a different status code for this scenario,
+    # we'll need to update the check below.
+    if response.status_code == 412 && options[:retry].nil?
+      # Clear any existing token (this is important to do so that the upcoming
+      # login request does not include an expired token)
+      self.token = nil
+
+      # Log in again to generate and store a new token
+      self.login
+
+      # Make the original request a second time.  This time it will use the newly generated token.
+      # We'll also pass a retry flag to the options, which will protect against infinite recursive retry loops.
+      new_options = options.merge({retry: true})
+
+      response = self.request(method, path, new_options)
+    end
+    response
   end
 
   # Splits the given ArchivesSpace resource_record_uri into its constituent repository_id and resource_id.
