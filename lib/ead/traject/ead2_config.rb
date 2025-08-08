@@ -108,6 +108,13 @@ end
 
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['date_range_isim'].include?(index_step.field_name) }
 
+# Extract title with HTML tags preserved and normalize it
+to_field 'normalized_title_html_ssm' do |record, accumulator, context|
+  title_elements = record.xpath('/ead/archdesc/did/unittitle')
+  title = title_elements.first&.to_s
+  dates = context.output_hash['normalized_date_ssm']&.first
+  accumulator << Arclight::NormalizedTitle.new(title, dates).to_s
+end
 
 to_field 'date_range_isim', extract_xpath('/ead/archdesc/did/unitdate/@normal', to_text: false) do |_record, accumulator|
   range = Arclight::YearRange.new

@@ -52,8 +52,36 @@ describe SolrDocument, type: :model do
     })
   end
 
+  describe "#normalized_title" do
+    context "when the title contains both italicized and non-italicized sections" do
+      let(:solr_doc_with_html_title) do
+        described_class.new({
+          'normalized_title_html_ssm' => '<unittitle><title render="italic">Administrative</title> files, 1979-1997</unittitle>'
+        })
+      end
+
+      it 'transforms italic parts to em tags and preserves non-italic text and date' do
+        result = solr_doc_with_html_title.normalized_title
+        expect(result).to eq('<em>Administrative</em> files, 1979-1997')
+      end
+    end
+
+    context "when the title has no render attribute" do
+      let(:solr_doc_with_plain_title) do
+        described_class.new({
+          'normalized_title_html_ssm' => '<unittitle><title>Administrative files</title>, 1979-1997</unittitle>'
+        })
+      end
+
+      it 'returns the title with span tags and date preserved' do
+        result = solr_doc_with_plain_title.normalized_title
+        expect(result).to eq('<span>Administrative files</span>, 1979-1997')
+      end
+    end
+  end
+
   describe '#requestable?' do
-    it  "returns true when the solr_document's repository allows requests, and the record has a parent container, "\
+    it "returns true when the solr_document's repository allows requests, and the record has a parent container, "\
         "and the record is not otherwise marked as unavailable" do
       expect(solr_doc.requestable?).to eq(true)
     end

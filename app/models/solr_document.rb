@@ -4,6 +4,8 @@
 class SolrDocument
   include Blacklight::Solr::Document
   include Arclight::SolrDocument
+  include ActionView::Helpers::TextHelper
+  include EadFormatHelpers
 
   # self.unique_key = 'id'
 
@@ -29,6 +31,12 @@ class SolrDocument
   def repository
     first('repository_ssm') || collection&.first('repository_ssm') ||
     first('repository_ssim') || collection&.first('repository_ssim')
+  end
+
+  # Use normalized_title_html_ssm to get HTML rendering of title
+  def normalized_title
+    value = first('normalized_title_html_ssm').to_s
+    render_html_tags(value: value) if value.present?
   end
 
   def requestable?

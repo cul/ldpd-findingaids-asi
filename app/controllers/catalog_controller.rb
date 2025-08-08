@@ -69,7 +69,7 @@ class CatalogController < ApplicationController
     config.track_search_session.storage = false
     # solr field configuration for search results/index views
     config.index.partials = %i[arclight_index_default]
-    config.index.title_field = 'normalized_title_ssm'
+    config.index.title_field = 'normalized_title'
     config.index.display_type_field = 'level_ssm'
     config.index.document_component = Acfa::Arclight::SearchResultComponent
     config.index.group_component = Acfa::Document::GroupComponent
@@ -82,7 +82,7 @@ class CatalogController < ApplicationController
     config.index.document_actions << :request_action
 
     # solr field configuration for document/show views
-    # config.show.title_field = 'title_display'
+    config.show.title_field = 'normalized_title'
     config.show.document_component = Acfa::Arclight::DocumentComponent
     config.show.sidebar_component = Acfa::SidebarComponent
     config.show.breadcrumb_component = Acfa::Arclight::BreadcrumbsHierarchyComponent
