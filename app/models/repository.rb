@@ -14,7 +14,6 @@ class Repository
     url: '',
     exclude_from_home: false,
     request_types: {},
-    contact_html: '',
     location_html: '',
     visit_note: nil
   }.freeze
@@ -54,10 +53,6 @@ class Repository
 
   def aeon_user_review_set_to_yes?
     @attributes.dig(:request_types, :aeon_local_request, :user_review)
-  end
-
-  def checkbox_per_unittitle
-    @attributes[:checkbox_per_unittitle]
   end
 
   def self.exists?(id)
