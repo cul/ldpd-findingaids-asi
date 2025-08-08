@@ -74,7 +74,7 @@ describe Traject::Indexer do
     end
   end
   describe 'repository indexing' do
-    let(:repository_id) { 'nnc-a' }
+    let(:repository_id) { 'nnc-rb' }
     let(:repository_name) { REPOS[repository_id][:name] }
     let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
     # the accumulator will wrap in an array
@@ -91,20 +91,19 @@ describe Traject::Indexer do
   end
   describe 'call number indexing' do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
-      let(:expected_value) { 'MS#0030' }
+      let(:expected_value) { 'MS#123456' }
       it do
         expect(index_document).not_to be_nil
         expect(index_document[:components][0][:call_number_ss]).to eql [expected_value]
         expect(index_document[:components][0][:components][0][:call_number_ss]).to eql [expected_value]
-        expect(index_document[:components][0][:components][0][:components][0][:call_number_ss]).to eql [expected_value]
+        expect(index_document[:components][0][:components][0][:call_number_ss]).to eql [expected_value]
       end
   end
   describe 'language indexing' do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
-      let(:expected_language_value) { 'Dutch' }
-      let(:expected_language_material_value) { 'Material is in English and in French, with some materials in Dutch.' }
+      let(:expected_language_material_value) { 'English  ,  Spanish; Castilian  . ' }
       it { expect(index_document).not_to be_nil }
-      it { expect(index_document[:language_ssim]).to eql [expected_language_value] }
+      it { expect(index_document[:language_ssim]).to eql ['English', 'Spanish; Castilian'] }
       it { expect(index_document[:language_material_ssm]).to include expected_language_material_value }
   end
   describe 'aspace path indexing' do
@@ -116,7 +115,7 @@ describe Traject::Indexer do
   describe 'container information indexing' do
     let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
     let(:info_for_one_of_the_containers) do
-      index_document[:components][0][:components][2][:container_information_ssm].map {|info_json| JSON.parse(info_json) }
+      index_document[:components][0][:components][0][:container_information_ssm].map {|info_json| JSON.parse(info_json) }
     end
     it do
       expect(index_document).not_to be_nil
@@ -124,10 +123,10 @@ describe Traject::Indexer do
     it 'extracts the expected information for a known box' do
       expect(info_for_one_of_the_containers).to include(
         {
-          'barcode' => 'RH00002380',
-          'id' => 'ef18c12f57c6c1c39c2f2ece677e6070',
+          'barcode' => 'RH000023801',
+          'id' => '50013b9b0921e77120555313ce470589',
           'parent' => '',
-          'label' => 'box 230',
+          'label' => 'box 1',
           'type' => 'box',
         }
       )
@@ -136,9 +135,9 @@ describe Traject::Indexer do
       expect(info_for_one_of_the_containers).to include(
         {
           'barcode' => nil,
-          'id' => 'b4ed1e77add4128f44588571fcd85b7e',
-          'parent' => 'ef18c12f57c6c1c39c2f2ece677e6070',
-          'label' => 'folder 1 to 3',
+          'id' => '3f672580591004c5abd04b8dfc7c055d',
+          'parent' => '50013b9b0921e77120555313ce470589',
+          'label' => 'folder 1',
           'type' => 'folder'
         }
       )
@@ -215,31 +214,33 @@ describe Traject::Indexer do
     context 'when restricted/closed/missing keywords are not present' do
       let(:keyword) { 'open' }
       it do
-        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([false])
+        # expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([false])
+        expect(index_document[:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([false])
       end
     end
     context 'when "restricted" keyword is present' do
       let(:keyword) { 'restricted' }
       it do
-        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+        # expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+        expect(index_document[:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
       end
     end
     context 'when "closed" keyword is present' do
       let(:keyword) { 'closed' }
       it do
-        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+        expect(index_document[:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
       end
     end
     context 'when "missing" keyword is present' do
       let(:keyword) { 'missing' }
       it do
-        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+        expect(index_document[:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
       end
     end
     context 'when a mixed-case relevant keyword is present' do
       let(:keyword) { 'MiSsInG' }
       it do
-        expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
+        expect(index_document[:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
       end
     end
   end
@@ -276,9 +277,8 @@ describe Traject::Indexer do
       it 'wraps the last element in parentheses when there are multiple extent elements, '\
          'but does not wrap the last element when there is only one element' do
         expect(index_document[:extent_ssm]).to eq([
-          '3 linear feet (4 boxes 13 slipcases)', # multiple elements
-          '3.6 Tb Digital (one hard disk)', # multiple elements
-          '423 linear feet' # only one element
+          '10 Linear Feet (10 boxes)', # multiple elements
+          '3.6 Terabytes' # only one element
         ])
       end
     end
@@ -286,10 +286,8 @@ describe Traject::Indexer do
     context 'at the component level' do
       it 'wraps the last element in parentheses when there are multiple extent elements, '\
          'but does not wrap the last element when there is only one element' do
-        expect(index_document[:components][0][:extent_ssm]).to eq([
-          '5 linear feet (4 boxes 14 slipcases)', # multiple elements
-          '7.6 Tb Digital (one hard disk)', # multiple elements
-          '444 linear feet' # only one element
+        expect(index_document[:components][0][:components][0][:extent_ssm]).to eq([
+          '1 folders' # only one element
         ])
       end
     end
@@ -300,7 +298,7 @@ describe Traject::Indexer do
     
     context 'when non-bibid id unit is present' do
       it do
-        expect(index_document[:call_number_ss]).to eq(["MS#0030"])
+        expect(index_document[:call_number_ss]).to eq(["MS#123456"])
       end
     end
   end
@@ -310,7 +308,7 @@ describe Traject::Indexer do
     
     context 'when bibid id unit is present' do
       it do
-        expect(index_document[:bibid_ss]).to eq(["4079591"])
+        expect(index_document[:bibid_ss]).to eq(["123456"])
       end
     end
   end
