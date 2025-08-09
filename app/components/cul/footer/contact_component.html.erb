@@ -8,7 +8,7 @@
   <div class="col">
     <ul class="list-unstyled">
       <% @repositories.each do |repository| %>
-        <% unless repository.exclude_from_home %>
+        <% unless repository.exclude_from_home? %>
           <li><%= link_to_repository_location(repository.slug) %></li>
         <% end %>
       <% end %>
