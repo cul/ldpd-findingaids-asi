@@ -64,7 +64,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'marc'
 gem 'iso-639'
 
-gem 'nokogiri', '~> 1.18.0'
+gem 'nokogiri', '~> 1.17.0'
 gem 'loofah', '~> 2.19.1'
 
 gem 'arclight', '~> 1.4.0'
