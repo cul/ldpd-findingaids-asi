@@ -33,7 +33,7 @@ class CatalogController < ApplicationController
     }
 
     # Sets the indexed Solr field that will display with highlighted matches
-    config.highlight_field = 'text'
+    config.highlight_field = 'all_text'
 
     # solr path which will be added to solr base url before the other solr params.
     # config.solr_path = 'select'
