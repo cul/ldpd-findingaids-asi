@@ -25,7 +25,7 @@
       and the default schema file included with Solr.
 -->
 
-<schema name="CUL Base Configuration" version="1.7">
+<schema name="Finding Aids Schema" version="1.7">
   <!-- attribute "name" is the name of this schema and is only used for display purposes.
       version="x.y" is Solr's version number for the schema syntax and
       semantics.  It should not normally be changed by applications.
@@ -82,6 +82,7 @@
   <!-- <field name="identifiers" type="string" indexed="true" stored="true" multiValued="true" /> -->
 
   <!-- BEGIN: ACFA explicitly defined fields -->
+  <field name="_nest_parent_" type="string" indexed="true" stored="true" multiValued="false" />
   <field name="unitid_identifier_match" type="identifier_match" indexed="true" stored="false" multiValued="true" />
   <!-- END: ACFA explicitly defined fields -->
 
