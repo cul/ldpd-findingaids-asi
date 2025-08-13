@@ -28,7 +28,6 @@ namespace :acfa do
     verbose = ENV.fetch('VERBOSE', 'false') == 'true'
     ead_dir = CONFIG[:ead_cache_dir]
     puts "Seeding index for #{rails_env}"
-    bib_pattern = /cul-(\d+).xml$/
     bib = ENV['BIB'] ? "cul-#{ENV['BIB']}" : '*'
     filename_pattern = ENV['PATTERN']
     filename_pattern ||= (ENV['CLIO_STUBS'].to_s =~ /true/i) ? "clio_ead_cul-#{bib}.xml" : "as_ead_#{bib}.xml"
