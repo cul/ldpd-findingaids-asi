@@ -108,8 +108,12 @@ end
 
 to_field 'bibliography_html_tesim' do |record, accumulator|
   record.xpath('/ead/archdesc/bibliography').each do |bib_node|
-    processed_bib = process_bibliography_element(bib_node)
-    accumulator << processed_bib
+    # Extract only content elements (excluding <head>)
+    content_elements = bib_node.xpath('./*[not(self::head)]')
+    next if content_elements.empty?
+
+    processed_content = process_bibliography_content(content_elements)
+    accumulator << processed_content
   end
 end
 
