@@ -55,6 +55,14 @@ end
 to_field 'language_material_ssm', extract_xpath('./did/langmaterial')
 to_field 'language_ssim', extract_xpath('./did/langmaterial/language')
 
+# Extract title with HTML tags preserved and normalize it
+to_field 'normalized_title_html_ssm'  do |record, accumulator, context|
+  title_elements = record.xpath('./did/unittitle')
+  title = title_elements.first&.to_s
+  date = context.output_hash['normalized_date_ssm']&.first
+  accumulator << settings['title_normalizer'].constantize.new(title, date).to_s
+end
+
 to_field 'collection_sort' do |_rec, accumulator, _context|
   accumulator.concat((settings[:root].output_hash['normalized_title_ssm'] || []).slice(0,1))
 end
