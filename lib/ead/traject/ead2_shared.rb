@@ -9,3 +9,14 @@ def extents_per_physdesc(physdescs_nodes)
     extents.join(' ')
   end
 end
+
+# Replace bibref tags with paragraph tags to add spacing between elements
+def process_bibliography_element(bib_node)
+  bib_string = bib_node.to_s
+
+  # Replace <bibref> with <p> and </bibref> with </p>
+  bib_string.gsub!(/<bibref([^>]*)>/, '<p\1>')
+  bib_string.gsub!(/<\/bibref>/, '</p>')
+
+  bib_string
+end

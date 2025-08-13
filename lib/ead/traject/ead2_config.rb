@@ -106,6 +106,13 @@ to_field 'repository_id_ssi' do |record, accumulator, context|
   accumulator.concat([context.clipboard[:repository_id]])
 end
 
+to_field 'bibliography_html_tesim' do |record, accumulator|
+  record.xpath('/ead/archdesc/bibliography').each do |bib_node|
+    processed_bib = process_bibliography_element(bib_node)
+    accumulator << processed_bib
+  end
+end
+
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['date_range_isim'].include?(index_step.field_name) }
 
 
