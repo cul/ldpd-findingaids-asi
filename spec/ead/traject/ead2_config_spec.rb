@@ -330,4 +330,28 @@ describe Traject::Indexer do
         end
       end
     end
+
+  describe 'bibliography indexing' do
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+
+    it 'excludes head elements from bibliography content' do
+      bibliography_content = index_document[:bibliography_html_tesim].join(' ')
+      expect(bibliography_content).not_to include('Publications About Described Materials')
+      expect(bibliography_content).not_to include('Publications based on the collection')
+    end
+
+    it 'includes paragraph content from first bibliography' do
+      first_bibliography = index_document[:bibliography_html_tesim][0]
+      expect(first_bibliography).to include('Cosenza, Mario Emilio. Dictionary of the Italian Humanists.')
+      expect(first_bibliography).to include('Anonymous. The title is missing.')
+    end
+
+    it 'converts bibref elements to paragraph tags in second bibliography' do
+      second_bibliography = index_document[:bibliography_html_tesim][1]
+      expect(second_bibliography).to include('<p>')
+      expect(second_bibliography).to include('</p>')
+      expect(second_bibliography).not_to include('<bibref>')
+      expect(second_bibliography).not_to include('</bibref>')
+    end
+  end
 end
