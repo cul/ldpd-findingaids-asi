@@ -5,9 +5,10 @@
   <% end %>
 
   <% if embed_hathi %>
-   <iframe src="<%= embed_hathi.href + "?urlappend=%3Bui=embed" %>" width="100%" height="600" title="W3Schools Free Online Web Tutorials"></iframe>
-      <%# TODO: render in a new tab %>
-      <%= link_to(embed_hathi.label, embed_hathi.href) %>
+    <div class="position-relative">
+      <iframe src="<%= embed_hathi.href + "?urlappend=%3Bui=embed" %>" width="100%" height="600" title="<%= embed_hathi.label %>"></iframe>
+      <%= link_to(embed_hathi.label, embed_hathi.href, target: "_blank") %>
+    </div>
   <% end %>
 
   <% linked_resources.each do |resource| %>

@@ -2,7 +2,7 @@
 
 module Acfa::Viewers
   # Display the document hierarchy as "breadcrumbs"
-  class MiradorComponent < Arclight::EmbedComponent
+  class DigitalObjectViewer < Arclight::EmbedComponent
     attr_accessor :document
 
     include Acfa::SolrDocument::EmbeddableResources

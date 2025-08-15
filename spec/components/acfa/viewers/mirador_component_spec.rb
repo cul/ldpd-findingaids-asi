@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Acfa::Viewers::MiradorComponent, type: :component do
+describe Acfa::Viewers::DigitalObjectViewer, type: :component do
   subject(:component) { described_class.new(document: document, presenter: document_presenter) }
 
   let(:digital_objects) { [] }

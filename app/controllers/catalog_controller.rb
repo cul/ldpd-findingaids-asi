@@ -86,7 +86,7 @@ class CatalogController < ApplicationController
     config.show.document_component = Acfa::Arclight::DocumentComponent
     config.show.sidebar_component = Acfa::SidebarComponent
     config.show.breadcrumb_component = Acfa::Arclight::BreadcrumbsHierarchyComponent
-    config.show.embed_component = Acfa::Viewers::MiradorComponent
+    config.show.embed_component = Acfa::Viewers::DigitalObjectViewer
     config.show.access_component = Arclight::AccessComponent
     config.show.online_status_component = Arclight::OnlineStatusIndicatorComponent
     config.show.display_type_field = 'level_ssm'
