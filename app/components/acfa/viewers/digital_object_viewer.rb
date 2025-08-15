@@ -13,8 +13,7 @@ module Acfa::Viewers
     end
 
     def embed_hathi
-      puts "Checking for embeddable Hathi resources"
-      puts "List: #{embeddable_hathi_resources[0]}"
+      return nil if embeddable_hathi_resources.empty?
       embeddable_hathi_resources.first
     end
 
