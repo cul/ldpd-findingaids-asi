@@ -124,7 +124,7 @@ describe Traject::Indexer do
       expect(info_for_one_of_the_containers).to include(
         {
           'barcode' => 'RH000023801',
-          'id' => '50013b9b0921e77120555313ce470589',
+          'id' => '0a1853bd6ce8901eb696c2132e166a26',
           'parent' => '',
           'label' => 'box 1',
           'type' => 'box',
@@ -135,8 +135,8 @@ describe Traject::Indexer do
       expect(info_for_one_of_the_containers).to include(
         {
           'barcode' => nil,
-          'id' => '3f672580591004c5abd04b8dfc7c055d',
-          'parent' => '50013b9b0921e77120555313ce470589',
+          'id' => '1cc8bde42a83dbc4b68780c53f2ab33b',
+          'parent' => '0a1853bd6ce8901eb696c2132e166a26',
           'label' => 'folder 1',
           'type' => 'folder'
         }
