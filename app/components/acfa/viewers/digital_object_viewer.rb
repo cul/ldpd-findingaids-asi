@@ -7,13 +7,11 @@ module Acfa::Viewers
 
     include Acfa::SolrDocument::EmbeddableResources
 
-    # Returns the IIIF manifest URL for the document, if available
     def embed_iiif_manifest
       return helpers.solr_document_iiif_collection_url(solr_document_id: @document.id, format: 'json') if embeddable_resources_iiif_manifests[1]
       embeddable_resources_iiif_manifests.first
     end
 
-    # Returns the first embeddable Hathi resource, if available
     def embed_hathi
       puts "Checking for embeddable Hathi resources"
       puts "List: #{embeddable_hathi_resources[0]}"

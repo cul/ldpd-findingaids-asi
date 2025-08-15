@@ -32,7 +32,7 @@ module Acfa::SolrDocument::EmbeddableResources
     end
   end
 
-  # DOI or Internet Archive or HathiTrust
+  # DOI, Internet Archive or HathiTrust urls
   def include_patterns
     [/\/(10\.7916\/[A-Za-z0-9\-\.]+)/, /\/\/archive\.org\/details\//, /\/\/hdl\.handle\.net\//]
   end
