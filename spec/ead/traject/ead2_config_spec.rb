@@ -221,7 +221,6 @@ describe Traject::Indexer do
     context 'when "restricted" keyword is present' do
       let(:keyword) { 'restricted' }
       it do
-        # expect(index_document[:components][0][:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
         expect(index_document[:components][0][:components][0][:aeon_unavailable_for_request_ssi]).to eq([true])
       end
     end
