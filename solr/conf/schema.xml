@@ -171,7 +171,7 @@
   <dynamicField name="*_vector1024si" type="knn1024_vector"  indexed="true"  stored="true" />
   <dynamicField name="*_vector1024i" type="knn1024_vector"  indexed="true"  stored="false" />
 
-  <dynamicField name="*_sort" type="alphaNumericSort" indexed="true" stored="false" multiValued="false" />
+  <dynamicField name="*_sort" type="alphaNumericSort" />
   <dynamicField name="*spell" type="textSpell" indexed="true" stored="false" multiValued="true" />
   <dynamicField name="*suggest" type="textSuggest" indexed="true" stored="false" multiValued="true" />
 
@@ -481,7 +481,7 @@
         With various TokenFilterFactories to produce a sortable field
         that does not include some properties of the source text
     -->
-  <fieldType name="alphaNumericSort" class="solr.SortableTextField" sortMissingLast="true" omitNorms="true">
+  <fieldType name="alphaNumericSort" class="solr.TextField" sortMissingLast="true" omitNorms="true" indexed="true" stored="false" multiValued="false" uninvertible="true">
     <analyzer>
       <!-- KeywordTokenizer does no actual tokenizing, so the entire
             input string is preserved as a single token
