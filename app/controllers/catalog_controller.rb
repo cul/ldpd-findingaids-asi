@@ -373,6 +373,8 @@ class CatalogController < ApplicationController
 
     # Group header values
     config.add_group_header_field 'abstract_or_scope', accessor: true, truncate: true, helper_method: :render_html_tags
+
+    config.search_state_fields += [:vector_search]
   end
 
   def resolve
