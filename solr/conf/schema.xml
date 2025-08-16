@@ -213,6 +213,12 @@
   <!-- <copyField source="field2_ss"   dest="field2_sort"  /> --> <!-- NOTE: this field assumes a single value -->
 
   <!-- BEGIN: ACFA copy fields -->
+    <!-- copy fielded searches into the catch-all text field -->
+    <copyField source="normalized_title_ssm"            dest="all_text" />
+    <copyField source="places_ssim"                     dest="all_text" />
+    <copyField source="names_ssim"                      dest="all_text" />
+    <copyField source="access_subjects_ssim"            dest="all_text" />
+
     <!-- copy searchable notes into the catch-all text field -->
     <copyField source="abstract_tesim"                  dest="all_text" />
     <copyField source="accessrestrict_tesim"            dest="all_text" />
@@ -246,8 +252,8 @@
     <copyField source="unitid_ssm"                      dest="unitid_identifier_match" />
 
     <!-- create title and date sort fields -->
-    <copyField source="normalized_title_ssm" dest="title_sort"/> <!-- TODO: assumes single values -->
-    <copyField source="normalized_date_ssm" dest="date_sort"/> <!-- TODO: assumes single values -->
+    <copyField source="normalized_title_ssm" dest="title_sort"/> <!-- NOTE: This field assumes normalized_title_ssm contains a single value. -->
+    <copyField source="normalized_date_ssm" dest="date_sort"/> <!-- NOTE: This field assumes normalized_date_ssm contains a single value. -->
 
     <!-- spellcheck fields -->
     <!-- default spell check;  should match fields for default request handler -->
