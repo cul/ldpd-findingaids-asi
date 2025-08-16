@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe SearchBuilder do
   let (:test_query) { "test query" }
-  let(:user_params) { { q: test_query, vector_search: true } }
+  let(:user_params) { { q: test_query, vector_search: 'true' } }
   let(:blacklight_config) { Blacklight::Configuration.new }
   let(:scope) { double blacklight_config: blacklight_config }
   let(:search_builder) { described_class.new(scope) }
