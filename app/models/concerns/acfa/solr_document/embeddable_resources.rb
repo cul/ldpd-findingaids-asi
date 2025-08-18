@@ -3,7 +3,6 @@ module Acfa::SolrDocument::EmbeddableResources
   def embeddable?(object)
     return true if object.role =~ /iiif-manifest/
     include_patterns.any? do |pattern|
-      puts "Checking embeddable for object with href: #{object.href} against pattern"
       object.href =~ pattern
     end
   end
