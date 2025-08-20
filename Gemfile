@@ -11,7 +11,7 @@ end
 ruby "~> 3.1.3"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.1.0'
+gem 'rails', '~> 7.2.0'
 
 gem 'stringio', '3.0.1'
 
@@ -84,11 +84,11 @@ end
 gem "rsolr", ">= 1.0", "< 3"
 gem "bootstrap", "\~\>\ 5.1"
 gem "sassc-rails", "~> 2.1"
-gem "devise", '~> 4.9' # omniauth-cul is only known to be compatible with devise ~> 4.9
+gem "devise", '~> 4.9.3' # omniauth-cul is only known to be compatible with devise ~> 4.9
 gem "omniauth", '~> 2.1' # omniauth-cul is only known to be compatible with omniauth ~> 2.1
 gem "omniauth-cul", '~> 0.2.0' # omniauth-cul is only known to be compatible with omniauth ~> 2.1
 gem "devise-guests", "~> 0.8"
-gem "blacklight-locale_picker", "~> 1.1.0"
+gem "blacklight-locale_picker", "~> 1.3.0"
 gem "blacklight_range_limit"
 gem "sitemap_generator"
 gem 'whenever', require: false
