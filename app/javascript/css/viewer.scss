@@ -9,28 +9,19 @@
   the width needs to be smaller than the height
 */
 #hathi-trust {
-  // Always takes the smaller value
   width: min(100%, 70vh);
 }
 
-// for phones
-@media (max-width: 600px) {
+@include media-breakpoint-down(sm) {
   #hathi-trust {
     height: 65vh;
-  }
-
-  #hathi-trust {
-    width: min(100%, 65vh);
+    width: min(100%, 60vh);
   }
 }
 
-// 67vh for ipads
-@media (min-width: 600px) and (max-width: 1024px) {
+@include media-breakpoint-only(md) {
   #hathi-trust {
-    height: 67vh;
-  }
-
-  #hathi-trust {
-    width: min(100%, 67vh);
+    height: 68vh;
+    width: min(100%, 63vh);
   }
 }
