@@ -11,6 +11,14 @@ module LdpdFindingaidsAsi
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w(ead assets tasks))
+
+    # No longer add autoloaded paths into `$LOAD_PATH`
+    config.add_autoload_paths_to_load_path = false
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -18,19 +26,6 @@ module LdpdFindingaidsAsi
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-
-    # NOTE: In Rails 7.1, it might be possible to replace the lines below with:
-    # config.autoload_lib(ignore: %w(assets tasks ead))
-    # See: https://guides.rubyonrails.org/autoloading_and_reloading_constants.html#config-autoload-lib-ignore
-    config.eager_load_paths << Rails.root.join('lib')
-    Rails.autoloaders.main.ignore(
-      # Ignore this directory because Zeitwerk doesn't like autoloading files that do not contain classes or modules
-      Rails.root.join('lib', 'ead'),
-      # No need to autoload lib/assets directory.
-      Rails.root.join('lib', 'assets'),
-      # No need to autoload lib/tasks directory.
-      Rails.root.join('lib', 'tasks'),
-    )
 
     # https://edgeguides.rubyonrails.org/engines.html#overriding-models-and-controllers
     overrides = "#{Rails.root}/app/overrides"
