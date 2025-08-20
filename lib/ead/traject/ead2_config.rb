@@ -170,7 +170,9 @@ to_field 'online_item_count_is', first_only do |record, accumulator|
 end
 
 to_field 'scopecontent_vector768i' do |record, accumulator, context|
-  text = record.xpath('//ead//scopecontent').text
-  embedding = EmbeddingService::Embedder.convert_text_to_vector_embedding(text.strip) if text.present?
-  accumulator.replace(embedding) if embedding.present?
+  value = fulltext_vector_content(context)
+  if value.present?
+    embedding = EmbeddingService::Embedder.convert_text_to_vector_embedding(value)
+    accumulator.replace(embedding) if embedding.present?
+  end
 end

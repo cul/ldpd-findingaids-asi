@@ -26,6 +26,8 @@ namespace :acfa do
     rails_env = (ENV['RAILS_ENV'] || 'development')
     solr_url = ENV.fetch('SOLR_URL', Blacklight.default_index.connection.base_uri)
     verbose = ENV.fetch('VERBOSE', 'false') == 'true'
+    start_at = ENV['START_AT']
+
     ead_dir = CONFIG[:ead_cache_dir]
     puts "Seeding index for #{rails_env}"
     bib_pattern = /cul-(\d+).xml$/
@@ -35,11 +37,24 @@ namespace :acfa do
     indexed = 0
     glob_pattern = File.join(ead_dir, filename_pattern)
     puts "Seeding index with as_ead data from #{glob_pattern}..."
-    Dir.glob(glob_pattern).each do |path|
+    file_paths = Dir.glob(glob_pattern).sort
+
+    # If a start_at argument has been supplied, skip all files before the specified filename.
+    # This is useful if you indexing job is interrupted and you want to continue where you left off.
+    # Generally you need to run the indexing process with VERBOSE=true to know what has been processed so far.
+    if start_at
+      index_of_start_value = file_paths.find_index { |el| el.end_with?(start_at) } || 0
+    else
+      index_of_start_value = 0
+    end
+
+    file_paths.each_with_index do |path, i|
+      next if i < index_of_start_value
+
       filename = File.basename(path)
       indexing_job = IndexEadJob.new
       indexed += indexing_job.perform(filename)
-      puts "Processed #{filename}" if verbose
+      puts "Processed #{filename} (#{i+1} of #{file_paths.length})" if verbose
     end
     if indexed > 0
       puts "curl #{solr_url}suggest?suggest.build=true"

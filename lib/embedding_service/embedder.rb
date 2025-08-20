@@ -1,10 +1,9 @@
 module EmbeddingService
   class Embedder
     def self.convert_text_to_vector_embedding(field_value)
-
-        uri = URI('https://vector-embeddings-dev.library.columbia.edu/vectorize/BAAI/bge-base-en-v1.5')
+        uri = URI("#{CONFIG[:embedding_service_base_url]}/vectorize/BAAI/bge-base-en-v1.5")
         http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = true
+        http.use_ssl = CONFIG[:embedding_service_base_url]&.start_with?('https:') ? true : false
 
         request = Net::HTTP::Post.new(uri)
         # puts "emb:"
