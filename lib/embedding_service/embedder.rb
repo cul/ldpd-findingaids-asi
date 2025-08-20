@@ -9,7 +9,7 @@ module EmbeddingService
         # puts "emb:"
         # puts field_value[0, 2000]
         # request.body = "text=#{field_value}"
-        request.body = "text=#{field_value[0, 1000]}"
+        request.body = "text=#{field_value[0, 512]}"
         request['Content-Type'] = 'application/x-www-form-urlencoded'
 
         begin
