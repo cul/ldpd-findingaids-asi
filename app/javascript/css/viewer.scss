@@ -2,3 +2,35 @@
 #hathi-trust {
   height: 80vh;
 }
+
+/*
+  Hathi Trust viewer breakpoints:
+  To ensure the Hathi Trust viewer always displays one page at a time
+  the width needs to be smaller than the height
+*/
+#hathi-trust {
+  // Always takes the smaller value
+  width: min(100%, 70vh);
+}
+
+// for phones
+@media (max-width: 600px) {
+  #hathi-trust {
+    height: 65vh;
+  }
+
+  #hathi-trust {
+    width: min(100%, 65vh);
+  }
+}
+
+// 67vh for ipads
+@media (min-width: 600px) and (max-width: 1024px) {
+  #hathi-trust {
+    height: 67vh;
+  }
+
+  #hathi-trust {
+    width: min(100%, 67vh);
+  }
+}
