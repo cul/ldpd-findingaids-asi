@@ -2,7 +2,7 @@
 
 module Acfa::Viewers
   # Display the document hierarchy as "breadcrumbs"
-  class MiradorComponent < Arclight::EmbedComponent
+  class DigitalObjectViewer < Arclight::EmbedComponent
     attr_accessor :document
 
     include Acfa::SolrDocument::EmbeddableResources
@@ -10,6 +10,11 @@ module Acfa::Viewers
     def embed_iiif_manifest
       return helpers.solr_document_iiif_collection_url(solr_document_id: @document.id, format: 'json') if embeddable_resources_iiif_manifests[1]
       embeddable_resources_iiif_manifests.first
+    end
+
+    def embed_hathi
+      return nil if embeddable_hathi_resources.empty?
+      embeddable_hathi_resources.first
     end
 
     def mirador_container(**attrs)
