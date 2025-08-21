@@ -24,6 +24,17 @@ to_field 'repository_id_ssi' do |record, accumulator, context|
   end
 end
 
+to_field 'bibliography_html_tesim' do |record, accumulator|
+  record.xpath('.//bibliography').each do |bib_node|
+    # Extract only content elements (excluding <head>)
+    content_elements = bib_node.xpath('./*[not(self::head)]')
+    next if content_elements.empty?
+
+    processed_content = process_bibliography_content(content_elements)
+    accumulator << processed_content
+  end
+end
+
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['date_range_isim'].include?(index_step.field_name) }
 
 to_field 'date_range_isim', extract_xpath('./did/unitdate/@normal', to_text: false) do |_record, accumulator|
