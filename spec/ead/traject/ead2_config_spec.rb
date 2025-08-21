@@ -339,8 +339,8 @@ describe Traject::Indexer do
 
     it 'includes paragraph content from first bibliography' do
       first_bibliography = index_document[:bibliography_html_tesim][0]
-      expect(first_bibliography).to include('Cosenza, Mario Emilio. Dictionary of the Italian Humanists.')
-      expect(first_bibliography).to include('Anonymous. The title is missing.')
+      expect(first_bibliography).to include('Cosenza, Mario Emilio. Dictionary of the Italian Humanists. Anonymous. The title is
+        missing.')
     end
 
     it 'converts bibref elements to paragraph tags in second bibliography' do
