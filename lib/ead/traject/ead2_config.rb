@@ -158,7 +158,13 @@ to_field 'aspace_path_ssi', extract_xpath('/ead/archdesc/did/unitid[@type = \'as
 end
 
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['language_ssim'].include?(index_step.field_name) }
-to_field 'language_material_ssm', extract_xpath('/ead/archdesc/did/langmaterial')
+to_field 'language_material_ssm' do  |record, accumulator|
+  if record.xpath('ead/archdesc/did/langmaterial/language').any?
+    accumulator.concat([record.xpath('ead/archdesc/did/langmaterial/language').map(&:text).join(', ')])
+  else
+    accumulator.concat([record.xpath('ead/archdesc/did/langmaterial').text.strip])
+  end
+end
 to_field 'language_ssim', extract_xpath('/ead/archdesc/did/langmaterial/language')
 
 # delete upstream digital_objects_ssm rule
