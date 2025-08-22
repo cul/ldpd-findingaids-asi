@@ -370,6 +370,7 @@
       <filter name="flattenGraph"/>
       -->
       <filter name="lowercase"/>
+      <filter name="englishMinimalStem"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer name="standard"/>
@@ -398,10 +399,7 @@
       <filter name="lowercase"/>
       <filter name="englishPossessive"/>
       <filter name="keywordMarker" protected="protwords.txt"/>
-      <!-- Optionally you may want to use this less aggressive stemmer instead of PorterStemFilterFactory:
       <filter name="englishMinimalStem"/>
-      -->
-      <filter name="porterStem"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer name="standard"/>
@@ -413,10 +411,7 @@
       <filter name="lowercase"/>
       <filter name="englishPossessive"/>
       <filter name="keywordMarker" protected="protwords.txt"/>
-      <!-- Optionally you may want to use this less aggressive stemmer instead of PorterStemFilterFactory:
       <filter name="englishMinimalStem"/>
-      -->
-      <filter name="porterStem"/>
     </analyzer>
   </fieldType>
 
