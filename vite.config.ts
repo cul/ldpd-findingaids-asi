@@ -11,4 +11,11 @@ export default defineConfig({
     RubyPlugin(),
     eslint(),
   ],
+  css: {
+    preprocessorOptions: {
+      sass: {
+        api: 'legacy',
+      },
+    },
+  }
 });
