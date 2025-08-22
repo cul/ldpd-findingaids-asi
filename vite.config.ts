@@ -10,12 +10,5 @@ export default defineConfig({
     basicSsl({}),
     RubyPlugin(),
     eslint(),
-  ],
-  css: {
-    preprocessorOptions: {
-      sass: {
-        api: 'legacy',
-      },
-    },
-  }
+  ]
 });
