@@ -54,8 +54,8 @@ class SearchBuilder < Blacklight::SearchBuilder
     end
 
     # Vector embedding service returned embedding data.  Replace query with vector version.
-    # solr_parameters[:q] = "{!knn f=scopecontent_vector768i topK=9999}[#{query_vector.join(', ')}]"
-    solr_parameters[:q] = "{!vectorSimilarity f=scopecontent_vector768i minReturn=0.79}[#{query_vector.join(', ')}]"
+    # solr_parameters[:q] = "{!knn f=searchable_text_vector768i topK=9999}[#{query_vector.join(', ')}]"
+    solr_parameters[:q] = "{!vectorSimilarity f=searchable_text_vector768i minReturn=0.79}[#{query_vector.join(', ')}]"
   end
 
   def vector_search_enabled?
