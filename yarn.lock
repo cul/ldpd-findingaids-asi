@@ -428,6 +428,11 @@
   resolved "https://registry.npmjs.org/@eslint/js/-/js-8.57.0.tgz"
   integrity sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==
 
+"@fortawesome/fontawesome-pro@^7.0.0":
+  version "7.0.0"
+  resolved "https://npm.fontawesome.com/@fortawesome/fontawesome-pro/-/fontawesome-pro-7.0.0.tgz#a5445abb9b2988f78261878135a740394aa5bc52"
+  integrity sha512-RDCOzN5yblG/CrggLZq6TP0M6eSNsBSBeY1l5s6ihA3jVvM7vpend38faVBD4LY+7KTGhkGsPLj9iRPwwhUEjQ==
+
 "@github/auto-complete-element@^3.6.2":
   version "3.6.2"
   resolved "https://registry.npmjs.org/@github/auto-complete-element/-/auto-complete-element-3.6.2.tgz"

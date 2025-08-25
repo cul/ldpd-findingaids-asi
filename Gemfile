@@ -3,11 +3,6 @@ require 'yaml'
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-def font_awesome_token
-  return ENV['FONT_AWESOME_TOKEN'] if ENV['FONT_AWESOME_TOKEN'] && ENV['FONT_AWESOME_TOKEN'] != ''
-  YAML.load(File.read("./config/secrets.yml")).fetch('font_awesome_token', nil) if File.exist?("./config/secrets.yml")
-end
-
 ruby "~> 3.1.3"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -72,15 +67,15 @@ gem 'loofah', '~> 2.21.0'
 gem 'arclight', '~> 1.4.0'
 gem 'blacklight', '~> 8.5.0'
 
-gem "font-awesome-sass", "~> 6.4.0"
-fa_token = font_awesome_token
-if fa_token
-  source "https://token:#{fa_token}@dl.fontawesome.com/basic/fontawesome-pro/ruby/" do
-    gem "font-awesome-pro-sass", "~> 6.4.0"
-  end
-else
-  raise 'ERROR: You are missing font_awesome_token in secrets.yml.  It is required for `bundle install` to work.'
-end
+# gem "font-awesome-sass", "~> 6.4.0"
+# fa_token = font_awesome_token
+# if fa_token
+#   source "https://token:#{fa_token}@dl.fontawesome.com/basic/fontawesome-pro/ruby/" do
+#     gem "font-awesome-pro-sass", "~> 6.4.0"
+#   end
+# else
+#   raise 'ERROR: You are missing font_awesome_token in secrets.yml.  It is required for `bundle install` to work.'
+# end
 gem "rsolr", ">= 1.0", "< 3"
 gem "bootstrap", "\~\>\ 5.1"
 gem "sassc-rails", "~> 2.1"
