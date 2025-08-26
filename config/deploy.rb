@@ -32,7 +32,8 @@ append  :linked_files,
         'config/repositories.yml',
         'config/resque.yml',
         'config/secrets.yml',
-        'public/robots.txt'
+        'public/robots.txt',
+        '.npmrc'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'node_modules', 'public/sitemaps'
