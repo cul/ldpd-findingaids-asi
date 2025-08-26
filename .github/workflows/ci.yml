@@ -33,7 +33,7 @@ jobs:
       #   with:
       #     node-version: ${{ matrix.node }}
       - name: Set up .npmrc
-        run: echo -e "@fortawesome:registry=https://npm.fontawesome.com/\n//npm.fontawesome.com/:_authToken=${RAILS_ENV}" > .npmrc
+        run: echo -e "@fortawesome:registry=https://npm.fontawesome.com/\n//npm.fontawesome.com/:_authToken=${{GITHUB_JOB}}" > .npmrc
       - name: Display .npmrc info
         run: cat .npmrc
       # - run: npm install -g yarn
