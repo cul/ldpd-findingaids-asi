@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe SearchBuilder do
   let(:test_query) { "test query" }
-  let(:user_params) { { q: test_query, vector_search: 'true' } }
   let(:blacklight_config) { Blacklight::Configuration.new }
   let(:scope) { double blacklight_config: blacklight_config }
   let(:search_builder) { described_class.new(scope) }
@@ -22,23 +21,103 @@ describe SearchBuilder do
       .and_return(controller_double)
   end
 
-  describe "no vector search" do
-    let(:no_vec_params) { { q: test_query} }
-    let(:query_parameters) { search_builder.with(no_vec_params).processed_parameters }
-    it 'includes the user submitted params' do
-      expect(query_parameters[:q]).to eq test_query
+  describe 'behavior driven by search mode' do
+    shared_examples 'vector search is executed' do
+      it 'converts the query to the embedding syntax' do
+        expect(processed_params[:q]).not_to eq(test_query)
+        expect(processed_params[:q]).to include("[#{fake_embedding.join(', ')}]")
+        expect(processed_params[:q]).to start_with('{!')
+      end
+    end
+
+    shared_examples 'standard search is executed' do
+      it 'does not alter query' do
+        expect(processed_params[:q]).to eq(test_query)
+      end
+    end
+
+    context "when default_search is 'standard'" do
+      before { allow(CONFIG).to receive(:[]).with(:default_search_mode).and_return('standard') }
+
+      context 'and no vector_search param is supplied' do
+        let(:processed_params) { search_builder.with(q: test_query).processed_parameters }
+        include_examples 'standard search is executed'
+      end
+
+      context "and vector_search='true' is supplied" do
+        let(:processed_params) do
+          search_builder.with(q: test_query, vector_search: 'true').processed_parameters
+        end
+        include_examples 'vector search is executed'
+      end
+    end
+
+    context "when default_search is 'vector'" do
+      before { allow(CONFIG).to receive(:[]).with(:default_search_mode).and_return('vector') }
+
+      context 'and no query parameter is suppplied' do
+        let(:test_query) { "" }
+        let(:processed_params) { search_builder.with(q: test_query).processed_parameters }
+        include_examples 'standard search is executed'
+      end
+
+      context 'and no vector_search param is supplied' do
+        let(:processed_params) { search_builder.with(q: test_query).processed_parameters }
+        include_examples 'vector search is executed'
+      end
+
+      context "and vector_search='false' is supplied" do
+        let(:processed_params) do
+          search_builder.with(q: test_query, vector_search: 'false').processed_parameters
+        end
+        include_examples 'standard search is executed'
+      end
     end
   end
 
+  describe '#vector_search_enabled?' do
+    subject { search_builder.vector_search_enabled? }
 
-  describe "vector search" do
-    let(:query_string) { search_builder.with(user_params).processed_parameters[:q] }
-
-    it 'replaces the text query with a query that embeds the vector' do
-      expect(query_string).not_to eq(test_query)
-      expect(query_string).to include("[#{fake_embedding.join(', ')}]")
-      expect(query_string).to start_with('{!')
+    before do
+      allow(search_builder).to receive(:blacklight_params).and_return(override_params)
+      stub_const('CONFIG', { default_search_mode: default_mode })
     end
 
+    context 'when override parameter is provided' do
+      context 'override is "true"' do
+        let(:override_params) { { vector_search: 'true' } }
+        let(:default_mode)    { 'standard' }
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'override is "false"' do
+      let(:override_params) { { vector_search: 'false' } }
+      let(:default_mode)    { 'vector' }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when no override parameter is provided' do
+      let(:override_params) { {} }
+
+      context 'and default_search_mode is "vector"' do
+        let(:default_mode) { 'vector' }
+
+        it { is_expected.to be true }
+      end
+
+      context 'and default_search_mode is "standard"' do
+        let(:default_mode) { 'standard' }
+
+        it { is_expected.to be false }
+      end
+      context 'and default_search_mode is nil' do
+        let(:default_mode) { nil }
+
+        it { is_expected.to be false }
+      end
+    end
   end
 end

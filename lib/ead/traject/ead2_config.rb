@@ -193,7 +193,7 @@ to_field 'online_item_count_is', first_only do |record, accumulator|
   accumulator << record.xpath('.//dao|.//daogrp').count
 end
 
-to_field 'scopecontent_vector768i' do |record, accumulator, context|
+to_field 'searchable_text_vector768i' do |record, accumulator, context|
   value = semantic_search_source_text(context)
   if value.present?
     embedding = EmbeddingService::Embedder.convert_text_to_vector_embedding(value)
