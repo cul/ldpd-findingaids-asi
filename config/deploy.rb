@@ -32,7 +32,6 @@ append  :linked_files,
         'config/redis.yml',
         'config/repositories.yml',
         'config/resque.yml',
-        'config/secrets.yml',
         'public/robots.txt',
         '.npmrc'
 

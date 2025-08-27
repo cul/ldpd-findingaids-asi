@@ -33,8 +33,6 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: Set up .npmrc
         run: echo -e "@fortawesome:registry=https://npm.fontawesome.com/\n//npm.fontawesome.com/:_authToken=${{secrets.FONT_AWESOME_TOKEN}}" > .npmrc
-      - name: Display .npmrc info
-        run: cat .npmrc
       - run: npm install -g yarn
       - run: yarn install
       - run: yarn run lint
