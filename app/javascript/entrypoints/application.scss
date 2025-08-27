@@ -4,7 +4,6 @@ $brand: $primary;
 $brand_text: $white;
 
 @import "../css/arclight"; // includes bootstrap, blacklight, and arclight base styles
-@import "../css/mirador";
 @import "../css/fontawesome-pro";
 
 @import "../css/cul-toolkit/cul"; // CUL Toolkit base styles (after bootstrap has been loaded)
@@ -12,8 +11,7 @@ $brand_text: $white;
 @import "../css/facets";
 @import "../css/topnav";
 @import "../css/cul_footer";
-@import "../css/mirador";
-
+@import "../css/viewer";
 @import '../css/cart.scss';
 
 //urls

@@ -61,8 +61,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'marc'
 gem 'iso-639'
 
-gem 'nokogiri', '~> 1.17.0'
 gem 'loofah', '~> 2.21.0'
+gem 'nokogiri', '~> 1.18', '>= 1.18.9', force_ruby_platform: true
 
 gem 'arclight', '~> 1.4.0'
 gem 'blacklight', '~> 8.5.0'

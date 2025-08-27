@@ -1,0 +1,27 @@
+#mirador,
+#hathi-trust {
+  height: 80vh;
+}
+
+/*
+  Hathi Trust viewer breakpoints:
+  To ensure the Hathi Trust viewer always displays one page at a time
+  the width needs to be smaller than the height
+*/
+#hathi-trust {
+  width: min(100%, 70vh);
+}
+
+@include media-breakpoint-down(sm) {
+  #hathi-trust {
+    height: 65vh;
+    width: min(100%, 60vh);
+  }
+}
+
+@include media-breakpoint-only(md) {
+  #hathi-trust {
+    height: 68vh;
+    width: min(100%, 63vh);
+  }
+}

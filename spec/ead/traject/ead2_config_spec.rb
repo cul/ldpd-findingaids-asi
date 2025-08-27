@@ -100,11 +100,24 @@ describe Traject::Indexer do
       end
   end
   describe 'language indexing' do
-      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
-      let(:expected_language_material_value) { 'English  ,  Spanish; Castilian  . ' }
-      it { expect(index_document).not_to be_nil }
-      it { expect(index_document[:language_ssim]).to eql ['English', 'Spanish; Castilian'] }
-      it { expect(index_document[:language_material_ssm]).to include expected_language_material_value }
+    context 'with ead from ASpace < 4.0' do
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_language/test_lang_aspace3x.xml') }
+      let(:expected_value) { 'English, English, Spanish; Castilian' }
+      it { expect(index_document[:language_ssim]).to eql ['English', 'English', 'Spanish; Castilian'] }
+      it { expect(index_document[:language_material_ssm]).to eql([expected_value]) }
+    end
+    context 'with ead from ASpace >= 4.0' do
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_language/test_lang_aspace4x.xml') }
+      let(:expected_value) { 'English, English, Spanish; Castilian' }
+      it { expect(index_document[:language_ssim]).to eql ['English', 'English', 'Spanish; Castilian'] }
+      it { expect(index_document[:language_material_ssm]).to eql([expected_value]) }
+    end
+    context 'with language note' do
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_language/test_lang_note.xml') }
+      let(:expected_value) { 'Max Beckmann material in German. M.Q. Beckmann diary in English.' }
+      it { expect(index_document[:language_ssim]).to be_nil }
+      it { expect(index_document[:language_material_ssm]).to eql([expected_value]) }
+    end
   end
   describe 'aspace path indexing' do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_eadid/from_unitid.xml') }
@@ -327,4 +340,28 @@ describe Traject::Indexer do
         end
       end
     end
+
+  describe 'bibliography indexing' do
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
+
+    it 'excludes head elements from bibliography content' do
+      bibliography_content = index_document[:bibliography_html_tesim].join(' ')
+      expect(bibliography_content).not_to include('Publications About Described Materials')
+      expect(bibliography_content).not_to include('Publications based on the collection')
+    end
+
+    it 'includes paragraph content from first bibliography' do
+      first_bibliography = index_document[:bibliography_html_tesim][0]
+      expect(first_bibliography).to include('Cosenza, Mario Emilio. Dictionary of the Italian Humanists. Anonymous. The title is
+        missing.')
+    end
+
+    it 'converts bibref elements to paragraph tags in second bibliography' do
+      second_bibliography = index_document[:bibliography_html_tesim][1]
+      expect(second_bibliography).to include('<p>')
+      expect(second_bibliography).to include('</p>')
+      expect(second_bibliography).not_to include('<bibref>')
+      expect(second_bibliography).not_to include('</bibref>')
+    end
+  end
 end

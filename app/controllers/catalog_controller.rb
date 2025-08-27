@@ -86,7 +86,7 @@ class CatalogController < ApplicationController
     config.show.document_component = Acfa::Arclight::DocumentComponent
     config.show.sidebar_component = Acfa::SidebarComponent
     config.show.breadcrumb_component = Acfa::Arclight::BreadcrumbsHierarchyComponent
-    config.show.embed_component = Acfa::Viewers::MiradorComponent
+    config.show.embed_component = Acfa::Viewers::DigitalObjectViewer
     config.show.access_component = Arclight::AccessComponent
     config.show.online_status_component = Arclight::OnlineStatusIndicatorComponent
     config.show.display_type_field = 'level_ssm'
@@ -253,6 +253,7 @@ class CatalogController < ApplicationController
     config.add_summary_field 'abstract', field: 'abstract_html_tesm', helper_method: :render_html_tags
     config.add_summary_field 'extent', field: 'extent_ssm'
     config.add_summary_field 'language', field: 'language_material_ssm'
+    config.add_summary_field 'bibliography', field: 'bibliography_html_tesim', helper_method: :render_html_tags
     config.add_summary_field 'scopecontent', field: 'scopecontent_html_tesm', helper_method: :render_html_tags
     config.add_summary_field 'bioghist', field: 'bioghist_html_tesm', helper_method: :render_html_tags
 
@@ -313,6 +314,7 @@ class CatalogController < ApplicationController
     config.add_component_field 'extent', field: 'extent_ssm'
     config.add_component_field 'altformavail', field: 'altformavail_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'scopecontent', field: 'scopecontent_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'bibliography', field: 'bibliography_html_tesim', helper_method: :render_html_tags
     config.add_component_field 'bioghist', field: 'bioghist_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'acqinfo', field: 'acqinfo_ssim', helper_method: :render_html_tags
     config.add_component_field 'phystech', field: 'phystech_html_tesm', helper_method: :render_html_tags

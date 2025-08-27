@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ead xmlns="urn:isbn:1-931666-22-9" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:isbn:1-931666-22-9 http://www.loc.gov/ead/ead.xsd"><eadheader countryencoding="iso3166-1" dateencoding="iso8601" langencoding="iso639-2b" repositoryencoding="iso15511"><eadid countrycode="US" mainagencycode="US-NNC-RB"></eadid><filedesc><titlestmt><titleproper>Max Beckmann diaries<num>13803512</num></titleproper></titlestmt><publicationstmt><publisher>Rare Book and Manuscript Library</publisher><p id="logostmt"><extref xlink:actuate="onLoad" xlink:href="https://aspace.library.columbia.edu/assets/columbia.png" xlink:show="embed" xlink:type="simple"/></p><address><addressline>Butler Library, 6th Floor</addressline><addressline>Columbia University, Mail Code 1127</addressline><addressline>535 W. 114th St.</addressline><addressline>New York, NY 10027</addressline><addressline>Business Number: (212) 854-5153</addressline><addressline>Fax Number: (212) 854-1365</addressline><addressline>rbml@libraries.cul.columbia.edu</addressline><addressline>URL: <extptr xlink:href="http://www.columbia.edu/cu/lweb/indiv/rbml/index.html" xlink:show="new" xlink:title="http://www.columbia.edu/cu/lweb/indiv/rbml/index.html" xlink:type="simple"/></addressline></address><p>This finding aid is made available for public use following the Universal 1.0 Public Domain Dedication Creative Commons designation.</p></publicationstmt></filedesc><profiledesc><creation>This finding aid was produced using ArchivesSpace on <date>2025-08-18 12:38:22 -0400</date>.</creation><langusage>English</langusage><descrules>DACS</descrules></profiledesc></eadheader><archdesc level="collection">
+  <did>
+    <repository>
+      <corpname>Rare Book and Manuscript Library</corpname>
+    </repository>
+    <unittitle>Max Beckmann diaries</unittitle>
+    <origination label="Creator">
+      <persname authfilenumber="http://id.loc.gov/authorities/names/n79139651" rules="dacs" source="naf">Beckmann, Max, 1884-1950</persname>
+    </origination>
+    <unitid>13803512</unitid>
+    <unitid>MS#1970</unitid>
+    <langmaterial id="aspace_1182b85a7bce22d36bc34f55a74e3e1c">Max Beckmann material in German. M.Q. Beckmann diary in English.</langmaterial>
+    <unitid type="aspace_uri">/repositories/2/resources/4783</unitid>
+    <physdesc altrender="whole">
+      <extent altrender="materialtype spaceoccupied">0.42 Linear Feet</extent>
+      <extent altrender="carrier">1 box</extent>
+    </physdesc>
+    <unitdate datechar="creation" normal="1922/1982" type="inclusive">1922-1982</unitdate>
+    <unitdate calendar="gregorian" datechar="creation" era="ce" type="bulk">bulk 1942-1950</unitdate>
+  </did>
+  <scopecontent id="aspace_7cb1b71e556772aa3b6c3fc4c334207a">
+    <head>Scope and Contents</head>
+<p>10 daily diaries of Max Beckmann (1942-1950); one diary of Mathilde Q. Beckmann (1982) with only one entry, on January 1; early 1920s unpublished play script manuscripts by Max Beckmann for "Maxim von Plessant der damenfreund..." and "Ebi" or "Ich will..."</p>  </scopecontent>
+  <relatedmaterial id="aspace_dc6ce8e5a18f7a5b495ba3acc472d040">
+    <head>Related Materials</head>
+<p>Max Beckmann papers, 1917-1954, at the Smithsonian Archives of American Art. https://www.aaa.si.edu/collections/max-beckmann-papers-8879/more-information</p>  </relatedmaterial>
+  <userestrict id="aspace_fb4911268c755ad5392e6c3f0d6aea90">
+    <head>Conditions Governing Use</head>
+<p>Reproductions may be made for research purposes. Copyright remains with the creator and his/her heirs. The responsibility to secure copyright permission rests with the patron.</p>  </userestrict>
+  <accessrestrict id="aspace_7ca00b68f2a13c675a192411536f5fb2">
+    <head>Conditions Governing Access</head>
+<p>This collection is located on-site.</p>  </accessrestrict>
+  <accessrestrict id="aspace_2719c4fd46020691d8549ee01f961819">
+    <head>Conditions Governing Access</head>
+<p>This collection has no restrictions.</p>  </accessrestrict>
+  <prefercite id="aspace_dc5e0faf20a6d84248fca24df01a7398">
+    <head>Preferred Citation</head>
+<p>Identification of specific item; Date (if known); Max Beckmann Diaries; Box and Folder; Rare Book and Manuscript Library, Columbia University Library.</p>  </prefercite>
+  <accruals id="aspace_babbc38a0288c759e6832bdd2b1088dd">
+    <head>Accruals</head>
+<p>Materials may have been added to the collection since this finding aid was prepared. Contact rbml@columbia.edu for more information.</p>  </accruals>
+  <controlaccess>
+    <genreform authfilenumber="http://vocab.getty.edu/page/aat/300027112" source="aat">Diaries</genreform>
+    <genreform authfilenumber="http://vocab.getty.edu/page/aat/300026487" source="aat">Scripts (documents)</genreform>
+  </controlaccess>
+  <dsc/>
+</archdesc>
+</ead>
