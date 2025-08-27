@@ -5,13 +5,7 @@ $brand_text: $white;
 
 @import "../css/arclight"; // includes bootstrap, blacklight, and arclight base styles
 @import "../css/mirador";
-
-// TODO: Use FontAwesome Kits
-$fa-font-path: '@fortawesome/fontawesome-pro/webfonts/';
-@import '@fortawesome/fontawesome-pro/scss/fontawesome';
-@import '@fortawesome/fontawesome-pro/scss/light';
-@import '@fortawesome/fontawesome-pro/scss/solid';
-@import '@fortawesome/fontawesome-pro/scss/regular';
+@import "../css/fontawesome-pro";
 
 @import "../css/cul-toolkit/cul"; // CUL Toolkit base styles (after bootstrap has been loaded)
 @import "../css/global_search";
