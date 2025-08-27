@@ -67,15 +67,6 @@ gem 'loofah', '~> 2.21.0'
 gem 'arclight', '~> 1.4.0'
 gem 'blacklight', '~> 8.5.0'
 
-# gem "font-awesome-sass", "~> 6.4.0"
-# fa_token = font_awesome_token
-# if fa_token
-#   source "https://token:#{fa_token}@dl.fontawesome.com/basic/fontawesome-pro/ruby/" do
-#     gem "font-awesome-pro-sass", "~> 6.4.0"
-#   end
-# else
-#   raise 'ERROR: You are missing font_awesome_token in secrets.yml.  It is required for `bundle install` to work.'
-# end
 gem "rsolr", ">= 1.0", "< 3"
 gem "bootstrap", "\~\>\ 5.1"
 gem "sassc-rails", "~> 2.1"
