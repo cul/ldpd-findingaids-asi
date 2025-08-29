@@ -26,13 +26,13 @@ append  :linked_files,
         'config/database.yml',
         'config/finding_aids.yml',
         'config/index_api.yml',
-        'config/master.key',
+        "config/credentials/#{fetch(:deploy_name)}.key",
         'config/permissions.yml',
         'config/redis.yml',
         'config/repositories.yml',
         'config/resque.yml',
-        'config/secrets.yml',
-        'public/robots.txt'
+        'public/robots.txt',
+        '.npmrc'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'node_modules', 'public/sitemaps'

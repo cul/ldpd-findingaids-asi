@@ -28,7 +28,7 @@ function RequestCartApp() {
           <Offcanvas.Title>
             Request Cart
             {' '}
-            <i className="fa fa-cart-shopping" />
+            <i className="fa-regular fa-cart-shopping" />
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
