@@ -35,7 +35,7 @@ Run `yarn add @fortawesome/fontawesome-pro`.
 ### Setting Up A Development Finding Aids Server
 1. Install Ruby dependencies with `bundle install`. The application Gemfile indicates the required Ruby version.
 2. Run the setup task, which will copy template config files and other sample data: `bundle exec rake acfa:setup:all`
-3. Generate development and test credentials files with `bundle exec rails credentials:edit --environment development` and `bundle exec rails credentials:edit --environment test`. This will create encrypted credentials.yml.enc files and master keys for both environments in the `config/credentials` directory.
+3. Generate development and test credentials files with `bundle exec rails credentials:edit --environment=development` and `bundle exec rails credentials:edit --environment=test`. Note: If you use Visual Studio Code, you should be able to run it as `EDITOR="code --wait" bin/rails credentials:edit --environment=development` (close the file to save). This will create encrypted credentials.yml.enc files and master keys for both environments in the `config/credentials` directory.
 4. Run the rspec suite with `bundle exec rspec` - this will set up the default template configurations
 5. Run the database migrations against sqlite in development with `bundle exec rake db:migrate`
 6. For running Solr, you have two options:
