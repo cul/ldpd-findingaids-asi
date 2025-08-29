@@ -28,7 +28,7 @@ will create a core called "acfa".
 @fortawesome:registry=https://npm.fontawesome.com/
 //npm.fontawesome.com/:_authToken={PASTE_YOUR_FONTAWESOME_PRO_TOKEN}
 ```
-Run `yarn add @fortawesome/fontawesome-pro`.
+Run `yarn add @fortawesome/fontawesome-pro@^6.7.2`.
 6. Install Javascript dependencies with `yarn install`.
 7. Run the vite server `yarn start:dev` - this will handle asset imports for the app.
 

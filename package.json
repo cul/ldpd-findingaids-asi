@@ -24,7 +24,7 @@
     "@columbia-libraries/mirador": "4.0.0-alpha.16-3",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@fortawesome/fontawesome-pro": "^6.0.0",
+    "@fortawesome/fontawesome-pro": "^6.7.2",
     "@github/auto-complete-element": "^3.6.2",
     "@hotwired/turbo-rails": "^8.0.4",
     "@mui/material": "6.4.11",
