@@ -70,3 +70,9 @@ local.rake
 
 # simplecov coverage report
 /coverage
+
+# Ignore development and test credentials
+/config/credentials/development.yml.enc
+/config/credentials/test.yml.enc
+
+/config/credentials/*.key

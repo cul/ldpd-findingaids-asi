@@ -19,6 +19,8 @@ set :job_template, "/usr/local/bin/mailifrc -s 'Error - :email_subject' :error_r
 job_type :rake, 'cd :path && :environment_variable=:environment bundle exec rake :task'
 
 # Regenerate sitemap every .
-every :wednesday, at: '4am' do
-  rake 'sitemap:create', email_subject: 'Sitemap generation'
+if Rails.env.findingaids_prod?
+  every :wednesday, at: '4am' do
+    rake 'sitemap:create', email_subject: 'Sitemap generation'
+  end
 end
