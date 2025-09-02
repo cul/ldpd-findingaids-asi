@@ -23,15 +23,22 @@ will create a core called "acfa".
 2. Follow the [instructions](https://github.com/nvm-sh/nvm?tab=readme-ov-file#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file) from the nvm repo to set up automatic Node version switching
 3. Open a new terminal window at the repo — this should automatically switch you to run the `node` version specified by `.nvmrc` and download it if necessary.
 4. Install yarn with `npm install --global yarn`
-5. Install Javascript dependencies with `yarn install`.
-6. Run the vite server `yarn start:dev` - this will handle asset imports for the app.
+5. To set up FontAwesome, create a `.npmrc` file in the root of the repository with the following content:
+```
+@fortawesome:registry=https://npm.fontawesome.com/
+//npm.fontawesome.com/:_authToken={PASTE_YOUR_FONTAWESOME_PRO_TOKEN}
+```
+Run `yarn add @fortawesome/fontawesome-pro@^6.7.2`.
+6. Install Javascript dependencies with `yarn install`.
+7. Run the vite server `yarn start:dev` - this will handle asset imports for the app.
 
 ### Setting Up A Development Finding Aids Server
 1. Install Ruby dependencies with `bundle install`. The application Gemfile indicates the required Ruby version.
 2. Run the setup task, which will copy template config files and other sample data: `bundle exec rake acfa:setup:all`
-3. Run the rspec suite with `bundle exec rspec` - this will set up the default template configurations
-4. Run the database migrations against sqlite in development with `bundle exec rake db:migrate`
-5. For running Solr, you have two options:
+3. Generate development and test credentials files with `bundle exec rails credentials:edit --environment=development` and `bundle exec rails credentials:edit --environment=test`. Note: If you use Visual Studio Code, you should be able to run it as `EDITOR="code --wait" bin/rails credentials:edit --environment=development` (close the file to save). This will create encrypted credentials.yml.enc files and master keys for both environments in the `config/credentials` directory.
+4. Run the rspec suite with `bundle exec rspec` - this will set up the default template configurations
+5. Run the database migrations against sqlite in development with `bundle exec rake db:migrate`
+6. For running Solr, you have two options:
    1. **Option 1:** Run `docker compose up` to start the solr server and then run `bundle exec rake acfa:seed` to seed the solr server with sample data.
    2. **Option 2:** Run `bundle exec rake acfa:server` to start up solr, seed it with example data, and start rails.
 

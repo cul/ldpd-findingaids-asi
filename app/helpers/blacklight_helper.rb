@@ -19,6 +19,6 @@ module BlacklightHelper
             end
     doc_link = search_state.url_for_document(doc)
     link_html_opts = doc_link.is_a?(String) ? { target: '_blank', class: "external-link", rel: "noopener noreferrer" } : document_link_params(doc, opts)
-    link_to label.html_safe, doc_link, link_html_opts
+    link_to label&.html_safe, doc_link, link_html_opts
   end
 end
