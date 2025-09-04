@@ -8,7 +8,7 @@ ruby "~> 3.1.3"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.2.0'
 
-gem 'stringio', '3.0.1'
+gem 'stringio', '3.0.1.1'
 
 gem 'resque', '~> 2.6'
 
