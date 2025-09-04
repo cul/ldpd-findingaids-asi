@@ -8,7 +8,7 @@ lock '~> 3.19.2'
 # maintain two rvm installations for two different Linux OS versions.
 set :rvm_custom_path, '~/.rvm-alma8'
 
-set :remote_user, 'ldpdserv'
+set :remote_user, 'renserv'
 set :application, 'findingaids'
 set :repo_url, "git@github.com:cul/ldpd-findingaids-asi.git"
 set :deploy_name, "#{fetch(:application)}_#{fetch(:stage)}"
