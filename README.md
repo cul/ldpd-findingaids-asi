@@ -23,12 +23,33 @@ will create a core called "acfa".
 2. Follow the [instructions](https://github.com/nvm-sh/nvm?tab=readme-ov-file#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file) from the nvm repo to set up automatic Node version switching
 3. Open a new terminal window at the repo — this should automatically switch you to run the `node` version specified by `.nvmrc` and download it if necessary.
 4. Install yarn with `npm install --global yarn`
-5. To set up FontAwesome, create a `.npmrc` file in the root of the repository with the following content:
-```
-@fortawesome:registry=https://npm.fontawesome.com/
-//npm.fontawesome.com/:_authToken={PASTE_YOUR_FONTAWESOME_PRO_TOKEN}
-```
-Run `yarn add @fortawesome/fontawesome-pro@^6.7.2`.
+5. Set up FontAwesome
+
+   **Option A: FontAwesome Pro (Recommended for maintainers)**
+   1. Create a `.npmrc` file in the root of the repository:
+      ```
+      @fortawesome:registry=https://npm.fontawesome.com/
+      //npm.fontawesome.com/:_authToken={PASTE_YOUR_FONTAWESOME_PRO_TOKEN}
+      ```
+   2. Install FontAwesome Pro:
+      ```bash
+      yarn add @fortawesome/fontawesome-pro@^6.7.2
+      ```
+
+   **Option B: FontAwesome Free**
+   1. Install FontAwesome Free:
+      ```bash
+      yarn add @fortawesome/fontawesome-free@^6.7.2
+      ```
+   2. Update `app/javascript/css/fontawesome-pro.scss` with the following content:
+      ```scss
+      $fa-font-path: '@fortawesome/fontawesome-free/webfonts/';
+      @import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+      @import '@fortawesome/fontawesome-free/scss/solid.scss';
+      ```
+   
+   > **Note:** When using FontAwesome Free, some icons may not display correctly as they are only available in the Pro version.
+
 6. Install Javascript dependencies with `yarn install`.
 7. Run the vite server `yarn start:dev` - this will handle asset imports for the app.
 
