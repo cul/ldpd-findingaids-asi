@@ -1,31 +1,48 @@
 require "rails_helper"
 
 RSpec.describe EmbeddingService::Endpoint do
-  describe "#construct_endpoint_uri" do
-    let(:destination_host) { 'vector-embedding-endpoint' }
-    let(:destination_url) { "https://#{destination_host}" }
-    let(:model_details) do
-        {
-            namespace: 'BAAI',
-            model: 'bge_base_en_15',
-            dimensions: 768,
-            summarize: false
-        }
-    end
-    let(:expected_params) do
-        {
-            "namespace" => "BAAI",
-            "model" => "bge_base_en_15",
-            "dimensions" => "768",
-            "summarize" => "false"
-        }
-    end
+  let(:destination_host) { 'vector-embedding-endpoint' }
+  let(:destination_url) { "https://#{destination_host}" }
+  let(:field_value) { "test input" }
+  let(:model_details) do
+      {
+          namespace: 'BAAI',
+          model: 'bge_base_en_15',
+          dimensions: 768,
+          summarize: false
+      }
+  end
 
-    it 'constructs the expected url' do
-        url = described_class.construct_endpoint_url(destination_url, model_details)
-        params = Rack::Utils.parse_nested_query(url.query)
-        expect(url.host).to eq(destination_host)
-        expect(params).to eq(expected_params)
-    end
+  describe "#generate_vector_embedding" do
+      before do
+          allow_any_instance_of(Net::HTTP).to receive(:request).and_raise(Timeout::Error, "connection closed")
+      end  
+      it "raises errors thrown by embedding service" do
+          expect {
+              described_class.generate_vector_embedding(destination_url, model_details, field_value)
+          }.to raise_error(EmbeddingService::GenerationError) { |error|
+              expect(error.message).to include("Embedding failed for")          
+              expect(error.cause).to be_a(Timeout::Error)
+              expect(error.cause.message).to eq("connection closed")
+          }
+      end
+  end
+
+  describe "#construct_endpoint_uri" do
+      let(:expected_params) do
+          {
+              "namespace" => "BAAI",
+              "model" => "bge_base_en_15",
+              "dimensions" => "768",
+              "summarize" => "false"
+          }
+      end
+
+      it 'constructs the expected url' do
+          url = described_class.construct_endpoint_url(destination_url, model_details)
+          params = Rack::Utils.parse_nested_query(url.query)
+          expect(url.host).to eq(destination_host)
+          expect(params).to eq(expected_params)
+      end
   end
 end
