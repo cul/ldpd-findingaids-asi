@@ -6,7 +6,7 @@ module EmbeddingService
             embedding_cache_column: 'bge_base_en_15_768',
             vector_embedding_app: {
                 namespace: 'BAAI',
-                model: 'bge_base_en_15',
+                model: 'bge-base-en-v1.5',
                 dimensions: 768,
                 summarize: false
             }
@@ -15,7 +15,7 @@ module EmbeddingService
             embedding_cache_column: 'bge_base_en_15_1024',
             vector_embedding_app: {
                 namespace: 'BAAI',
-                model: 'bge_base_en_15',
+                model: 'bge-large-en-v1.5',
                 dimensions: 1024,
                 summarize: false
             }
@@ -24,9 +24,9 @@ module EmbeddingService
 
 
     def self.convert_text_to_vector_embedding(doc_id, field_value, model_identifier)
-        mapping = MODEL_MAPPING[ model_identifier]
-        cached_embedding = cached_vector(doc_id, field_value, mapping[:embedding_cache_column])
-        cached_embedding ? cached_embedding : update_cache(doc_id, mapping[:vector_embedding_app], field_value)
+        model_details = get_model_details(model_identifier)
+        cached_embedding = cached_vector(doc_id, field_value, model_details)
+        cached_embedding ? cached_embedding : update_cache(doc_id, model_details, field_value)
     end
 
     def self.update_cache(doc_id, model_details, field_value)
@@ -39,6 +39,10 @@ module EmbeddingService
         )
 
         new_embedding
+    end
+
+    def self.get_model_details(model_identifier)
+        model_details = MODEL_MAPPING[model_identifier][:embedding_cache_column]
     end
 
     def self.cached_vector(doc_id, field_value, key_column)

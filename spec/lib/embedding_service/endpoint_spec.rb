@@ -4,14 +4,18 @@ RSpec.describe EmbeddingService::Endpoint do
   let(:destination_host) { 'vector-embedding-endpoint' }
   let(:destination_url) { "https://#{destination_host}" }
   let(:field_value) { "test input" }
-  let(:model_details) do
-      {
-          namespace: 'BAAI',
-          model: 'bge_base_en_15',
-          dimensions: 768,
-          summarize: false
-      }
-  end
+    let(:model_details) do
+        {
+            embedding_cache_column: 'bge_base_en_15_768',
+            vector_embedding_app: {
+                namespace: 'BAAI',
+                model: 'bge-base-en-v1.5',
+                dimensions: 768,
+                summarize: false
+            }
+        }
+    end
+
 
   describe "#generate_vector_embedding" do
       before do
@@ -28,21 +32,17 @@ RSpec.describe EmbeddingService::Endpoint do
       end
   end
 
-  describe "#construct_endpoint_uri" do
-      let(:expected_params) do
-          {
-              "namespace" => "BAAI",
-              "model" => "bge_base_en_15",
-              "dimensions" => "768",
-              "summarize" => "false"
-          }
-      end
+  describe "#parameterize_model_details" do
+    let(:expected_params) do
+        {
+            model: "BAAI/bge-base-en-v1.5",
+            summarize: "false"
+        }
+    end
 
-      it 'constructs the expected url' do
-          url = described_class.construct_endpoint_url(destination_url, model_details)
-          params = Rack::Utils.parse_nested_query(url.query)
-          expect(url.host).to eq(destination_host)
-          expect(params).to eq(expected_params)
-      end
+    it 'constructs the expected params' do
+        params = described_class.parameterize_model_details(model_details)
+        expect(params).to eq(expected_params)
+    end
   end
 end

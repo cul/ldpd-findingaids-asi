@@ -1,9 +1,11 @@
 module EmbeddingService
   class Endpoint
     def self.generate_vector_embedding(destination_url, model_details, field_value)
-        uri = construct_endpoint_url(destination_url, model_details)
+        uri = URI(destination_url)
+        model_params = parameterize_model_details(model_details)
+        uri.query = URI.encode_www_form(model_params)
         http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = CONFIG[:embedding_service_base_url]&.start_with?('https:') ? true : false
+        http.use_ssl = uri  .to_s.start_with?('https:') ? true : false
 
         request = Net::HTTP::Post.new(uri)
         request.body = prepare_value_parameter(field_value)
@@ -25,9 +27,12 @@ module EmbeddingService
         end
     end
 
-    def self.construct_endpoint_url(destination_url, model_details)
-        param_string = URI.encode_www_form(model_details)
-        uri = URI("#{destination_url}?#{param_string}")
+    def self.parameterize_model_details(model_details)
+        endpoint_values = model_details[:vector_embedding_app]
+        {
+            model: "#{endpoint_values[:namespace]}/#{endpoint_values[:model]}",
+            summarize: "#{endpoint_values[:summarize]}"
+        }
     end
 
     def self.prepare_value_parameter(field_value)
