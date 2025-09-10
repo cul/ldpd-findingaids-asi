@@ -46,11 +46,16 @@ class SearchBuilder < Blacklight::SearchBuilder
     blacklight_config.solr_path = vector_search_handler
 
     query_text = blacklight_params[:q]
-    query_vector = EmbeddingService::Embedder.convert_text_to_vector_embedding(query_text)
+    query_vector = EmbeddingService::Endpoint.generate_vector_embedding(
+      CONFIG[:embedding_service_base_url],
+      EmbeddingService::CachedEmbedder.get_model_details(),
+      value
+    )
+
     if query_vector.nil?
-      blacklight_config.solr_path = default_search_handler # Revert to default search handler
-      Rails.logger.error('The vector embedding service is unreachable right now, so vector search will not work.')
-      return
+      error_message = 'The vector embedding service is unreachable right now, so vector search will not work.'
+      Rails.logger.error(error_message)
+      raise RuntimeError, error_message
     end
 
     # Vector embedding service returned embedding data.  Replace query with vector version.

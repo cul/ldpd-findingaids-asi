@@ -164,7 +164,7 @@ end
 to_field 'searchable_text_vector768i' do |record, accumulator, context|
   value = semantic_search_source_text(context)
   if value.present?
-    embedding = EmbeddingService::Embedder.convert_text_to_vector_embedding(value)
+    embedding = EmbeddingService::CachedEmbedder.convert_text_to_vector_embedding(context.output_hash['id'], value, get_model_identifier())
     accumulator.replace(embedding) if embedding.present?
   end
 end
