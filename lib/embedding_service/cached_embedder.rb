@@ -24,8 +24,17 @@ module EmbeddingService
 
 
     def self.convert_text_to_vector_embedding(doc_id, field_value, model_identifier)
+        nil_arguments = []
+        nil_arguments << "doc_id" if doc_id.nil?
+        nil_arguments << "field_value" if field_value.nil?
+        nil_arguments << "model_identifier" if model_identifier.nil?
+
+        unless nil_arguments.empty?
+            raise ArgumentError, "#{nil_arguments.join(', ')} cannot be nil."
+        end
+
         model_details = get_model_details(model_identifier)
-        cached_embedding = cached_vector(doc_id, field_value, model_details)
+        cached_embedding = cached_vector(doc_id, field_value, model_identifier)
         cached_embedding ? cached_embedding : update_cache(doc_id, model_details, field_value)
     end
 
@@ -42,7 +51,7 @@ module EmbeddingService
     end
 
     def self.get_model_details(model_identifier)
-        model_details = MODEL_MAPPING[model_identifier][:embedding_cache_column]
+        model_details = MODEL_MAPPING[model_identifier][:vector_embedding_app]
     end
 
     def self.cached_vector(doc_id, field_value, key_column)

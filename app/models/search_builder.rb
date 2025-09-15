@@ -48,8 +48,8 @@ class SearchBuilder < Blacklight::SearchBuilder
     query_text = blacklight_params[:q]
     query_vector = EmbeddingService::Endpoint.generate_vector_embedding(
       CONFIG[:embedding_service_base_url],
-      EmbeddingService::CachedEmbedder.get_model_details(),
-      value
+      EmbeddingService::CachedEmbedder.get_model_details(CONFIG[:vector_search_model_key]),
+      query_text
     )
 
     if query_vector.nil?
@@ -64,8 +64,7 @@ class SearchBuilder < Blacklight::SearchBuilder
   end
 
   def vector_search_enabled?
-    return false if blacklight_params[:vector_search] == 'false'
-    return true if blacklight_params[:vector_search] == 'true'
+    return true if  blacklight_params[:vector_search].present?
     CONFIG[:default_search_mode] == 'vector'
   end
 end

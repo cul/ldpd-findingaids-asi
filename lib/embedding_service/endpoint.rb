@@ -1,7 +1,7 @@
 module EmbeddingService
   class Endpoint
     def self.generate_vector_embedding(destination_url, model_details, field_value)
-        uri = URI(destination_url)
+        uri = URI("#{destination_url}/vectorize")
         model_params = parameterize_model_details(model_details)
         uri.query = URI.encode_www_form(model_params)
         http = Net::HTTP.new(uri.host, uri.port)
@@ -28,10 +28,9 @@ module EmbeddingService
     end
 
     def self.parameterize_model_details(model_details)
-        endpoint_values = model_details[:vector_embedding_app]
         {
-            model: "#{endpoint_values[:namespace]}/#{endpoint_values[:model]}",
-            summarize: "#{endpoint_values[:summarize]}"
+            model: "#{model_details[:namespace]}/#{model_details[:model]}",
+            summarize: "#{model_details[:summarize]}"
         }
     end
 

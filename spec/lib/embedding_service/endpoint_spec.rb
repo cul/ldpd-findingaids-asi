@@ -6,13 +6,10 @@ RSpec.describe EmbeddingService::Endpoint do
   let(:field_value) { "test input" }
     let(:model_details) do
         {
-            embedding_cache_column: 'bge_base_en_15_768',
-            vector_embedding_app: {
-                namespace: 'BAAI',
-                model: 'bge-base-en-v1.5',
-                dimensions: 768,
-                summarize: false
-            }
+            namespace: 'BAAI',
+            model: 'bge-base-en-v1.5',
+            dimensions: 768,
+            summarize: false
         }
     end
 

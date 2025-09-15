@@ -8,8 +8,8 @@ describe SearchBuilder do
   let(:fake_embedding)    { [0.1, 0.2, 0.3] }
 
   before do
-    allow(EmbeddingService::CachedEmbedder)
-      .to receive(:convert_text_to_vector_embedding)
+    allow(EmbeddingService::Endpoint)
+      .to receive(:generate_vector_embedding)
       .and_return(fake_embedding)
 
     controller_double = double(
@@ -37,7 +37,10 @@ describe SearchBuilder do
     end
 
     context "when default_search is 'standard'" do
-      before { allow(CONFIG).to receive(:[]).with(:default_search_mode).and_return('standard') }
+      before do
+        allow(CONFIG).to receive(:[]).and_call_original
+        allow(CONFIG).to receive(:[]).with(:default_search_mode).and_return('standard')
+      end
 
       context 'and no vector_search param is supplied' do
         let(:processed_params) { search_builder.with(q: test_query).processed_parameters }
@@ -53,7 +56,10 @@ describe SearchBuilder do
     end
 
     context "when default_search is 'vector'" do
-      before { allow(CONFIG).to receive(:[]).with(:default_search_mode).and_return('vector') }
+      before do
+        allow(CONFIG).to receive(:[]).and_call_original
+        allow(CONFIG).to receive(:[]).with(:default_search_mode).and_return('vector')
+      end
 
       context 'and no query parameter is suppplied' do
         let(:test_query) { "" }
