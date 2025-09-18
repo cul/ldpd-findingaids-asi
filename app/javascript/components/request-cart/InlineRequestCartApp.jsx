@@ -1,5 +1,5 @@
 import React from 'react';
-import RequestCart from './RequestCart';
+import RequestCart from './RequestCart.tsx';
 
 function InlineRequestCartApp() {
   return (

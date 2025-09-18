@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import RequestCartStorage from '../../RequestCartStorage';
-import RequestCart from './RequestCart';
+import RequestCart from './RequestCart.tsx';
 
 function RequestCartApp() {
   const [show, setShow] = useState(false);
