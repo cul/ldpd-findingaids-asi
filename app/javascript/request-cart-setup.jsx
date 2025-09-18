@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import RequestCartApp from './components/request-cart/RequestCartApp';
-import InlineRequestCartApp from './components/request-cart/InlineRequestCartApp';
+import RequestCartApp from './components/request-cart/RequestCartApp.tsx';
+import InlineRequestCartApp from './components/request-cart/InlineRequestCartApp.tsx';
 import RequestCartStorage from './RequestCartStorage';
 
 // Define some global event dispatching functions that will allow us to send data to the cart app
