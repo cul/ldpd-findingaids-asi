@@ -196,7 +196,16 @@ end
 to_field 'searchable_text_vector768i' do |record, accumulator, context|
   value = semantic_search_source_text(context)
   if value.present?
-    embedding = EmbeddingService::CachedEmbedder.convert_text_to_vector_embedding(context.output_hash['id'][0], value, get_model_identifier())
+    embedding = EmbeddingService::CachedEmbedder.convert_text_to_vector_embedding(context.output_hash['id'][0], value, 'bge_base_en_15_768')
     accumulator.replace(embedding) if embedding.present?
   end
 end
+
+to_field 'searchable_text_vector1024i' do |record, accumulator, context|
+  value = semantic_search_source_text(context)
+  if value.present?
+    embedding = EmbeddingService::CachedEmbedder.convert_text_to_vector_embedding(context.output_hash['id'][0], value,  'bge_base_en_15_1024')
+    accumulator.replace(embedding) if embedding.present?
+  end
+end
+

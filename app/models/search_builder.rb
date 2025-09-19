@@ -46,9 +46,13 @@ class SearchBuilder < Blacklight::SearchBuilder
     blacklight_config.solr_path = vector_search_handler
 
     query_text = blacklight_params[:q]
+
+    model_identifier = get_model_identifier(blacklight_params)
+
+    endpoint_params = EmbeddingService::CachedEmbedder.get_endpoint_params(model_identifier)
     query_vector = EmbeddingService::Endpoint.generate_vector_embedding(
       CONFIG[:embedding_service_base_url],
-      EmbeddingService::CachedEmbedder.get_model_details(CONFIG[:vector_search_model_key]),
+      endpoint_params,
       query_text
     )
 
@@ -60,11 +64,20 @@ class SearchBuilder < Blacklight::SearchBuilder
 
     # Vector embedding service returned embedding data.  Replace query with vector version.
     # solr_parameters[:q] = "{!knn f=searchable_text_vector768i topK=9999}[#{query_vector.join(', ')}]"
-    solr_parameters[:q] = "{!vectorSimilarity f=searchable_text_vector768i minReturn=0.79}[#{query_vector.join(', ')}]"
+    dimension = endpoint_params[:dimensions]
+    solr_parameters[:q] = "{!vectorSimilarity f=searchable_text_vector#{dimension}i minReturn=0.79}[#{query_vector.join(', ')}]"
   end
 
   def vector_search_enabled?
     return true if  blacklight_params[:vector_search].present?
     CONFIG[:default_search_mode] == 'vector'
+  end
+
+  def get_model_identifier(params)
+    if params[:vector_search]
+      model_identifier = params[:vector_search]
+    else
+      model_identifier = CONFIG[:vector_search_query_key]
+    end
   end
 end

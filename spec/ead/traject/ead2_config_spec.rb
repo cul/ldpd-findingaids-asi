@@ -22,6 +22,13 @@ describe Traject::Indexer do
     records.first
   end
   let(:index_document) { subject.map_record(record).with_indifferent_access }
+
+  before do
+    allow(EmbeddingService::CachedEmbedder)
+      .to receive(:convert_text_to_vector_embedding)
+      .and_return([0.0, 0.0, 0.0])
+  end  
+
   describe 'eadid' do
     let(:expected_value) { 'cul-1234567' }
     context 'is given in /ead/archdesc/unitid[1]/text()' do

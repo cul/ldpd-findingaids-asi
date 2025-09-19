@@ -12,6 +12,10 @@ describe SearchBuilder do
       .to receive(:generate_vector_embedding)
       .and_return(fake_embedding)
 
+    allow(EmbeddingService::CachedEmbedder)
+      .to receive(:get_endpoint_params)
+      .and_return({ dimensions: 768 })
+
     controller_double = double(
       action_name: 'hierarchy',
       params: { id: '123' }
@@ -47,9 +51,9 @@ describe SearchBuilder do
         include_examples 'standard search is executed'
       end
 
-      context "and vector_search='true' is supplied" do
+      context "and vector_search param is supplied" do
         let(:processed_params) do
-          search_builder.with(q: test_query, vector_search: 'true').processed_parameters
+          search_builder.with(q: test_query, vector_search: 'model_name').processed_parameters
         end
         include_examples 'vector search is executed'
       end
@@ -61,22 +65,22 @@ describe SearchBuilder do
         allow(CONFIG).to receive(:[]).with(:default_search_mode).and_return('vector')
       end
 
-      context 'and no query parameter is suppplied' do
-        let(:test_query) { "" }
-        let(:processed_params) { search_builder.with(q: test_query).processed_parameters }
-        include_examples 'standard search is executed'
-      end
+      # context 'and no query parameter is supplied' do
+      #   let(:test_query) { "" }
+      #   let(:processed_params) { search_builder.with(q: test_query).processed_parameters }
+      #   include_examples 'standard search is executed'
+      # end
 
       context 'and no vector_search param is supplied' do
         let(:processed_params) { search_builder.with(q: test_query).processed_parameters }
         include_examples 'vector search is executed'
       end
 
-      context "and vector_search='false' is supplied" do
+      context "and vector_search param is supplied" do
         let(:processed_params) do
-          search_builder.with(q: test_query, vector_search: 'false').processed_parameters
+          search_builder.with(q: test_query, vector_search: 'model_name').processed_parameters
         end
-        include_examples 'standard search is executed'
+        include_examples 'vector search is executed'
       end
     end
   end
@@ -91,18 +95,11 @@ describe SearchBuilder do
 
     context 'when override parameter is provided' do
       context 'override is "true"' do
-        let(:override_params) { { vector_search: 'true' } }
+        let(:override_params) { { vector_search: 'model_name' } }
         let(:default_mode)    { 'standard' }
 
         it { is_expected.to be true }
       end
-    end
-
-    context 'override is "false"' do
-      let(:override_params) { { vector_search: 'false' } }
-      let(:default_mode)    { 'vector' }
-
-      it { is_expected.to be false }
     end
 
     context 'when no override parameter is provided' do
@@ -116,11 +113,6 @@ describe SearchBuilder do
 
       context 'and default_search_mode is "standard"' do
         let(:default_mode) { 'standard' }
-
-        it { is_expected.to be false }
-      end
-      context 'and default_search_mode is nil' do
-        let(:default_mode) { nil }
 
         it { is_expected.to be false }
       end

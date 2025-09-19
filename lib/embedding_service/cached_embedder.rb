@@ -3,22 +3,16 @@ module EmbeddingService
 
       MODEL_MAPPING = {
         'bge_base_en_15_768' => {
-            embedding_cache_column: 'bge_base_en_15_768',
-            vector_embedding_app: {
-                namespace: 'BAAI',
-                model: 'bge-base-en-v1.5',
-                dimensions: 768,
-                summarize: false
-            }
+            namespace: 'BAAI',
+            model: 'bge-base-en-v1.5',
+            dimensions: 768,
+            summarize: false
         },
         'bge_base_en_15_1024' => {
-            embedding_cache_column: 'bge_base_en_15_1024',
-            vector_embedding_app: {
-                namespace: 'BAAI',
-                model: 'bge-large-en-v1.5',
-                dimensions: 1024,
-                summarize: false
-            }
+            namespace: 'BAAI',
+            model: 'bge-large-en-v1.5',
+            dimensions: 1024,
+            summarize: false
         }
     }.freeze
 
@@ -33,31 +27,33 @@ module EmbeddingService
             raise ArgumentError, "#{nil_arguments.join(', ')} cannot be nil."
         end
 
-        model_details = get_model_details(model_identifier)
         cached_embedding = cached_vector(doc_id, field_value, model_identifier)
-        cached_embedding ? cached_embedding : update_cache(doc_id, model_details, field_value)
+        cached_embedding ? cached_embedding : update_cache(doc_id, field_value, model_identifier)
     end
 
-    def self.update_cache(doc_id, model_details, field_value)
+    def self.update_cache(doc_id, field_value, model_identifier)
         new_hash =   Zlib.crc32(field_value)
-        new_embedding = EmbeddingService::Endpoint.generate_vector_embedding(CONFIG[:embedding_service_base_url], model_details, field_value)
+        endpoint_params = get_endpoint_params(model_identifier)
+        new_embedding = EmbeddingService::Endpoint.generate_vector_embedding(CONFIG[:embedding_service_base_url], endpoint_params, field_value)
 
-        EmbeddingCache.find_or_create_by(doc_id: doc_id).update(
-            value_hash: new_hash,
-            bge_base_en_15_768: new_embedding
+        EmbeddingCache.find_or_create_by(doc_id: doc_id, model_identifier: model_identifier).update(
+            {
+                value_hash: new_hash,
+                embedding: new_embedding
+            }
         )
 
         new_embedding
     end
 
-    def self.get_model_details(model_identifier)
-        model_details = MODEL_MAPPING[model_identifier][:vector_embedding_app]
+    def self.get_endpoint_params(model_identifier)
+        MODEL_MAPPING[model_identifier]
     end
 
-    def self.cached_vector(doc_id, field_value, key_column)
+    def self.cached_vector(doc_id, field_value, model_identifier)
         value_hash = Zlib.crc32(field_value)
-        record = EmbeddingCache.find_by(doc_id: doc_id, value_hash: value_hash)
-        record ? record[key_column] : nil
+        record = EmbeddingCache.find_by(doc_id: doc_id, model_identifier: model_identifier, value_hash: value_hash)
+        record ? record.embedding : nil
     end
 
   end

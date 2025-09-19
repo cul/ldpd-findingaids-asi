@@ -46,8 +46,3 @@ def semantic_search_source_text(traject_context)
 
   content_as_embeddings
 end
-
-def get_model_identifier
-  CONFIG[:vector_search_model_key]
-end
-
