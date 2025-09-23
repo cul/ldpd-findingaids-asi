@@ -5,7 +5,7 @@ import 'blacklight-frontend';
 
 import '../autocomplete-setup';
 import '../request-cart-setup';
-import '../blacklight-range-limit';
+import '../blacklight-range-limit.ts';
 import '../admin';
 import loadMirador from '../src/mirador';
 
