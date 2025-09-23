@@ -1,25 +1,45 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-// import React, { useEffect, useState } from 'react';
 import React, { useEffect, useState } from 'react';
+import { Button, Table } from 'react-bootstrap';
 import debounce from 'lodash.debounce';
-import Button from 'react-bootstrap/Button';
 import sortBy from 'lodash.sortby';
-import { Table } from 'react-bootstrap';
 
 import RequestCartStorage from '../../RequestCartStorage';
-import { RequestCartItem } from '../../types';
+
+export interface RequestCartItem {
+  id: string;
+  collectionName: string;
+  containerInfo?: string;
+  itemName?: string;
+  readingRoomLocation?: string;
+}
+
 
 interface RequestCartProps {
   submissionMode: 'select_account' | 'create';
-  header?: React.ReactElement; // can be null
+  header?: React.ReactElement;
+}
+
+interface RequestCartChangeEvent extends CustomEvent {
+  detail: {
+    cartData: {
+      note: string;
+      items: RequestCartItem[];
+    };
+  };
 }
 
 declare global {
   interface Window {
     showCart: () => void;
     addToCart: (recordData: RequestCartItem) => void;
-    updateCartNote: (note: string) => any;
-    removeFromCart: (id: string) => any;
+    updateCartNote: (note: string) => void;
+    removeFromCart: (id: string) => void;
+  }
+
+  // Custom event for when the request cart changes (items added/removed, note changed)
+  interface WindowEventMap {
+    requestCartChange: RequestCartChangeEvent;
   }
 }
 
@@ -31,22 +51,24 @@ function RequestCart({ submissionMode, header }: RequestCartProps) {
   const loginMethod = new URLSearchParams(window.location.search).get('login_method');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [items, setItems] = useState<any[]>(RequestCartStorage.getItems());
+  const [items, setItems] = useState<RequestCartItem[]>(RequestCartStorage.getItems());
   const [note, setNote] = useState<string>(RequestCartStorage.getRequestCartNote());
+
   const csrfTokenParamName = document.querySelector('meta[name="csrf-param"]')?.getAttribute('content') || '';
   const csrfTokenValue = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
-  const handleRequestCartChangeEvent = (e: any) => {
+
+  const handleRequestCartChangeEvent = (e: RequestCartChangeEvent) => {
     setNote(e.detail.cartData.note);
     setItems([...e.detail.cartData.items]);
   };
 
-  const handleNoteChange = (e: any) => {
+  const handleNoteChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNote(e.target.value);
   };
 
-  const renderHiddenCartItemFormValues = () => {
-    const elements = [];
+  const renderHiddenCartItemFormValues = (): React.ReactElement[] => {
+    const elements: React.ReactElement[] = [];
     items.forEach((item) => {
       elements.push(<input key={item.id} type="hidden" name="ids[]" value={item.id} />);
     });
@@ -54,7 +76,7 @@ function RequestCart({ submissionMode, header }: RequestCartProps) {
     return elements;
   };
 
-  const renderSubmissionElement = () => {
+  const renderSubmissionElement = (): React.ReactElement | null => {
     if (items.length === 0) { return null; }
     if (submissionMode === 'create') {
       return (
@@ -72,10 +94,10 @@ function RequestCart({ submissionMode, header }: RequestCartProps) {
             type="submit"
             variant="primary"
             className="w-100 mb-3"
-            onClick={(e) => {
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
               window.updateCartNote(note);
-              (e.target as HTMLElement).closest('form')?.submit(); // todo: can we avoid casting here?
+              (e.target as HTMLElement).closest('form')?.submit();
               setIsSubmitting(true);
             }}
             disabled={isSubmitting}
@@ -123,13 +145,17 @@ function RequestCart({ submissionMode, header }: RequestCartProps) {
     debouncedPersistRequestCartNote(note);
   }, [note]);
 
-  const cartItemsGroupedByReadingRoomLocation = (ungroupedItems: any[], groupByField: string, sortByFields: any[]) => {
-    const groups = [];
+  const cartItemsGroupedByReadingRoomLocation = (
+    ungroupedItems: RequestCartItem[],
+    groupByField: keyof RequestCartItem,
+    sortByFields: (keyof RequestCartItem)[]
+  ): RequestCartItem[][] => {
+    const groups: RequestCartItem[][] = [];
     const sortedUngroupedItems = sortBy(
       ungroupedItems,
       [groupByField, ...sortByFields],
     );
-    let latestGroup = [];
+    let latestGroup: RequestCartItem[] = [];
 
     for (let i = 0; i < sortedUngroupedItems.length; i += 1) {
       const currentItem = sortedUngroupedItems[i];
@@ -189,7 +215,7 @@ function RequestCart({ submissionMode, header }: RequestCartProps) {
       <div>
         <textarea
           placeholder="Notes to special collections staff"
-          rows={4} // todo: change back to 3 once component renders correctly
+          rows={3}
           maxLength={256}
           className="w-100 form-control mb-3"
           value={note}
