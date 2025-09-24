@@ -1,18 +1,6 @@
+import { CartItem, CartData } from './cartTypes.ts';
+
 const REQUEST_CART_LOCAL_STORAGE_KEY = 'requestCart';
-
-interface CartItem {
-  id: string;
-  collectionName: string;
-  itemName: string;
-  readingRoomLocation: string;
-  containerInfo: string;
-}
-
-interface CartData {
-  items: CartItem[];
-  note: string;
-}
-
 const initialCartData: CartData = { items: [], note: '' };
 
 /**

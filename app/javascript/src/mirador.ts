@@ -1,5 +1,5 @@
 import Mirador from '@columbia-libraries/mirador';
-import { __CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE as ReactSharedInternalsClient } from 'react'; // TODO: handle ts error
+import { __CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE as ReactSharedInternalsClient } from 'react';
 import { MiradorConfig, Canvas, ViewConfig } from '../types.ts';
 
 function loadMirador(): void {
@@ -46,7 +46,7 @@ function loadMirador(): void {
       .concat([...Mirador.culPlugins.viewerNavigation])
       .concat([...Mirador.culPlugins.nativeObjectViewerPlugin]);
 
-    const foldersAttValue: any = miradorDiv.dataset.useFolders;
+    const foldersAttValue = miradorDiv.dataset.useFolders as 'true' | 'false';
     const useFolders = Boolean(foldersAttValue) && !foldersAttValue.match(/false/i);
 
     if (useFolders) {

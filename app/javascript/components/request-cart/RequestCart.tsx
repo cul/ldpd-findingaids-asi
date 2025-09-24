@@ -5,42 +5,11 @@ import debounce from 'lodash.debounce';
 import sortBy from 'lodash.sortby';
 
 import RequestCartStorage from '../../RequestCartStorage';
-
-export interface RequestCartItem {
-  id: string;
-  collectionName: string;
-  containerInfo?: string;
-  itemName?: string;
-  readingRoomLocation?: string;
-}
-
+import { CartItem, CartData, RequestCartChangeEvent } from '../../cartTypes';
 
 interface RequestCartProps {
   submissionMode: 'select_account' | 'create';
   header?: React.ReactElement;
-}
-
-interface RequestCartChangeEvent extends CustomEvent {
-  detail: {
-    cartData: {
-      note: string;
-      items: RequestCartItem[];
-    };
-  };
-}
-
-declare global {
-  interface Window {
-    showCart: () => void;
-    addToCart: (recordData: RequestCartItem) => void;
-    updateCartNote: (note: string) => void;
-    removeFromCart: (id: string) => void;
-  }
-
-  // Custom event for when the request cart changes (items added/removed, note changed)
-  interface WindowEventMap {
-    requestCartChange: RequestCartChangeEvent;
-  }
 }
 
 const debouncedPersistRequestCartNote = debounce((note: string) => {
@@ -51,7 +20,7 @@ function RequestCart({ submissionMode, header }: RequestCartProps) {
   const loginMethod = new URLSearchParams(window.location.search).get('login_method');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [items, setItems] = useState<RequestCartItem[]>(RequestCartStorage.getItems());
+  const [items, setItems] = useState<CartItem[]>(RequestCartStorage.getItems());
   const [note, setNote] = useState<string>(RequestCartStorage.getRequestCartNote());
 
   const csrfTokenParamName = document.querySelector('meta[name="csrf-param"]')?.getAttribute('content') || '';
@@ -146,16 +115,16 @@ function RequestCart({ submissionMode, header }: RequestCartProps) {
   }, [note]);
 
   const cartItemsGroupedByReadingRoomLocation = (
-    ungroupedItems: RequestCartItem[],
-    groupByField: keyof RequestCartItem,
-    sortByFields: (keyof RequestCartItem)[]
-  ): RequestCartItem[][] => {
-    const groups: RequestCartItem[][] = [];
+    ungroupedItems: CartItem[],
+    groupByField: keyof CartItem,
+    sortByFields: (keyof CartItem)[]
+  ): CartItem[][] => {
+    const groups: CartItem[][] = [];
     const sortedUngroupedItems = sortBy(
       ungroupedItems,
       [groupByField, ...sortByFields],
     );
-    let latestGroup: RequestCartItem[] = [];
+    let latestGroup: CartItem[] = [];
 
     for (let i = 0; i < sortedUngroupedItems.length; i += 1) {
       const currentItem = sortedUngroupedItems[i];
