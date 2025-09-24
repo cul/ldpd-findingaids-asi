@@ -39,7 +39,6 @@
     "i18next": ">= 23.2.3",
     "lodash.debounce": "^4.0.8",
     "lodash.sortby": "^4.7.0",
-    "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^19.0.0",
