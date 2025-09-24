@@ -5,6 +5,7 @@ declare global {
     updateCartNote: (note: string) => void;
     removeFromCart: (id: string) => void;
     clearCart: () => void;
+    handleAddToCartButtonClick: (buttonElement: HTMLElement) => void;
   }
 
   // Custom event for when the request cart changes (items added/removed, note changed)
