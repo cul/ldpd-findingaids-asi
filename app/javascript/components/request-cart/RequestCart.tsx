@@ -1,36 +1,42 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { Button, Table } from 'react-bootstrap';
 import debounce from 'lodash.debounce';
-import Button from 'react-bootstrap/Button';
 import sortBy from 'lodash.sortby';
-import { Table } from 'react-bootstrap';
-import RequestCartStorage from '../../RequestCartStorage';
 
-const debouncedPersistRequestCartNote = debounce((note) => {
+import RequestCartStorage from '../../RequestCartStorage';
+import { CartItem, RequestCartChangeEvent } from '../../cart-types';
+
+interface RequestCartProps {
+  submissionMode: 'select_account' | 'create';
+  header?: React.ReactElement;
+}
+
+const debouncedPersistRequestCartNote = debounce((note: string) => {
   window.updateCartNote(note);
 }, 250);
 
-function RequestCart({ submissionMode, header }) {
+function RequestCart({ submissionMode, header }: RequestCartProps) {
   const loginMethod = new URLSearchParams(window.location.search).get('login_method');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [items, setItems] = useState(RequestCartStorage.getItems());
-  const [note, setNote] = useState(RequestCartStorage.getRequestCartNote());
-  const csrfTokenParamName = document.querySelector('meta[name="csrf-param"]').getAttribute('content');
-  const csrfTokenValue = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  const [items, setItems] = useState<CartItem[]>(RequestCartStorage.getItems());
+  const [note, setNote] = useState<string>(RequestCartStorage.getRequestCartNote());
 
-  const handleRequestCartChangeEvent = (e) => {
+  const csrfTokenParamName = document.querySelector('meta[name="csrf-param"]')?.getAttribute('content') || '';
+  const csrfTokenValue = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+
+  const handleRequestCartChangeEvent = (e: RequestCartChangeEvent) => {
     setNote(e.detail.cartData.note);
     setItems([...e.detail.cartData.items]);
   };
 
-  const handleNoteChange = (e) => {
+  const handleNoteChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNote(e.target.value);
   };
 
-  const renderHiddenCartItemFormValues = () => {
-    const elements = [];
+  const renderHiddenCartItemFormValues = (): React.ReactElement[] => {
+    const elements: React.ReactElement[] = [];
     items.forEach((item) => {
       elements.push(<input key={item.id} type="hidden" name="ids[]" value={item.id} />);
     });
@@ -38,7 +44,7 @@ function RequestCart({ submissionMode, header }) {
     return elements;
   };
 
-  const renderSubmissionElement = () => {
+  const renderSubmissionElement = (): React.ReactElement | null => {
     if (items.length === 0) { return null; }
     if (submissionMode === 'create') {
       return (
@@ -56,10 +62,10 @@ function RequestCart({ submissionMode, header }) {
             type="submit"
             variant="primary"
             className="w-100 mb-3"
-            onClick={(e) => {
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
               window.updateCartNote(note);
-              e.target.closest('form').submit();
+              (e.target as HTMLElement).closest('form')?.submit();
               setIsSubmitting(true);
             }}
             disabled={isSubmitting}
@@ -107,13 +113,18 @@ function RequestCart({ submissionMode, header }) {
     debouncedPersistRequestCartNote(note);
   }, [note]);
 
-  const cartItemsGroupedByReadingRoomLocation = (ungroupedItems, groupByField, sortByFields) => {
-    const groups = [];
+  const cartItemsGroupedByReadingRoomLocation = (
+    ungroupedItems: CartItem[],
+    groupByField: keyof CartItem,
+    sortByFields: (keyof CartItem)[],
+  ): CartItem[][] => {
+    const groups: CartItem[][] = [];
     const sortedUngroupedItems = sortBy(
       ungroupedItems,
       [groupByField, ...sortByFields],
     );
-    let latestGroup = [];
+    let latestGroup: CartItem[] = [];
+
     for (let i = 0; i < sortedUngroupedItems.length; i += 1) {
       const currentItem = sortedUngroupedItems[i];
       latestGroup.push(currentItem);
@@ -172,7 +183,7 @@ function RequestCart({ submissionMode, header }) {
       <div>
         <textarea
           placeholder="Notes to special collections staff"
-          rows="3"
+          rows={3}
           maxLength={256}
           className="w-100 form-control mb-3"
           value={note}
@@ -183,14 +194,5 @@ function RequestCart({ submissionMode, header }) {
     </div>
   );
 }
-
-RequestCart.propTypes = {
-  submissionMode: PropTypes.oneOf(['select_account', 'create']).isRequired,
-  header: PropTypes.element,
-};
-
-RequestCart.defaultProps = {
-  header: null,
-};
 
 export default RequestCart;

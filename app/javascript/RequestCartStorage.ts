@@ -1,43 +1,51 @@
+import { CartItem, CartData } from './cart-types';
+
 const REQUEST_CART_LOCAL_STORAGE_KEY = 'requestCart';
-// const ARCHIVED_REQUEST_CART_LOCAL_STORAGE_KEY = 'archivedRequestCart';
-const initialCartData = { items: [], note: '' };
+const initialCartData: CartData = { items: [], note: '' };
 
 /**
  * A static class that wraps local storage for Request Cart features.
  */
 export default class RequestCartStorage {
-  static init() {
+  static init(): void {
     const cartData = this.getCartData();
     this.dispatchCartChangeEvent(cartData);
   }
 
-  static dispatchCartChangeEvent(cartData) {
+  static dispatchCartChangeEvent(cartData: CartData): void {
     window.dispatchEvent(new CustomEvent('requestCartChange', { detail: { cartData } }));
   }
 
-  static persistCartData(cartData) {
+  static persistCartData(cartData: CartData): void {
     localStorage.setItem(REQUEST_CART_LOCAL_STORAGE_KEY, JSON.stringify(cartData));
     this.dispatchCartChangeEvent(cartData);
   }
 
-  static getCartData() {
-    return JSON.parse(localStorage.getItem(REQUEST_CART_LOCAL_STORAGE_KEY)) || initialCartData;
+  static getCartData(): CartData {
+    const storedData = localStorage.getItem(REQUEST_CART_LOCAL_STORAGE_KEY);
+    return storedData ? JSON.parse(storedData) : initialCartData;
   }
 
-  static getRequestCartNote() {
+  static getRequestCartNote(): string {
     return this.getCartData().note;
   }
 
-  static setRequestCartNote(note) {
+  static setRequestCartNote(note: string): void {
     const cartData = this.getCartData();
     cartData.note = note;
     this.persistCartData(cartData);
   }
 
-  static addItem(id, collectionName, itemName, readingRoomLocation, containerInfo) {
+  static addItem(
+    id: string,
+    collectionName: string,
+    itemName: string,
+    readingRoomLocation: string,
+    containerInfo: string,
+  ): void {
     const cartData = this.getCartData();
 
-    const newItem = {
+    const newItem: CartItem = {
       id,
       collectionName,
       itemName,
@@ -45,7 +53,7 @@ export default class RequestCartStorage {
       containerInfo,
     };
 
-    // Check for identical existing item.  If found, skip adding this duplicate.
+    // Check for identical existing item. If found, skip adding this duplicate.
     const existingItem = cartData.items.find((el) => newItem.id === el.id);
     if (existingItem) { return; }
 
@@ -53,12 +61,12 @@ export default class RequestCartStorage {
     this.persistCartData(cartData);
   }
 
-  static containsItem(id) {
+  static containsItem(id: string): CartItem | undefined {
     const cartData = this.getCartData();
     return cartData.items.find((item) => id === item.id);
   }
 
-  static removeItem(id) {
+  static removeItem(id: string): void {
     const cartData = this.getCartData();
 
     const indexOfItemToRemove = cartData.items.findIndex((el) => el.id === id);
@@ -66,11 +74,11 @@ export default class RequestCartStorage {
     this.persistCartData(cartData);
   }
 
-  static clearCart() {
+  static clearCart(): void {
     this.persistCartData(initialCartData);
   }
 
-  static getItems() {
+  static getItems(): CartItem[] {
     return this.getCartData().items;
   }
 }
