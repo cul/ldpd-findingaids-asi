@@ -1,4 +1,4 @@
-import { CartItem, RequestCartChangeEvent } from './cart-types.ts';
+import { CartItem, RequestCartChangeEvent } from './cart-types';
 
 declare global {
   interface Window {
