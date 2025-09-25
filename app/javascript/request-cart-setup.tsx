@@ -87,20 +87,20 @@ function onRequestCartChange(e: RequestCartChangeEvent) {
 }
 
 // Setup and cleanup
-let mainCartReactRoot: Root | null = null;
-let inlineCartReactRoot: Root | null = null;
+let mainCartReactRoot: Root | null;
+let inlineCartReactRoot: Root | null;
 
 function setup() {
   const mainCartContainerElement = document.getElementById('request-cart-widget');
   const inlineCartContainerElement = document.getElementById('inline-request-cart-widget');
 
   if (mainCartContainerElement) {
-    mainCartReactRoot ||= createRoot(mainCartContainerElement);
+    if (!mainCartReactRoot) { mainCartReactRoot = createRoot(mainCartContainerElement); }
     mainCartReactRoot.render(<RequestCartApp />);
   }
 
   if (inlineCartContainerElement) {
-    inlineCartReactRoot ||= createRoot(inlineCartContainerElement);
+    if (!inlineCartReactRoot) { inlineCartReactRoot = createRoot(inlineCartContainerElement); }
     inlineCartReactRoot.render(<InlineRequestCartApp />);
   }
 
@@ -112,7 +112,9 @@ function setup() {
   // On submission form page
   const aeonForm = document.getElementById('aeon-submission-form') as HTMLFormElement;
   if (aeonForm) {
+    // Clear cart
     window.clearCart();
+    // And submit the form shortly after
     setTimeout(() => aeonForm.submit(), 500);
   }
 }
