@@ -10,10 +10,9 @@ services:
     environment:
       - SOLR_MODULES=analysis-extras
       - SOLR_OPTS=-Dsolr.jetty.request.header.size=65536
+      - SOLR_JAVA_MEM=-Xms512m -Xmx10g
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
       - acfa
       - /opt/solr/conf
-      - "-Xms256m"
-      - "-Xmx512m"
