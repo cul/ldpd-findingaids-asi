@@ -26,7 +26,6 @@ function RequestCart({ submissionMode, header }: RequestCartProps) {
   const csrfTokenParamName = document.querySelector('meta[name="csrf-param"]')?.getAttribute('content') || '';
   const csrfTokenValue = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
-
   const handleRequestCartChangeEvent = (e: RequestCartChangeEvent) => {
     setNote(e.detail.cartData.note);
     setItems([...e.detail.cartData.items]);
@@ -117,7 +116,7 @@ function RequestCart({ submissionMode, header }: RequestCartProps) {
   const cartItemsGroupedByReadingRoomLocation = (
     ungroupedItems: CartItem[],
     groupByField: keyof CartItem,
-    sortByFields: (keyof CartItem)[]
+    sortByFields: (keyof CartItem)[],
   ): CartItem[][] => {
     const groups: CartItem[][] = [];
     const sortedUngroupedItems = sortBy(

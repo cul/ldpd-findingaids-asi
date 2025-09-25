@@ -1,9 +1,3 @@
-export interface RequestCartChangeEvent extends CustomEvent {
-  detail: {
-    cartData: CartData;
-  };
-}
-
 export interface CartItem {
   id: string;
   collectionName: string;

@@ -1,23 +1,3 @@
-export interface MiradorConfig {
-  id: string;
-  window: WindowConfig;
-  windows: MiradorWindow[];
-  workspace: {
-    showZoomControls: boolean;
-  };
-  workspaceControlPanel: {
-    enabled: boolean;
-  };
-  miradorDownloadPlugin: {
-    restrictDownloadOnSizeDefinition: boolean;
-  };
-  translations: {
-    en: {
-      openCompanionWindow_citation: string;
-    };
-  };
-}
-
 export interface ViewConfig {
   defaultView: string;
   views: Array<{
@@ -29,6 +9,19 @@ export interface ViewConfig {
 
 export interface Canvas {
   id: string;
+}
+
+interface CanvasLinkConfig {
+  active: boolean;
+  enabled: boolean;
+  singleCanvasOnly: boolean;
+  providers: unknown[];
+  getCanvasLink: (manifestId: string, canvases: Canvas[]) => string;
+}
+
+interface MiradorWindow {
+  manifestId: string;
+  canvasId: string | null;
 }
 
 interface WindowConfig {
@@ -48,15 +41,22 @@ interface WindowConfig {
   allowTopCollectionButton?: boolean;
 }
 
-interface CanvasLinkConfig {
-  active: boolean;
-  enabled: boolean;
-  singleCanvasOnly: boolean;
-  providers: unknown[];
-  getCanvasLink: (manifestId: string, canvases: Canvas[]) => string;
-}
-
-interface MiradorWindow {
-  manifestId: string;
-  canvasId: string | null;
+export interface MiradorConfig {
+  id: string;
+  window: WindowConfig;
+  windows: MiradorWindow[];
+  workspace: {
+    showZoomControls: boolean;
+  };
+  workspaceControlPanel: {
+    enabled: boolean;
+  };
+  miradorDownloadPlugin: {
+    restrictDownloadOnSizeDefinition: boolean;
+  };
+  translations: {
+    en: {
+      openCompanionWindow_citation: string;
+    };
+  };
 }

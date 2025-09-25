@@ -6,7 +6,7 @@
     "start:dev": "./bin/vite dev",
     "start:dev:anyhostname": "VITE_RUBY_HOST=0.0.0.0 ./bin/vite dev",
     "start:dev:anyhostname:ssl": "VITE_RUBY_HOST=0.0.0.0 VITE_RUBY_HTTPS=true ./bin/vite dev",
-    "lint": "eslint app/javascript --ext js,jsx --max-warnings=0"
+    "lint": "eslint app/javascript --ext ts,tsx,js,jsx --max-warnings=0"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
@@ -35,6 +35,8 @@
     "@types/lodash.sortby": "^4.7.9",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
+    "@typescript-eslint/eslint-plugin": "^8.44.1",
+    "@typescript-eslint/parser": "^8.44.1",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
     "arclight": "^1.4.0",
     "blacklight-frontend": "^8.0.1",
@@ -48,6 +50,7 @@
     "react-dom": "^19.0.0",
     "react-i18next": "^15.4.1",
     "sass": "^1.77.8",
+    "typescript": "^5.9.2",
     "video.js": "^7.21.6"
   }
 }
