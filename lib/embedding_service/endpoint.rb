@@ -2,14 +2,13 @@ module EmbeddingService
   class Endpoint
     def self.generate_vector_embedding(destination_url, model_details, field_value)
         uri = URI("#{destination_url}/vectorize")
-        model_params = parameterize_model_details(model_details)
-        uri.query = URI.encode_www_form(model_params)
+        params = create_params(model_details, field_value)
         http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = uri  .to_s.start_with?('https:') ? true : false
+        http.use_ssl = uri.to_s.start_with?('https:')
 
         request = Net::HTTP::Post.new(uri)
-        request.body = prepare_value_parameter(field_value)
         request['Content-Type'] = 'application/x-www-form-urlencoded'
+        request.set_form_data(params)
 
         begin
             response = http.request(request)
@@ -27,15 +26,16 @@ module EmbeddingService
         end
     end
 
-    def self.parameterize_model_details(model_details)
+    def self.create_params(model_details, field_value)
         {
             model: "#{model_details[:namespace]}/#{model_details[:model]}",
-            summarize: "#{model_details[:summarize]}"
+            summarize: "#{model_details[:summarize]}",
+            text: truncate_value(field_value) 
         }
     end
 
-    def self.prepare_value_parameter(field_value)
-        "text=#{field_value[0, 512]}"
+    def self.truncate_value(field_value)
+        field_value[0, 512]
     end
   end
 end
