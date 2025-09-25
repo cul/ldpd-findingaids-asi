@@ -28,11 +28,14 @@ module.exports = {
     },
   ],
   rules: {
-    'max-len': ["error", { "ignoreComments": true }, { "code": 120 }],
+    'max-len': ['error', { ignoreComments: true }, { code: 120 }],
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     // Disable import extension and resolution rules
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
+    'react/require-default-props': 'off',
+    // Allow JSX in .tsx files
+    'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.tsx'] }],
   },
 };

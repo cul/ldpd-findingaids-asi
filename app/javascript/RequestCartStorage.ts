@@ -1,4 +1,4 @@
-import { CartItem, CartData } from './cart-types.ts';
+import { CartItem, CartData } from './cart-types';
 
 const REQUEST_CART_LOCAL_STORAGE_KEY = 'requestCart';
 const initialCartData: CartData = { items: [], note: '' };
@@ -36,7 +36,13 @@ export default class RequestCartStorage {
     this.persistCartData(cartData);
   }
 
-  static addItem(id: string, collectionName: string, itemName: string, readingRoomLocation: string, containerInfo: string): void {
+  static addItem(
+    id: string,
+    collectionName: string,
+    itemName: string,
+    readingRoomLocation: string,
+    containerInfo: string,
+  ): void {
     const cartData = this.getCartData();
 
     const newItem: CartItem = {

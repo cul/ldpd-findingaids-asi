@@ -21,6 +21,7 @@ if (refreshResourceForm) {
     const includeUnpublished = includeUnpublishedElement.value === 'true';
 
     if (refreshResultStatusElement) {
+      // eslint-disable-next-line
       refreshResultStatusElement.innerHTML = 'Downloading and reindexing... (this can take a while for large resources)';
     }
 
