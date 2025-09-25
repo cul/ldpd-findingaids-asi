@@ -1,6 +1,6 @@
 import Mirador from '@columbia-libraries/mirador';
 import { __CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE as ReactSharedInternalsClient } from 'react';
-import { MiradorConfig, Canvas, ViewConfig } from '../types.ts';
+import { MiradorConfig, Canvas, ViewConfig } from './mirador-types.ts';
 
 function loadMirador(): void {
   const miradorDiv = document.getElementById('mirador');

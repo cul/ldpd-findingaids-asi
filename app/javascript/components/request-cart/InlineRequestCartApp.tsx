@@ -1,4 +1,4 @@
-import RequestCart from './RequestCart.tsx';
+import RequestCart from './RequestCart';
 
 function InlineRequestCartApp() {
   return (

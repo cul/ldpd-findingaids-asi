@@ -5,7 +5,7 @@ import debounce from 'lodash.debounce';
 import sortBy from 'lodash.sortby';
 
 import RequestCartStorage from '../../RequestCartStorage';
-import { CartItem, CartData, RequestCartChangeEvent } from '../../cartTypes';
+import { CartItem, RequestCartChangeEvent } from '../../cart-types';
 
 interface RequestCartProps {
   submissionMode: 'select_account' | 'create';

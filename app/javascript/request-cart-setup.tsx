@@ -1,8 +1,9 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
-import RequestCartApp from './components/request-cart/RequestCartApp.tsx';
-import InlineRequestCartApp from './components/request-cart/InlineRequestCartApp.tsx';
+import { createRoot, Root } from 'react-dom/client';
+import RequestCartApp from './components/request-cart/RequestCartApp';
+import InlineRequestCartApp from './components/request-cart/InlineRequestCartApp';
 import RequestCartStorage from './RequestCartStorage.ts';
+import { RequestCartChangeEvent } from './cart-types.ts';
 
 // Define some global event dispatching functions that will allow us to send data to the cart app
 // from inside or outside of a React context.
@@ -18,11 +19,11 @@ window.addToCart = (recordData) => {
   window.showCart();
 };
 
-window.removeFromCart = (id) => {
+window.removeFromCart = (id: string) => {
   RequestCartStorage.removeItem(id);
 };
 
-window.updateCartNote = (note) => {
+window.updateCartNote = (note: string) => {
   RequestCartStorage.setRequestCartNote(note);
 };
 
@@ -33,15 +34,22 @@ window.clearCart = () => {
 // Handle cart button clicks
 window.handleAddToCartButtonClick = (buttonElement) => {
   const id = buttonElement.getAttribute('data-id');
+  if (!id) return;
+
   if (RequestCartStorage.containsItem(id)) {
     window.removeFromCart(id);
   } else {
+    const collectionName = buttonElement.getAttribute('data-collection-name')!;
+    const itemName = buttonElement.getAttribute('data-item-name')!;
+    const readingRoomLocation = buttonElement.getAttribute('data-reading-room-location')!;
+    const containerInfo = buttonElement.getAttribute('data-container-info')!;
+
     window.addToCart({
-      id: buttonElement.getAttribute('data-id'),
-      collectionName: buttonElement.getAttribute('data-collection-name'),
-      itemName: buttonElement.getAttribute('data-item-name'),
-      readingRoomLocation: buttonElement.getAttribute('data-reading-room-location'),
-      containerInfo: buttonElement.getAttribute('data-container-info'),
+      id,
+      collectionName,
+      itemName,
+      readingRoomLocation,
+      containerInfo,
     });
   }
 };
@@ -50,12 +58,16 @@ function refreshAddToCartButtons() {
   document.querySelectorAll('.add-to-cart-button')?.forEach((buttonElement) => {
     const id = buttonElement.getAttribute('data-id');
     const buttonTextElement = buttonElement.querySelector('.button-text');
+
+    if (!id || !buttonTextElement) return;
+
     if (RequestCartStorage.containsItem(id)) {
-      buttonTextElement.innerHTML = buttonElement.getAttribute('data-remove-from-cart-text');
+      const removeText = buttonElement.getAttribute('data-remove-from-cart-text')!;
+      buttonTextElement.innerHTML = removeText;
       buttonElement.classList.remove('btn-primary');
       buttonElement.classList.add('btn-outline-primary');
     } else {
-      buttonTextElement.innerHTML = buttonElement.getAttribute('data-add-to-cart-text');
+      buttonTextElement.innerHTML = buttonElement.getAttribute('data-add-to-cart-text')!;
       buttonElement.classList.remove('btn-outline-primary');
       buttonElement.classList.add('btn-primary');
     }
@@ -63,61 +75,55 @@ function refreshAddToCartButtons() {
 }
 
 // Handle cart change events
-function onRequestCartChange(e) {
+function onRequestCartChange(e: RequestCartChangeEvent) {
   const { items } = e.detail.cartData;
   // Update any cart count indicators on the page
   document.querySelectorAll('.request-cart-item-count')?.forEach((el) => {
     // eslint-disable-next-line no-param-reassign
-    el.innerHTML = items.length;
+    el.innerHTML = items.length.toString();
   });
   // Update the state of any add-to-cart buttons on the page
   refreshAddToCartButtons();
 }
 
 // Setup and cleanup
-
-let mainCartReactRoot;
-let inlineCartReactRoot;
+let mainCartReactRoot: Root | null = null;
+let inlineCartReactRoot: Root | null = null;
 
 function setup() {
   const mainCartContainerElement = document.getElementById('request-cart-widget');
   const inlineCartContainerElement = document.getElementById('inline-request-cart-widget');
+
   if (mainCartContainerElement) {
-    if (!mainCartReactRoot) { mainCartReactRoot = createRoot(mainCartContainerElement); }
+    mainCartReactRoot ||= createRoot(mainCartContainerElement);
     mainCartReactRoot.render(<RequestCartApp />);
   }
+
   if (inlineCartContainerElement) {
-    if (!inlineCartReactRoot) { inlineCartReactRoot = createRoot(inlineCartContainerElement); }
+    inlineCartReactRoot ||= createRoot(inlineCartContainerElement);
     inlineCartReactRoot.render(<InlineRequestCartApp />);
   }
-  window.addEventListener('requestCartChange', onRequestCartChange);
 
+  window.addEventListener('requestCartChange', onRequestCartChange);
   document.querySelectorAll('.show-cart-button').forEach((el) => {
     el.addEventListener('click', window.showCart);
   });
 
   // On submission form page
-  if (document.getElementById('aeon-submission-form')) {
-    // Clear cart
+  const aeonForm = document.getElementById('aeon-submission-form') as HTMLFormElement;
+  if (aeonForm) {
     window.clearCart();
-    // And submit the form shortly after
-    setTimeout(() => {
-      document.getElementById('aeon-submission-form').submit();
-    }, 500);
+    setTimeout(() => aeonForm.submit(), 500);
   }
 }
 
 function cleanup() {
-  if (mainCartReactRoot) {
-    mainCartReactRoot.unmount();
-    mainCartReactRoot = null;
-  }
-  if (inlineCartReactRoot) {
-    inlineCartReactRoot.unmount();
-    inlineCartReactRoot = null;
-  }
-  window.removeEventListener('requestCartChange', onRequestCartChange);
+  mainCartReactRoot?.unmount();
+  mainCartReactRoot = null;
+  inlineCartReactRoot?.unmount();
+  inlineCartReactRoot = null;
 
+  window.removeEventListener('requestCartChange', onRequestCartChange);
   document.querySelectorAll('.show-cart-button').forEach((el) => {
     el.removeEventListener('click', window.showCart);
   });
@@ -130,10 +136,10 @@ document.addEventListener('turbo:before-render', cleanup);
 
 // The handler below is for making sure that we refresh
 document.addEventListener('turbo:frame-load', (e) => {
-  const turboFrameElement = e.target;
+  const turboFrameElement = e.target as HTMLElement;
   // If a frame is loaded and it contains an .add-to-cart-button element,
   // refresh the state of all .add-to-cart-button elements on the page.
-  if (turboFrameElement.querySelector('.add-to-cart-button')) {
+  if (turboFrameElement?.querySelector('.add-to-cart-button')) {
     refreshAddToCartButtons();
   }
 });

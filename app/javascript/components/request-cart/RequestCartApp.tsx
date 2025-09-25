@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
-import RequestCartStorage from '../../RequestCartStorage.js';
-import RequestCart from './RequestCart.tsx';
+import RequestCartStorage from '../../RequestCartStorage';
+import RequestCart from './RequestCart';
 
 function RequestCartApp() {
   const [show, setShow] = useState(false);

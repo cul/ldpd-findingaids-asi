@@ -1,4 +1,4 @@
-import { CartItem, CartData } from './cartTypes.ts';
+import { CartItem, CartData } from './cart-types.ts';
 
 const REQUEST_CART_LOCAL_STORAGE_KEY = 'requestCart';
 const initialCartData: CartData = { items: [], note: '' };
