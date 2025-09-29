@@ -46,7 +46,7 @@ end
 each_record do |record, context|
   nested_collections = record.xpath('//c[@level="collection"]')
   if nested_collections.any?
-    puts "Skipping #{settings['command_line.filename']}: contains nested collection(s)"
+    logger.warn("Skipping #{settings['command_line.filename']}: contains nested collection(s)")
     context.skip!("Detected nested collection components")
     next
   end
