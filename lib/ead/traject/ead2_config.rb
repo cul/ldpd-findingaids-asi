@@ -19,6 +19,7 @@ require_relative 'ead2_shared'
 require 'arclight/repository'
 load_config_file "app/overrides/arclight/repository_override.rb"
 
+puts "Parent level config"
 settings do
   provide 'component_traject_config', File.join(__dir__, 'ead2_component_config.rb')
 end
@@ -44,18 +45,30 @@ def normalize_repository_id(mainagencycode, record)
 end
 
 each_record do |record, context|
+  nested_collections = record.xpath('//c[@level="collection"]')
+  if nested_collections.any?
+    puts "Skipping #{settings['command_line.filename']}: contains nested collection(s)"
+    context.skip!("Detected nested collection components")
+    next
+  end
+
   context.clipboard[:repository_id] ||= normalize_repository_id(record.xpath('/ead/eadheader/eadid/@mainagencycode').text, record)
   if context.clipboard[:repository_id].present? && REPOS[context.clipboard[:repository_id]]
     context.clipboard[:repository] ||= Repository.find(context.clipboard[:repository_id]).name
   else
     logger.warn "no repository config found for code '#{context.clipboard[:repository_id]}'; skipping #{settings['command_line.filename']}"
-    context.skip!
+    context.skip!("No repository configuration found for repository code '#{context.clipboard[:repository_id]}'")
   end
 end
 
 load_config_file "#{Arclight::Engine.root}/lib/arclight/traject/ead2_config.rb"
 
 extend TrajectPlus::Macros
+
+# to_field 'level_ssim' do |record, accumulator, context|
+#   nested_collections = record.xpath('//c[@level="collection"]')
+#   context.skip!("Detected nested collection components") if nested_collections.any?
+# end
 
 to_field 'collection_sort' do |_record, accumulator, context|
   accumulator.concat context.output_hash.fetch('normalized_title_ssm', []).slice(0,1)
@@ -84,7 +97,7 @@ def eadid_from_url_or_text(field_name)
       end
     else
       logger.warn "no id found; skipping #{settings['command_line.filename']}"
-      context.skip!
+      context.skip!("Missing required ID")
     end
   end
 end
