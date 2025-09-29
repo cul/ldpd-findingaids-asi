@@ -19,7 +19,6 @@ require_relative 'ead2_shared'
 require 'arclight/repository'
 load_config_file "app/overrides/arclight/repository_override.rb"
 
-puts "Parent level config"
 settings do
   provide 'component_traject_config', File.join(__dir__, 'ead2_component_config.rb')
 end
@@ -64,11 +63,6 @@ end
 load_config_file "#{Arclight::Engine.root}/lib/arclight/traject/ead2_config.rb"
 
 extend TrajectPlus::Macros
-
-# to_field 'level_ssim' do |record, accumulator, context|
-#   nested_collections = record.xpath('//c[@level="collection"]')
-#   context.skip!("Detected nested collection components") if nested_collections.any?
-# end
 
 to_field 'collection_sort' do |_record, accumulator, context|
   accumulator.concat context.output_hash.fetch('normalized_title_ssm', []).slice(0,1)

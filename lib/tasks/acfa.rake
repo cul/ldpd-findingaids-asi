@@ -31,16 +31,44 @@ namespace :acfa do
     bib = ENV['BIB'] ? "cul-#{ENV['BIB']}" : '*'
     filename_pattern = ENV['PATTERN']
     filename_pattern ||= (ENV['CLIO_STUBS'].to_s =~ /true/i) ? "clio_ead_cul-#{bib}.xml" : "as_ead_#{bib}.xml"
-    indexed = 0
+
+    total_indexed = 0
+    total_skipped = 0
+    all_skip_messages = []
+
     glob_pattern = File.join(ead_dir, filename_pattern)
     puts "Seeding index with as_ead data from #{glob_pattern}..."
+
     Dir.glob(glob_pattern).each do |path|
       filename = File.basename(path)
       indexing_job = IndexEadJob.new
-      indexed += indexing_job.perform(filename)
-      puts "Processed #{filename}" if verbose
+      indexing_result = indexing_job.perform(filename)
+
+      total_indexed += indexing_result[:indexed]
+      total_skipped += indexing_result[:errors]
+
+      if indexing_result[:skip_messages]&.any?
+        all_skip_messages.concat(indexing_result[:skip_messages])
+        if verbose
+          puts "#{filename} - Skip reasons: #{indexing_result[:skip_messages].join(', ')}"
+        end
+      end
+
+      puts "Processed #{filename}: indexed #{indexing_result[:indexed]}, skipped #{indexing_result[:errors]}" if verbose
     end
-    if indexed > 0
+
+    # Summary report
+    puts "\n=== INDEXING SUMMARY ==="
+    puts "Files processed: #{total_indexed + total_skipped}"
+    puts "Records indexed: #{total_indexed}"
+    puts "Records skipped: #{total_skipped}"
+
+    if all_skip_messages.any?
+      puts "\nSkip reasons encountered:"
+      all_skip_messages.uniq.each { |msg| puts "  - #{msg}" }
+    end
+
+    if total_indexed > 0
       puts "curl #{solr_url}suggest?suggest.build=true"
       `curl #{solr_url}suggest?suggest.build=true`
     else

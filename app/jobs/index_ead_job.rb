@@ -36,7 +36,7 @@ class IndexEadJob < ApplicationJob
             skipped += 1
             next
           end
-      
+
           traject_indexer.writer.put( context )
           traject_indexer.writer.commit(softCommit: true)
           indexed += 1
@@ -44,13 +44,13 @@ class IndexEadJob < ApplicationJob
       end
     rescue Exception => ex
       puts "#{filename} failed to index: #{ex.message}"
+      skip_messages << ex.message
       skipped += 1
     end
-    
+
     traject_indexer.complete
-    puts "Indexed #{indexed} records, skipped #{skipped} records"
-    
-    { indexed: indexed, errors: skipped }
+    # For reporting purposes, treat skipped records as errors
+    { indexed: indexed, errors: skipped, skip_messages: skip_messages }
   end
   
 end
