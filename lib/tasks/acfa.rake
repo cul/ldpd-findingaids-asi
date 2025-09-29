@@ -73,4 +73,60 @@ namespace :acfa do
     `curl #{solr_url}suggest?suggest.build=true`
     puts solr_response.inspect
   end
+
+  namespace :embedding_cache do
+    desc "Export embedding_cache to JSONL (usage: rake acfa:embedding_cache:export JSONL_PATH=/path/to/file.jsonl)"
+    task export: :environment do
+      path = ENV["JSONL_PATH"]
+      unless path
+        abort "You must provide JSONL_PATH environmental variable"
+      end
+
+      count = 0
+      failed = 0
+
+      File.open(path, "w") do |file|
+        EmbeddingCache.find_each do |row|
+          begin
+            file.puts(row.to_json)
+            count += 1
+            print "\rExported #{count} records..." if count % 100 == 0
+          rescue => e
+            failed += 1
+            Rails.logger.error("Failed to export record ID #{row.doc_id}: #{e.message}")
+          end
+        end
+      end
+      puts "Successfully exported #{count} records to #{path}"
+      puts "Failed to export #{failed} records (see logs)" if failed > 0
+    end
+
+    desc "Import embedding_cache from JSONL (usage: rake acfa:embedding_cache:import JSONL_PATH=/path/to/file.jsonl)"
+    task import: :environment do
+      path = ENV["JSONL_PATH"]
+      unless path
+        abort "You must provide JSONL_PATH environmental variable"
+      end
+
+      count = 0
+      failed = 0
+
+      File.foreach(path) do |line|
+        next if line.strip.empty?
+
+        begin
+          data = JSON.parse(line)
+          EmbeddingCache.upsert(data, unique_by: [:doc_id, :model_identifier, :value_hash])
+          count += 1
+          print "\rImported #{count} records..." if count % 100 == 0
+        rescue => e
+          failed += 1
+          Rails.logger.error("Error importing doc id #{data["doc_id"]}: #{e.class} - #{e.message}")
+        end
+      end
+      puts "Successfully imported #{count} records to #{path}"
+      puts "Failed to import #{failed} records (see logs)" if failed > 0
+    end
+  end
+
 end
