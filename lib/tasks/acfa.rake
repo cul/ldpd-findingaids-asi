@@ -116,7 +116,7 @@ namespace :acfa do
 
         begin
           data = JSON.parse(line)
-          EmbeddingCache.upsert(data, unique_by: [:doc_id, :model_identifier, :value_hash])
+          EmbeddingCache.upsert_all([data])
           count += 1
           print "\rImported #{count} records..." if count % 100 == 0
         rescue => e
