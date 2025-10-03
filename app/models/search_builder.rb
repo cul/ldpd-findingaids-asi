@@ -5,6 +5,8 @@ class SearchBuilder < Blacklight::SearchBuilder
 
   include Arclight::SearchBehavior
 
+  self.default_processor_chain += [:convert_query_to_embedding_for_vector_search]
+
   def add_hierarchy_behavior(solr_parameters)
     return unless search_state.controller&.action_name == 'hierarchy'
     request_id = search_state.controller.params[:id]
@@ -30,5 +32,25 @@ class SearchBuilder < Blacklight::SearchBuilder
     return "#{search_state.sort_field.group_under}, #{search_state.sort_field.sort}" if search_state.sort_field.group_under
 
     search_state.sort_field.sort
+  end
+
+  def convert_query_to_embedding_for_vector_search(solr_parameters)
+    default_search_handler = 'select'
+    vector_search_handler = 'select-vector'
+
+    vector_seach_enabled = blacklight_params[:vector_search] == 'true' && blacklight_params[:q].present?
+    blacklight_config.solr_path = vector_seach_enabled ? vector_search_handler : default_search_handler
+    return unless vector_seach_enabled
+
+    query_text = blacklight_params[:q]
+    query_vector = EmbeddingService::Embedder.convert_text_to_vector_embedding(query_text)
+    if query_vector.nil?
+      blacklight_config.solr_path = default_search_handler # Revert to default search handler
+      Rails.logger.error('The vector embedding service is unreachable right now, so vector search will not work.')
+      return
+    end
+
+    # Vector embedding service returned embedding data.  Replace query with vector version.
+    solr_parameters[:q] = "{!knn f=scopecontent_vector768i topK=10}[#{query_vector.join(', ')}]"
   end
 end
