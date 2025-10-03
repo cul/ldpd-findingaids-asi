@@ -48,12 +48,6 @@ def semantic_search_source_text(traject_context)
 end
 
 def get_model_identifier
-  model_identifier = params[:vector_search] || CONFIG[:vector_search_model_key]
-
-  if model_identifier.nil? && CONFIG[:default_search_mode] == 'vector'
-    raise "Model key cannot be nil for vector search."
-  end
-
-  model_identifier
+  CONFIG[:vector_search_model_key]
 end
 
