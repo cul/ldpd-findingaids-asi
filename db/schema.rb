@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_24_221444) do
+ActiveRecord::Schema[7.0].define(version: 2025_08_28_191918) do
   create_table "bookmarks", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "user_type"
@@ -21,6 +21,17 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_24_221444) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["document_id"], name: "index_bookmarks_on_document_id"
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
+  end
+
+  create_table "embedding_cache", force: :cascade do |t|
+    t.string "doc_id"
+    t.integer "value_hash"
+    t.json "bge_base_en_15_768"
+    t.json "bge_base_en_15_1024"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doc_id"], name: "index_embedding_cache_on_doc_id", unique: true
+    t.index ["value_hash"], name: "index_embedding_cache_on_value_hash"
   end
 
   create_table "searches", force: :cascade do |t|
