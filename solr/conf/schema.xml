@@ -97,65 +97,65 @@
   <dynamicField name="*_ii"     type="pint"          stored="false"  indexed="true"   multiValued="false" />
   <dynamicField name="*_ism"    type="pint"          stored="true"   indexed="false"  multiValued="true"  />
   <dynamicField name="*_iim"    type="pint"          stored="false"  indexed="true"   multiValued="true"  />
-  <dynamicField name="*_isi"    type="pint"          stored="true"   indexed="true"   multiValued="true"  />
+  <dynamicField name="*_isi"    type="pint"          stored="true"   indexed="true"   multiValued="false"  />
   <dynamicField name="*_isim"   type="pint"          stored="true"   indexed="true"   multiValued="true"  />
   <dynamicField name="*_ss"     type="string"        stored="true"   indexed="false"  multiValued="false" />
   <dynamicField name="*_si"     type="string"        stored="false"  indexed="true"   multiValued="false" />
   <dynamicField name="*_ssm"    type="string"        stored="true"   indexed="false"  multiValued="true"  />
   <dynamicField name="*_sim"    type="string"        stored="false"  indexed="true"   multiValued="true"  />
-  <dynamicField name="*_ssi"    type="string"        stored="true"   indexed="true"   multiValued="true"  />
+  <dynamicField name="*_ssi"    type="string"        stored="true"   indexed="true"   multiValued="false"  />
   <dynamicField name="*_ssim"   type="string"        stored="true"   indexed="true"   multiValued="true"  />
   <dynamicField name="*_ls"     type="plong"         stored="true"   indexed="false"  multiValued="false" />
   <dynamicField name="*_li"     type="plong"         stored="false"  indexed="true"   multiValued="false" />
   <dynamicField name="*_lsm"    type="plong"         stored="true"   indexed="false"  multiValued="true"  />
   <dynamicField name="*_lim"    type="plong"         stored="false"  indexed="true"   multiValued="true"  />
-  <dynamicField name="*_lsi"    type="plong"         stored="true"   indexed="true"   multiValued="true"  />
+  <dynamicField name="*_lsi"    type="plong"         stored="true"   indexed="true"   multiValued="false"  />
   <dynamicField name="*_lsim"   type="plong"         stored="true"   indexed="true"   multiValued="true"  />
   <dynamicField name="*_bs"     type="boolean"       stored="true"   indexed="false"  multiValued="false" />
   <dynamicField name="*_bi"     type="boolean"       stored="false"  indexed="true"   multiValued="false" />
   <dynamicField name="*_bsm"    type="boolean"       stored="true"   indexed="false"  multiValued="true"  />
   <dynamicField name="*_bim"    type="boolean"       stored="false"  indexed="true"   multiValued="true"  />
-  <dynamicField name="*_bsi"    type="boolean"       stored="true"   indexed="true"   multiValued="true"  />
+  <dynamicField name="*_bsi"    type="boolean"       stored="true"   indexed="true"   multiValued="false"  />
   <dynamicField name="*_bsim"   type="boolean"       stored="true"   indexed="true"   multiValued="true"  />
   <dynamicField name="*_fs"     type="pfloat"        stored="true"   indexed="false"  multiValued="false" />
   <dynamicField name="*_fi"     type="pfloat"        stored="false"  indexed="true"   multiValued="false" />
   <dynamicField name="*_fsm"    type="pfloat"        stored="true"   indexed="false"  multiValued="true"  />
   <dynamicField name="*_fim"    type="pfloat"        stored="false"  indexed="true"   multiValued="true"  />
-  <dynamicField name="*_fsi"    type="pfloat"        stored="true"   indexed="true"   multiValued="true"  />
+  <dynamicField name="*_fsi"    type="pfloat"        stored="true"   indexed="true"   multiValued="false"  />
   <dynamicField name="*_fsim"   type="pfloat"        stored="true"   indexed="true"   multiValued="true"  />
   <dynamicField name="*_ds"     type="pdouble"       stored="true"   indexed="false"  multiValued="false" />
   <dynamicField name="*_di"     type="pdouble"       stored="false"  indexed="true"   multiValued="false" />
   <dynamicField name="*_dsm"    type="pdouble"       stored="true"   indexed="false"  multiValued="true"  />
   <dynamicField name="*_dim"    type="pdouble"       stored="false"  indexed="true"   multiValued="true"  />
-  <dynamicField name="*_dsi"    type="pdouble"       stored="true"   indexed="true"   multiValued="true"  />
+  <dynamicField name="*_dsi"    type="pdouble"       stored="true"   indexed="true"   multiValued="false"  />
   <dynamicField name="*_dsim"   type="pdouble"       stored="true"   indexed="true"   multiValued="true"  />
   <dynamicField name="*_dts"    type="pdate"         stored="true"   indexed="false"  multiValued="false" />
   <dynamicField name="*_dti"    type="pdate"         stored="false"  indexed="true"   multiValued="false" />
   <dynamicField name="*_dtsm"   type="pdate"         stored="true"   indexed="false"  multiValued="true"  />
   <dynamicField name="*_dtim"   type="pdate"         stored="false"  indexed="true"   multiValued="true"  />
-  <dynamicField name="*_dtsi"   type="pdate"         stored="true"   indexed="true"   multiValued="true"  />
+  <dynamicField name="*_dtsi"   type="pdate"         stored="true"   indexed="true"   multiValued="false"  />
   <dynamicField name="*_dtsim"  type="pdate"         stored="true"   indexed="true"   multiValued="true"  />
   <dynamicField name="*_dri"    type="dateRange"     stored="false"  indexed="true"   multiValued="false" /> <!-- dateRange always needs to be indexed to be compatible with omitNorms="true" -->
   <dynamicField name="*_drim"   type="dateRange"     stored="false"  indexed="true"   multiValued="true"  /> <!-- dateRange always needs to be indexed to be compatible with omitNorms="true" -->
-  <dynamicField name="*_drsi"   type="dateRange"     stored="true"   indexed="true"   multiValued="true"  /> <!-- dateRange always needs to be indexed to be compatible with omitNorms="true" -->
+  <dynamicField name="*_drsi"   type="dateRange"     stored="true"   indexed="true"   multiValued="false"  /> <!-- dateRange always needs to be indexed to be compatible with omitNorms="true" -->
   <dynamicField name="*_drsim"  type="dateRange"     stored="true"   indexed="true"   multiValued="true"  /> <!-- dateRange always needs to be indexed to be compatible with omitNorms="true" -->
   <dynamicField name="*_ts"     type="text_general"  stored="true"   indexed="false"  multiValued="false" />
   <dynamicField name="*_ti"     type="text_general"  stored="true"   indexed="true"   multiValued="false" />
   <dynamicField name="*_tsm"    type="text_general"  stored="true"   indexed="false"  multiValued="true"  />
   <dynamicField name="*_tim"    type="text_general"  stored="true"   indexed="true"   multiValued="true"  />
-  <dynamicField name="*_tsi"    type="text_general"  stored="true"    indexed="true"   multiValued="true"  />
+  <dynamicField name="*_tsi"    type="text_general"  stored="true"   indexed="true"   multiValued="false"  />
   <dynamicField name="*_tsim"   type="text_general"  stored="true"   indexed="true"   multiValued="true"  />
   <dynamicField name="*_tes"    type="text_en"       stored="true"   indexed="false"  multiValued="false" />
   <dynamicField name="*_tei"    type="text_en"       stored="true"   indexed="true"   multiValued="false" />
   <dynamicField name="*_tesm"   type="text_en"       stored="true"   indexed="false"  multiValued="true"  />
   <dynamicField name="*_teim"   type="text_en"       stored="true"   indexed="true"   multiValued="true"  />
-  <dynamicField name="*_tesi"   type="text_en"       stored="true"    indexed="true"   multiValued="true"  />
+  <dynamicField name="*_tesi"   type="text_en"       stored="true"    indexed="true"   multiValued="false"  />
   <dynamicField name="*_tesim"  type="text_en"       stored="true"   indexed="true"   multiValued="true"  />
   <dynamicField name="*_tesplits"    type="text_en_splitting"  stored="true"   indexed="false"  multiValued="false" />
   <dynamicField name="*_tespliti"    type="text_en_splitting"  stored="true"   indexed="true"   multiValued="false" />
   <dynamicField name="*_tesplitsm"   type="text_en_splitting"  stored="true"   indexed="false"  multiValued="true"  />
   <dynamicField name="*_tesplitim"   type="text_en_splitting"  stored="true"   indexed="true"   multiValued="true"  />
-  <dynamicField name="*_tesplitsi"   type="text_en_splitting"  stored="true"    indexed="true"   multiValued="true"  />
+  <dynamicField name="*_tesplitsi"   type="text_en_splitting"  stored="true"   indexed="true"   multiValued="false"  />
   <dynamicField name="*_tesplitsim"  type="text_en_splitting"  stored="true"   indexed="true"   multiValued="true"  />
 
   <!-- If you're not using lat/long coordinates, then you can remove the next two fields: -->
