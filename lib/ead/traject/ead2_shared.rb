@@ -21,8 +21,9 @@ def process_bibliography_content(content_elements)
 
     element_string
   end.join("\n")
-  
-def fulltext_vector_content(traject_context)
+end  
+
+def semantic_search_source_text(traject_context)
   title = traject_context.output_hash['normalized_title_ssm']&.join(', ')
   parent_unittitles = traject_context.output_hash['parent_unittitles_ssm']
   collection_name = parent_unittitles.present? ? parent_unittitles.shift : nil
