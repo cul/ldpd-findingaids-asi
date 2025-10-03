@@ -8,7 +8,7 @@ describe SearchBuilder do
   let(:fake_embedding)    { [0.1, 0.2, 0.3] }
 
   before do
-    allow(EmbeddingService::Embedder)
+    allow(EmbeddingService::CachedEmbedder)
       .to receive(:convert_text_to_vector_embedding)
       .and_return(fake_embedding)
 
