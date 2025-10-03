@@ -35,12 +35,12 @@ class SearchBuilder < Blacklight::SearchBuilder
   end
 
   def convert_query_to_embedding_for_vector_search(solr_parameters)
+    return unless vector_search_enabled? && blacklight_params[:q].present?
+
     default_search_handler = 'select'
     vector_search_handler = 'select-vector'
 
-    vector_seach_enabled = blacklight_params[:vector_search] == 'true' && blacklight_params[:q].present?
-    blacklight_config.solr_path = vector_seach_enabled ? vector_search_handler : default_search_handler
-    return unless vector_seach_enabled
+    blacklight_config.solr_path = vector_search_handler
 
     query_text = blacklight_params[:q]
     query_vector = EmbeddingService::Embedder.convert_text_to_vector_embedding(query_text)
@@ -54,4 +54,12 @@ class SearchBuilder < Blacklight::SearchBuilder
     # solr_parameters[:q] = "{!knn f=scopecontent_vector768i topK=9999}[#{query_vector.join(', ')}]"
     solr_parameters[:q] = "{!vectorSimilarity f=scopecontent_vector768i minReturn=0.7}[#{query_vector.join(', ')}]"
   end
+
+  def vector_search_enabled?
+    vector_search_override = blacklight_params[:vector_search]
+
+     return vector_search_override == 'true' if %w[true false].include?(vector_search_override)
+
+    CONFIG[:default_search_mode] == 'vector'
+    end
 end
