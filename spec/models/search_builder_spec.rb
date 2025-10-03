@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 describe SearchBuilder do
-  let (:test_query) { "test query" }
+  let(:test_query) { "test query" }
   let(:user_params) { { q: test_query, vector_search: 'true' } }
   let(:blacklight_config) { Blacklight::Configuration.new }
   let(:scope) { double blacklight_config: blacklight_config }
   let(:search_builder) { described_class.new(scope) }
   let(:fake_embedding)    { [0.1, 0.2, 0.3] }
-  let(:vector_query)  { "{!knn f=scopecontent_vector768i topK=10}[0.1, 0.2, 0.3]" }
 
   before do
     allow(EmbeddingService::Embedder)
@@ -33,20 +32,13 @@ describe SearchBuilder do
 
 
   describe "vector search" do
-    let(:query_parameters) { search_builder.with(user_params).processed_parameters }
+    let(:query_string) { search_builder.with(user_params).processed_parameters[:q] }
 
-    it 'includes the embedded query' do
-      expect(query_parameters[:q]).to eq vector_query
+    it 'replaces the text query with a query that embeds the vector' do
+      expect(query_string).not_to eq(test_query)
+      expect(query_string).to include("[#{fake_embedding.join(', ')}]")
+      expect(query_string).to start_with('{!')
     end
-  end
 
-  # describe "my custom step" do
-  #   subject(:query_parameters) do
-  #     search_builder.with(user_params).processed_parameters
-  #   end
-  #
-  #   it "adds my custom data" do
-  #     expect(query_parameters).to include :custom_data
-  #   end
-  # end
+  end
 end
