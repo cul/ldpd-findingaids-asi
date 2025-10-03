@@ -161,7 +161,7 @@ to_field 'has_online_content_ssim', extract_xpath('.//dao|.//daogrp') do |_recor
   accumulator.replace([accumulator.any?])
 end
 
-to_field 'scopecontent_vector768i' do |record, accumulator, context|
+to_field 'searchable_text_vector768i' do |record, accumulator, context|
   value = semantic_search_source_text(context)
   if value.present?
     embedding = EmbeddingService::Embedder.convert_text_to_vector_embedding(value)
