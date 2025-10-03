@@ -9,20 +9,20 @@ module EmbeddingService
         request.body = prepare_value_parameter(field_value)
         request['Content-Type'] = 'application/x-www-form-urlencoded'
 
-        # begin
-        #     response = http.request(request)
-        #     parsed_response = ::JSON.parse(response.body)
-        #     if parsed_response['embeddings']
-        #         Rails.logger.debug { "Embedding generated successfully for text (first 20 chars): #{field_value.truncate(20)}" }
-        #         return parsed_response['embeddings']
-        #     else
-        #         Rails.logger.warn { "Embedding service returned no embeddings for: #{field_value.truncate(20)}" }
-        #         return nil
-        #     end
-        # rescue StandardError => e
-        #     Rails.logger.error { "Error generating embedding for: #{field_value.truncate(20)} -- #{e.class}: #{e.message}" }
-        #     return nil
-        # end
+        begin
+            response = http.request(request)
+            parsed_response = ::JSON.parse(response.body)
+            if parsed_response['embeddings']
+                Rails.logger.debug { "Embedding generated successfully for text (first 20 chars): #{field_value.truncate(20)}" }
+                return parsed_response['embeddings']
+            else
+                Rails.logger.warn { "Embedding service returned no embeddings for: #{field_value.truncate(20)}" }
+                return nil
+            end
+        rescue StandardError => e
+            Rails.logger.error { "Error generating embedding for: #{field_value.truncate(20)} -- #{e.class}: #{e.message}" }
+            raise EmbeddingService::GenerationError.new("Embedding failed for '#{field_value.truncate(20)}'"), cause: e
+        end
     end
 
     def self.construct_endpoint_url(destination_url, model_details)
