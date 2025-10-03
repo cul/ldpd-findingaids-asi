@@ -59,10 +59,8 @@ class SearchBuilder < Blacklight::SearchBuilder
   end
 
   def vector_search_enabled?
-    vector_search_override = blacklight_params[:vector_search]
-
-     return vector_search_override == 'true' if %w[true false].include?(vector_search_override)
-
+    return false if blacklight_params[:vector_search] == 'false'
+    return true if blacklight_params[:vector_search] == 'true'
     CONFIG[:default_search_mode] == 'vector'
   end
 end
