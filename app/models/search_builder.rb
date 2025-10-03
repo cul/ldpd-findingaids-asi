@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+
+# NOTE: This class is NOT automatically reloaded when doing local development,
+# so you'll need to restart your Rails server whenever you make changes.
 class SearchBuilder < Blacklight::SearchBuilder
   include Blacklight::Solr::SearchBuilderBehavior
   include BlacklightRangeLimit::RangeLimitBuilder
@@ -52,7 +55,7 @@ class SearchBuilder < Blacklight::SearchBuilder
 
     # Vector embedding service returned embedding data.  Replace query with vector version.
     # solr_parameters[:q] = "{!knn f=scopecontent_vector768i topK=9999}[#{query_vector.join(', ')}]"
-    solr_parameters[:q] = "{!vectorSimilarity f=scopecontent_vector768i minReturn=0.7}[#{query_vector.join(', ')}]"
+    solr_parameters[:q] = "{!vectorSimilarity f=scopecontent_vector768i minReturn=0.79}[#{query_vector.join(', ')}]"
   end
 
   def vector_search_enabled?
@@ -61,5 +64,5 @@ class SearchBuilder < Blacklight::SearchBuilder
      return vector_search_override == 'true' if %w[true false].include?(vector_search_override)
 
     CONFIG[:default_search_mode] == 'vector'
-    end
+  end
 end
