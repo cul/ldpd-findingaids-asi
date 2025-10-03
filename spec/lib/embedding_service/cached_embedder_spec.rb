@@ -41,7 +41,7 @@ RSpec.describe EmbeddingService::CachedEmbedder do
         )
       end
 
-      let(:cache_row){ EmbeddingCache.find_by(doc_id: doc_id) }
+      let(:cache_row){ EmbeddingCache.find_by(doc_id: doc_id, model_identifier: model_identifier) }
 
       it "calls the embedding service" do
         embedding
@@ -57,17 +57,17 @@ RSpec.describe EmbeddingService::CachedEmbedder do
       it "stores the correct values in the cache row" do
         embedding
         expect(cache_row.value_hash).to eq(hash)
-        expect(cache_row.bge_base_en_15_768).to eq(embedding)
+        expect(cache_row.embedding).to eq(embedding)
       end
     end
 
     context "when a row already exists in the cache table" do
       let!(:cache_row) do
         EmbeddingCache.create!(
-          doc_id:          doc_id,
+          doc_id: doc_id,
+          model_identifier: model_identifier,
           value_hash: hash,
-          bge_base_en_15_768: cached_768,
-          bge_base_en_15_1024: cached_1024
+          embedding: cached_768
         )
       end
 
@@ -91,7 +91,7 @@ RSpec.describe EmbeddingService::CachedEmbedder do
 
           expect(EmbeddingService::Endpoint).to have_received(:generate_vector_embedding).once
           expect(embedding).to eq(new_embedding)
-          updated_hash = EmbeddingCache.where(doc_id: doc_id).pluck(:value_hash).first
+          updated_hash = EmbeddingCache.where(doc_id: doc_id, model_identifier: model_identifier).pluck(:value_hash).first
           expect(updated_hash).not_to eq(hash)
         end
       end

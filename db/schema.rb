@@ -25,13 +25,13 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_28_191918) do
 
   create_table "embedding_cache", force: :cascade do |t|
     t.string "doc_id"
+    t.string "model_identifier"
     t.integer "value_hash"
-    t.json "bge_base_en_15_768"
-    t.json "bge_base_en_15_1024"
+    t.json "embedding"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["doc_id"], name: "index_embedding_cache_on_doc_id", unique: true
-    t.index ["value_hash"], name: "index_embedding_cache_on_value_hash"
+    t.index ["doc_id", "model_identifier", "value_hash"], name: "index_embedding_caches_on_doc_model_value", unique: true
+    t.index ["doc_id", "model_identifier"], name: "index_embedding_cache_on_doc_id_and_model_identifier", unique: true
   end
 
   create_table "searches", force: :cascade do |t|
