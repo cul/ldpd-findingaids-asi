@@ -29,16 +29,17 @@ RSpec.describe EmbeddingService::Endpoint do
       end
   end
 
-  describe "#parameterize_model_details" do
+  describe "#create_params" do
     let(:expected_params) do
         {
             model: "BAAI/bge-base-en-v1.5",
-            summarize: "false"
+            summarize: "false",
+            text: field_value
         }
     end
 
     it 'constructs the expected params' do
-        params = described_class.parameterize_model_details(model_details)
+        params = described_class.create_params(model_details, field_value)
         expect(params).to eq(expected_params)
     end
   end
