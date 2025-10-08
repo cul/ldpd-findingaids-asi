@@ -44,12 +44,19 @@ def normalize_repository_id(mainagencycode, record)
 end
 
 each_record do |record, context|
+  nested_collections = record.xpath('//c[@level="collection"]')
+  if nested_collections.any?
+    logger.warn("Skipping #{settings['command_line.filename']}: contains nested collection(s)")
+    context.skip!("Detected nested collection components")
+    next
+  end
+
   context.clipboard[:repository_id] ||= normalize_repository_id(record.xpath('/ead/eadheader/eadid/@mainagencycode').text, record)
   if context.clipboard[:repository_id].present? && REPOS[context.clipboard[:repository_id]]
     context.clipboard[:repository] ||= Repository.find(context.clipboard[:repository_id]).name
   else
     logger.warn "no repository config found for code '#{context.clipboard[:repository_id]}'; skipping #{settings['command_line.filename']}"
-    context.skip!
+    context.skip!("No repository configuration found for repository code '#{context.clipboard[:repository_id]}'")
   end
 end
 
@@ -84,7 +91,7 @@ def eadid_from_url_or_text(field_name)
       end
     else
       logger.warn "no id found; skipping #{settings['command_line.filename']}"
-      context.skip!
+      context.skip!("Missing required ID")
     end
   end
 end

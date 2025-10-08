@@ -19,12 +19,24 @@ class IndexEadJob < ApplicationJob
     traject_indexer.load_config_file(traject_config)
     filepath = File.join(ead_dir, filename)
     indexed = 0
-    open(filepath) do |io|
-      traject_indexer.settings['command_line.filename'] = filepath
-      Arclight::Traject::NokogiriNamespacelessReader.new(io, {}).to_a.each do |record|
-        context = Traject::Indexer::Context.new(source_record: record, settings: traject_indexer.settings, source_record_id_proc: traject_indexer.source_record_id_proc, logger: traject_indexer.logger)
-        traject_indexer.map_to_context!(context)
-        unless context.skip?
+    skipped = 0
+    skip_messages = []
+
+    begin
+      open(filepath) do |io|
+        traject_indexer.settings['command_line.filename'] = filepath
+        Arclight::Traject::NokogiriNamespacelessReader.new(io, {}).to_a.each do |record|
+          context = Traject::Indexer::Context.new(source_record: record, settings: traject_indexer.settings, source_record_id_proc: traject_indexer.source_record_id_proc, logger: traject_indexer.logger)
+          traject_indexer.map_to_context!(context)
+
+          if context.skip?
+            skip_reason = context.skipmessage || "Unknown reason"
+            skip_messages << skip_reason
+            puts "Skipping indexing for #{filename}: #{skip_reason}"
+            skipped += 1
+            next
+          end
+
           traject_indexer.writer.put( context )
           traject_indexer.writer.commit(softCommit: true)
           indexed += 1
@@ -32,9 +44,13 @@ class IndexEadJob < ApplicationJob
       end
     rescue Exception => ex
       puts "#{filename} failed to index: #{ex.message}"
+      skip_messages << ex.message
+      skipped += 1
     end
+
     traject_indexer.complete
-    indexed
+    # For reporting purposes, treat skipped records as errors
+    { indexed: indexed, errors: skipped, skip_messages: skip_messages }
   end
   
 end
