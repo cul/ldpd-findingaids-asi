@@ -2,9 +2,5 @@
 
 module Acfa
   # Render the masthead
-  class MastheadComponent < ::Arclight::MastheadComponent
-    def main_menu
-      render Acfa::TopNavbarComponent.new(blacklight_config: @blacklight_config)
-    end
-  end
+  class MastheadComponent < ::Arclight::MastheadComponent; end
 end
