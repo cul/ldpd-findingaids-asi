@@ -62,7 +62,7 @@ gem 'iso-639'
 gem 'loofah', '~> 2.21.0'
 gem 'nokogiri', '~> 1.18', '>= 1.18.9', force_ruby_platform: true
 
-gem 'arclight', '~> 1.5.0'
+gem 'arclight', '~> 1.6.2'
 gem 'blacklight', '~> 8.5.0'
 
 gem "rsolr", ">= 1.0", "< 3"
