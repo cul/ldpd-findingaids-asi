@@ -62,11 +62,13 @@
         so we don't need to index the version field. -->
   <field name="_version_" type="plong" indexed="false" stored="false"/>
 
-  <!-- If you don't use child/nested documents, then you should remove the next two fields: -->
+  <!-- If you don't use child/nested documents, then you should remove the next three fields: -->
   <!-- for nested documents (minimal; points to root document) -->
   <field name="_root_" type="string" indexed="true" stored="false" />
   <!-- for nested documents (relationship tracking) -->
-  <field name="_nest_path_" type="_nest_path_" /><fieldType name="_nest_path_" class="solr.NestPathField" />
+  <field name="_nest_path_" type="_nest_path_" indexed="true" stored="true" />
+  <!-- for nested documents (reference to parent) -->
+  <field name="_nest_parent_" type="string" indexed="true" stored="true" multiValued="false" />
 
   <!-- Timestamp field to indicate when this document was last updated. -->
   <field name="timestamp" type="pdate" indexed="true" stored="true" default="NOW" multiValued="false"/>
@@ -82,7 +84,6 @@
   <!-- <field name="identifiers" type="string" indexed="true" stored="true" multiValued="true" /> -->
 
   <!-- BEGIN: ACFA explicitly defined fields -->
-  <field name="_nest_parent_" type="string" indexed="true" stored="true" multiValued="false" />
   <field name="unitid_identifier_match" type="identifier_match" indexed="true" stored="false" multiValued="true" />
   <!-- END: ACFA explicitly defined fields -->
 
@@ -334,6 +335,9 @@
 
   <!--Binary data type. The data should be sent/retrieved in as Base64 encoded Strings -->
   <fieldType name="binary" class="solr.BinaryField"/>
+
+  <!-- For nested document relationship tracking -->
+  <fieldType name="_nest_path_" class="solr.NestPathField" />
 
   <!-- solr.TextField allows the specification of custom text analyzers
         specified as a tokenizer and a list of token filters. Different
