@@ -187,7 +187,6 @@ end
 
 to_field 'call_number_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")][not(starts-with(., "in"))]'), first_only
 
-
 to_field 'bibid_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "") = "" or starts-with(., "in")]'), first_only
 
 # include digital objects with multiple file versions
