@@ -185,9 +185,9 @@ to_field 'extent_ssm' do |record, accumulator|
   accumulator.concat(extents_per_physdesc(record.xpath('/ead/archdesc/did/physdesc[extent]')))
 end
 
-to_field 'call_number_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")][not(@type)]'), first_only
+to_field 'call_number_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")][not(starts-with(., "in"))]'), first_only
 
-to_field 'bibid_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "") = ""]'), first_only
+to_field 'bibid_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "") = "" or starts-with(., "in")]'), first_only
 
 # include digital objects with multiple file versions
 @index_steps.delete_if { |index_step| index_step.is_a?(ToFieldStep) && ['has_online_content_ssim'].include?(index_step.field_name) }
