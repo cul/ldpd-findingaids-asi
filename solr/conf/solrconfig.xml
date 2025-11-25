@@ -106,7 +106,7 @@
          name_teim^10
          place_teim^10
          subject_teim^2
-         identifier_search
+         ref_ssi
          parent_unittitles_tesim
          text
        </str>
@@ -118,7 +118,7 @@
          name_teim^20
          place_teim^20
          subject_teim^5
-         identifier_search^2
+         ref_ssi^2
          parent_unittitles_tesim^2
          text^2
        </str>
