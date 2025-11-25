@@ -90,6 +90,7 @@ describe Traject::Indexer do
     end
   end
   describe 'call number indexing' do
+    context 'with bibid' do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_ead.xml') }
       let(:expected_value) { 'MS#123456' }
       it do
@@ -98,7 +99,18 @@ describe Traject::Indexer do
         expect(index_document[:components][0][:components][0][:call_number_ss]).to eql [expected_value]
         expect(index_document[:components][0][:components][0][:call_number_ss]).to eql [expected_value]
       end
+    end
+    context 'with hrid' do
+      let(:fixture_path) { File.join(file_fixture_path, 'ead/test_hrid.xml') }
+      let(:expected_value) { 'BA#1126' }
+      it do
+        expect(index_document).not_to be_nil
+        expect(index_document[:components][0][:call_number_ss]).to eql [expected_value]
+      end
+    end
   end
+
+
   describe 'language indexing' do
     context 'with ead from ASpace < 4.0' do
       let(:fixture_path) { File.join(file_fixture_path, 'ead/test_language/test_lang_aspace3x.xml') }

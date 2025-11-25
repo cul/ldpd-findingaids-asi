@@ -87,7 +87,7 @@ to_field 'parent_access_restrict_tesm' do |record, accumulator|
 end
 
 # Extract call number, which is the first did/unitit that is NOT all-numeric
-to_field 'call_number_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")][not(@type)]'), first_only
+to_field 'call_number_ss', extract_xpath('/ead/archdesc/did/unitid[translate(., "0123456789", "")][not(starts-with(., "in"))]'), first_only
 
 to_field "container_information_ssm" do |record, accumulator, context|
   record.xpath("./did/container").each do |container_element|
