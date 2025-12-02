@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= render partial: 'web_analytics' if CONFIG[:web_analytics] %>
-    <title><%= render_page_title %></title>
+    <title><%= strip_tags(render_page_title) %></title>
     <script>
       document.querySelector('html').classList.remove('no-js');
     </script>
