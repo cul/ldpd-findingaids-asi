@@ -106,8 +106,7 @@
          name_teim^10
          place_teim^10
          subject_teim^2
-         ref_ssm
-         unitid_ssm
+         ref_ssi
          parent_unittitles_tesim
          text
        </str>
@@ -119,8 +118,7 @@
          name_teim^20
          place_teim^20
          subject_teim^5
-         ref_ssm^2
-         unitid_ssm^2
+         ref_ssi^2
          parent_unittitles_tesim^2
          text^2
        </str>
