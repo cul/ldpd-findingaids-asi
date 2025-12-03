@@ -39,6 +39,12 @@ class SolrDocument
     render_html_tags(value: value) if value.present?
   end
 
+  # Override collection_name to use the raw field value instead of normalized_title
+  # in order to avoid including HTML tags when using the search within collection feature.
+  def collection_name
+    collection&.first('collection_ssim') || collection&.first('normalized_title_ssm')
+  end
+
   def requestable?
     return false unless repository_config&.request_types&.any?
     return false unless self.containers.present?

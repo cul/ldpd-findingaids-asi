@@ -80,6 +80,30 @@ describe SolrDocument, type: :model do
     end
   end
 
+  describe "#collection_name" do
+    let(:component_doc) do
+      described_class.new({
+        'id' => id,
+        'collection' => {
+          'docs' => [
+            {
+              'id' => id,
+              'collection_ssim' => ['Administrative files, 1979-1997'],
+              'normalized_title_ssm' => ['Administrative files, 1979-1997'],
+              'normalized_title_html_ssm' => '<unittitle><title render="italic">Administrative</title> files, 1979-1997</unittitle>'
+            }
+          ]
+        }
+      })
+    end
+
+    it 'returns plain text without HTML tags' do
+      expect(component_doc.collection_name).to eq('Administrative files, 1979-1997')
+      expect(component_doc.collection_name).not_to include('<em>')
+      expect(component_doc.collection_name).not_to include('<title')
+    end
+  end
+
   describe '#requestable?' do
     it "returns true when the solr_document's repository allows requests, and the record has a parent container, "\
         "and the record is not otherwise marked as unavailable" do

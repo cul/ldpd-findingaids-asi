@@ -13,6 +13,7 @@ require 'active_support/core_ext/array/wrap'
 require 'arclight/digital_object'
 require 'arclight/year_range'
 require_relative 'ead2_shared'
+require_relative "../normalized_title"
 
 # Arclight::Repository expects repositories.yml not to have environment keys
 # so we must monkey patch
@@ -21,6 +22,7 @@ load_config_file "app/overrides/arclight/repository_override.rb"
 
 settings do
   provide 'component_traject_config', File.join(__dir__, 'ead2_component_config.rb')
+  provide 'title_normalizer', 'ArclightOverrides::NormalizedTitle'
 end
 
 def normalize_repository_id(mainagencycode, record)
@@ -130,8 +132,8 @@ end
 to_field 'normalized_title_html_ssm' do |record, accumulator, context|
   title_elements = record.xpath('/ead/archdesc/did/unittitle')
   title = title_elements.first&.to_s
-  dates = context.output_hash['normalized_date_ssm']&.first
-  accumulator << Arclight::NormalizedTitle.new(title, dates).to_s
+  date = context.output_hash['normalized_date_ssm']&.first
+  accumulator << settings['title_normalizer'].constantize.new(title, date).to_s
 end
 
 to_field 'date_range_isim', extract_xpath('/ead/archdesc/did/unitdate/@normal', to_text: false) do |_record, accumulator|
