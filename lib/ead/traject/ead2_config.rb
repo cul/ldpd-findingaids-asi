@@ -132,8 +132,8 @@ end
 to_field 'normalized_title_html_ssm' do |record, accumulator, context|
   title_elements = record.xpath('/ead/archdesc/did/unittitle')
   title = title_elements.first&.to_s
-  dates = context.output_hash['normalized_date_ssm']&.first
-  accumulator << ArclightOverrides::NormalizedTitle.new(title, dates).to_s
+  date = context.output_hash['normalized_date_ssm']&.first
+  accumulator << settings['title_normalizer'].constantize.new(title, date).to_s
 end
 
 to_field 'date_range_isim', extract_xpath('/ead/archdesc/did/unitdate/@normal', to_text: false) do |_record, accumulator|
