@@ -8,7 +8,7 @@
     <title><%= [@finding_aid_title, @repository_name, 'Columbia University Libraries Finding Aids'].reject(&:blank?).join(' | ') %></title>
     <%= csp_meta_tag %>
     <%= csrf_meta_tag %>
-
+    <%= favicon_link_tag %>
     <%= vite_client_tag %>
     <%= vite_typescript_tag 'application.tsx' %>
     <%= vite_stylesheet_tag 'application.scss' %>
