@@ -70,6 +70,9 @@ node_modules
 # Local rake tasks
 local.rake
 
+# macOS Files
+.DS_Store
+
 # simplecov coverage report
 /coverage
 
