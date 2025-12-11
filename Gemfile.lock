@@ -453,7 +453,7 @@ GEM
       ostruct
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
-    stringio (3.0.4)
+    stringio (3.1.1)
     terser (1.1.17)
       execjs (>= 0.3.0, < 3)
     thor (1.4.0)
@@ -563,7 +563,7 @@ DEPENDENCIES
   sprockets-rails
   sqlite3 (>= 2.1)
   stimulus-rails
-  stringio (= 3.0.4)
+  stringio (= 3.1.1)
   terser
   turbo-rails
   tzinfo-data

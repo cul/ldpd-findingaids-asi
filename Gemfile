@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 8.0.4'
 
-gem 'stringio', '3.0.4'
+gem 'stringio', '3.1.1'
 
 gem 'resque', '~> 2.6'
 
