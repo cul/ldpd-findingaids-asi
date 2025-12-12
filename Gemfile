@@ -13,8 +13,6 @@ gem 'resque', '~> 2.6'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '>= 2.1' # min SQLite3 version required by Rails 8
 # Use mysql2 as the database for CUL
 gem 'mysql2'
 
@@ -103,6 +101,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Run against the latest stable release
 group :development, :test do
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3', '>= 2.1' # min SQLite3 version required by Rails 8
+
   gem 'capybara', '~> 3.32'
   gem 'rspec-rails'
   gem "solr_wrapper", ">= 0.3"
