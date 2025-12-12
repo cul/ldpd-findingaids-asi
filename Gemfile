@@ -4,18 +4,15 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.0'
+gem 'rails', '~> 8.0.4'
 
-gem 'stringio', '3.0.4'
+gem 'stringio', '3.1.1'
 
 gem 'resque', '~> 2.6'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
-# Use sqlite3 as the database for Active Record
-# fcd1, 03/29/22: Rails 6 doesn't like '~> 1.3.13'. As ldpd-amesa does, spec to ~> 1.4
-gem 'sqlite3', '~> 1.6.7'
 # Use mysql2 as the database for CUL
 gem 'mysql2'
 
@@ -63,7 +60,7 @@ gem 'loofah', '~> 2.21.0'
 gem 'nokogiri', '~> 1.18', '>= 1.18.9', force_ruby_platform: true
 
 gem 'arclight', '~> 1.6.2'
-gem 'blacklight', '~> 8.5.0'
+gem 'blacklight', '~> 8.7.0'
 
 gem "rsolr", ">= 1.0", "< 3"
 gem "bootstrap", "\~\>\ 5.1"
@@ -104,6 +101,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Run against the latest stable release
 group :development, :test do
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3', '>= 2.1' # min SQLite3 version required by Rails 8
+
   gem 'capybara', '~> 3.32'
   gem 'rspec-rails'
   gem "solr_wrapper", ">= 0.3"

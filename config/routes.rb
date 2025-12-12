@@ -5,11 +5,15 @@ Rails.application.routes.draw do
 
   concern :searchable, Blacklight::Routes::Searchable.new
 
-  resource :catalog, only: [:index], as: 'catalog', path: '/archives', controller: 'catalog' do
+  resource :catalog, only: [], as: 'catalog', path: '/archives', controller: 'catalog' do
     concerns :searchable
     concerns :range_searchable
 
+    collection do
+      get '', action: :index
+    end
   end
+
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   post '/users/development/sign_in_developer', to: 'users/development#sign_in_developer' if Rails.env.development?
 
