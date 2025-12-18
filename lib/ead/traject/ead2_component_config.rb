@@ -97,7 +97,7 @@ to_field "container_information_ssm" do |record, accumulator, context|
     barcode = barcode_match[1] if barcode_match
     text = [container_element.attribute("type"), container_element.text].join(" ").strip
     container_information = {
-      id: container_element.attributes["id"].to_s.gsub("aspace_", ""),
+      uri: '/' + container_element.attributes["id"].to_s.sub(/\.\d+$/, '').gsub('.', '/'),
       barcode: barcode,
       label: text,
       parent: container_element.attribute("parent").to_s.gsub("aspace_", ""),
