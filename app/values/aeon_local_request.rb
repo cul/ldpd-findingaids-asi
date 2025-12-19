@@ -105,7 +105,6 @@ class AeonLocalRequest
   end
 
   def form_attributes
-    puts "In the form attributes method!"
     form_fields = {}
     form_fields['Site'] = self.repository_local_request_config['site_code'] if self.repository_local_request_config
     # We intentionally send collection name to the AEON "ItemTitle" field because this was requested by CUL staff.
