@@ -20,15 +20,12 @@ RSpec.describe AeonLocalRequest do
     [
       {
         'barcode' => barcode,
-        'id' => 'ef18c12f57c6c1c39c2f2ece677e6070',
-        'parent' => '',
+        'uri' => '/repositories/2/top_containers/145199',
         'label' => box_label,
         'type' => 'box',
       }.to_json,
       {
         'barcode' => nil,
-        'id' => 'b4ed1e77add4128f44588571fcd85b7e',
-        'parent' => 'ef18c12f57c6c1c39c2f2ece677e6070',
         'label' => folder_label,
         'type' => 'folder'
       }.to_json
@@ -134,14 +131,12 @@ RSpec.describe AeonLocalRequest do
           {
             'barcode' => nil,
             'id' => 'aspace_cebc1ce953260203b3ed07954e79541f',
-            'parent' => '',
             'label' => mapcase_label,
             'type' => 'mapcase',
           }.to_json,
           {
             'barcode' => nil,
             'id' => 'aspace_1908a16b0b79277ce166a6efe43a2ab2',
-            'parent' => 'aspace_cebc1ce953260203b3ed07954e79541f',
             'label' => 'folder 3',
             'type' => 'folder'
           }.to_json
@@ -165,7 +160,6 @@ RSpec.describe AeonLocalRequest do
           {
             'barcode' => nil,
             'id' => 'aspace_cebc1ce953260203b3ed07954e79541f',
-            'parent' => '',
             'label' => mapcase_label,
             'type' => 'mapcase',
           }.to_json,
@@ -352,6 +346,7 @@ RSpec.describe AeonLocalRequest do
         'ItemSubTitle' => title_ssm.first,
         'CallNumber' => 'MS#1234',
         'Location' => 'Rare Book & Manuscript Library',
+        'TopContainerID' => '/repositories/2/top_containers/145199',
       }
     end
 
@@ -388,6 +383,7 @@ RSpec.describe AeonLocalRequest do
           'ItemSubTitle' => nil,
           'CallNumber' => nil,
           'Location' => nil,
+          'TopContainerID' => nil,
         }
       end
 

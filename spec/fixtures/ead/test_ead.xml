@@ -91,8 +91,8 @@
               <extent altrender="materialtype spaceoccupied">1 folders</extent>
             </physdesc>
             <unitdate datechar="creation" normal="1980/1980" type="inclusive">1980</unitdate>
-            <container id="aspace_0a1853bd6ce8901eb696c2132e166a26" label="box [RH000023801]" type="box">1</container>
-            <container id="aspace_1cc8bde42a83dbc4b68780c53f2ab33b" parent="aspace_0a1853bd6ce8901eb696c2132e166a26" type="folder">1</container>
+            <container id="repositories.2.top_containers.145199.1" label="box [RH000023801]" type="box">1</container>
+            <container id="aspace_1cc8bde42a83dbc4b68780c53f2ab33b" parent="repositories.2.top_containers.145199.1" type="folder">1</container>
           </did>
           <accessrestrict id="aspace_db5e280e4b20aeb9867a604e67235280">
             <head>Conditions Governing Access</head>
@@ -105,7 +105,7 @@
             <unitid>/repositories/2/archival_objects/1752640</unitid>
             <unitid type="aspace_uri">/repositories/2/archival_objects/1755715</unitid>
             <unitdate datechar="creation" normal="1981/1981" type="inclusive">1981</unitdate>
-            <container id="aspace_f02fba2f03f164e3228e115337411902" label="box [RH000023801]" type="box">1</container>
+            <container id="repositories.2.top_containers.145199.2" label="box [RH000023801]" type="box">1</container>
           </did>
         </c>
         <c id="aspace_afc1758670f1fe38ab265b4a38a6e551" level="file">
@@ -114,7 +114,7 @@
             <unitid>/repositories/2/archival_objects/1752641</unitid>
             <unitid type="aspace_uri">/repositories/2/archival_objects/1755716</unitid>
             <unitdate datechar="creation" normal="1982/1982" type="inclusive">1982</unitdate>
-            <container id="aspace_70e1f737bc0b8128c095169a967be36d" label="box [RH000023801]" type="box">1</container>
+            <container id="repositories.2.top_containers.145199.3" label="box [RH000023801]" type="box">1</container>
           </did>
         </c>
       </c>

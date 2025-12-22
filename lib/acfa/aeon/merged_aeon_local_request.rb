@@ -23,7 +23,8 @@ class Acfa::Aeon::MergedAeonLocalRequest
     # Call number is at the collection level, so first value is fine here
     'CallNumber' => :first,
     # All items in the same box are from the same repository, so first value is fine here
-    'Location' => :first
+    'Location' => :first,
+    'TopContainerID' => :first
   }
 
   def initialize(aeon_local_requests)

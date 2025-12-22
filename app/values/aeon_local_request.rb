@@ -72,6 +72,10 @@ class AeonLocalRequest
     @barcode ||= container_information.map {|container| container['barcode']}.find { |barcode| barcode.present? }
   end
 
+  def container_uri
+    @container_uri ||= container_information.map {|container| container['uri']}.find { |uri| uri.present? }
+  end
+
   def folder_number
     @folder_number ||= container_information.map {|container| container['label']}.find { |label|
       label.downcase.include?('folder')
@@ -133,6 +137,8 @@ class AeonLocalRequest
     form_fields['CallNumber'] = self.call_number
     # This is different from the site code, and generally formatted as full library name like "Rare Book and Manuscript Library".
     form_fields['Location'] = self.location
+    # Top container id transformed to URI, follows "/repositories/:id/top_containers/:top_container_id" pattern
+    form_fields['TopContainerID'] = self.container_uri
 
     form_fields
   end
