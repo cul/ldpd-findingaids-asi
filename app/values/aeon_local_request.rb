@@ -138,7 +138,7 @@ class AeonLocalRequest
     # This is different from the site code, and generally formatted as full library name like "Rare Book and Manuscript Library".
     form_fields['Location'] = self.location
     # Top container id transformed to URI, follows "/repositories/:id/top_containers/:top_container_id" pattern
-    form_fields['TopContainerID'] = self.container_uri
+    form_fields['Transaction.CustomFields.TopContainerID'] = self.container_uri
 
     form_fields
   end

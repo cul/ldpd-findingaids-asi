@@ -346,7 +346,7 @@ RSpec.describe AeonLocalRequest do
         'ItemSubTitle' => title_ssm.first,
         'CallNumber' => 'MS#1234',
         'Location' => 'Rare Book & Manuscript Library',
-        'TopContainerID' => '/repositories/2/top_containers/145199',
+        'Transaction.CustomFields.TopContainerID' => '/repositories/2/top_containers/145199',
       }
     end
 
@@ -383,7 +383,7 @@ RSpec.describe AeonLocalRequest do
           'ItemSubTitle' => nil,
           'CallNumber' => nil,
           'Location' => nil,
-          'TopContainerID' => nil,
+          'Transaction.CustomFields.TopContainerID' => nil,
         }
       end
 

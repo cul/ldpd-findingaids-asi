@@ -24,7 +24,7 @@ class Acfa::Aeon::MergedAeonLocalRequest
     'CallNumber' => :first,
     # All items in the same box are from the same repository, so first value is fine here
     'Location' => :first,
-    'TopContainerID' => :first
+    'Transaction.CustomFields.TopContainerID' => :first
   }
 
   def initialize(aeon_local_requests)
