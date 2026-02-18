@@ -4,7 +4,7 @@
   <% end %>
   <% component.with_value do %>
     <div class='al-in-person-repository-name'>
-      <%= link_to(repository.name, arclight_engine.repository_path(repository.slug)) %>
+      <%= link_to(repository.name, helpers.repository_entry_url(repository.slug)) %>
     </div>
     <div class='al-in-person-repository-location'>
       <address>
