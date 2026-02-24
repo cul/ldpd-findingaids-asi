@@ -101,10 +101,10 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
-"@columbia-libraries/mirador@4.0.0-alpha.16-6":
-  version "4.0.0-alpha.16-6"
-  resolved "https://registry.yarnpkg.com/@columbia-libraries/mirador/-/mirador-4.0.0-alpha.16-6.tgz#2ad7b9c44c8e12cbfa755306e6e8d146e55ec39b"
-  integrity sha512-TInI2DoNA/jE29AYIryUzqmzmgk4DmItWMmMHFNlJWtIUVJ7yW+mUsZAvntlJN8v0irpgbW177O+eHXGTE+xag==
+"@columbia-libraries/mirador@4.0.0-alpha.16-7":
+  version "4.0.0-alpha.16-7"
+  resolved "https://registry.yarnpkg.com/@columbia-libraries/mirador/-/mirador-4.0.0-alpha.16-7.tgz#bfded9109320e86bc5144ea191f4227be2d2250f"
+  integrity sha512-Gr8ooySLS6obCw6q+3ScGeTF19qXMy9ZJGhu7JVTbJsJRqwUAwncuRO1rjO0JToWYld7nNOZMJLVEjRh91JZtQ==
   dependencies:
     "@custom-react-hooks/use-element-size" "^1.5.1"
     "@emotion/cache" "^11.11.0"
@@ -118,6 +118,7 @@
     copy-to-clipboard "^3.3.1"
     deepmerge "^4.2.2"
     dompurify "^3.0.0"
+    fast-xml-parser "^5.3.6"
     i18next "^21.0.0 || ^22.0.0 || ^23.0.0 || ^24.0.0 || ^25.0.0"
     lodash "^4.17.11"
     manifesto.js "^4.2.0"
@@ -2189,6 +2190,13 @@ fast-xml-parser@^4.5.0:
   dependencies:
     strnum "^1.1.1"
 
+fast-xml-parser@^5.3.6:
+  version "5.3.7"
+  resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-5.3.7.tgz#81694e71ff0e568cbb6befade342f2a7e58aa1d9"
+  integrity sha512-JzVLro9NQv92pOM/jTCR6mHlJh2FGwtomH8ZQjhFj/R29P2Fnj38OgPJVtcvYw6SuKClhgYuwUZf5b3rd8u2mA==
+  dependencies:
+    strnum "^2.1.2"
+
 fastq@^1.6.0:
   version "1.17.1"
   resolved "https://registry.npmjs.org/fastq/-/fastq-1.17.1.tgz"
@@ -3934,6 +3942,11 @@ strnum@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/strnum/-/strnum-1.1.2.tgz#57bca4fbaa6f271081715dbc9ed7cee5493e28e4"
   integrity sha512-vrN+B7DBIoTTZjnPNewwhx6cBA/H+IS7rfW68n7XxC1y7uoiGQBxaKzqucGUgavX15dJgiGztLJ8vxuEzwqBdA==
+
+strnum@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/strnum/-/strnum-2.1.2.tgz#a5e00ba66ab25f9cafa3726b567ce7a49170937a"
+  integrity sha512-l63NF9y/cLROq/yqKXSLtcMeeyOfnSQlfMSlzFt/K73oIaD8DGaQWd7Z34X9GPiKqP5rbSh84Hl4bOlLcjiSrQ==
 
 stylis-plugin-rtl@^2.1.1:
   version "2.1.1"

@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.26.10",
-    "@columbia-libraries/mirador": "4.0.0-alpha.16-6",
+    "@columbia-libraries/mirador": "4.0.0-alpha.16-7",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fortawesome/fontawesome-pro": "^6.7.2",
