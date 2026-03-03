@@ -17,12 +17,12 @@ settings do
   provide 'component_traject_config', __FILE__
 end
 
-NAME_ELEMENTS = %w[corpname famname name persname].freeze
+NAME_FIELDS = %w[corpname famname name persname].freeze
 
 # Skip indexing name elements on the top-most component level to avoid duplicating names that already appear in lower-level components.
 each_record do |_record, context|
   if settings[:depth] == 1
-    (NAME_ELEMENTS.map { |element| "#{element}_ssim" } + ['names_ssim']).each do |field|
+    (NAME_FIELDS.map { |element| "#{element}_ssim" } + ['names_ssim']).each do |field|
       context.output_hash.delete(field)
     end
   elsif context.output_hash['names_ssim']
