@@ -25,6 +25,16 @@ module Api
       rescue ArchivesSpace::ConnectionError
         render json: {result: false, error: 'Unable to connect to ArchivesSpace.'}, status: :internal_server_error
       end
+      
+      # Download a file from the root (temporary) of the project directory
+      def download_ead_cache
+        zip_files = Dir.glob(Rails.root.join('ead-cache_*.zip'))
+        puts "Found zip files: #{zip_files}"
+        zip_file_path = zip_files.sort.last
+        zip_filename = File.basename(zip_file_path)
+
+        send_file(zip_file_path, filename: zip_filename, type: 'application/zip')
+      end
 
       private
 

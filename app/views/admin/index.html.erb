@@ -4,6 +4,7 @@
 <h1 class="mb-4">Admin</h1>
 <div>
   <h2>Refresh Resource</h2>
+
   <%= form_with id: 'refresh-resource-form', url: api_v1_admin_refresh_resource_path, method: :post, data: {turbo: false}, class: 'row' do |form| %>
     <p>Enter an ArchivesSpace resource record URI below.</p>
     <%= form.label :resource_record_uri, "Resource record URI", class: 'sr-only' %>
@@ -16,4 +17,11 @@
     </div>
   <% end %>
   <div id="refresh-result-status"></div>
+
+  <% cache_timestamp = ead_cache_zip_timestamp %>
+  <% if cache_timestamp %>
+    <%= link_to "Download EAD cache from #{cache_timestamp}", api_v1_admin_download_ead_cache_path, class: 'btn btn-secondary', data: { turbo: false } %>
+  <% else %>
+    <span class="btn btn-secondary disabled">No cached EAD files available</span>
+  <% end %>
 </div>
