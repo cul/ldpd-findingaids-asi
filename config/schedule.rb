@@ -34,9 +34,9 @@ if Rails.env.development? || Rails.env.findingaids_dev?
   # To test this script locally, make sure that your project is NOT located in Documents/ directory (or Desktop or Downloads) because of macOS permissions issues.
   every 3.minutes do
     ead_cache_dir = CONFIG[:ead_cache_dir]
-    command "echo 'Zipping EAD cache directory: #{ead_cache_dir}. Path is #{path}'"
-
-    # TODO: Find a better location for the zip file and clean up old zip files
-    command "zip -j #{path}/ead-cache_#{Time.now.strftime('%Y%m%d%H%M%S')}.zip #{ead_cache_dir}/as_ead_*.xml"
+    ead_cache_zip_dir = CONFIG[:ead_cache_zip_dir]
+    command "mkdir -p #{ead_cache_zip_dir}"
+    command "echo 'Zipping EAD cache directory: #{ead_cache_dir}. Output to #{ead_cache_zip_dir}'"
+    command "zip -j #{ead_cache_zip_dir}/ead-cache_#{Time.now.strftime('%Y%m%d%H%M%S')}.zip #{ead_cache_dir}/as_ead_*.xml"
   end
 end

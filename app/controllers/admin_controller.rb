@@ -9,7 +9,7 @@ class AdminController < ApplicationController
   private
 
   def ead_cache_zip_timestamp
-    zip_file = Dir.glob(Rails.root.join('ead-cache_*.zip')).sort.last
+    zip_file = Dir.glob(File.join(CONFIG[:ead_cache_zip_dir], 'ead-cache_*.zip')).sort.last
     return nil unless zip_file
 
     match = File.basename(zip_file, '.zip').match(/ead-cache_(\d{14})/)
