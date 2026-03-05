@@ -18,24 +18,19 @@ set :job_template, "/usr/local/bin/mailifrc -s 'Error - :email_subject' :error_r
 # Overriding to remove output redirection option.
 job_type :rake, 'cd :path && :environment_variable=:environment bundle exec rake :task'
 
-# set :output, '/tmp/cron_test.txt'
-
 # Regenerate sitemap every .
 if Rails.env.findingaids_prod?
   every :wednesday, at: '4am' do
     rake 'sitemap:create', email_subject: 'Sitemap generation'
   end
-end
 
-if Rails.env.development? || Rails.env.findingaids_dev?
-  puts "Cron added"
-  # set :job_template, "/bin/bash -l -c ':job'"
-
-  # To test this script locally, make sure that your project is NOT located in Documents/ directory (or Desktop or Downloads) because of macOS permissions issues.
-  every 3.minutes do
+  # TODO: Adjust the schedule for this task
+  every 1.month do
     ead_cache_dir = CONFIG[:ead_cache_dir]
     ead_cache_zip_path = CONFIG[:ead_cache_zip_path]
-    command "echo 'Zipping EAD cache directory: #{ead_cache_dir}. Output to #{ead_cache_zip_path}'"
+
+    # To test this command locally, make sure that your project is NOT located in Documents/ directory (or Desktop, or Downloads) 
+    # since files from those directories cannot be accessed by cron jobs on macOS due to privacy protections.
     command "rm -f #{ead_cache_zip_path} && zip -j #{ead_cache_zip_path} #{ead_cache_dir}/as_ead_*.xml", email_subject: 'Error creating EAD cache zip file'
   end
 end

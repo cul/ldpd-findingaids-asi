@@ -18,13 +18,13 @@
   <% end %>
   <div id="refresh-result-status"></div>
 
-  <% if Rails.env.findingaids_dev? || Rails.env.development? %>
+  <% if Rails.env.findingaids_prod? %>
     <hr class="mt-5 border-2 border-light"/>
     <h5 class="">EAD Cache Download</h5>
-    <% cache_timestamp = ead_cache_zip_timestamp %>
-    <% if cache_timestamp %>
-      <p class="text-muted small">Cached EAD files were generated on <%= cache_timestamp %>.</p>
-      <%= link_to "Download EAD files", api_v1_admin_download_ead_cache_path, class: 'btn btn-primary', data: { turbo: false } %>
+    <% cache_info = ead_cache_zip_info  %>
+    <% if cache_info %>
+      <p class="text-muted small">Cached EAD files were generated on <%= cache_info[:timestamp] %></p>
+      <%= link_to "Download EAD files (#{cache_info[:size]})", api_v1_admin_download_ead_cache_path, class: 'btn btn-primary', data: { turbo: false } %>
     <% else %>
       <span class="btn btn-secondary disabled">No cached EAD files available</span>
     <% end %>
