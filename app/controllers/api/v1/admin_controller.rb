@@ -26,9 +26,10 @@ module Api
         render json: {result: false, error: 'Unable to connect to ArchivesSpace.'}, status: :internal_server_error
       end
 
+      # Download the EAD cache zip file (generated monthly by a cron job)
       def download_ead_cache
-        zip_file_path = Dir.glob(File.join(CONFIG[:ead_cache_zip_dir], 'ead-cache_*.zip')).sort.last
-        return render json: { result: false, error: 'No cached EAD zip files found.' }, status: :not_found unless zip_file_path
+        zip_file_path = CONFIG[:ead_cache_zip_path]
+        return render json: { result: false, error: 'No cached EAD zip files found.' }, status: :not_found unless File.exist?(zip_file_path)
 
         send_file(zip_file_path, filename: File.basename(zip_file_path), type: 'application/zip')
       end

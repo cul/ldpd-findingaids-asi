@@ -9,12 +9,11 @@ class AdminController < ApplicationController
   private
 
   def ead_cache_zip_timestamp
-    zip_file = Dir.glob(File.join(CONFIG[:ead_cache_zip_dir], 'ead-cache_*.zip')).sort.last
-    return nil unless zip_file
+    zip_file = CONFIG[:ead_cache_zip_path]
+    return nil unless File.exist?(zip_file)
 
-    match = File.basename(zip_file, '.zip').match(/ead-cache_(\d{14})/)
-    Time.strptime(match[1], '%Y%m%d%H%M%S').strftime('%B %d, %Y at %l:%M %p') if match
-  rescue ArgumentError
+    File.mtime(zip_file).strftime('%B %d, %Y at %l:%M %p')
+  rescue StandardError
     nil
   end
 end
