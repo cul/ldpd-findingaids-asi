@@ -18,9 +18,12 @@
   <% end %>
   <div id="refresh-result-status"></div>
 
+  <hr class="mt-5 border-2 border-light"/>
+  <h5 class="">EAD Cache Download</h5>
   <% cache_timestamp = ead_cache_zip_timestamp %>
   <% if cache_timestamp %>
-    <%= link_to "Download EAD cache from #{cache_timestamp}", api_v1_admin_download_ead_cache_path, class: 'btn btn-secondary', data: { turbo: false } %>
+    <p class="text-muted small">Cached EAD files were generated on <%= cache_timestamp %>.</p>
+    <%= link_to "Download EAD files", api_v1_admin_download_ead_cache_path, class: 'btn btn-primary', data: { turbo: false } %>
   <% else %>
     <span class="btn btn-secondary disabled">No cached EAD files available</span>
   <% end %>

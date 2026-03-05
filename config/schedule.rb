@@ -18,7 +18,7 @@ set :job_template, "/usr/local/bin/mailifrc -s 'Error - :email_subject' :error_r
 # Overriding to remove output redirection option.
 job_type :rake, 'cd :path && :environment_variable=:environment bundle exec rake :task'
 
-set :output, '/tmp/cron_test.txt'
+# set :output, '/tmp/cron_test.txt'
 
 # Regenerate sitemap every .
 if Rails.env.findingaids_prod?
@@ -27,13 +27,14 @@ if Rails.env.findingaids_prod?
   end
 end
 
-if Rails.env.development?
-  set :job_template, "/bin/bash -l -c ':job'"
+if Rails.env.development? || Rails.env.findingaids_dev?
+  puts "Cron added"
+  # set :job_template, "/bin/bash -l -c ':job'"
 
   # To test this script locally, make sure that your project is NOT located in Documents/ directory (or Desktop or Downloads) because of macOS permissions issues.
-  every 2.minutes do
+  every 3.minutes do
     ead_cache_dir = CONFIG[:ead_cache_dir]
-    command "echo 'Zipping EAD cache directory: #{ead_cache_dir}'"
+    command "echo 'Zipping EAD cache directory: #{ead_cache_dir}. Path is #{path}'"
 
     # TODO: Find a better location for the zip file and clean up old zip files
     command "zip -j #{path}/ead-cache_#{Time.now.strftime('%Y%m%d%H%M%S')}.zip #{ead_cache_dir}/as_ead_*.xml"
