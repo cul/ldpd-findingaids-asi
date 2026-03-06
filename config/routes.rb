@@ -57,6 +57,7 @@ Rails.application.routes.draw do
         post '/index/index_ead', to: 'index#index_ead'
         post '/index/delete_ead', to: 'index#delete_ead'
         post '/admin/refresh_resource', to: 'admin#refresh_resource'
+        get '/admin/download_ead_cache', to: 'admin#download_ead_cache'
       end
     end
 end
