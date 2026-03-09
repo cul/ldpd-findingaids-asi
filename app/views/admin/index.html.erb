@@ -18,15 +18,18 @@
   <% end %>
   <div id="refresh-result-status"></div>
 
-  <% if Rails.env.findingaids_prod? %>
+  <% if CONFIG[:ead_cache_zip_path] %>
     <hr class="mt-5 border-2 border-light"/>
-    <h5 class="">EAD Cache Download</h5>
+    <h5>EAD Cache Download</h5>
     <% cache_info = ead_cache_zip_info  %>
     <% if cache_info %>
       <p class="text-muted small">Cached EAD files were generated on <%= cache_info[:timestamp] %></p>
       <%= link_to "Download EAD files (#{cache_info[:size]})", api_v1_admin_download_ead_cache_path, class: 'btn btn-primary', data: { turbo: false } %>
     <% else %>
       <span class="btn btn-secondary disabled">No cached EAD files available</span>
+      <% if !Rails.env.findingaids_prod? %>
+        <p class="text-muted small pt-2">The cron job to generate the zip file runs in production only.</p>
+      <% end %>
     <% end %>
   <% end %>
 </div>

@@ -16,7 +16,5 @@ class AdminController < ApplicationController
       timestamp: File.mtime(zip_file).strftime('%B %d, %Y at %l:%M %p'),
       size: (File.size(zip_file).to_f / 1000000).round(2).to_s + ' MB'
     }
-  rescue StandardError
-    nil
   end
 end

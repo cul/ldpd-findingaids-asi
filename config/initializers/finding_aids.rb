@@ -5,8 +5,5 @@ REPOS = HashWithIndifferentAccess.new(YAML.load_file("#{Rails.root}/config/repos
 AEON = HashWithIndifferentAccess.new(YAML.load_file("#{Rails.root}/config/aeon.yml", aliases: true)[Rails.env]).freeze
 ARCHIVESSPACE = HashWithIndifferentAccess.new(Rails.application.config_for(:archivesspace))
 
-# Sets the ead_cache_zip_path to be a sibling of the ead_cache_dir
-CONFIG[:ead_cache_zip_path] = File.join(File.dirname(CONFIG[:ead_cache_dir]), 'ead_cache.zip')
-
 # Make sure that the ead_cache_dir exists
 FileUtils.mkdir_p(CONFIG[:ead_cache_dir])

@@ -31,7 +31,7 @@ module Api
         zip_file_path = CONFIG[:ead_cache_zip_path]
         return render json: { result: false, error: 'No cached EAD zip files found.' }, status: :not_found unless File.exist?(zip_file_path)
 
-        send_file(zip_file_path, filename: File.basename(zip_file_path), type: 'application/zip')
+        send_file(zip_file_path, filename: File.basename(zip_file_path))
       end
 
       private
