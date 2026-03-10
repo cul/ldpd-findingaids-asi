@@ -23,4 +23,13 @@ if Rails.env.findingaids_prod?
   every :wednesday, at: '4am' do
     rake 'sitemap:create', email_subject: 'Sitemap generation'
   end
+
+  every 1.month do
+    ead_cache_dir = CONFIG[:ead_cache_dir]
+    ead_cache_zip_path = CONFIG[:ead_cache_zip_path]
+
+    # To test this command locally, make sure that your project is NOT located in Documents/ directory (or Desktop, or Downloads) 
+    # since files from those directories cannot be accessed by cron jobs on macOS due to privacy protections.
+    command "rm -f #{ead_cache_zip_path} && zip -j #{ead_cache_zip_path} #{ead_cache_dir}/as_ead_*.xml", email_subject: 'Error creating EAD cache zip file'
+  end
 end
