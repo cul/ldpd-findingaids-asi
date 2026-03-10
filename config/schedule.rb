@@ -24,7 +24,6 @@ if Rails.env.findingaids_prod?
     rake 'sitemap:create', email_subject: 'Sitemap generation'
   end
 
-  # TODO: Adjust the schedule for this task
   every 1.month do
     ead_cache_dir = CONFIG[:ead_cache_dir]
     ead_cache_zip_path = CONFIG[:ead_cache_zip_path]
