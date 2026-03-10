@@ -28,7 +28,7 @@
     <% else %>
       <span class="btn btn-secondary disabled">No cached EAD files available</span>
       <% if !Rails.env.findingaids_prod? %>
-        <p class="text-muted small pt-2">The cron job to generate the zip file runs in production only.</p>
+        <p class="text-muted small pt-2">The cron job that generates the zip file runs only in production.</p>
       <% end %>
     <% end %>
   <% end %>
