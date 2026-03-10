@@ -286,7 +286,7 @@ GEM
       net-protocol
     net-ssh (7.3.0)
     nio4r (2.7.5)
-    nokogiri (1.18.10)
+    nokogiri (1.19.1)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     omniauth (2.1.2)
@@ -545,7 +545,7 @@ DEPENDENCIES
   loofah (~> 2.21.0)
   marc
   mysql2
-  nokogiri (~> 1.18, >= 1.18.9)
+  nokogiri (~> 1.19)
   omniauth (~> 2.1)
   omniauth-cul (~> 0.2.0)
   puma (~> 6.6.0)
