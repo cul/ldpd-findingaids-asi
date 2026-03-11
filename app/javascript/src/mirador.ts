@@ -37,7 +37,7 @@ function loadMirador(): void {
       viewConfig.defaultView = 'single';
     }
 
-    const culMiradorPlugins: any[] = [...Mirador.culPlugins.downloadDialogPlugin]
+    const culMiradorPlugins = [...Mirador.culPlugins.downloadDialogPlugin]
       .concat([...Mirador.culPlugins.viewXmlPlugin])
       .concat([...Mirador.culPlugins.citationsSidebarPlugin])
       .concat([...Mirador.culPlugins.videojsPlugin])
