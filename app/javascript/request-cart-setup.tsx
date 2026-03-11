@@ -1,9 +1,8 @@
-import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import RequestCartApp from './components/request-cart/RequestCartApp';
 import InlineRequestCartApp from './components/request-cart/InlineRequestCartApp';
-import RequestCartStorage from './RequestCartStorage.ts';
-import { RequestCartChangeEvent } from './cart-types.ts';
+import RequestCartStorage from './RequestCartStorage';
+import { RequestCartChangeEvent } from './cart-types';
 
 // Define some global event dispatching functions that will allow us to send data to the cart app
 // from inside or outside of a React context.
@@ -79,7 +78,6 @@ function onRequestCartChange(e: RequestCartChangeEvent) {
   const { items } = e.detail.cartData;
   // Update any cart count indicators on the page
   document.querySelectorAll('.request-cart-item-count')?.forEach((el) => {
-    // eslint-disable-next-line no-param-reassign
     el.innerHTML = items.length.toString();
   });
   // Update the state of any add-to-cart buttons on the page

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface MiradorViewer {
   viewer: (config: any, plugins?: any[]) => void;
   culPlugins: {
