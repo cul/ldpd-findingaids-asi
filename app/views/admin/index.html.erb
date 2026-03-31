@@ -26,7 +26,7 @@
       <p class="text-muted small">Cached EAD files were generated on <%= cache_info[:timestamp] %></p>
       <%= link_to "Download EAD files (#{cache_info[:size]})", api_v1_admin_download_ead_cache_path, class: 'btn btn-primary', data: { turbo: false } %>
     <% else %>
-      <span class="btn btn-secondary disabled">No cached EAD files available</span>
+      <button class="btn btn-secondary" disabled>No cached EAD files available</button>
       <% if !Rails.env.findingaids_prod? %>
         <p class="text-muted small pt-2">The cron job that generates the zip file runs only in production.</p>
       <% end %>

@@ -104,7 +104,9 @@ group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '>= 2.1' # min SQLite3 version required by Rails 8
 
-  gem 'capybara', '~> 3.32'
+  gem 'capybara', '~> 3.40'
   gem 'rspec-rails'
   gem "solr_wrapper", ">= 0.3"
+  # For running tests with chromedriver
+  gem 'selenium-webdriver', '~> 4.39'
 end
