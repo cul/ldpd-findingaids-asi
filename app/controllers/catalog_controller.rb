@@ -126,6 +126,9 @@ class CatalogController < ApplicationController
       contact_field
     ]
 
+    # This is a CUL customization for page titles
+    config.show.document_presenter_class = Acfa::ShowPresenter
+
     ##
     # Compact index view
     config.view.compact!
