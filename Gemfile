@@ -65,7 +65,7 @@ gem 'blacklight', '~> 8.7.0'
 gem "rsolr", ">= 1.0", "< 3"
 gem "bootstrap", "\~\>\ 5.1"
 gem "sassc-rails", "~> 2.1"
-gem "devise", '~> 4.9.3' # omniauth-cul is only known to be compatible with devise ~> 4.9
+gem "devise", '~> 5.0.3' # omniauth-cul is only known to be compatible with devise ~> 4.9
 gem "omniauth", '~> 2.1' # omniauth-cul is only known to be compatible with omniauth ~> 2.1
 gem "omniauth-cul", '~> 0.2.0' # omniauth-cul is only known to be compatible with omniauth ~> 2.1
 gem "devise-guests", "~> 0.8"
