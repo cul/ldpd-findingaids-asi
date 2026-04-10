@@ -126,6 +126,9 @@ class CatalogController < ApplicationController
       contact_field
     ]
 
+    # This is a CUL customization for page titles
+    config.show.document_presenter_class = Acfa::ShowPresenter
+
     ##
     # Compact index view
     config.view.compact!
@@ -253,7 +256,6 @@ class CatalogController < ApplicationController
     config.add_summary_field 'abstract', field: 'abstract_html_tesm', helper_method: :render_html_tags
     config.add_summary_field 'extent', field: 'extent_ssm'
     config.add_summary_field 'language', field: 'language_material_ssm'
-    config.add_summary_field 'bibliography', field: 'bibliography_html_tesim', helper_method: :render_html_tags
     config.add_summary_field 'scopecontent', field: 'scopecontent_html_tesm', helper_method: :render_html_tags
     config.add_summary_field 'bioghist', field: 'bioghist_html_tesm', helper_method: :render_html_tags
 
@@ -278,6 +280,7 @@ class CatalogController < ApplicationController
     config.add_related_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tags
     config.add_related_field 'descrules', field: 'descrules_ssm', helper_method: :render_html_tags
     config.add_related_field 'prefercite', field: 'prefercite_html_tesm', helper_method: :render_html_tags
+    config.add_related_field 'bibliography', field: 'bibliography_html_tesim', helper_method: :render_html_tags
 
 
     # Collection Show Page - Indexed Terms Section
@@ -331,6 +334,7 @@ class CatalogController < ApplicationController
     config.add_component_field 'originalsloc', field: 'originalsloc_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'relatedmaterial', field: 'relatedmaterial_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'separatedmaterial', field: 'separatedmaterial_html_tesm', helper_method: :render_html_tags
 
 
     # Component Show Page - Indexed Terms Section

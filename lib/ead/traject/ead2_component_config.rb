@@ -17,6 +17,21 @@ settings do
   provide 'component_traject_config', __FILE__
 end
 
+NAME_FIELDS = %w[corpname famname name persname].freeze
+
+# Skip indexing name elements on the top-most component level to avoid duplicating names that already appear in lower-level components.
+each_record do |_record, context|
+  if settings[:depth] == 1
+    (NAME_FIELDS.map { |element| "#{element}_ssim" } + ['names_ssim']).each do |field|
+      context.output_hash.delete(field)
+    end
+  elsif context.output_hash['names_ssim']
+    # Deduplicate names_ssim for all components, since the upstream Arclight
+    # indexes both ./controlaccess/#{name_element} and .//#{name_element} (which can overlap).
+    context.output_hash['names_ssim'].uniq!
+  end
+end
+
 to_field 'repository_id_ssi' do |record, accumulator, context|
   if settings[:root]&.clipboard
     repository_id = settings[:root].clipboard[:repository_id]
