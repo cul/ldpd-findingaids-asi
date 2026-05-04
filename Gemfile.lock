@@ -152,7 +152,7 @@ GEM
     connection_pool (3.0.2)
     crass (1.0.6)
     csv (3.3.5)
-    date (3.5.0)
+    date (3.5.1)
     deprecation (1.1.0)
       activesupport
     devise (4.9.4)
@@ -271,7 +271,7 @@ GEM
     mysql2 (0.5.6)
     net-http (0.9.1)
       uri (>= 0.11.1)
-    net-imap (0.5.12)
+    net-imap (0.5.14)
       date
       net-protocol
     net-pop (0.1.2)
