@@ -7,6 +7,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem 'rails', '~> 8.0.4'
 
 gem 'stringio', '3.1.1'
+gem 'erb', '>= 6.0.4'
 
 gem 'resque', '~> 2.6'
 
