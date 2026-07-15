@@ -129,6 +129,14 @@ limitations under the License.
         </mergePolicyFactory>
       -->
 
+    <mergePolicyFactory class="org.apache.solr.index.TieredMergePolicyFactory">
+      <int name="maxMergeAtOnce">10</int>
+      <int name="segmentsPerTier">10</int>
+      <int name="targetSearchConcurrency">1</int>
+      <double name="forceMergeDeletesPctAllowed">0.0</double>
+      <double name="deletesPctAllowed">33.0</double>
+    </mergePolicyFactory>
+
     <!-- Expert: Merge Scheduler
         The Merge Scheduler in Lucene controls how merges are
         performed.  The ConcurrentMergeScheduler (Lucene 2.3 default)
