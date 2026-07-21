@@ -150,6 +150,7 @@ describe Traject::Indexer do
         {
           'barcode' => 'RH000023801',
           'uri' => '/repositories/2/top_containers/145199',
+          'top_container_uri' => '/repositories/2/top_containers/145199',
           'label' => 'box 1',
           'type' => 'box',
         }
@@ -160,10 +161,44 @@ describe Traject::Indexer do
         {
           'barcode' => nil,
           'uri' => nil,
+          'top_container_uri' => '/repositories/2/top_containers/145199',
           'label' => 'folder 1',
           'type' => 'folder'
         }
       )
+    end
+  end
+
+  describe 'top container grouping key (top_container_uri)' do
+    let(:fixture_path) { File.join(file_fixture_path, 'ead/test_multiple_top_containers.xml') }
+    let(:two_top_container_component) do
+      index_document[:components][0][:components][0][:container_information_ssm].map { |info_json| JSON.parse(info_json) }
+    end
+    let(:mapcase_component) do
+      index_document[:components][0][:components][1][:container_information_ssm].map { |info_json| JSON.parse(info_json) }
+    end
+
+    it 'partitions a two-top-container component into two distinct top_container_uri values' do
+      expect(two_top_container_component.map { |c| c['top_container_uri'] }.uniq).to eq(
+        ['/repositories/3/top_containers/143762', '/repositories/3/top_containers/155583']
+      )
+    end
+
+    it 'gives a folder the same top_container_uri as its box (derived from `parent`)' do
+      box, folder = two_top_container_component[0], two_top_container_component[1]
+      expect(box['type']).to eq('box')
+      expect(folder['type']).to eq('folder')
+      expect(folder['top_container_uri']).to eq(box['top_container_uri'])
+      expect(box['uri']).to eq('/repositories/3/top_containers/143762')
+      expect(folder['uri']).to be_nil
+    end
+
+    it 'keeps a aspace fallback key for mapcases' do
+      mapcase, folder = mapcase_component[0], mapcase_component[1]
+      expect(mapcase['type']).to eq('mapcase')
+      expect(mapcase['top_container_uri']).to eq('aspace_fb820cf9051e192c2abb6556e37266d4')
+      expect(mapcase['uri']).to be_nil
+      expect(folder['top_container_uri']).to eq('aspace_fb820cf9051e192c2abb6556e37266d4')
     end
   end
 

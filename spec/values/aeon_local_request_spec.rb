@@ -21,11 +21,13 @@ RSpec.describe AeonLocalRequest do
       {
         'barcode' => barcode,
         'uri' => '/repositories/2/top_containers/145199',
+        'top_container_uri' => '/repositories/2/top_containers/145199',
         'label' => box_label,
         'type' => 'box',
       }.to_json,
       {
         'barcode' => nil,
+        'top_container_uri' => '/repositories/2/top_containers/145199',
         'label' => folder_label,
         'type' => 'folder'
       }.to_json
@@ -228,6 +230,71 @@ RSpec.describe AeonLocalRequest do
       include_context "empty solr_doc"
       it 'returns a blank value' do
         expect(aeon_local_request.container_information).to be_blank
+      end
+    end
+  end
+
+  describe '.for_top_containers' do
+    def build_request_doc(containers)
+      SolrDocument.new({
+        'id' => id,
+        'collection_ssim' => collection_ssim,
+        'title_ssm' => title_ssm,
+        'normalized_date_ssm' => normalized_date_ssm,
+        'repository_id_ssi' => repository_id,
+        'call_number_ss' => call_number,
+        'collection_offsite_ssi' => collection_offsite_ssi,
+        'container_information_ssm' => containers.map(&:to_json)
+      })
+    end
+
+    let(:box_47) do
+      { 'uri' => '/repositories/3/top_containers/143762', 'top_container_uri' => '/repositories/3/top_containers/143762',
+        'barcode' => 'BC47', 'label' => 'box 47', 'type' => 'box' }
+    end
+    let(:folder_47) do
+      { 'uri' => nil, 'top_container_uri' => '/repositories/3/top_containers/143762',
+        'barcode' => nil, 'label' => 'folder 12A to 12D', 'type' => 'folder' }
+    end
+    let(:box_50) do
+      { 'uri' => '/repositories/3/top_containers/155583', 'top_container_uri' => '/repositories/3/top_containers/155583',
+        'barcode' => 'BC50', 'label' => 'box 50', 'type' => 'box' }
+    end
+    let(:folder_50) do
+      { 'uri' => nil, 'top_container_uri' => '/repositories/3/top_containers/155583',
+        'barcode' => nil, 'label' => 'folder 7 to 8', 'type' => 'folder' }
+    end
+
+    context 'a component spanning two top containers' do
+      let(:requests) { described_class.for_top_containers(build_request_doc([box_47, folder_47, box_50, folder_50])) }
+
+      it 'returns one request per top container' do
+        expect(requests.length).to eq(2)
+      end
+
+      it 'scopes ItemVolume / ItemNumber / TopContainerID to each box' do
+        first, second = requests
+        expect(first.form_attributes['ItemVolume']).to eq('box 47')
+        expect(first.form_attributes['ItemNumber']).to eq('BC47')
+        expect(first.form_attributes['Transaction.CustomFields.TopContainerID']).to eq('/repositories/3/top_containers/143762')
+
+        expect(second.form_attributes['ItemVolume']).to eq('box 50')
+        expect(second.form_attributes['ItemNumber']).to eq('BC50')
+        expect(second.form_attributes['Transaction.CustomFields.TopContainerID']).to eq('/repositories/3/top_containers/155583')
+      end
+
+      it 'gives each request a distinct grouping_field_value so the checkout view splits them' do
+        expect(requests.map(&:grouping_field_value)).to eq(['box 47', 'box 50'])
+      end
+    end
+
+    context 'a component in a single top container' do
+      let(:doc) { build_request_doc([box_47, folder_47]) }
+
+      it 'returns a single request identical to the un-split request' do
+        requests = described_class.for_top_containers(doc)
+        expect(requests.length).to eq(1)
+        expect(requests.first.form_attributes).to eq(described_class.new(doc).form_attributes)
       end
     end
   end

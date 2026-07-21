@@ -4,9 +4,24 @@
 # POST form specifically aimed at Aeon's external request
 # endpoint (https://support.atlas-sys.com/hc/en-us/articles/360011820054-External-Request-Endpoint)
 class AeonLocalRequest
-  def initialize(solr_document)
+  def initialize(solr_document, container_information: nil)
     raise ArgumentError.new("solr_document cannot be nil") if solr_document.nil?
     @solr_document = solr_document
+
+    # When given, this request covers just one top container of the document
+    # rather than the whole component
+    @container_information_override = container_information
+  end
+
+  # Returns one AeonLocalRequest per distinct top container on the document, each
+  # scoped to that top container's slice of container_information.
+  # Falls back to a single request when there is only 1 top-container group.
+  def self.for_top_containers(solr_document)
+    request = new(solr_document)
+    slices = request.container_information.group_by { |container| container['top_container_uri'] }.values
+    return [request] if slices.length <= 1
+
+    slices.map { |slice| new(solr_document, container_information: slice) }
   end
 
   def repository_config
@@ -65,7 +80,8 @@ class AeonLocalRequest
   end
 
   def container_information
-    @container_information ||= @solr_document.fetch('container_information_ssm', []).map {|info_json| JSON.parse(info_json) }
+    @container_information ||= @container_information_override ||
+      @solr_document.fetch('container_information_ssm', []).map {|info_json| JSON.parse(info_json) }
   end
 
   def barcode
