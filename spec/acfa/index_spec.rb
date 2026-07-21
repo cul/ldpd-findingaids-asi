@@ -5,7 +5,8 @@ RSpec.describe Acfa::Index do
   describe ".build_suggester" do
     let(:example_solr_url) { 'https://example.com:12345' }
     it "works as expected" do
-      expect(described_class).to receive(:`).with("curl #{example_solr_url}suggest?suggest.build=true")
+      expect(described_class).to receive(:`).with("curl #{example_solr_url}update?commit=true&expungeDeletes=true")
+      expect(described_class).to receive(:`).with("curl #{example_solr_url}suggest?suggest.buildAll=true")
       described_class.build_suggester(example_solr_url)
     end
   end
