@@ -56,6 +56,12 @@ class SolrDocument
     @aeon_request ||= AeonLocalRequest.new(self)
   end
 
+  # We submit one AeonLocalRequest per top container, so a component that spans multiple top
+  # containers (eg. box 47 and box 50) is checked out as separate Aeon transactions
+  def aeon_requests
+    @aeon_requests ||= AeonLocalRequest.for_top_containers(self)
+  end
+
   # Override to permit indexing of more xlink attributes via Acfa::DigitalObject subclass of Arclight::DigitalObject
   def digital_objects
     digital_objects_field = fetch('digital_objects_ssm', []).reject(&:empty?)

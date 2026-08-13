@@ -40,7 +40,8 @@ class AeonRequestsController < ApplicationController
       rows: ids.length
     )
 
-    @aeon_requests = solr_response.dig('response', 'docs').map { |doc| SolrDocument.new(doc) }.map { |doc| doc.aeon_request }
+    # A single document can span multiple top containers, each container becomes its own Aeon request (see SolrDocument#aeon_requests).
+    @aeon_requests = solr_response.dig('response', 'docs').map { |doc| SolrDocument.new(doc) }.flat_map { |doc| doc.aeon_requests }
     @aeon_dll_url = params[:login_method] == 'shib' ? AEON[:shib_dll_url] : AEON[:non_shib_dll_url]
     @note = params[:note]
 

@@ -108,19 +108,32 @@ to_field "container_information_ssm" do |record, accumulator, context|
   record.xpath("./did/container").each do |container_element|
     type = container_element.attributes["type"].to_s
     container_id = container_element.attributes["id"].to_s
+    container_parent = container_element.attribute("parent").to_s
     barcode_label = container_element.attributes["label"].to_s
     barcode_match = barcode_label.match(/\[([^\]]+)\]/)
     barcode = barcode_match[1] if barcode_match
     text = [container_element.attribute("type"), container_element.text].join(" ").strip
-    
+
+    # Reference to the top container this element belongs to
+    top_container_ref = container_parent.present? ? container_parent : container_id
+
+    # Grouping key that allows a component's containers to be partitioned by top container.
+    # This is only for internal grouping and is not sent to Aeon.
+    top_container_uri =
+      if top_container_ref.start_with?("repositories")
+        "/" + top_container_ref.sub(/\.\d+$/, '').gsub('.', '/')
+      elsif top_container_ref.present?
+        top_container_ref
+      end
+
     # Convert container ID to URI path (only for boxes with repository IDs)
-    # Example: "repositories.2.top_containers.145199.1" -> "/repositories/2/top_containers/145199"
     uri = if type == "box" && container_id.start_with?("repositories")
             "/" + container_id.sub(/\.\d+$/, '').gsub('.', '/')
           end
-    
+
     container_information = {
       uri: uri,
+      top_container_uri: top_container_uri,
       barcode: barcode,
       label: text,
       type: type
