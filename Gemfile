@@ -57,7 +57,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'marc'
 gem 'iso-639'
 
-gem 'loofah', '~> 2.21.0'
+gem 'loofah', '~> 2.25.2'
 gem 'nokogiri', '~> 1.18', '>= 1.18.9', force_ruby_platform: true
 
 gem 'arclight', '~> 1.6.2'
