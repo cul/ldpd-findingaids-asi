@@ -23,8 +23,6 @@ gem 'terser'
 # Use Puma as the app server
 gem 'puma', '~> 7.2.1'
 
-gem 'concurrent-ruby', '1.3.4' # needs Rails 7.1 to unpin
-
 # Use JavaScript with Vite [https://github.com/sergii/vite_rails]
 gem 'vite_rails'
 
