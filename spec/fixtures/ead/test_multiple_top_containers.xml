@@ -60,6 +60,17 @@
               parent="aspace_fb820cf9051e192c2abb6556e37266d4" type="folder">1</container>
           </did>
         </c>
+
+        <!-- Flatbox -->
+        <c id="aspace_flatbox_component" level="file">
+          <did>
+            <unittitle>Employee Wage Information</unittitle>
+            <unitid type="aspace_uri">/repositories/2/archival_objects/3</unitid>
+            <container id="repositories.2.top_containers.3.1" label="flatbox" type="flatbox">6</container>
+            <container id="aspace_321a8aec38c00bc559aa92dff092b892"
+              parent="repositories.2.top_containers.3.1" type="folder">1</container>
+          </did>
+        </c>
       </c>
     </dsc>
   </archdesc>

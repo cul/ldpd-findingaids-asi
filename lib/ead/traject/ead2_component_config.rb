@@ -126,8 +126,8 @@ to_field "container_information_ssm" do |record, accumulator, context|
         top_container_ref
       end
 
-    # Convert container ID to URI path (only for boxes with repository IDs)
-    uri = if type == "box" && container_id.start_with?("repositories")
+    # Convert container ID to URI path
+    uri = if container_id.start_with?("repositories")
             "/" + container_id.sub(/\.\d+$/, '').gsub('.', '/')
           end
 

@@ -177,6 +177,9 @@ describe Traject::Indexer do
     let(:mapcase_component) do
       index_document[:components][0][:components][1][:container_information_ssm].map { |info_json| JSON.parse(info_json) }
     end
+    let(:flatbox_component) do
+      index_document[:components][0][:components][2][:container_information_ssm].map { |info_json| JSON.parse(info_json) }
+    end
 
     it 'partitions a two-top-container component into two distinct top_container_uri values' do
       expect(two_top_container_component.map { |c| c['top_container_uri'] }.uniq).to eq(
@@ -199,6 +202,25 @@ describe Traject::Indexer do
       expect(mapcase['top_container_uri']).to eq('aspace_fb820cf9051e192c2abb6556e37266d4')
       expect(mapcase['uri']).to be_nil
       expect(folder['top_container_uri']).to eq('aspace_fb820cf9051e192c2abb6556e37266d4')
+    end
+
+    it 'stores a uri for a non-box top container (flatbox)' do
+      expect(flatbox_component.first).to eq(
+        {
+          'barcode' => nil,
+          'uri' => '/repositories/2/top_containers/3',
+          'top_container_uri' => '/repositories/2/top_containers/3',
+          'label' => 'flatbox 6',
+          'type' => 'flatbox'
+        }
+      )
+    end
+
+    it 'gives a flatbox folder the flatbox top_container_uri' do
+      flatbox, folder = flatbox_component[0], flatbox_component[1]
+      expect(folder['type']).to eq('folder')
+      expect(folder['top_container_uri']).to eq(flatbox['top_container_uri'])
+      expect(folder['uri']).to be_nil
     end
   end
 
