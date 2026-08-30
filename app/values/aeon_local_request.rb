@@ -117,7 +117,7 @@ class AeonLocalRequest
   end
 
   def location
-    @solr_document['collection_offsite_ssi'] == 'true' ? 'Offsite' : self.repository_config&.name
+    @location ||= barcode.present? ? 'Offsite' : self.repository_config&.name
   end
 
   def form_attributes
