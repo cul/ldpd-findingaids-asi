@@ -14,7 +14,6 @@ RSpec.describe AeonLocalRequest do
   let(:folder_label) { 'folder 1 to 3' }
   let(:parent_unittitles_ssm) { ['First value', 'Series 2'] }
   let(:call_number) { 'MS#1234' }
-  let(:collection_offsite_ssi) { 'false' }
   let(:digital_objects_ssm) { nil }
   let(:container_information_ssm) do
     [
@@ -45,7 +44,6 @@ RSpec.describe AeonLocalRequest do
       'container_information_ssm' => container_information_ssm,
       'parent_unittitles_ssm' => parent_unittitles_ssm,
       'call_number_ss' => call_number,
-      'collection_offsite_ssi' => collection_offsite_ssi,
       'digital_objects_ssm' => digital_objects_ssm
     })
   end
@@ -376,14 +374,14 @@ RSpec.describe AeonLocalRequest do
 
   describe '#location' do
     context 'an item from an onsite collection' do
-      let(:collection_offsite_ssi) { 'false' }
+      let(:barcode) { nil }
       it 'returns the expected value' do
         expect(aeon_local_request.location).to eq('Rare Book & Manuscript Library')
       end
     end
 
     context 'an item from an offsite collection' do
-      let(:collection_offsite_ssi) { 'true' }
+      let(:barcode) { 'barcode123'}
       it 'returns the expected value' do
         expect(aeon_local_request.location).to eq('Offsite')
       end
@@ -412,7 +410,7 @@ RSpec.describe AeonLocalRequest do
         'ItemNumber' => 'RH00002380',
         'ItemSubTitle' => title_ssm.first,
         'CallNumber' => 'MS#1234',
-        'Location' => 'Rare Book & Manuscript Library',
+        'Location' => 'Offsite',
         'Transaction.CustomFields.TopContainerID' => '/repositories/2/top_containers/145199',
       }
     end
