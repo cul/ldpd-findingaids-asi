@@ -335,6 +335,7 @@ class CatalogController < ApplicationController
     config.add_component_field 'relatedmaterial', field: 'relatedmaterial_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'odd', field: 'odd_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'separatedmaterial', field: 'separatedmaterial_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'langmaterial', field: 'language_material_ssm'
 
 
     # Component Show Page - Indexed Terms Section
