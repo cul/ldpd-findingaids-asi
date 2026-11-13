@@ -64,9 +64,23 @@ describe Acfa::Viewers::DigitalObjectViewer, type: :component do
       end
     end
 
-    it "renders HathiTrust resource in iframe (not Mirador)" do
-      expect(rendered_node).to have_selector "iframe[src=\"#{href}?urlappend=%3Bui=embed\"]"
-      expect(rendered_node).not_to have_selector "div#mirador"
+    context "when the HathiTrust viewer is enabled" do
+      before { allow(component).to receive(:hathi_viewer_enabled?).and_return(true) }
+
+      it "renders HathiTrust resource in iframe (not Mirador) and a link" do
+        expect(rendered_node).to have_selector "iframe[src=\"#{href}?urlappend=%3Bui=embed\"]"
+        expect(rendered_node).not_to have_selector "div#mirador"
+        expect(rendered_node).to have_link label, href: href
+      end
+    end
+
+    context "when the HathiTrust viewer is disabled" do
+      before { allow(component).to receive(:hathi_viewer_enabled?).and_return(false) }
+
+      it "renders only a link to the HathiTrust resource" do
+        expect(rendered_node).not_to have_selector "iframe#hathi-trust"
+        expect(rendered_node).to have_link label, href: href
+      end
     end
   end
 

@@ -5,11 +5,13 @@
   <% end %>
 
   <% if embed_hathi %>
-    <iframe
-      id="hathi-trust"
-      src="<%= embed_hathi.href + "?urlappend=%3Bui=embed" %>"
-      title="<%= embed_hathi.label %>">
-    </iframe>
+    <% if hathi_viewer_enabled? %>
+      <iframe
+        id="hathi-trust"
+        src="<%= embed_hathi.href + "?urlappend=%3Bui=embed" %>"
+        title="<%= embed_hathi.label %>">
+      </iframe>
+    <% end %>
     <p><%= link_to(embed_hathi.label, embed_hathi.href, target: "_blank") %></p>
   <% end %>
 

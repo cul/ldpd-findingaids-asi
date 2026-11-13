@@ -31,6 +31,10 @@ module Acfa::SolrDocument::EmbeddableResources
     end
   end
 
+  def hathi_viewer_enabled?
+    CONFIG[:enable_hathi_trust_viewer]
+  end
+
   # DOI, Internet Archive or HathiTrust urls
   def include_patterns
     [/\/(10\.7916\/[A-Za-z0-9\-\.]+)/, /\/\/archive\.org\/details\//, /\/\/hdl\.handle\.net\//]
